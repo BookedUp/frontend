@@ -1,0 +1,38 @@
+.printing-done {
+  position: absolute;
+  top: 295px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 352px;
+  height: 32px;
+}
+.successfully-print-pdf-owner-child {
+  position: absolute;
+  top: 50px;
+  left: 80px;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-tan-200);
+  width: 240px;
+  height: 200px;
+}
+.image-12-icon {
+  position: absolute;
+  top: 63px;
+  left: 58px;
+  width: 284px;
+  height: 209px;
+  object-fit: cover;
+}
+.successfully-print-pdf-owner {
+  position: relative;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  width: 100%;
+  height: 391px;
+  text-align: center;
+  font-size: var(--font-size-xl);
+  color: var(--color-gray-400);
+  font-family: var(--font-adamina);
+}

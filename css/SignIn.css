@@ -1,0 +1,174 @@
+.sign-in6 {
+  position: absolute;
+  top: 160px;
+  left: 519px;
+  font-size: var(--font-size-9xl);
+  font-family: var(--font-adamina);
+  text-align: center;
+  display: inline-block;
+  width: 401px;
+  height: 32px;
+}
+.continue-with-email2 {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 20px;
+}
+.continue-with-email-frame {
+  position: absolute;
+  top: 448px;
+  left: 520px;
+  border-radius: var(--br-7xs);
+  background-color: var(--blue-1);
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-lg);
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+}
+.email-address19 {
+  position: absolute;
+  top: 232px;
+  left: 520px;
+  letter-spacing: 0.02em;
+  line-height: 140%;
+}
+.register5 {
+  color: var(--blue-1);
+}
+.dont-have-an-container {
+  top: 523px;
+  left: 520px;
+  font-size: var(--font-size-base);
+  text-align: center;
+  display: inline-block;
+  width: 400px;
+  cursor: pointer;
+  color: var(--gray-2);
+}
+.dont-have-an-container,
+.forgot-password1,
+.password6 {
+  position: absolute;
+  letter-spacing: 0.02em;
+}
+.password6 {
+  top: 320px;
+  left: 520px;
+  line-height: 140%;
+}
+.forgot-password1 {
+  top: 408px;
+  left: 738px;
+  display: flex;
+  color: var(--blue-1);
+  text-align: right;
+  align-items: center;
+  width: 182px;
+  height: 20px;
+  cursor: pointer;
+}
+.group-child117,
+.keep-me-signed {
+  position: absolute;
+  top: 0;
+  height: 20px;
+}
+.keep-me-signed {
+  left: 28px;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  width: 182px;
+}
+.group-child117 {
+  left: 0;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-white);
+  border: 1px solid var(--gray-4);
+  box-sizing: border-box;
+  width: 20px;
+}
+.keep-me-signed-in-parent {
+  position: absolute;
+  top: 408px;
+  left: 520px;
+  width: 210px;
+  height: 20px;
+  color: var(--gray-2);
+}
+.email-address21 {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 140%;
+}
+.email-address20 {
+  position: absolute;
+  top: 256px;
+  left: 520px;
+  border-radius: var(--br-9xs);
+  background-color: var(--gray-6);
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
+  box-sizing: border-box;
+  font-size: var(--font-size-mini);
+  color: var(--gray-6);
+}
+.enter-password4 {
+  flex: 1;
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 140%;
+}
+.eye-1-icon4 {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.password7 {
+  position: absolute;
+  top: 344px;
+  left: 520px;
+  border-radius: var(--br-9xs);
+  background-color: var(--gray-6);
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  font-size: var(--font-size-mini);
+  color: var(--gray-6);
+}
+.logo-with-slogan-214 {
+  position: absolute;
+  top: 28px;
+  left: 42px;
+  width: 268px;
+  height: 148px;
+  object-fit: cover;
+}
+.sign-in5 {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 970px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-400);
+  font-family: var(--font-sansation);
+}

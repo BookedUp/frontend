@@ -1,0 +1,53 @@
+.downloading,
+.just-a-moment1 {
+  position: absolute;
+  left: 24px;
+  width: 352px;
+}
+.downloading {
+  top: 295px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+}
+.just-a-moment1 {
+  top: 339px;
+  font-size: var(--font-size-base);
+  letter-spacing: 0.02em;
+  line-height: 140%;
+  font-family: var(--font-sansation);
+  color: var(--gray-2);
+  display: inline-block;
+}
+.downloading-pdf-owner-child {
+  position: absolute;
+  top: 50px;
+  left: 80px;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-tan-200);
+  width: 240px;
+  height: 200px;
+}
+.image-11-icon2 {
+  position: absolute;
+  top: 63px;
+  left: 58px;
+  width: 284px;
+  height: 209px;
+  object-fit: cover;
+}
+.downloading-pdf-owner {
+  position: relative;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  width: 400px;
+  height: 391px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  text-align: center;
+  font-size: var(--font-size-xl);
+  color: var(--color-gray-400);
+  font-family: var(--font-adamina);
+}

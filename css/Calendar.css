@@ -1,0 +1,144 @@
+.chevron-left-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.month-year {
+  flex: 1;
+  position: relative;
+}
+.month-year-line {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base) var(--padding-13xl);
+  gap: var(--gap-3xs);
+}
+.calendar-child {
+  position: relative;
+  border-top: 1px solid var(--gray-4);
+  box-sizing: border-box;
+  width: 356px;
+  height: 1px;
+}
+.day1 {
+  position: relative;
+  letter-spacing: 0.03em;
+  line-height: 12px;
+  text-transform: uppercase;
+}
+.day,
+.day-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.day {
+  flex: 1;
+  padding: var(--padding-11xs) var(--padding-5xs);
+}
+.day-line {
+  align-self: stretch;
+  padding: var(--padding-5xs) var(--padding-13xl);
+  gap: var(--gap-2xs);
+}
+.div21 {
+  position: relative;
+  line-height: 22px;
+  opacity: 0.3;
+}
+.date4 {
+  flex: 1;
+  height: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs);
+  box-sizing: border-box;
+}
+.div23 {
+  position: relative;
+  line-height: 22px;
+}
+.date-number-line-04,
+.date34 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.date-number-line-04 {
+  align-self: stretch;
+  flex-direction: row;
+  padding: var(--padding-9xs) var(--padding-13xl);
+  gap: var(--gap-3xs);
+}
+.date34 {
+  flex: 1;
+  height: 42px;
+  flex-direction: column;
+  padding: var(--padding-3xs);
+  box-sizing: border-box;
+  opacity: 0.4;
+}
+.div53 {
+  position: relative;
+  line-height: 22px;
+  opacity: 0.4;
+}
+.date36 {
+  flex: 1;
+  height: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs);
+  box-sizing: border-box;
+  opacity: 0.7;
+}
+.date-line {
+  align-self: stretch;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: center;
+  font-size: var(--font-size-lg);
+}
+.calendar,
+.date-line,
+.day-date {
+  display: flex;
+  flex-direction: column;
+}
+.day-date {
+  align-self: stretch;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-9xs);
+  text-align: left;
+  font-size: var(--body-small-bold-size);
+  color: var(--color-black);
+}
+.calendar {
+  position: relative;
+  background-color: var(--color-white);
+  width: 400px;
+  height: 368px;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-9xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  text-align: center;
+  font-size: var(--font-size-xl);
+  color: var(--gray-3);
+  font-family: var(--font-adamina);
+}

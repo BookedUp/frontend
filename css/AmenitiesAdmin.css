@@ -1,0 +1,1114 @@
+.amenities-admin-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-white);
+  width: 1440px;
+  height: 68px;
+}
+.amenities-admin-item {
+  position: absolute;
+  top: 12px;
+  left: 1296px;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+}
+.home {
+  cursor: pointer;
+}
+.about,
+.home {
+  position: relative;
+  letter-spacing: 0.02em;
+}
+.home-parent {
+  position: absolute;
+  top: 30px;
+  left: 596px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-29xl);
+  font-size: var(--font-size-base);
+  color: var(--gray-1);
+}
+.amenities-admin-inner {
+  position: absolute;
+  top: 142px;
+  left: 205px;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-lemonchiffon-100);
+  border: 1px solid var(--gray-5);
+  box-sizing: border-box;
+  width: 1030px;
+  height: 240px;
+}
+.includes-taxes-and {
+  position: absolute;
+  top: 297px;
+  right: 746px;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
+  color: var(--gray-1);
+  text-align: right;
+}
+.location-1-icon {
+  position: absolute;
+  top: 267px;
+  left: 534px;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+.lorem-ipsum-road {
+  position: absolute;
+  top: 267px;
+  left: 560px;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
+  line-height: 140%;
+  color: var(--gray-1);
+  display: inline-block;
+  width: 370px;
+  height: 21px;
+}
+.rectangle-icon {
+  position: absolute;
+  top: 162px;
+  left: 225px;
+  border-radius: var(--br-8xs);
+  width: 285px;
+  height: 200px;
+  object-fit: cover;
+}
+.changed-wrapper,
+.lakeside-motel-warefront {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-xl);
+}
+.lakeside-motel-warefront {
+  top: 166px;
+  left: 534px;
+  letter-spacing: 0.01em;
+  color: var(--color-gray-300);
+  width: 380px;
+  height: 32px;
+}
+.changed-wrapper {
+  top: 235px;
+  left: 536px;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: right;
+  color: var(--color-orange);
+}
+.reviews {
+  position: absolute;
+  top: 205px;
+  left: 628px;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
+  line-height: 140%;
+}
+.view-details {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 20px;
+}
+.view-details-wrapper {
+  position: absolute;
+  top: 322px;
+  left: 1088px;
+  border-radius: var(--br-7xs);
+  background-color: var(--blue-1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-lg);
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+}
+.reject1 {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 20px;
+  display: inline-block;
+  width: 52px;
+  flex-shrink: 0;
+}
+.accept-wrapper,
+.reject-container {
+  position: absolute;
+  top: 162px;
+  left: 1088px;
+  border-radius: var(--br-7xs);
+  background-color: var(--color-firebrick);
+  width: 123px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-lg);
+  box-sizing: border-box;
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+}
+.accept-wrapper {
+  left: 954px;
+  background-color: var(--color-seagreen-100);
+}
+.group-icon {
+  position: absolute;
+  top: 205px;
+  left: 534px;
+  width: 82px;
+  height: 20px;
+}
+.cream-black-minimalist-illustr {
+  position: absolute;
+  top: 10px;
+  left: 86px;
+  width: 126px;
+  height: 58px;
+  object-fit: cover;
+}
+.about1,
+.company,
+.jobs {
+  position: absolute;
+  left: 415px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+}
+.company {
+  top: 1302px;
+  font-size: var(--font-size-mini);
+  color: var(--color-black);
+  width: 70px;
+  height: 17px;
+}
+.about1,
+.jobs {
+  top: 1336px;
+  width: 37px;
+  height: 13px;
+}
+.jobs {
+  top: 1358px;
+  width: 30px;
+}
+.advertising,
+.australia,
+.contact-us,
+.newsroom,
+.privacy-policy,
+.support {
+  position: absolute;
+  top: 1379px;
+  left: 415px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  width: 66px;
+  height: 14px;
+}
+.advertising,
+.australia,
+.contact-us,
+.privacy-policy,
+.support {
+  top: 1401px;
+  width: 69px;
+  height: 15px;
+}
+.australia,
+.contact-us,
+.privacy-policy,
+.support {
+  top: 1424px;
+  width: 67px;
+}
+.australia,
+.privacy-policy,
+.support {
+  top: 1336px;
+  left: 657px;
+  width: 53px;
+  height: 13px;
+}
+.privacy-policy,
+.support {
+  left: 899px;
+  width: 84px;
+}
+.support {
+  left: 1141px;
+  width: 49px;
+}
+.cancel-your-bookings,
+.new-zealand,
+.terms-of-use,
+.united-states-america {
+  position: absolute;
+  top: 1358px;
+  left: 657px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  width: 81px;
+  height: 13px;
+}
+.cancel-your-bookings,
+.terms-of-use,
+.united-states-america {
+  left: 899px;
+  width: 78px;
+}
+.cancel-your-bookings,
+.united-states-america {
+  left: 1141px;
+  width: 132px;
+}
+.united-states-america {
+  top: 1379px;
+  left: 657px;
+  width: 177px;
+  height: 14px;
+}
+.acessibility,
+.greece,
+.maldives,
+.refund-policies,
+.reward-system-policy,
+.use-coupon {
+  position: absolute;
+  top: 1379px;
+  left: 899px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  width: 70px;
+  height: 14px;
+}
+.greece,
+.maldives,
+.refund-policies,
+.reward-system-policy,
+.use-coupon {
+  left: 1141px;
+  width: 76px;
+}
+.greece,
+.maldives,
+.refund-policies,
+.reward-system-policy {
+  top: 1401px;
+  left: 657px;
+  width: 44px;
+  height: 15px;
+}
+.maldives,
+.refund-policies,
+.reward-system-policy {
+  left: 899px;
+  width: 133px;
+}
+.maldives,
+.refund-policies {
+  left: 1141px;
+  width: 94px;
+}
+.maldives {
+  top: 1424px;
+  left: 657px;
+  width: 55px;
+}
+.explore,
+.help,
+.international-travel-documents,
+.see-more,
+.singapore,
+.terms-and-policies {
+  position: absolute;
+  top: 1424px;
+  left: 1141px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  width: 189px;
+  height: 15px;
+}
+.explore,
+.help,
+.see-more,
+.singapore,
+.terms-and-policies {
+  top: 1445px;
+  left: 657px;
+  width: 62px;
+  height: 14px;
+}
+.explore,
+.help,
+.see-more,
+.terms-and-policies {
+  top: 1468px;
+  font-size: var(--body-small-bold-size);
+  color: var(--blue-1);
+  width: 58px;
+  height: 13px;
+}
+.explore,
+.help,
+.terms-and-policies {
+  top: 1302px;
+  font-size: var(--font-size-mini);
+  color: var(--color-black);
+  width: 54px;
+  height: 17px;
+}
+.help,
+.terms-and-policies {
+  left: 899px;
+  width: 133px;
+}
+.help {
+  left: 1141px;
+  width: 34px;
+}
+.rectangle-div {
+  position: absolute;
+  top: 1512px;
+  left: 0;
+  background-color: var(--color-whitesmoke-400);
+  width: 1440px;
+  height: 41px;
+}
+.copyright-1-icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.bookedup-2023 {
+  position: relative;
+  line-height: 140%;
+}
+.copyright-1-parent {
+  position: absolute;
+  top: 1524px;
+  right: 667px;
+  height: 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--gap-7xs);
+  font-size: var(--font-size-sm);
+}
+.logo-with-slogan-2 {
+  position: absolute;
+  top: 1289px;
+  left: 22px;
+  width: 352px;
+  height: 172px;
+  object-fit: cover;
+}
+.amenities-admin-child1 {
+  position: absolute;
+  top: 410px;
+  left: 205px;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-white);
+  border: 1px solid var(--gray-5);
+  box-sizing: border-box;
+  width: 1030px;
+  height: 240px;
+}
+.per-night {
+  position: relative;
+  letter-spacing: 0.01em;
+}
+.per-night-wrapper {
+  position: absolute;
+  top: 590px;
+  right: 801px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: right;
+  font-size: var(--font-size-mini);
+  color: var(--gray-1);
+}
+.lorem-ipsum-road1 {
+  position: absolute;
+  top: 537px;
+  left: 558px;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
+  line-height: 140%;
+  color: var(--gray-1);
+  display: inline-block;
+  width: 370px;
+  height: 21px;
+}
+.location-2-icon {
+  position: absolute;
+  top: 537px;
+  left: 534px;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+.amenities-admin-child2 {
+  position: absolute;
+  top: 430px;
+  left: 225px;
+  border-radius: var(--br-8xs);
+  width: 285px;
+  height: 200px;
+  object-fit: cover;
+}
+.marineford-hotel {
+  position: absolute;
+  top: 434px;
+  left: 534px;
+  font-size: var(--font-size-xl);
+  letter-spacing: 0.01em;
+  display: flex;
+  color: var(--color-gray-300);
+  align-items: center;
+  width: 380px;
+  height: 32px;
+}
+.reviews1 {
+  position: absolute;
+  top: 473px;
+  left: 628px;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
+  line-height: 140%;
+}
+.view-details-container {
+  position: absolute;
+  top: 590px;
+  left: 1088px;
+  border-radius: var(--br-7xs);
+  background-color: var(--blue-1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-lg);
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+}
+.amenities-admin-child4,
+.group-child {
+  position: absolute;
+  top: 473px;
+  left: 534px;
+  width: 74px;
+  height: 20px;
+}
+.group-child {
+  top: 0;
+  left: 0;
+  background-color: var(--color-white);
+  box-shadow: 0 1px 0#e0e0e0;
+  width: 1440px;
+  height: 48px;
+}
+.all-accommodations {
+  position: absolute;
+  top: 16px;
+  left: 122px;
+  letter-spacing: 0.02em;
+}
+.group-item {
+  position: absolute;
+  top: 44px;
+  left: 111px;
+  background-color: var(--blue-1);
+  width: 182px;
+  height: 3px;
+}
+.new-accommodations {
+  position: absolute;
+  top: 16px;
+  left: 316px;
+  letter-spacing: 0.02em;
+}
+.group-inner {
+  position: absolute;
+  top: 44px;
+  left: 273px;
+  background-color: var(--color-gray-800);
+  width: 187px;
+  height: 3px;
+}
+.changed-accommodations {
+  position: absolute;
+  top: 16px;
+  left: 519px;
+  letter-spacing: 0.02em;
+}
+.group-child1,
+.group-child2,
+.group-child3 {
+  position: absolute;
+  top: 44px;
+  left: 474px;
+  background-color: var(--color-gray-800);
+  width: 100px;
+  height: 3px;
+}
+.group-child2,
+.group-child3 {
+  left: 588px;
+  width: 94px;
+}
+.group-child3 {
+  left: 696px;
+  width: 93px;
+}
+.rectangle-parent {
+  position: absolute;
+  top: 68px;
+  left: 0;
+  width: 1440px;
+  height: 48px;
+  font-size: var(--font-size-base);
+  color: var(--gray-1);
+}
+.accepted-wrapper {
+  position: absolute;
+  top: 430px;
+  left: 1088px;
+  border-radius: var(--br-7xs);
+  background-color: var(--color-seagreen-100);
+  width: 123px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-lg);
+  box-sizing: border-box;
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+}
+.amenities-admin-child5 {
+  position: absolute;
+  top: 947px;
+  left: 205px;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-white);
+  border: 1px solid var(--gray-5);
+  box-sizing: border-box;
+  width: 1030px;
+  height: 240px;
+}
+.rejected-wrapper {
+  position: absolute;
+  top: 963px;
+  left: 1088px;
+  border-radius: var(--br-7xs);
+  background-color: var(--color-firebrick);
+  width: 123px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-lg);
+  box-sizing: border-box;
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+}
+.amenities-admin-child6 {
+  position: absolute;
+  top: 967px;
+  left: 225px;
+  border-radius: var(--br-8xs);
+  width: 285px;
+  height: 200px;
+  object-fit: cover;
+}
+.lakeside-motel-warefront1 {
+  position: absolute;
+  top: 971px;
+  left: 534px;
+  font-size: var(--font-size-xl);
+  letter-spacing: 0.01em;
+  display: flex;
+  color: var(--color-gray-300);
+  align-items: center;
+  width: 380px;
+  height: 32px;
+}
+.reviews2 {
+  position: absolute;
+  top: 1010px;
+  left: 628px;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
+  line-height: 140%;
+}
+.view-details-frame {
+  position: absolute;
+  top: 1127px;
+  left: 1088px;
+  border-radius: var(--br-7xs);
+  background-color: var(--blue-1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-lg);
+  cursor: pointer;
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+}
+.amenities-admin-child7 {
+  position: absolute;
+  top: 1010px;
+  left: 534px;
+  width: 74px;
+  height: 20px;
+}
+.load-more-results-wrapper {
+  position: absolute;
+  top: 1215px;
+  left: 639px;
+  border-radius: var(--br-7xs);
+  background-color: var(--color-dodgerblue-300);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-lg);
+  font-size: var(--font-size-mini);
+  color: var(--blue-1);
+}
+.location-4-icon {
+  position: absolute;
+  top: 1074px;
+  left: 532px;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+.includes-taxes-and1,
+.lorem-ipsum-road2 {
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
+}
+.lorem-ipsum-road2 {
+  position: absolute;
+  top: 1074px;
+  left: 558px;
+  line-height: 140%;
+  color: var(--gray-1);
+  display: inline-block;
+  width: 370px;
+  height: 21px;
+}
+.includes-taxes-and1 {
+  top: 565px;
+  right: 746px;
+}
+.includes-taxes-and1,
+.includes-taxes-and2,
+.per-night-container {
+  position: absolute;
+  text-align: right;
+  color: var(--gray-1);
+}
+.includes-taxes-and2 {
+  top: 1102px;
+  right: 746px;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
+}
+.per-night-container {
+  top: 320px;
+  right: 802px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: var(--font-size-mini);
+}
+.amenities-admin-child8 {
+  position: absolute;
+  top: 669px;
+  left: 205px;
+  border-radius: var(--br-8xs);
+  background-color: rgba(91, 226, 161, 0.35);
+  border: 1px solid var(--gray-5);
+  box-sizing: border-box;
+  width: 1030px;
+  height: 240px;
+}
+.includes-taxes-and3 {
+  position: absolute;
+  top: 824px;
+  right: 746px;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
+  color: var(--gray-1);
+  text-align: right;
+}
+.location-5-icon {
+  position: absolute;
+  top: 794px;
+  left: 534px;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+.lorem-ipsum-road3 {
+  position: absolute;
+  top: 794px;
+  left: 560px;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
+  line-height: 140%;
+  color: var(--gray-1);
+  display: inline-block;
+  width: 370px;
+  height: 21px;
+}
+.amenities-admin-child9 {
+  position: absolute;
+  top: 689px;
+  left: 225px;
+  border-radius: var(--br-8xs);
+  width: 285px;
+  height: 200px;
+  object-fit: cover;
+}
+.ipsum-motel,
+.new-wrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-xl);
+}
+.ipsum-motel {
+  top: 693px;
+  left: 534px;
+  letter-spacing: 0.01em;
+  color: var(--color-gray-300);
+  width: 380px;
+  height: 32px;
+}
+.new-wrapper {
+  top: 762px;
+  left: 536px;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: right;
+  color: var(--color-seagreen-100);
+}
+.reviews3 {
+  position: absolute;
+  top: 732px;
+  left: 628px;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
+  line-height: 140%;
+}
+.accept-container,
+.frame-div,
+.reject-frame {
+  position: absolute;
+  top: 849px;
+  left: 1088px;
+  border-radius: var(--br-7xs);
+  background-color: var(--blue-1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-lg);
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+}
+.accept-container,
+.reject-frame {
+  top: 689px;
+  background-color: var(--color-firebrick);
+  width: 123px;
+  box-sizing: border-box;
+}
+.accept-container {
+  left: 954px;
+  background-color: var(--color-seagreen-100);
+}
+.amenities-admin-child10 {
+  position: absolute;
+  top: 732px;
+  left: 534px;
+  width: 82px;
+  height: 20px;
+}
+.per-night-frame,
+.per-night-wrapper1 {
+  position: absolute;
+  top: 847px;
+  right: 802px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: right;
+  font-size: var(--font-size-mini);
+  color: var(--gray-1);
+}
+.per-night-wrapper1 {
+  top: 1128px;
+  right: 803px;
+}
+.amenities-admin {
+  position: relative;
+  background-color: var(--color-whitesmoke-100);
+  width: 100%;
+  height: 1553px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-2xs);
+  color: var(--gray-2);
+  font-family: var(--font-sansation);
+}
+.are-you-sure,
+.be-aware {
+  position: absolute;
+  left: 24px;
+  width: 352px;
+}
+.be-aware {
+  top: 250px;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-adamina);
+  color: var(--color-gray-400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+}
+.are-you-sure {
+  top: 294px;
+  font-size: var(--font-size-base);
+  letter-spacing: 0.02em;
+  line-height: 140%;
+  color: var(--gray-2);
+  display: inline-block;
+}
+.reject {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 20px;
+}
+.reject-wrapper,
+.x-wrapper {
+  position: absolute;
+  top: 417px;
+  left: 24px;
+  border-radius: var(--br-7xs);
+  background-color: var(--color-firebrick);
+  width: 352px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-lg);
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: left;
+}
+.x-wrapper {
+  top: 13px;
+  left: 364px;
+  width: 22px;
+  height: 21px;
+}
+.d-digital-marketing-class-1 {
+  position: absolute;
+  top: 50px;
+  left: 80px;
+  width: 240px;
+  height: 200px;
+  object-fit: cover;
+}
+.cancel-reservation-owner {
+  position: relative;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  width: 400px;
+  height: 500px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  text-align: center;
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+  font-family: var(--font-sansation);
+}
+.reservation-successfully-accep {
+  position: absolute;
+  top: 295px;
+  left: 24px;
+  font-family: var(--font-adamina);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 352px;
+  height: 32px;
+}
+.congratulations-your-successfu {
+  position: absolute;
+  top: 339px;
+  left: 24px;
+  font-size: var(--font-size-base);
+  letter-spacing: 0.02em;
+  line-height: 140%;
+  color: var(--gray-2);
+  display: inline-block;
+  width: 352px;
+}
+.view-all-reservations {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 20px;
+}
+.view-all-reservations-wrapper {
+  position: absolute;
+  top: 428px;
+  left: 24px;
+  border-radius: var(--br-7xs);
+  background-color: var(--color-seagreen-100);
+  width: 352px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-lg);
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+}
+.accept-reservation-owner-child {
+  position: absolute;
+  top: 50px;
+  left: 80px;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-tan-200);
+  width: 240px;
+  height: 200px;
+}
+.image-11-icon {
+  position: absolute;
+  top: 63px;
+  left: 58px;
+  width: 284px;
+  height: 209px;
+  object-fit: cover;
+}
+.accept-reservation-owner {
+  position: relative;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  width: 400px;
+  height: 500px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  text-align: center;
+  font-size: var(--font-size-xl);
+  color: var(--color-gray-400);
+  font-family: var(--font-sansation);
+}
+.user-square-2-icon {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.user-square-2-parent {
+  align-self: stretch;
+  background-color: var(--color-white);
+  box-shadow: 0 0.5px 0#d5d5d5;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-3xs) var(--padding-3xs) var(--padding-3xs)
+    var(--padding-sm);
+  gap: var(--gap-3xs);
+  cursor: pointer;
+}
+.frame-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.my-reservations {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 20px;
+}
+.frame-parent6 {
+  box-shadow: 0 0.5px 0#d5d5d5;
+  width: 200px;
+  height: 40px;
+  flex-direction: row;
+  align-items: center;
+  padding: var(--padding-3xs) var(--padding-10xs) var(--padding-3xs)
+    var(--padding-3xs);
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  cursor: pointer;
+}
+.admin-dropdown,
+.frame-parent6,
+.logout-1-parent {
+  background-color: var(--color-white);
+  display: flex;
+  justify-content: flex-start;
+}
+.logout-1-parent {
+  align-self: stretch;
+  flex-direction: row;
+  align-items: center;
+  padding: var(--padding-3xs) var(--padding-3xs) var(--padding-3xs)
+    var(--padding-sm);
+  gap: var(--gap-3xs);
+  cursor: pointer;
+}
+.admin-dropdown {
+  position: relative;
+  border-radius: var(--br-3xs);
+  box-shadow: 0 4px 44px rgba(0, 0, 0, 0.15);
+  width: 200px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--padding-3xs) 0;
+  box-sizing: border-box;
+  gap: var(--gap-12xs);
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  text-align: left;
+  font-size: var(--font-size-mini);
+  color: var(--gray-2);
+  font-family: var(--font-sansation);
+}

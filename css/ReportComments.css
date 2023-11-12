@@ -1,0 +1,93 @@
+.are-you-sure1 {
+  position: absolute;
+  top: 250px;
+  left: 24px;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-adamina);
+  color: var(--color-gray-400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 352px;
+  height: 32px;
+}
+.report,
+.this-report-on {
+  letter-spacing: 0.02em;
+  display: inline-block;
+}
+.this-report-on {
+  position: absolute;
+  top: 294px;
+  left: 24px;
+  font-size: var(--font-size-base);
+  line-height: 140%;
+  color: var(--gray-2);
+  width: 352px;
+}
+.report {
+  position: relative;
+  line-height: 20px;
+  width: 62px;
+  flex-shrink: 0;
+}
+.report-wrapper {
+  position: absolute;
+  top: 417px;
+  left: 24px;
+  border-radius: var(--br-7xs);
+  background-color: var(--color-firebrick);
+  width: 352px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-lg);
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: left;
+}
+.x2 {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 20px;
+}
+.x-frame {
+  position: absolute;
+  top: 13px;
+  left: 364px;
+  border-radius: var(--br-7xs);
+  background-color: var(--color-firebrick);
+  width: 22px;
+  height: 21px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-lg);
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: left;
+}
+.d-digital-marketing-class-12 {
+  position: absolute;
+  top: 50px;
+  left: 80px;
+  width: 240px;
+  height: 200px;
+  object-fit: cover;
+}
+.report-comments {
+  position: relative;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  width: 400px;
+  height: 500px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  text-align: center;
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+  font-family: var(--font-sansation);
+}

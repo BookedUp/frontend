@@ -1,0 +1,135 @@
+.register-guest-step-2-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-white);
+  width: 1440px;
+  height: 68px;
+}
+.create-password1 {
+  position: absolute;
+  top: 160px;
+  left: 519px;
+  font-size: var(--font-size-9xl);
+  font-family: var(--font-adamina);
+  text-align: center;
+  display: inline-block;
+  width: 401px;
+  height: 32px;
+}
+.create-account1 {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 20px;
+}
+.create-account-container {
+  position: absolute;
+  top: 474px;
+  left: 520px;
+  border-radius: var(--br-7xs);
+  background-color: var(--blue-1);
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-lg);
+  box-sizing: border-box;
+  cursor: pointer;
+  color: var(--color-white);
+}
+.confirm-password1,
+.password3,
+.use-a-minimum1 {
+  position: absolute;
+  left: 520px;
+  letter-spacing: 0.02em;
+  line-height: 140%;
+}
+.use-a-minimum1 {
+  top: 204px;
+  font-size: var(--font-size-base);
+  color: var(--gray-2);
+  text-align: center;
+  display: inline-block;
+  width: 400px;
+}
+.confirm-password1,
+.password3 {
+  top: 376px;
+  font-size: var(--font-size-sm);
+}
+.password3 {
+  top: 288px;
+}
+.terms-and-conditions1 {
+  color: var(--blue-1);
+}
+.by-creating-an-container3 {
+  line-break: anywhere;
+  width: 100%;
+}
+.by-creating-an-container2 {
+  position: absolute;
+  top: 542px;
+  left: 519px;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.02em;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  width: 401px;
+  color: var(--gray-2);
+}
+.enter-password2 {
+  flex: 1;
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 140%;
+}
+.eye-1-icon2 {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.password4,
+.password5 {
+  position: absolute;
+  top: 312px;
+  left: 520px;
+  border-radius: var(--br-9xs);
+  background-color: var(--gray-6);
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  color: var(--gray-6);
+}
+.password5 {
+  top: 400px;
+}
+.logo-with-slogan-41 {
+  position: absolute;
+  top: 28px;
+  left: 42px;
+  width: 268px;
+  height: 148px;
+  object-fit: cover;
+}
+.register-guest-step-2 {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 970px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-mini);
+  color: var(--color-gray-400);
+  font-family: var(--font-sansation);
+}

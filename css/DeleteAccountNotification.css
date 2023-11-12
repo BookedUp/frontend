@@ -1,0 +1,71 @@
+.please-be-aware3,
+.warning3 {
+  position: absolute;
+  left: 24px;
+  width: 352px;
+}
+.warning3 {
+  top: 250px;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-adamina);
+  color: var(--color-gray-400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+}
+.please-be-aware3 {
+  top: 294px;
+  font-size: var(--font-size-base);
+  letter-spacing: 0.02em;
+  line-height: 140%;
+  color: var(--gray-2);
+  display: inline-block;
+}
+.delete7 {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 20px;
+}
+.delete-wrapper5,
+.x-wrapper4 {
+  position: absolute;
+  top: 417px;
+  left: 24px;
+  border-radius: var(--br-7xs);
+  background-color: var(--color-firebrick);
+  width: 352px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-lg);
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: left;
+}
+.x-wrapper4 {
+  top: 13px;
+  left: 364px;
+  width: 22px;
+  height: 21px;
+}
+.d-digital-marketing-class-16 {
+  position: absolute;
+  top: 50px;
+  left: 80px;
+  width: 240px;
+  height: 200px;
+  object-fit: cover;
+}
+.delete-account-notification {
+  position: relative;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-white);
+  width: 100%;
+  height: 500px;
+  text-align: center;
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+  font-family: var(--font-sansation);
+}

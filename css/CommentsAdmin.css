@@ -1,0 +1,654 @@
+.logogoogle-icon4 {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--br-xl);
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+  object-fit: cover;
+}
+.avatargoogle3 {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+.name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: 0.2px;
+  line-height: 17px;
+}
+.authorgoogle {
+  position: relative;
+  width: 75px;
+  height: 17px;
+}
+.starsgoogle-icon {
+  position: relative;
+  width: 78px;
+  height: 14px;
+}
+.authot-starts {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--gap-5xs);
+  font-size: var(--font-size-mini);
+  color: var(--color-gray-700);
+}
+.date {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: 0.2px;
+  line-height: 19px;
+}
+.dategoogle {
+  position: relative;
+  width: 70px;
+  height: 19px;
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+}
+.comment {
+  position: relative;
+  font-size: var(--font-size-base);
+  line-height: 24px;
+  font-family: var(--font-adamina);
+  color: var(--color-darkslategray-200);
+  display: inline-block;
+  width: 921px;
+}
+.authot-starts-description4 {
+  width: 921px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-7xs);
+}
+.authot-starts-description-avat8,
+.authot-starts-description-avat9 {
+  width: 975px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.authot-starts-description-avat9 {
+  gap: var(--gap-sm);
+}
+.authot-starts-description-avat8 {
+  position: absolute;
+  top: 27px;
+  left: 26px;
+}
+.comments-admin-child,
+.review-card14 {
+  position: absolute;
+  background-color: var(--color-white);
+}
+.review-card14 {
+  top: 151px;
+  left: 212px;
+  box-shadow: var(--element-hover);
+  width: 1023px;
+  height: 201px;
+  overflow: hidden;
+  font-size: var(--font-size-xl);
+  color: var(--color-gray-300);
+  font-family: var(--font-roboto);
+}
+.comments-admin-child {
+  top: 2px;
+  left: 0;
+  width: 1440px;
+  height: 68px;
+}
+.comments-admin-item {
+  position: absolute;
+  top: 12px;
+  left: 1296px;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+}
+.home2 {
+  cursor: pointer;
+}
+.about4,
+.home2 {
+  position: relative;
+  letter-spacing: 0.02em;
+}
+.home-container {
+  position: absolute;
+  top: 32px;
+  left: 596px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-29xl);
+  font-size: var(--font-size-base);
+  color: var(--gray-1);
+}
+.logogoogle-icon5 {
+  position: relative;
+  border-radius: var(--br-xl);
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+.review-card15 {
+  position: absolute;
+  top: 385px;
+  left: 209px;
+  background-color: var(--color-lemonchiffon-100);
+  box-shadow: var(--element-hover);
+  width: 1023px;
+  height: 201px;
+  overflow: hidden;
+  font-size: var(--font-size-xl);
+  color: var(--color-gray-300);
+  font-family: var(--font-roboto);
+}
+.delete1 {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 20px;
+}
+.delete-container,
+.owner {
+  display: flex;
+  align-items: center;
+}
+.delete-container {
+  position: absolute;
+  top: 401px;
+  left: 1088px;
+  border-radius: var(--br-7xs);
+  background-color: var(--color-firebrick);
+  width: 123px;
+  flex-direction: row;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-lg);
+  box-sizing: border-box;
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+}
+.owner {
+  position: relative;
+  letter-spacing: 0.01em;
+  font-family: var(--font-sansation);
+  width: 380px;
+  height: 32px;
+  flex-shrink: 0;
+}
+.dategoogle2 {
+  position: relative;
+  width: 70px;
+  height: 19px;
+  font-size: var(--font-size-sm);
+  color: rgba(255, 249, 193, 0.54);
+}
+.review-card16 {
+  position: absolute;
+  top: 619px;
+  left: 212px;
+  background-color: var(--color-lemonchiffon-100);
+  box-shadow: var(--element-hover);
+  width: 1023px;
+  height: 201px;
+  overflow: hidden;
+  font-size: var(--font-size-xl);
+  color: #191919;
+  font-family: var(--font-roboto);
+}
+.delete-frame {
+  position: absolute;
+  top: 635px;
+  left: 1088px;
+  border-radius: var(--br-7xs);
+  background-color: var(--color-firebrick);
+  width: 123px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-lg);
+  box-sizing: border-box;
+  font-size: var(--font-size-mini);
+  color: var(--color-white);
+}
+.review-card17 {
+  position: absolute;
+  top: 853px;
+  left: 209px;
+  background-color: var(--color-white);
+  box-shadow: var(--element-hover);
+  width: 1023px;
+  height: 201px;
+  overflow: hidden;
+  font-size: var(--font-size-xl);
+  color: var(--color-gray-300);
+  font-family: var(--font-roboto);
+}
+.cream-black-minimalist-illustr2 {
+  position: absolute;
+  top: 12px;
+  left: 86px;
+  width: 126px;
+  height: 58px;
+  object-fit: cover;
+}
+.about5,
+.advertising2,
+.company2,
+.contact-us2,
+.jobs2,
+.newsroom2 {
+  position: absolute;
+  left: 415px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+}
+.company2 {
+  top: 1194px;
+  font-size: var(--font-size-mini);
+  color: var(--color-black);
+  width: 70px;
+  height: 17px;
+}
+.about5,
+.advertising2,
+.contact-us2,
+.jobs2,
+.newsroom2 {
+  top: 1228px;
+  width: 37px;
+  height: 13px;
+}
+.advertising2,
+.contact-us2,
+.jobs2,
+.newsroom2 {
+  top: 1250px;
+  width: 30px;
+}
+.advertising2,
+.contact-us2,
+.newsroom2 {
+  top: 1271px;
+  width: 66px;
+  height: 14px;
+}
+.advertising2,
+.contact-us2 {
+  top: 1293px;
+  width: 69px;
+  height: 15px;
+}
+.contact-us2 {
+  top: 1316px;
+  width: 67px;
+}
+.australia2,
+.cancel-your-bookings2,
+.new-zealand2,
+.privacy-policy2,
+.support2,
+.terms-of-use2 {
+  position: absolute;
+  top: 1228px;
+  left: 657px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  width: 53px;
+  height: 13px;
+}
+.cancel-your-bookings2,
+.new-zealand2,
+.privacy-policy2,
+.support2,
+.terms-of-use2 {
+  left: 899px;
+  width: 84px;
+}
+.cancel-your-bookings2,
+.new-zealand2,
+.support2,
+.terms-of-use2 {
+  left: 1141px;
+  width: 49px;
+}
+.cancel-your-bookings2,
+.new-zealand2,
+.terms-of-use2 {
+  top: 1250px;
+  left: 657px;
+  width: 81px;
+}
+.cancel-your-bookings2,
+.terms-of-use2 {
+  left: 899px;
+  width: 78px;
+}
+.cancel-your-bookings2 {
+  left: 1141px;
+  width: 132px;
+}
+.acessibility2,
+.greece2,
+.united-states-america2,
+.use-coupon2 {
+  position: absolute;
+  top: 1271px;
+  left: 657px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  width: 177px;
+  height: 14px;
+}
+.acessibility2,
+.greece2,
+.use-coupon2 {
+  left: 899px;
+  width: 70px;
+}
+.greece2,
+.use-coupon2 {
+  left: 1141px;
+  width: 76px;
+}
+.greece2 {
+  top: 1293px;
+  left: 657px;
+  width: 44px;
+  height: 15px;
+}
+.international-travel-documents2,
+.maldives2,
+.refund-policies2,
+.reward-system-policy2 {
+  position: absolute;
+  top: 1293px;
+  left: 899px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  width: 133px;
+  height: 15px;
+}
+.international-travel-documents2,
+.maldives2,
+.refund-policies2 {
+  left: 1141px;
+  width: 94px;
+}
+.international-travel-documents2,
+.maldives2 {
+  top: 1316px;
+  left: 657px;
+  width: 55px;
+}
+.international-travel-documents2 {
+  left: 1141px;
+  width: 189px;
+}
+.explore2,
+.help2,
+.see-more2,
+.singapore2,
+.terms-and-policies2 {
+  position: absolute;
+  top: 1337px;
+  left: 657px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  width: 62px;
+  height: 14px;
+}
+.explore2,
+.help2,
+.see-more2,
+.terms-and-policies2 {
+  top: 1360px;
+  font-size: var(--body-small-bold-size);
+  color: var(--blue-1);
+  width: 58px;
+  height: 13px;
+}
+.explore2,
+.help2,
+.terms-and-policies2 {
+  top: 1194px;
+  font-size: var(--font-size-mini);
+  color: var(--color-black);
+  width: 54px;
+  height: 17px;
+}
+.help2,
+.terms-and-policies2 {
+  left: 899px;
+  width: 133px;
+}
+.help2 {
+  left: 1141px;
+  width: 34px;
+}
+.comments-admin-inner {
+  position: absolute;
+  top: 1404px;
+  left: 0;
+  background-color: var(--color-whitesmoke-400);
+  width: 1440px;
+  height: 41px;
+}
+.copyright-1-icon2 {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.bookedup-20232 {
+  position: relative;
+  line-height: 140%;
+}
+.copyright-1-container {
+  position: absolute;
+  top: 1416px;
+  right: 667px;
+  height: 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--gap-7xs);
+  font-size: var(--font-size-sm);
+}
+.logo-with-slogan-22 {
+  position: absolute;
+  top: 1181px;
+  left: 22px;
+  width: 352px;
+  height: 172px;
+  object-fit: cover;
+}
+.group-child10 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-white);
+  box-shadow: 0 1px 0#e0e0e0;
+  width: 1440px;
+  height: 48px;
+}
+.all-reviews {
+  position: absolute;
+  top: 16px;
+  left: 122px;
+  letter-spacing: 0.02em;
+}
+.group-child11 {
+  position: absolute;
+  top: 44px;
+  left: 108px;
+  background-color: var(--blue-1);
+  width: 109px;
+  height: 3px;
+}
+.reported-comments {
+  position: absolute;
+  top: 16px;
+  left: 246px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  width: 160px;
+}
+.group-child12,
+.group-child13,
+.group-child14,
+.group-child15 {
+  position: absolute;
+  top: 44px;
+  left: 273px;
+  background-color: var(--color-gray-800);
+  width: 187px;
+  height: 3px;
+}
+.group-child13,
+.group-child14,
+.group-child15 {
+  left: 474px;
+  width: 100px;
+}
+.group-child14,
+.group-child15 {
+  left: 588px;
+  width: 94px;
+}
+.group-child15 {
+  left: 696px;
+  width: 93px;
+}
+.rectangle-container {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 1440px;
+  height: 48px;
+  font-size: var(--font-size-base);
+  color: var(--gray-1);
+}
+.load-more-results-frame {
+  position: absolute;
+  top: 1087px;
+  left: 639px;
+  border-radius: var(--br-7xs);
+  background-color: var(--color-dodgerblue-300);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-3xs) var(--padding-lg);
+  font-size: var(--font-size-mini);
+  color: var(--blue-1);
+}
+.comments-admin {
+  position: relative;
+  background-color: var(--color-whitesmoke-100);
+  width: 100%;
+  height: 1443px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-2xs);
+  color: var(--gray-2);
+  font-family: var(--font-sansation);
+}
+.user-square-2-icon {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.user-square-2-parent {
+  align-self: stretch;
+  background-color: var(--color-white);
+  box-shadow: 0 0.5px 0#d5d5d5;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-3xs) var(--padding-3xs) var(--padding-3xs)
+    var(--padding-sm);
+  gap: var(--gap-3xs);
+  cursor: pointer;
+}
+.frame-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.my-reservations {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 20px;
+}
+.frame-parent6 {
+  box-shadow: 0 0.5px 0#d5d5d5;
+  width: 200px;
+  height: 40px;
+  flex-direction: row;
+  align-items: center;
+  padding: var(--padding-3xs) var(--padding-10xs) var(--padding-3xs)
+    var(--padding-3xs);
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  cursor: pointer;
+}
+.admin-dropdown,
+.frame-parent6,
+.logout-1-parent {
+  background-color: var(--color-white);
+  display: flex;
+  justify-content: flex-start;
+}
+.logout-1-parent {
+  align-self: stretch;
+  flex-direction: row;
+  align-items: center;
+  padding: var(--padding-3xs) var(--padding-3xs) var(--padding-3xs)
+    var(--padding-sm);
+  gap: var(--gap-3xs);
+  cursor: pointer;
+}
+.admin-dropdown {
+  position: relative;
+  border-radius: var(--br-3xs);
+  box-shadow: 0 4px 44px rgba(0, 0, 0, 0.15);
+  width: 200px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--padding-3xs) 0;
+  box-sizing: border-box;
+  gap: var(--gap-12xs);
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  text-align: left;
+  font-size: var(--font-size-mini);
+  color: var(--gray-2);
+  font-family: var(--font-sansation);
+}
