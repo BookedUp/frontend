@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link rel="stylesheet" href="../../css/BookingSuccessful.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Adamina:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus Jakarta Sans:wght@700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
+    />
+  </head>
+  <body>
+    <div class="booking-successful">
+      <div class="booking-successful1">Booking Successful</div>
+      <div class="congratulations-your-reservati">
+        Congratulations your reservation has been made. You will be notified 2
+        days prior the date.
+      </div>
+      <div class="view-trip-wrapper" id="popupframeContainer">
+        <b class="view-trip">View Trip</b>
+      </div>
+      <div class="booking-successful-child"></div>
+      <img class="image-11-icon5" alt="" src="../../public/image-11@2x.png" />
+    </div>
+
+    <script>
+      var popupframeContainer = document.getElementById("popupframeContainer");
+      if (popupframeContainer) {
+        popupframeContainer.addEventListener("click", function (e) {
+          window.location.href = "./MyReservations.html";
+        });
+      }
+      </script>
+  </body>
+</html>

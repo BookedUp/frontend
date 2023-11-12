@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="../../../css/global.css" />
+    <link rel="stylesheet" href="../../../css/AmenitiesAddedSuccessful.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Adamina:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus Jakarta Sans:wght@700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
+    />
+  </head>
+  <body>
+    <div class="amenities-added-successful">
+      <div class="amenities-successfully-added">
+        Amenities Successfully Added
+      </div>
+      <div class="congratulations-your-amenities">
+        Congratulations your amenities has been successfully added.
+      </div>
+      <div class="view-your-amenities-wrapper" id="popupframeContainer">
+        <b class="view-your-amenities">View Your Amenities</b>
+      </div>
+      <div class="amenities-added-successful-child"></div>
+      <img class="image-11-icon3" alt="" src="../../../public/image-11@2x.png" />
+    </div>
+
+    <script>
+      var popupframeContainer = document.getElementById("popupframeContainer");
+      if (popupframeContainer) {
+        popupframeContainer.addEventListener("click", function (e) {
+          window.location.href = "../MyAmenities.html";
+        });
+      }
+      </script>
+  </body>
+</html>

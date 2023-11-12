@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link rel="stylesheet" href="../../css/OwnerDropdown.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Adamina:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus Jakarta Sans:wght@700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
+    />
+  </head>
+  <body>
+    <div class="owner-dropdown">
+      <div class="user-square-2-group" id="popupframeContainer">
+        <img
+          class="user-square-2-icon1"
+          alt=""
+          src="../../public/usersquare-2.svg"
+        />
+
+        <div class="manage-account3">Manage account</div>
+      </div>
+      <div class="hotel-2-parent" id="popupframeContainer1">
+        <img class="frame-icon5" alt="" src="../../public/frame.svg" />
+
+        <div class="manage-account3">My amenities</div>
+      </div>
+      <div class="hotel-2-parent" id="popupframeContainer2">
+        <img class="hotel-2-icon" alt="" src="../../public/hotel-2.svg" />
+
+        <div class="manage-account3">Reservations</div>
+      </div>
+      <div class="hotel-2-parent" id="popupframeContainer3">
+        <img class="frame-icon5" alt="" src="../../public/frame2.svg" />
+
+        <div class="manage-account3">Comments</div>
+      </div>
+      <div class="hotel-2-parent" id="popupframeContainer4">
+        <img
+          class="report-solid-24-1-1"
+          alt=""
+          src="../../public/reportsolid24-1-1@2x.png"
+        />
+
+        <div class="manage-account3">Reports</div>
+      </div>
+      <div class="logout-1-group" id="popupframeContainer5">
+        <img class="user-square-2-icon1" alt="" src="../../public/logout-1.svg" />
+
+        <div class="manage-account3">Sign out</div>
+      </div>
+    </div>
+
+    <script>
+      var popupframeContainer = document.getElementById("popupframeContainer");
+      if (popupframeContainer) {
+        popupframeContainer.addEventListener("click", function (e) {
+          window.location.href = "./ManageAccountOwner.html";
+        });
+      }
+      
+      var popupframeContainer1 = document.getElementById("popupframeContainer1");
+      if (popupframeContainer1) {
+        popupframeContainer1.addEventListener("click", function (e) {
+          window.location.href = "./MyAmenities.html";
+        });
+      }
+      
+      var popupframeContainer2 = document.getElementById("popupframeContainer2");
+      if (popupframeContainer2) {
+        popupframeContainer2.addEventListener("click", function (e) {
+          window.location.href = "./ReservationsOwner.html";
+        });
+      }
+      
+      var popupframeContainer3 = document.getElementById("popupframeContainer3");
+      if (popupframeContainer3) {
+        popupframeContainer3.addEventListener("click", function (e) {
+          window.location.href = "./CommentsOwner.html";
+        });
+      }
+      
+      var popupframeContainer4 = document.getElementById("popupframeContainer4");
+      if (popupframeContainer4) {
+        popupframeContainer4.addEventListener("click", function (e) {
+          window.location.href = "./ReportsOwner.html";
+        });
+      }
+      
+      var popupframeContainer5 = document.getElementById("popupframeContainer5");
+      if (popupframeContainer5) {
+        popupframeContainer5.addEventListener("click", function (e) {
+          window.location.href = "../../UnloggedPerson.html";
+        });
+      }
+      </script>
+  </body>
+</html>
