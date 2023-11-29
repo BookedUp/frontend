@@ -411,6 +411,7 @@
   .hotel1-1-icon3 {
     top: 743px;
     object-fit: cover;
+    border-radius: var(--br-5xs);
   }
   .image-icon12 {
     position: relative;
