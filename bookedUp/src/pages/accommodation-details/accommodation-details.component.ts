@@ -28,7 +28,7 @@ export class AccommodationDetailsComponent implements OnInit {
     var homeText = document.getElementById("homeText");
     if (homeText) {
       homeText.addEventListener("click", () => {
-        this.router.navigate(['']);
+        this.router.navigate(['/']);
       });
     }
   }
