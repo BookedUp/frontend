@@ -32,6 +32,13 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/register']);
       });
     }
+
+    var forgotPasswordText = document.getElementById("forgotPasswordText");
+    if (forgotPasswordText) {
+      forgotPasswordText.addEventListener("click", () => {
+        this.router.navigate(['/forgot-password']);
+      });
+    }
   }
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
