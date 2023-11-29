@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+
 
 @Component({
   selector: 'app-index',
@@ -7,6 +9,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./index.component.css', '../../styles.css']
 })
 export class IndexComponent implements OnInit {
+  bsConfig: Partial<BsDatepickerConfig> = {};
+
+  isLocationInputVisible: boolean = false;
+  enteredLocation: string = '';
+
+  isGuestInputVisible: boolean = false;
+  enteredGuests: number | undefined;
+
+
+  isDateInputVisible: boolean = false;
+  selectedDate!: Date;
+
 
   constructor(private router: Router) {}
 
@@ -25,6 +39,73 @@ export class IndexComponent implements OnInit {
       });
     }
 
-  }
- }
+    var locationText = document.getElementById("locationText");
+    if (locationText) {
+      locationText.addEventListener("click", () => {
+        this.isLocationInputVisible = true;
+      });
+    }
 
+    var locationInput = document.getElementById("locationInput");
+    if (locationInput) {
+      locationInput.addEventListener("blur", () => {
+        this.disableLocationInput();
+      });
+    }
+
+    var guestsComponent = document.getElementById("guestsComponent");
+    if (guestsComponent) {
+      guestsComponent.addEventListener("click", () => {
+        this.enableGuestInput();
+      });
+    }
+
+    var guestsInput = document.getElementById("guestsInput");
+    if (guestsInput) {
+      guestsInput.addEventListener("blur", () => {
+        this.disableGuestInput();
+      });
+    }
+  }
+
+  enableLocationInput() {
+    this.isLocationInputVisible = true;
+  }
+
+  disableLocationInput() {
+    this.isLocationInputVisible = false;
+
+    if (this.enteredLocation.trim() === "") {
+      this.enteredLocation = '';
+    } else {
+      console.log("Entered location:", this.enteredLocation);
+    }
+  }
+
+  enableGuestInput() {
+    this.isGuestInputVisible = true;
+  }
+
+  disableGuestInput() {
+    this.isGuestInputVisible = false;
+
+    if (this.enteredGuests === undefined || this.enteredGuests === null) {
+      this.enteredGuests = undefined;
+    } else {
+      console.log("Entered number of guests:", this.enteredGuests);
+    }
+  }
+
+  enableDateInput() {
+    this.isDateInputVisible = true;
+  }
+
+  onDateSelected(date: Date) {
+    this.selectedDate = date;
+    this.isDateInputVisible = false;
+  }
+
+  disableDateInput() {
+    this.isDateInputVisible = false;
+  }
+}

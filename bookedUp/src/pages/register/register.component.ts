@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   showHostText = false;
+  isInputMode: boolean = false;
+  enteredLocation: string = '';
 
   constructor(private router: Router) { }
 
@@ -39,4 +41,10 @@ export class RegisterComponent implements OnInit {
   toggleText() {
     this.showHostText = !this.showHostText;
   }
+
+  enableInput() {
+    this.isInputMode = true;
+  }
+
+
 }

@@ -13,17 +13,34 @@
       </div>
       <b class="password6">Password</b>
       <b class="forgot-password1" id="forgotPasswordText">Forgot password?</b>
+      <!-- index.component.html -->
+
       <div class="keep-me-signed-in-parent">
-        <div class="keep-me-signed">Keep me signed in</div>
+        <input type="checkbox" id="keepMeSignedIn" class="keep-me-signed-checkbox" />
+        <label for="keepMeSignedIn" class="keep-me-signed">Keep me signed in</label>
         <div class="group-child117"></div>
       </div>
+
       <div class="email-address20">
-        <div class="email-address21">Email address</div>
+        <input type="text" class="email-address21" placeholder="Enter email address..." />
       </div>
+      <!-- index.component.html -->
+
       <div class="password7">
-        <div class="enter-password4">Enter password</div>
-        <img class="eye-1-icon4" alt="" src="../../assets/public/eye-1.svg" />
+        <input
+          type="{{ isPasswordVisible ? 'text' : 'password' }}"
+          class="enter-password4"
+          placeholder="Enter password..."
+        />
+        <img
+          class="eye-1-icon4"
+          alt="Toggle Password Visibility"
+          src="../../assets/public/eye-1.svg"
+          (click)="togglePasswordVisibility()"
+        />
       </div>
+
+
       <img
         class="logo-with-slogan-214"
         alt=""
@@ -44,7 +61,7 @@
           window.location.href = "../admin/LoggedAdminMain.html";
         });
       }
-      
+
       var forgotPasswordText = document.getElementById("forgotPasswordText");
       if (forgotPasswordText) {
         forgotPasswordText.addEventListener("click", function (e) {

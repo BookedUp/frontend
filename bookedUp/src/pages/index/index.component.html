@@ -13,7 +13,7 @@
             alt=""
             src="../../assets/public/rectangle-781@2x.png"
           />
-    
+
           <div class="unlogged-person-inner"></div>
           <div class="the-perfect-stay3">The Perfect Stay, One Click Away</div>
           <div class="find-your-perfect4">
@@ -23,30 +23,38 @@
           <div class="search-wrapper5" id="frameContainer">
             <b class="search8">Search</b>
           </div>
-          <div class="component-15">
+          <div class="component-15" id="locationComponent">
             <img class="location-1-icon17" alt="" src="../../assets/public/location-13.svg" />
-    
-            <div class="where-are-you3">Where are you going?</div>
+            <div *ngIf="!isLocationInputVisible" class="where-are-you3" id="locationText" (click)="enableLocationInput()">Where are you going?</div>
+            <div *ngIf="isLocationInputVisible" class="input-wrapper">
+              <input type="text" id="locationInput" [(ngModel)]="enteredLocation" placeholder="Enter your destination">
+            </div>
           </div>
           <div class="component-43">
             <img class="location-1-icon17" alt="" src="../../assets/public/calendar-1.svg" />
-    
-            <div class="check-in-date6">Check in date</div>
+            <div class="check-in-date6" (click)="enableDateInput()">
+              {{ selectedDate ? selectedDate.toLocaleDateString() : 'Check in date' }}
+            </div>
           </div>
+
+
+
           <div class="component-23">
             <img class="location-1-icon17" alt="" src="../../assets/public/calendar-1.svg" />
-    
+
             <div class="check-in-date6">Check out date</div>
           </div>
-          <div class="component-33">
-            <img
-              class="location-1-icon17"
-              alt=""
-              src="../../assets/public/usersquare-12.svg"
-            />
-    
-            <div class="guests3">Guests</div>
+          <!-- Vaša komponenta.html -->
+
+          <div class="component-33" id="guestsComponent">
+            <img class="location-1-icon17" alt="" src="../../assets/public/usersquare-12.svg" />
+
+            <div *ngIf="!isGuestInputVisible" class="guests3" (click)="enableGuestInput()">Guests</div>
+            <div *ngIf="isGuestInputVisible" class="input-wrapper">
+              <input type="number" [(ngModel)]="enteredGuests" min="1" inputmode="numeric" pattern="[0-9]*" placeholder="Enter number of guests" (blur)="disableGuestInput()" />
+            </div>
           </div>
+
           <div class="home-parent29">
             <div class="home31">Home</div>
             <div class="home31">About</div>
@@ -63,7 +71,7 @@
             alt=""
             src="../../assets/public/cream-black-minimalist-illustrated-luxury-real-estate-circle-logo-7-3@2x.png"
           />
-    
+
           <div class="explore-the-world-with-bookedu-parent1">
             <div class="explore-the-world3">Explore the world with BookedUp</div>
             <div class="discover-new-places3">
@@ -77,7 +85,7 @@
             alt=""
             src="../../assets/public/rectangle-8@2x.png"
           />
-    
+
           <div class="australia-wrapper1">
             <div class="australia25">Australia</div>
           </div>
@@ -86,7 +94,7 @@
             alt=""
             src="../../assets/public/rectangle-9@2x.png"
           />
-    
+
           <div class="japan-wrapper1">
             <div class="australia25">Japan</div>
           </div>
@@ -95,7 +103,7 @@
             alt=""
             src="../../assets/public/rectangle-10@2x.png"
           />
-    
+
           <div class="new-zealand-wrapper1">
             <div class="new-zealand25">New Zealand</div>
           </div>
@@ -104,7 +112,7 @@
           </div>
           <div class="rectangle-parent23">
             <img class="group-child116" alt="" src="../../assets/public/rectangle-18@2x.png" />
-    
+
             <div class="download-the-mobile-applicatio-parent1">
               <div class="download-the-mobile3">
                 Download the mobile application for bonus coupons and travel codes
@@ -119,7 +127,7 @@
                 alt=""
                 src="../../assets/public/isolated-right-hand-with-smartphone-1@2x.png"
               />
-    
+
               <img
                 class="isolated-right-hand-with-smart-icon7"
                 alt=""
@@ -132,12 +140,12 @@
             alt=""
             src="../../assets/public/rectangle-77.svg"
           />
-    
+
           <img class="hotel1-1-icon3" alt="" src="../../assets/public/hotel1-1@2x.png" />
-    
+
           <div class="card12">
             <img class="image-icon12" alt="" src="../../assets/public/image.svg" />
-    
+
             <div class="information12">
               <div class="name-star12">
                 <div class="the-aston-hotel3">The Aston hotel</div>
@@ -162,7 +170,7 @@
           </div>
           <div class="card13">
             <img class="image-icon12" alt="" src="../../assets/public/image1.svg" />
-    
+
             <div class="information12">
               <div class="name-star12">
                 <div class="recce-graham-resort3">Recce Graham resort</div>
@@ -187,7 +195,7 @@
           </div>
           <div class="card14">
             <img class="image-icon12" alt="" src="../../assets/public/image1.svg" />
-    
+
             <div class="information12">
               <div class="name-star12">
                 <div class="recce-graham-resort3">Fireside Dinners</div>
@@ -212,7 +220,7 @@
           </div>
           <div class="card15">
             <img class="image-icon12" alt="" src="../../assets/public/image1.svg" />
-    
+
             <div class="information12">
               <div class="name-star12">
                 <div class="recce-graham-resort3">Oculous Inn Stay</div>
@@ -240,25 +248,25 @@
             alt=""
             src="../../assets/public/chevronrightregular24-11@2x.png"
           />
-    
+
           <img
             class="chevron-right-regular-24-2-icon3"
             alt=""
             src="../../assets/public/chevronrightregular24-1@2x.png"
           />
-    
+
           <img
             class="chevron-left-regular-24-1-icon4"
             alt=""
             src="../../assets/public/chevronleftregular24-2@2x.png"
           />
-    
+
           <img
             class="chevron-left-regular-24-2-icon3"
             alt=""
             src="../../assets/public/chevronleftregular24-2@2x.png"
           />
-    
+
           <b class="company20">Company</b>
           <div class="about52">About</div>
           <div class="jobs20">Jobs</div>
@@ -281,7 +289,7 @@
           <div class="unlogged-person-child5"></div>
           <div class="copyright-1-parent29">
             <img class="copyright-1-icon31" alt="" src="../../assets/public/copyright-1.svg" />
-    
+
             <div class="bookedup-202332">BookedUp 2023 | Team 19 FTN</div>
           </div>
           <img
@@ -289,7 +297,7 @@
             alt=""
             src="../../assets/public/logo-with-slogan-2@2x.png"
           />
-    
+
           <div class="support20">Support</div>
           <div class="cancel-your-bookings20">Cancel your bookings</div>
           <div class="use-coupon20">Use Coupon</div>
@@ -299,7 +307,7 @@
           </div>
           <b class="help20">Help</b>
         </div>
-    
+
         <script>
           var frameContainer = document.getElementById("frameContainer");
           if (frameContainer) {
@@ -307,9 +315,8 @@
               window.location.href = "./html/unlogged/SearchUnlogged.html";
             });
           }
-          
+
           </script>
       </body>
 
 </html>
-  

@@ -828,4 +828,17 @@
     color: var(--gray-2);
     font-family: var(--font-sansation);
   }
-  
+
+.input-wrapper {
+  display: inline-block;
+}
+
+input {
+  border: none;
+  outline: none;
+  background: none;
+  font-family: var(--font-adamina);
+  font-size: var(--font-size-mini);
+}
+
+

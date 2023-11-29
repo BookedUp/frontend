@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css', '../../styles.css']
 })
 export class LoginComponent implements OnInit {
+  isPasswordVisible: boolean = false;
+
 
   constructor(private router: Router) { }
 
@@ -30,6 +32,9 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/register']);
       });
     }
+  }
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
 }

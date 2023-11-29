@@ -172,4 +172,89 @@
     color: var(--color-gray-400);
     font-family: var(--font-sansation);
   }
-  
+
+/* Change the color of "Enter email" and "Enter password" text to dark gray */
+
+
+.email-address20,
+.password7 {
+  position: relative;
+  width: 400px;
+  background-color: var(--gray-6);
+  border-radius: var(--br-9xs);
+}
+
+.email-address21,
+.enter-password4,
+.email-address20 input,
+.password7 input {
+  font-family: var(--font-adamina);
+  font-size: var(--font-size-mini);
+  color: var(--gray-2);
+}
+
+.email-address20 input,
+.password7 input {
+  width: 100%;
+  border: none;
+  background-color: var(--gray-6);
+  outline: none; /* Remove default input focus outline */
+}
+
+.dont-have-an-container,
+.forgot-password1,
+.keep-me-signed-in-parent {
+  position: absolute;
+  letter-spacing: 0.02em;
+  z-index: 10; /* Dodajte ovu liniju kako biste bili sigurni da su ovi elementi iznad ostalih */
+}
+
+.password6 {
+  top: 320px;
+  left: 520px;
+  line-height: 140%;
+}
+
+.forgot-password1 {
+  top: 408px;
+  left: 738px;
+  display: flex;
+  color: var(--blue-1);
+  text-align: right;
+  align-items: center;
+  width: 182px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.keep-me-signed-in-parent {
+  top: 408px;
+  left: 520px;
+  width: 210px;
+  height: 20px;
+  color: var(--gray-2);
+}
+
+.password7 {
+  position: absolute;
+  top: 395px; /* Pomerite na odgovarajuću visinu iznad */
+  left: 520px;
+  margin-top: -50px; /* Dodajte negativnu marginu */
+  border-radius: var(--br-9xs);
+  background-color: var(--gray-6);
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  font-size: var(--font-size-mini);
+  color: var(--gray-6);
+}
+
+
+
+
+
