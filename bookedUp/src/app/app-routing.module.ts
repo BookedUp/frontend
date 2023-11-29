@@ -3,11 +3,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { IndexComponent } from '../pages/index/index.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
+import { RegisterStep2Component } from '../pages/register-step-2/register-step-2.component';
+import { ForgotPasswordComponent } from '../pages/forgot-password/forgot-password.component';
+import { CheckInboxComponent } from '../pages/check-inbox/check-inbox.component';
+import { SearchComponent } from '../pages/search/search.component';
+import { AccommodationDetailsComponent } from '../pages/accommodation-details/accommodation-details.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'register-step-2', component: RegisterStep2Component },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'check-inbox', component: CheckInboxComponent },
+  { path: 'search', component: SearchComponent },
+  { path: 'accommodation-details', component: AccommodationDetailsComponent },
 ];
 
 @NgModule({
