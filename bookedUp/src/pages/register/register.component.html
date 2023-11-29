@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="register-guest">
+      <div class="register4">Register</div>
+      <div class="continue-with-email-container" id="frameContainer">
+        <b class="continue-with-email1">Continue with next step</b>
+      </div>
+      <div class="already-have-an-container1" id="alreadyHaveAn">
+        <span>Already have an account? </span>
+        <span class="sign-in4">Sign in</span>
+      </div>
+      <b class="email-address16">Email address</b>
+      <div class="email-address17">
+        <input type="email" id="email" name="email" value="user@example.com" class="input-transparent">
+      </div>
+      <b class="mobile-phone2">Mobile Phone</b>
+      <div class="mobile-phone3">
+        <input type="text" id="phone" name="phone" value="+38160123456" class="input-transparent">
+      </div>
+      <b class="last-name6">Last Name</b>
+      <div class="last-name7">
+        <input type="text" id="lastName" name="lastName" value="Johnsy" class="input-transparent">
+      </div>
+      <b class="first-name6">First Name</b>
+      <div class="first-name7">
+        <input type="text" id="firstName" name="firstName" value="John" class="input-transparent">
+      </div>
+      <b class="address4">Address</b>
+      <div class="adress1">
+        <input type="text" id="address" name="address" value="Street XYZ" class="input-transparent">
+      </div>
+      <img
+        class="logo-with-slogan-31"
+        alt=""
+        src="../../assets/public/logo-with-slogan-4@2x.png"
+      />
+      
+      <b class="role-2">Role</b>
+      <div class="container" id="sliderContainer" (click)="toggleText()">
+        <div class="role" id="roleContainer">
+          <div class="text-container">
+            <div class="slider-text">{{ showHostText ? 'Host' : 'Guest' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
