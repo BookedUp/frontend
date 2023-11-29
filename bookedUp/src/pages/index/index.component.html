@@ -26,9 +26,9 @@
           <div class="component-15" id="locationComponent">
             <img class="location-1-icon17" alt="" src="../../assets/public/location-13.svg" />
             <div *ngIf="!isLocationInputVisible" class="where-are-you3" id="locationText" (click)="enableLocationInput()">Where are you going?</div>
-            <div *ngIf="isLocationInputVisible" class="input-wrapper">
+            <!-- <div *ngIf="isLocationInputVisible" class="input-wrapper">
               <input type="text" id="locationInput" [(ngModel)]="enteredLocation" placeholder="Enter your destination">
-            </div>
+            </div> -->
           </div>
           <div class="component-43">
             <img class="location-1-icon17" alt="" src="../../assets/public/calendar-1.svg" />
@@ -50,9 +50,9 @@
             <img class="location-1-icon17" alt="" src="../../assets/public/usersquare-12.svg" />
 
             <div *ngIf="!isGuestInputVisible" class="guests3" (click)="enableGuestInput()">Guests</div>
-            <div *ngIf="isGuestInputVisible" class="input-wrapper">
+            <!-- <div *ngIf="isGuestInputVisible" class="input-wrapper">
               <input type="number" [(ngModel)]="enteredGuests" min="1" inputmode="numeric" pattern="[0-9]*" placeholder="Enter number of guests" (blur)="disableGuestInput()" />
-            </div>
+            </div> -->
           </div>
 
           <div class="home-parent29">
@@ -307,16 +307,6 @@
           </div>
           <b class="help20">Help</b>
         </div>
-
-        <script>
-          var frameContainer = document.getElementById("frameContainer");
-          if (frameContainer) {
-            frameContainer.addEventListener("click", function (e) {
-              window.location.href = "./html/unlogged/SearchUnlogged.html";
-            });
-          }
-
-          </script>
       </body>
 
 </html>

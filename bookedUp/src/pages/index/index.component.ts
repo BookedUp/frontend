@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+//import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
   styleUrls: ['./index.component.css', '../../styles.css']
 })
 export class IndexComponent implements OnInit {
-  bsConfig: Partial<BsDatepickerConfig> = {};
+  //bsConfig: Partial<BsDatepickerConfig> = {};
 
   isLocationInputVisible: boolean = false;
   enteredLocation: string = '';
@@ -36,6 +36,13 @@ export class IndexComponent implements OnInit {
     if (frameContainer2) {
       frameContainer2.addEventListener("click", () => {
         this.router.navigate(['/register']);
+      });
+    }
+
+    var frameContainer = document.getElementById("frameContainer");
+    if (frameContainer) {
+      frameContainer.addEventListener("click", () => {
+        this.router.navigate(['/search']);
       });
     }
 
