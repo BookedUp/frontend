@@ -12,6 +12,8 @@ import { ForgotPasswordComponent } from '../pages/forgot-password/forgot-passwor
 import { CheckInboxComponent } from '../pages/check-inbox/check-inbox.component';
 import { SearchComponent } from '../pages/search/search.component';
 import { AccommodationDetailsComponent } from '../pages/accommodation-details/accommodation-details.component';
+import { UserMainPageComponent } from '../pages/user-main-page/user-main-page.component';
+import { ManageProfileComponent } from '../pages/manage-profile/manage-profile.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -25,7 +27,9 @@ import { AppComponent } from './app.component';
     ForgotPasswordComponent,
     CheckInboxComponent,
     SearchComponent,
-    AccommodationDetailsComponent
+    AccommodationDetailsComponent,
+    UserMainPageComponent,
+    ManageProfileComponent
   ],
   imports: [
     BrowserModule,
