@@ -36,6 +36,13 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login']);
       });
     }
+    
+    var frameContainer = document.getElementById("frameContainer");
+    if (frameContainer) {
+      frameContainer.addEventListener("click", () => {
+        this.router.navigate(['/register-step-2']);
+      });
+    }
   }
 
   toggleText() {
