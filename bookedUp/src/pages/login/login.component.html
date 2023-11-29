@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="sign-in5">
+      <div class="sign-in6">Sign in</div>
+      <div class="continue-with-email-frame" id="frameContainer">
+        <b class="continue-with-email2">Continue with email</b>
+      </div>
+      <b class="email-address19">Email address</b>
+      <div class="dont-have-an-container" id="dontHaveAn">
+        <span>Don’t have an account? </span>
+        <span class="register5">Register</span>
+      </div>
+      <b class="password6">Password</b>
+      <b class="forgot-password1" id="forgotPasswordText">Forgot password?</b>
+      <div class="keep-me-signed-in-parent">
+        <div class="keep-me-signed">Keep me signed in</div>
+        <div class="group-child117"></div>
+      </div>
+      <div class="email-address20">
+        <div class="email-address21">Email address</div>
+      </div>
+      <div class="password7">
+        <div class="enter-password4">Enter password</div>
+        <img class="eye-1-icon4" alt="" src="../../assets/public/eye-1.svg" />
+      </div>
+      <img
+        class="logo-with-slogan-214"
+        alt=""
+        src="../../assets/public/logo-with-slogan-21@2x.png"
+      />
+
+      <img
+        class="logo-with-slogan-214"
+        alt=""
+        src="../../assets/public/logo-with-slogan-4@2x.png"
+      />
+    </div>
+
+    <script>
+      var frameContainer = document.getElementById("frameContainer");
+      if (frameContainer) {
+        frameContainer.addEventListener("click", function (e) {
+          window.location.href = "../admin/LoggedAdminMain.html";
+        });
+      }
+      
+      var forgotPasswordText = document.getElementById("forgotPasswordText");
+      if (forgotPasswordText) {
+        forgotPasswordText.addEventListener("click", function (e) {
+          window.location.href = "./ForgotPassword.html";
+        });
+      }
+      </script>
+  </body>
+</html>
