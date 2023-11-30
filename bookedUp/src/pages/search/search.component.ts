@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,11 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./search.component.css', '../../styles.css']
 })
 export class SearchComponent implements OnInit {
+  isChecked: boolean = false;
+  selectedClass: string = 'all-wrapper1';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private renderer: Renderer2, private el: ElementRef) { }
+
+
 
   ngOnInit() {
-
+    
     var alreadyHaveAn = document.getElementById("frameContainer");
     if (alreadyHaveAn) {
       alreadyHaveAn.addEventListener("click", () => {
@@ -47,4 +52,19 @@ export class SearchComponent implements OnInit {
       });
     }
   }
+
+  toggleCheckbox() {
+    this.isChecked = !this.isChecked;
+  }
+
+  changeStyle(className: string): void {
+    this.selectedClass = className;
 }
+
+
+
+}
+
+
+
+

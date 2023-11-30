@@ -113,7 +113,11 @@
         src="../../assets/public/rectangle-63@2x.png"
       />
 
-      <div class="search-unlogged-child19"></div>
+ 
+      <input type="checkbox" [(ngModel)]="isChecked" class="hidden-checkbox" />
+      <div (click)="toggleCheckbox()" [class.checked]="isChecked" class="search-unlogged-child19">
+        <i class="fas fa-check"></i>
+      </div>                  
       <div class="search-unlogged-child20"></div>
       <div class="div246">$ 0 - $ 50</div>
       <div class="free-cancellation3">Free cancellation</div>
@@ -169,7 +173,7 @@
       <div class="search-1-parent1">
         <img class="location-1-icon16" alt="" src="../../assets/public/search-1.svg" />
 
-        <div class="melbourne3">eg. Beach westpalm</div>
+        <input type="text" class="melbourne3" placeholder="eg. Beach westpalm"/>
       </div>
       <div class="calendar-1-parent7">
         <img class="location-1-icon16" alt="" src="../../assets/public/calendar-1.svg" />
@@ -384,25 +388,26 @@
         <b class="register1">Load more results</b>
       </div>
       <div class="frame-parent45">
-        <div class="all-wrapper1">
+        <div class="all-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'all-wrapper1' }" (click)="changeStyle('all-wrapper1')">
           <b class="register1">All</b>
         </div>
-        <div class="hotels-wrapper1">
+        <div class="hotels-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'hotels-wrapper1' }" (click)="changeStyle('hotels-wrapper1')">
           <div class="register1">Hotels</div>
         </div>
-        <div class="hotels-wrapper1">
+        <div class="hostels-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'hostels-wrapper1' }" (click)="changeStyle('hostels-wrapper1')">
           <div class="register1">Hostels</div>
         </div>
-        <div class="hotels-wrapper1">
+        <div class="appartments-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'appartments-wrapper1' }" (click)="changeStyle('appartments-wrapper1')">
           <div class="register1">Apartments</div>
         </div>
-        <div class="hotels-wrapper1">
+        <div class="resorts-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'resorts-wrapper1' }" (click)="changeStyle('resorts-wrapper1')">
           <div class="register1">Resorts</div>
         </div>
-        <div class="villas-wrapper1">
+        <div class="villas-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'villas-wrapper1' }" (click)="changeStyle('villas-wrapper1')">
           <div class="register1">Villas</div>
         </div>
       </div>
+      
       <div class="frame-parent46">
         <div class="sort-by-parent1">
           <b class="sort-by3">Sort by</b>

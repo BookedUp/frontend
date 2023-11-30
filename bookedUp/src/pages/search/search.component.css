@@ -443,7 +443,36 @@
   .search-unlogged-child18 {
     top: 2294px;
   }
-  .search-unlogged-child19,
+ .hidden-checkbox {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.search-unlogged-child19 {
+  position: absolute;
+  top: 557px;
+  left: 118px;
+  border-radius: var(--br-8xs);
+  background-color: var(--color-white);
+  border: 1px solid var(--gray-4);
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.search-unlogged-child19 i {
+  display: none; /* Inicijalno sakrij ikonu */
+}
+
+.search-unlogged-child19.checked i {
+  /* Prikazi ikonu kada je checkbox čekiran */
+  display: inline-block;
+  color: var(--color-checked);
+}
+
   .search-unlogged-child20 {
     position: absolute;
     top: 557px;
@@ -820,6 +849,7 @@
     width: 142px;
     height: 21px;
     flex-shrink: 0;
+    border: none;
   }
   .location-1-parent1,
   .search-1-parent1 {
@@ -1243,6 +1273,9 @@
   }
   .all-wrapper1,
   .hotels-wrapper1,
+  .hostels-wrapper1,
+  .appartments-wrapper1,
+  .resorts-wrapper1,
   .load-more-results-wrapper9,
   .villas-wrapper1 {
     display: flex;
@@ -1262,6 +1295,9 @@
   }
   .all-wrapper1,
   .hotels-wrapper1,
+  .hostels-wrapper1,
+  .appartments-wrapper1,
+  .resorts-wrapper1,
   .villas-wrapper1 {
     border: 1px solid var(--blue-1);
   }
@@ -1271,12 +1307,16 @@
     color: var(--blue-1);
   }
   .hotels-wrapper1,
+  .hostels-wrapper1,
+  .appartments-wrapper1,
+  .resorts-wrapper1,
   .villas-wrapper1 {
     background-color: var(--color-white);
   }
   .villas-wrapper1 {
     border-radius: 0 var(--br-7xs) var(--br-7xs) 0;
   }
+
   .frame-parent45 {
     position: absolute;
     top: 358px;
@@ -1287,6 +1327,11 @@
     justify-content: flex-start;
     font-size: var(--font-size-mini);
   }
+  .clicked {
+    background-color: #9e8d5f; /* Promenite boju pozadine */
+    color: #ffffff; /* Promenite boju teksta */
+  }
+  
   .recommended3,
   .sort-by3 {
     position: relative;
