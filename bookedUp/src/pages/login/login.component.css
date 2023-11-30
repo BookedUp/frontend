@@ -86,22 +86,20 @@
     align-items: center;
     width: 182px;
   }
-  .group-child117 {
-    left: 0;
-    border-radius: var(--br-8xs);
-    background-color: var(--color-white);
-    border: 1px solid var(--gray-4);
-    box-sizing: border-box;
-    width: 20px;
-  }
   .keep-me-signed-in-parent {
-    position: absolute;
-    top: 408px;
-    left: 520px;
-    width: 210px;
-    height: 20px;
-    color: var(--gray-2);
-  }
+  position: absolute;
+  top: 408px;
+  left: 520px;
+  width: 210px;
+  height: 20px;
+  color: var(--gray-2);
+}
+
+.group-child117 {
+  position: absolute;
+  left: 0;
+}
+
   .email-address21 {
     position: relative;
     letter-spacing: 0.02em;
@@ -217,7 +215,7 @@
 
 .forgot-password1 {
   top: 408px;
-  left: 738px;
+  left: 805px;
   display: flex;
   color: var(--blue-1);
   text-align: right;
