@@ -113,7 +113,8 @@
     letter-spacing: 0.02em;
     line-height: 140%;
     display: inline-block;
-    width: 105px;
+    width: 108px;
+    color: #828282;
     flex-shrink: 0;
   }
   .component-23,
@@ -124,6 +125,7 @@
     border-radius: var(--br-9xs);
     background-color: var(--gray-6);
     width: 170px;
+    height: 43px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -413,6 +415,7 @@
     object-fit: cover;
     border-radius: var(--br-5xs);
   }
+
   .image-icon12 {
     position: relative;
     border-radius: var(--br-xs) var(--br-xs) 0 0;

@@ -30,16 +30,16 @@ export class RegisterComponent implements OnInit {
       });
     }
 
-    var alreadyHaveAn = document.getElementById("alreadyHaveAn");
-    if (alreadyHaveAn) {
-      alreadyHaveAn.addEventListener("click", () => {
+    var alreadyHaveAnRegistration = document.getElementById("alreadyHaveAnRegistration");
+    if (alreadyHaveAnRegistration) {
+      alreadyHaveAnRegistration.addEventListener("click", () => {
         this.router.navigate(['/login']);
       });
     }
     
-    var frameContainer = document.getElementById("frameContainer");
-    if (frameContainer) {
-      frameContainer.addEventListener("click", () => {
+    var registrationStep2 = document.getElementById("registrationStep2");
+    if (registrationStep2) {
+      registrationStep2.addEventListener("click", () => {
         this.router.navigate(['/register-step-2']);
       });
     }

@@ -20,39 +20,31 @@
             Find your perfect stay with expert hotel and apartment recommendations,
             travel tips, and destination inspiration.
           </div>
-          <div class="search-wrapper5" id="frameContainer">
+
+
+          <div class="search-wrapper5" id="searchButton">
             <b class="search8">Search</b>
           </div>
-          <div class="component-15" id="locationComponent">
-            <img class="location-1-icon17" alt="" src="../../assets/public/location-13.svg" />
-            <div *ngIf="!isLocationInputVisible" class="where-are-you3" id="locationText" (click)="enableLocationInput()">Where are you going?</div>
-            <!-- <div *ngIf="isLocationInputVisible" class="input-wrapper">
-              <input type="text" id="locationInput" [(ngModel)]="enteredLocation" placeholder="Enter your destination">
-            </div> -->
+
+          <div class="component-15">
+            <img class="location-1-icon17" alt="" src="../../assets/public/location-13.svg"/>
+            <input type="text" class="where-are-you3" placeholder="Where are you going?"/>
           </div>
-          <div class="component-43">
+
+          <div class="component-43">            
             <img class="location-1-icon17" alt="" src="../../assets/public/calendar-1.svg" />
-            <div class="check-in-date6" (click)="enableDateInput()">
-              {{ selectedDate ? selectedDate.toLocaleDateString() : 'Check in date' }}
-            </div>
+            <input placeholder="Check In Date" class="check-in-date6" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="fromDate" />
           </div>
-
-
 
           <div class="component-23">
             <img class="location-1-icon17" alt="" src="../../assets/public/calendar-1.svg" />
-
-            <div class="check-in-date6">Check out date</div>
+            <input placeholder="Check Out Date" class="check-in-date6" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="toDate" />
           </div>
-          <!-- Vaša komponenta.html -->
 
-          <div class="component-33" id="guestsComponent">
-            <img class="location-1-icon17" alt="" src="../../assets/public/usersquare-12.svg" />
+          <div class="component-33">
+            <img class="location-1-icon17"alt=""src="../../assets/public/usersquare-12.svg" />
+            <input type="number" class="guests3" placeholder="Guests" pattern="\d*" />
 
-            <div *ngIf="!isGuestInputVisible" class="guests3" (click)="enableGuestInput()">Guests</div>
-            <!-- <div *ngIf="isGuestInputVisible" class="input-wrapper">
-              <input type="number" [(ngModel)]="enteredGuests" min="1" inputmode="numeric" pattern="[0-9]*" placeholder="Enter number of guests" (blur)="disableGuestInput()" />
-            </div> -->
           </div>
 
           <div class="home-parent29">

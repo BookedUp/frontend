@@ -133,4 +133,45 @@
     color: var(--color-gray-400);
     font-family: var(--font-sansation);
   }
-  
+
+.password4,
+.password5 {
+  position: absolute;
+  top: 312px;
+  left: 520px;
+  border-radius: var(--br-9xs);
+  background-color: var(--gray-6);
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  color: var(--gray-6);
+}
+
+.password5 {
+  top: 400px;
+}
+
+
+.password4 input,
+.password5 input {
+  flex: 1;
+  border: none;
+  background-color: var(--gray-6);
+  outline: none;
+  font-family: var(--font-adamina);
+  font-size: var(--font-size-mini);
+  color: var(--gray-2);
+  text-transform: none; /* Dodato kako bi sva slova bila iste veličine */
+}
+
+.eye-1-icon2,
+.eye-1-icon4 {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}

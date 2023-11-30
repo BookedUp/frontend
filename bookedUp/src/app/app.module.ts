@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';  // Dodajte ovu liniju
-//import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Dodajte i BrowserAnimationsModule
 
 import { IndexComponent } from '../pages/index/index.component';
@@ -29,13 +28,12 @@ import { AppComponent } from './app.component';
     SearchComponent,
     AccommodationDetailsComponent,
     UserMainPageComponent,
-    ManageProfileComponent
+    ManageProfileComponent,
   ],
   imports: [
     BrowserModule,
-    FormsModule,  // Dodajte ovde FormsModule
+    FormsModule,
     AppRoutingModule,
-//    BsDatepickerModule.forRoot(),
     BrowserAnimationsModule,
   ],
   providers: [],

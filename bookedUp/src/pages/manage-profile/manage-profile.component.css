@@ -16,7 +16,8 @@
     object-fit: cover;
   }
   .home3 {
-    cursor: pointer;
+    cursor: po
+    inter;
   }
   .about6,
   .home3 {
@@ -35,6 +36,7 @@
     font-size: var(--font-size-base);
     color: var(--gray-1);
   }
+  
   .manage-account {
     position: absolute;
     top: 128px;
@@ -354,14 +356,20 @@
   }
   .ftngmailcom,
   .hannah {
-    position: absolute;
-    top: 328px;
-    left: 360px;
-    font-size: var(--font-size-mini);
-    letter-spacing: 0.02em;
-    line-height: 140%;
-    color: var(--color-black);
-  }
+      position: absolute;
+      top: 328px;
+      left: 360px;
+      font-size: var(--font-size-mini);
+      letter-spacing: 0.02em;
+      line-height: 140%;
+      color: var(--color-black);
+      background: transparent;
+      border: none;
+      outline: none; /* Remove the outline when focused (optional) */
+      z-index: 1; /* Add this line */
+    }
+    
+  
   .hannah {
     top: 212px;
   }
@@ -407,7 +415,12 @@
     letter-spacing: 0.02em;
     line-height: 140%;
     color: var(--color-black);
+    background: transparent;
+    border: none;
+    outline: none; /* Remove the outline when focused (optional) */
+    z-index: 1; /* Add this line */
   }
+  
   .frame-child1 {
     position: absolute;
     margin: 0 !important;
@@ -441,7 +454,12 @@
     letter-spacing: 0.02em;
     line-height: 140%;
     color: var(--color-black);
+    background: transparent;
+    border: none;
+    outline: none; /* Remove the outline when focused (optional) */
+    z-index: 1; /* Add this line */
   }
+  
   .image-5-icon {
     position: relative;
     width: 24px;
@@ -468,10 +486,10 @@
   .image-5-parent {
     position: absolute;
     top: 463px;
-    left: 212px;
+    left: 196px;
     border-radius: var(--br-9xs);
     background-color: var(--color-silver-200);
-    width: 116px;
+    width: 130px;
     height: 35px;
     display: flex;
     flex-direction: row;
@@ -480,14 +498,22 @@
     padding: var(--padding-3xs) var(--padding-xs);
     box-sizing: border-box;
     gap: var(--gap-3xs);
-    font-size: var(--font-size-mini);
+    font-size:10px; /* Adjusted fixed font size */
     color: var(--gray-1);
   }
+  
   .div5 {
     position: relative;
+    font-size: var(--font-size-mini);
     letter-spacing: 0.02em;
     line-height: 140%;
+    color: var(--color-black);
+    background: transparent;
+    border: none;
+    outline: none; /* Remove the outline when focused (optional) */
+    z-index: 1; /* Add this line */
   }
+  
   .wrapper {
     position: absolute;
     top: 463px;
@@ -513,17 +539,7 @@
     letter-spacing: 0.02em;
     line-height: 140%;
     color: var(--color-gray-400);
-  }
-  .group-child16 {
-    position: absolute;
-    top: 2.3px;
-    left: 0;
-    border-radius: var(--br-xs-5);
-    background-color: var(--color-silver-200);
-    width: 46px;
-    height: 18.4px;
-  }
-  .ellipse-div {
+  }.ellipse-div {
     position: absolute;
     top: 0;
     left: 23px;
@@ -532,11 +548,14 @@
     width: 23px;
     height: 23px;
   }
+  
   .rectangle-parent1 {
     position: relative;
     width: 46px;
     height: 23px;
+    overflow: hidden; /* Add overflow to hide overflowing content */
   }
+  
   .email-notifications-parent {
     position: absolute;
     top: 543px;
@@ -551,6 +570,28 @@
     font-size: var(--font-size-sm);
     color: var(--color-gray-200);
   }
+  
+  .group-child16 {
+    position: absolute;
+    top: 2.3px;
+    left: 0;
+    border-radius: var(--br-xs-5);
+    background-color: var(--color-silver-200);
+    width: 46px;
+    height: 18.4px;
+    cursor: pointer; /* Add cursor style to indicate interactivity */
+  }
+  
+  /* Styles for the active portion */
+  .group-child16 .active-portion {
+    width: 23px; /* Adjust width based on your design */
+    height: 100%;
+    background-color: var(--color-active); /* Set the background color of the active portion */
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
   .neutral-pink-modern-circle-sha {
     position: relative;
     width: 399px;
@@ -561,7 +602,7 @@
   .edit-image {
     position: absolute;
     margin: 0 !important;
-    top: 371px;
+    top: 380px;
     left: 172px;
     display: flex;
     align-items: center;
@@ -645,7 +686,7 @@
   }
   .delete {
     position: relative;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     line-height: 20px;
   }
   .delete-wrapper,
@@ -667,7 +708,7 @@
   }
   .x-container {
     top: 13px;
-    left: 364px;
+    left: 355px;
     width: 22px;
     height: 21px;
   }
