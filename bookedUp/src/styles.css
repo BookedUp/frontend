@@ -140,3 +140,5 @@ body {
     --element-hover: 0px 2px 25px rgba(0, 0, 0, 0.07);
   }
   
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
