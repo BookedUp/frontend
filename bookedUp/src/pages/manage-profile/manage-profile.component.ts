@@ -38,11 +38,11 @@ export class ManageProfileComponent implements OnInit {
     }
 
     var popupframeContainer = document.getElementById("popupframeContainer");
-      if (popupframeContainer) {
-        popupframeContainer.addEventListener("click", () => {
-          this.router.navigate(['/manage-profile']);
-        });
-      }
+    if (popupframeContainer) {
+      popupframeContainer.addEventListener("click", () => {
+        this.router.navigate(['/manage-profile']);
+      });
+    }
 
     var homeText = document.getElementById("homeText");
     if (homeText) {
@@ -50,8 +50,8 @@ export class ManageProfileComponent implements OnInit {
         this.router.navigate(['/user-main-page']);
       });
     }
-    
-      
+
+
     var popupframeContainer4 = document.getElementById("popupframeContainer4");
     if (popupframeContainer4) {
       popupframeContainer4.addEventListener("click", () => {

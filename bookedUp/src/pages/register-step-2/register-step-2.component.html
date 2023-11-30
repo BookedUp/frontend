@@ -16,19 +16,42 @@
       <div class="by-creating-an-container2">
         <span class="by-creating-an-container3">
           <span>By creating an account, you agree with our </span>
-          <span class="terms-and-conditions1">Terms and Conditions </span>
+          <span class="terms-and-conditions1">Terms and Conditions   </span>
           <span>and </span>
           <span class="terms-and-conditions1">Privacy Statement.</span>
         </span>
       </div>
+      <!-- Prva ikonica -->
       <div class="password4">
-        <div class="enter-password2">Enter password</div>
-        <img class="eye-1-icon2" alt="" src="../../assets/public/eye-1.svg" />
+        <input
+          type="{{ isPasswordVisible1 ? 'text' : 'password' }}"
+          class="enter-password2"
+          placeholder="Enter password..."
+        />
+        <img
+          class="eye-1-icon2"
+          alt="Toggle Password Visibility"
+          src="../../assets/public/eye-1.svg"
+          (click)="togglePasswordVisibility1()"
+        />
       </div>
+
+      <!-- Druga ikonica -->
       <div class="password5">
-        <div class="enter-password2">Enter password</div>
-        <img class="eye-1-icon2" alt="" src="../../assets/public/eye-1.svg" />
+        <input
+          type="{{ isPasswordVisible2 ? 'text' : 'password' }}"
+          class="enter-password2"
+          placeholder="Enter to confirm password..."
+        />
+        <img
+          class="eye-1-icon2"
+          alt="Toggle Password Visibility"
+          src="../../assets/public/eye-1.svg"
+          (click)="togglePasswordVisibility2()"
+        />
       </div>
+
+
       <img
         class="logo-with-slogan-41"
         alt=""
