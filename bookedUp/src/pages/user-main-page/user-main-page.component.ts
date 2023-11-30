@@ -11,9 +11,9 @@ export class UserMainPageComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    var ellipseIcon = document.getElementById("ellipseIcon");
-    if (ellipseIcon) {
-      ellipseIcon.addEventListener("click", () => {
+    var adminManage = document.getElementById("adminManage");
+    if (adminManage) {
+      adminManage.addEventListener("click", () => {
         var popup = document.getElementById("adminDropdownContainer");
         var popupStyle = popup?.style;
 
@@ -37,9 +37,9 @@ export class UserMainPageComponent implements OnInit {
       });
     }
 
-    var popupframeContainer = document.getElementById("popupframeContainer");
-      if (popupframeContainer) {
-        popupframeContainer.addEventListener("click", () => {
+    var manageProfile = document.getElementById("manageProfile");
+      if (manageProfile) {
+        manageProfile.addEventListener("click", () => {
           this.router.navigate(['/manage-profile']);
         });
       }
@@ -52,9 +52,9 @@ export class UserMainPageComponent implements OnInit {
     }
     
       
-    var popupframeContainer4 = document.getElementById("popupframeContainer4");
-    if (popupframeContainer4) {
-      popupframeContainer4.addEventListener("click", () => {
+    var logOut = document.getElementById("logOut");
+    if (logOut) {
+      logOut.addEventListener("click", () => {
         this.router.navigate(['/']);
       });
     }
