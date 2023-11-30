@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';  // Dodajte ovu liniju
-//import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Dodajte i BrowserAnimationsModule
 
 import { IndexComponent } from '../pages/index/index.component';
@@ -16,10 +15,6 @@ import { UserMainPageComponent } from '../pages/user-main-page/user-main-page.co
 import { ManageProfileComponent } from '../pages/manage-profile/manage-profile.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -40,10 +35,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatInputModule,
-    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
