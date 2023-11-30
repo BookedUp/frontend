@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="register-guest-step-2">
+      <div class="register-guest-step-2-child"></div>
+      <div class="create-password1">Create password</div>
+      <div class="create-account-container" id="frameContainer">
+        <b class="create-account1">Create account</b>
+      </div>
+      <div class="use-a-minimum1">
+        Use a minimum of 10 characters, including letters, lowercase letters,
+        and numbers.
+      </div>
+      <b class="confirm-password1">Confirm password</b>
+      <b class="password3">Password</b>
+      <div class="by-creating-an-container2">
+        <span class="by-creating-an-container3">
+          <span>By creating an account, you agree with our </span>
+          <span class="terms-and-conditions1">Terms and Conditions   </span>
+          <span>and </span>
+          <span class="terms-and-conditions1">Privacy Statement.</span>
+        </span>
+      </div>
+      <!-- Prva ikonica -->
+      <div class="password4">
+        <input
+          type="{{ isPasswordVisible1 ? 'text' : 'password' }}"
+          class="enter-password2"
+          placeholder="Enter password..."
+        />
+        <img
+          class="eye-1-icon2"
+          alt="Toggle Password Visibility"
+          src="../../assets/public/eye-1.svg"
+          (click)="togglePasswordVisibility1()"
+        />
+      </div>
+
+      <!-- Druga ikonica -->
+      <div class="password5">
+        <input
+          type="{{ isPasswordVisible2 ? 'text' : 'password' }}"
+          class="enter-password2"
+          placeholder="Enter to confirm password..."
+        />
+        <img
+          class="eye-1-icon2"
+          alt="Toggle Password Visibility"
+          src="../../assets/public/eye-1.svg"
+          (click)="togglePasswordVisibility2()"
+        />
+      </div>
+
+
+      <img
+        class="logo-with-slogan-41"
+        alt=""
+        src="../../assets/public/logo-with-slogan-4@2x.png"
+      />
+    </div>
+
+    <script>
+      var frameContainer = document.getElementById("frameContainer");
+      if (frameContainer) {
+        frameContainer.addEventListener("click", function (e) {
+          window.location.href = "../guest/LoggedGuestMain.html";
+        });
+      }
+      </script>
+  </body>
+</html>
