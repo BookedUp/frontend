@@ -20,9 +20,9 @@ export class LoginComponent implements OnInit {
       });
     }
 
-    var frameContainer = document.getElementById("frameContainer");
-    if (frameContainer) {
-      frameContainer.addEventListener("click", () => {
+    var continueEmail = document.getElementById("continueEmail");
+    if (continueEmail) {
+      continueEmail.addEventListener("click", () => {
         this.router.navigate(['/user-main-page']);
       });
     }
