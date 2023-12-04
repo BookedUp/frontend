@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HeaderComponent } from '../shared/header/header.component';
+import { FooterComponent } from 'src/shared/footer/footer.component';
 import { IndexComponent } from '../pages/index/index.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
@@ -13,6 +15,8 @@ import { ManageProfileComponent } from '../pages/manage-profile/manage-profile.c
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
+  { path: 'header', component: HeaderComponent },
+  { path: 'footer', component: FooterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register-step-2', component: RegisterStep2Component },

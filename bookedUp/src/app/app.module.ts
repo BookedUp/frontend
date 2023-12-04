@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';  // Dodajte ovu liniju
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Dodajte i BrowserAnimationsModule
 
+
+import { HeaderComponent } from '../shared/header/header.component';
+import { FooterComponent } from 'src/shared/footer/footer.component';
 import { IndexComponent } from '../pages/index/index.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
@@ -19,6 +22,8 @@ import { AppComponent } from './app.component';
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
+    FooterComponent,
     IndexComponent,
     LoginComponent,
     RegisterComponent,
