@@ -12,6 +12,9 @@ import { SearchComponent } from '../pages/search/search.component';
 import { AccommodationDetailsComponent } from '../pages/accommodation-details/accommodation-details.component';
 import { UserMainPageComponent } from '../pages/user-main-page/user-main-page.component';
 import { ManageProfileComponent } from '../pages/manage-profile/manage-profile.component';
+import { OwnerMainPageComponent } from '../pages/owner-main-page/owner-main-page.component';
+import { AccommodationsComponent } from '../pages/accommodations/accommodations.component';
+import { CreateAccommodationComponent } from '../pages/create-accommodation/create-accommodation.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
@@ -26,6 +29,9 @@ const routes: Routes = [
   { path: 'accommodation-details', component: AccommodationDetailsComponent },
   { path: 'user-main-page', component: UserMainPageComponent },
   { path: 'manage-profile', component: ManageProfileComponent },
+  { path: 'owner-main-page', component: OwnerMainPageComponent },
+  { path: 'accommodations', component: AccommodationsComponent },
+  { path: 'add-new-accommodation', component: CreateAccommodationComponent },
 ];
 
 @NgModule({

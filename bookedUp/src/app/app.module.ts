@@ -18,6 +18,9 @@ import { UserMainPageComponent } from '../pages/user-main-page/user-main-page.co
 import { ManageProfileComponent } from '../pages/manage-profile/manage-profile.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { OwnerMainPageComponent } from '../pages/owner-main-page/owner-main-page.component';
+import { AccommodationsComponent } from '../pages/accommodations/accommodations.component';
+import { CreateAccommodationComponent } from '../pages/create-accommodation/create-accommodation.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import { AppComponent } from './app.component';
     AccommodationDetailsComponent,
     UserMainPageComponent,
     ManageProfileComponent,
+    OwnerMainPageComponent,
+    AccommodationsComponent,
+    CreateAccommodationComponent
   ],
   imports: [
     BrowserModule,
