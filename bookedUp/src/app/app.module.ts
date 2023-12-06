@@ -21,6 +21,7 @@ import { AppComponent } from './app.component';
 import { OwnerMainPageComponent } from '../pages/owner-main-page/owner-main-page.component';
 import { AccommodationsComponent } from '../pages/accommodations/accommodations.component';
 import { CreateAccommodationComponent } from '../pages/create-accommodation/create-accommodation.component';
+import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CreateAccommodationComponent } from '../pages/create-accommodation/crea
     ManageProfileComponent,
     OwnerMainPageComponent,
     AccommodationsComponent,
-    CreateAccommodationComponent
+    CreateAccommodationComponent,
+    ReservationRequestsComponent
   ],
   imports: [
     BrowserModule,

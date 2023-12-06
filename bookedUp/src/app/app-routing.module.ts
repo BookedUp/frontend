@@ -15,6 +15,7 @@ import { ManageProfileComponent } from '../pages/manage-profile/manage-profile.c
 import { OwnerMainPageComponent } from '../pages/owner-main-page/owner-main-page.component';
 import { AccommodationsComponent } from '../pages/accommodations/accommodations.component';
 import { CreateAccommodationComponent } from '../pages/create-accommodation/create-accommodation.component';
+import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'owner-main-page', component: OwnerMainPageComponent },
   { path: 'accommodations', component: AccommodationsComponent },
   { path: 'add-new-accommodation', component: CreateAccommodationComponent },
+  { path: 'reservation-requests', component: ReservationRequestsComponent },
 ];
 
 @NgModule({
