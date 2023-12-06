@@ -51,6 +51,13 @@ export class OwnerMainPageComponent implements OnInit {
         });
       }
 
+    var reservationRequests = document.getElementById("reservation-requests");
+      if (reservationRequests) {
+        reservationRequests.addEventListener("click", () => {
+          this.router.navigate(['/reservation-requests']);
+        });
+      }
+
     var homeText = document.getElementById("homeText");
     if (homeText) {
       homeText.addEventListener("click", () => {

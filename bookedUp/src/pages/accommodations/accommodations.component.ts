@@ -58,6 +58,13 @@ export class AccommodationsComponent implements OnInit {
       });
     }
 
+    var reservationRequests = document.getElementById("reservation-requests-acc");
+      if (reservationRequests) {
+        reservationRequests.addEventListener("click", () => {
+          this.router.navigate(['/reservation-requests']);
+        });
+      }
+
     var homeText = document.getElementById("homeText-acc");
     if (homeText) {
       homeText.addEventListener("click", () => {

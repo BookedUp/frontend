@@ -51,6 +51,13 @@ export class CreateAccommodationComponent implements OnInit {
         });
       }
       
+    var reservationRequest = document.getElementById("reseervation-requests-create");
+    if (reservationRequest) {
+      reservationRequest.addEventListener("click", () => {
+        this.router.navigate(['/reservation-requests']);
+      });
+    }
+
     var logOut = document.getElementById("logOut-create");
     if (logOut) {
       logOut.addEventListener("click", () => {
