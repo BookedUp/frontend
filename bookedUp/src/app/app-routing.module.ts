@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HeaderComponent } from '../shared/header/header.component';
+import { HeaderAdminComponent } from '../shared/header-admin/header-admin.component';
+import { HeaderHostComponent } from '../shared/header-host/header-host.component';
+import { HeaderGuestComponent } from '../shared/header-guest/header-guest.component';
 import { FooterComponent } from 'src/shared/footer/footer.component';
 import { IndexComponent } from '../pages/index/index.component';
 import { LoginComponent } from '../pages/login/login.component';
@@ -20,6 +23,9 @@ import { ReservationRequestsComponent } from '../pages/reservation-requests/rese
 const routes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'header', component: HeaderComponent },
+  { path: 'header-admin', component: HeaderAdminComponent },
+  { path: 'header-host', component: HeaderHostComponent },
+  { path: 'header-guest', component: HeaderGuestComponent },
   { path: 'footer', component: FooterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
