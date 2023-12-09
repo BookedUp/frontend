@@ -1,0 +1,120 @@
+header {
+position: relative;
+padding: var(--padding-base);
+}
+
+.header-container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.logo {
+max-width: 126px;
+height: auto;
+object-fit: cover;
+}
+
+.home-nav {
+flex-grow: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: row;
+gap: var(--gap-29xl);
+font-size: var(--font-size-base);
+color: var(--gray-1);
+}
+
+.home-item {
+letter-spacing: 0.02em;
+}
+
+.manage-account-admin-item {
+position: absolute;
+top: 20px;
+left: 1296px;
+border-radius: 50%;
+width: 44px;
+height: 44px;
+object-fit: cover;
+}
+
+.user-square-2-icon {
+position: relative;
+width: 20px;
+height: 20px;
+overflow: hidden;
+flex-shrink: 0;
+}
+.user-square-2-parent {
+align-self: stretch;
+background-color: var(--color-white);
+box-shadow: 0 0.5px 0#d5d5d5;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: flex-start;
+padding: var(--padding-3xs) var(--padding-3xs) var(--padding-3xs)
+    var(--padding-sm);
+gap: var(--gap-3xs);
+cursor: pointer;
+}
+.frame-icon {
+position: relative;
+width: 24px;
+height: 24px;
+overflow: hidden;
+flex-shrink: 0;
+}
+.my-reservations {
+position: relative;
+letter-spacing: 0.02em;
+line-height: 20px;
+}
+.frame-parent6 {
+box-shadow: 0 0.5px 0#d5d5d5;
+width: 200px;
+height: 40px;
+flex-direction: row;
+align-items: center;
+padding: var(--padding-3xs) var(--padding-10xs) var(--padding-3xs)
+    var(--padding-3xs);
+box-sizing: border-box;
+gap: var(--gap-3xs);
+cursor: pointer;
+}
+.admin-dropdown,
+.frame-parent6,
+.logout-1-parent {
+background-color: var(--color-white);
+display: flex;
+justify-content: flex-start;
+}
+.logout-1-parent {
+align-self: stretch;
+flex-direction: row;
+align-items: center;
+padding: var(--padding-3xs) var(--padding-3xs) var(--padding-3xs)
+    var(--padding-sm);
+gap: var(--gap-3xs);
+cursor: pointer;
+}
+.admin-dropdown {
+position: relative;
+border-radius: var(--br-3xs);
+box-shadow: 0 4px 44px rgba(0, 0, 0, 0.15);
+width: 200px;
+flex-direction: column;
+align-items: flex-start;
+padding: var(--padding-3xs) 0;
+box-sizing: border-box;
+gap: var(--gap-12xs);
+max-width: 90%;
+max-height: 90%;
+overflow: auto;
+text-align: left;
+font-size: var(--font-size-mini);
+color: var(--gray-2);
+font-family: var(--font-sansation);
+}
