@@ -5,6 +5,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 
 import { HeaderComponent } from '../shared/header/header.component';
+import { HeaderAdminComponent } from '../shared/header-admin/header-admin.component';
+import { HeaderHostComponent } from '../shared/header-host/header-host.component';
+import { HeaderGuestComponent } from '../shared/header-guest/header-guest.component';
 import { FooterComponent } from 'src/shared/footer/footer.component';
 import { IndexComponent } from '../pages/index/index.component';
 import { LoginComponent } from '../pages/login/login.component';
@@ -18,11 +21,18 @@ import { UserMainPageComponent } from '../pages/user-main-page/user-main-page.co
 import { ManageProfileComponent } from '../pages/manage-profile/manage-profile.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { OwnerMainPageComponent } from '../pages/owner-main-page/owner-main-page.component';
+import { AccommodationsComponent } from '../pages/accommodations/accommodations.component';
+import { CreateAccommodationComponent } from '../pages/create-accommodation/create-accommodation.component';
+import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    HeaderAdminComponent,
+    HeaderHostComponent,
+    HeaderGuestComponent,
     FooterComponent,
     IndexComponent,
     LoginComponent,
@@ -34,6 +44,10 @@ import { AppComponent } from './app.component';
     AccommodationDetailsComponent,
     UserMainPageComponent,
     ManageProfileComponent,
+    OwnerMainPageComponent,
+    AccommodationsComponent,
+    CreateAccommodationComponent,
+    ReservationRequestsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HeaderComponent } from '../shared/header/header.component';
+import { HeaderAdminComponent } from '../shared/header-admin/header-admin.component';
+import { HeaderHostComponent } from '../shared/header-host/header-host.component';
+import { HeaderGuestComponent } from '../shared/header-guest/header-guest.component';
 import { FooterComponent } from 'src/shared/footer/footer.component';
 import { IndexComponent } from '../pages/index/index.component';
 import { LoginComponent } from '../pages/login/login.component';
@@ -12,10 +15,17 @@ import { SearchComponent } from '../pages/search/search.component';
 import { AccommodationDetailsComponent } from '../pages/accommodation-details/accommodation-details.component';
 import { UserMainPageComponent } from '../pages/user-main-page/user-main-page.component';
 import { ManageProfileComponent } from '../pages/manage-profile/manage-profile.component';
+import { OwnerMainPageComponent } from '../pages/owner-main-page/owner-main-page.component';
+import { AccommodationsComponent } from '../pages/accommodations/accommodations.component';
+import { CreateAccommodationComponent } from '../pages/create-accommodation/create-accommodation.component';
+import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'header', component: HeaderComponent },
+  { path: 'header-admin', component: HeaderAdminComponent },
+  { path: 'header-host', component: HeaderHostComponent },
+  { path: 'header-guest', component: HeaderGuestComponent },
   { path: 'footer', component: FooterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -26,6 +36,10 @@ const routes: Routes = [
   { path: 'accommodation-details', component: AccommodationDetailsComponent },
   { path: 'user-main-page', component: UserMainPageComponent },
   { path: 'manage-profile', component: ManageProfileComponent },
+  { path: 'owner-main-page', component: OwnerMainPageComponent },
+  { path: 'accommodations', component: AccommodationsComponent },
+  { path: 'add-new-accommodation', component: CreateAccommodationComponent },
+  { path: 'reservation-requests', component: ReservationRequestsComponent },
 ];
 
 @NgModule({
