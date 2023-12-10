@@ -118,3 +118,11 @@ font-size: var(--font-size-mini);
 color: var(--gray-2);
 font-family: var(--font-sansation);
 }
+
+.popup-overlay{
+    display: flex;
+    z-index: 100;
+    background: rgba(113, 113, 113, 0.3);
+    align-items: center;
+    justify-content: center;
+    }

@@ -6,79 +6,43 @@ import { Router } from '@angular/router';
   templateUrl: './header-guest.component.html',
   styleUrls: ['./header-guest.component.css', '../../styles.css']
 })
-export class HeaderGuestComponent implements OnInit {
+export class HeaderGuestComponent {
+
+  isPopupVisible = false;
 
   constructor(private router: Router) {}
 
-  ngOnInit() {
+  onProfilePictureClick(): void {
+    this.isPopupVisible = !this.isPopupVisible;
+  }
 
-    var profilePict = document.getElementById("profile-picture-guest");
-    if (profilePict) {
-      profilePict.addEventListener("click", () => {
-        var popup = document.getElementById("guestDropdownContainer");
-        var popupStyle = popup?.style;
-
-        if (popupStyle) {
-          popupStyle.display = "flex";
-          popupStyle.zIndex = "100";
-          popupStyle.backgroundColor = "rgba(113, 113, 113, 0.3)";
-          popupStyle.alignItems = "center";
-          popupStyle.justifyContent = "center";
-        }
-
-        popup?.setAttribute("closable", "");
-
-        var onClick = (popup && popup.onclick) || function (e: Event) {
-          if (e.target === popup && popup && popup.hasAttribute("closable")) {
-            popup.style.display = "none";
-          }
-        };
-
-        popup?.addEventListener("click", onClick);
-      });
+  onPopupClick(event: Event): void {
+    if (this.isPopupVisible && event.target instanceof HTMLElement && event.target.hasAttribute('closable')) {
+      this.isPopupVisible = false;
     }
+  }
 
+  navigateToManageAccount(): void {
+    this.router.navigate(['/manage-profile'], { queryParams: { role: 'guest' } });
+  }
 
-    var manageAcc = document.getElementById("manageAcc");
-    if (manageAcc) {
-      manageAcc.addEventListener("click", () => {
-        this.router.navigate(['/']);
-      });
-    }
+  navigateToMyReservations(): void {
+    this.router.navigate(['/'], { queryParams: { role: 'guest' } });
+  }
 
-    var myReservation = document.getElementById("myReservation");
-    if (myReservation) {
-      myReservation.addEventListener("click", () => {
-        this.router.navigate(['/']);
-      });
-    }
+  navigateToFavourites(): void {
+    this.router.navigate(['/'], { queryParams: { role: 'guest' } });
+  }
 
-    var favourties = document.getElementById("favourties");
-    if (favourties) {
-      favourties.addEventListener("click", () => {
-        this.router.navigate(['/']);
-      });
-    }
+  navigateToReviews(): void {
+    this.router.navigate(['/'], { queryParams: { role: 'guest' } });
+  }
 
-    var reviews = document.getElementById("reviews");
-    if (reviews) {
-      reviews.addEventListener("click", () => {
-        this.router.navigate(['/']);
-      });
-    }
+  navigateToHome(): void {
+    this.router.navigate(['/'], { queryParams: { role: 'guest' } });
+  }
 
-    var popupframeContainer4 = document.getElementById("signOut");
-    if (popupframeContainer4) {
-      popupframeContainer4.addEventListener("click", () => {
-        this.router.navigate(['/']);
-      });
-    }
-
-    var homeText = document.getElementById("homeText");
-    if (homeText) {
-      homeText.addEventListener("click", () => {
-        this.router.navigate(['/']);
-      });
-    }
+  navigateToSignOut(): void {
+    this.router.navigate(['/']);
   }
 }
