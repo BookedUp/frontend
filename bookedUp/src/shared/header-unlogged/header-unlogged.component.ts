@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,23 +6,15 @@ import { Router } from '@angular/router';
   templateUrl: './header-unlogged.component.html',
   styleUrls: ['./header-unlogged.component.css', '../../styles.css']
 })
-export class HeaderUnloggedComponent implements OnInit {
+export class HeaderUnloggedComponent  {
 
   constructor(private router: Router) {}
 
-  ngOnInit() {
-    var frameContainer3 = document.getElementById("login");
-    if (frameContainer3) {
-      frameContainer3.addEventListener("click", () => {
-        this.router.navigate(['/login']);
-      });
-    }
+  navigateToLogIn(): void {
+    this.router.navigate(['/login']);
+  }
 
-    var frameContainer2 = document.getElementById("register");
-    if (frameContainer2) {
-      frameContainer2.addEventListener("click", () => {
-        this.router.navigate(['/register']);
-      });
-    }
+  navigateToRegister(): void {
+    this.router.navigate(['/register']);
   }
 }
