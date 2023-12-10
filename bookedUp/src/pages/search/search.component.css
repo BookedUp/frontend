@@ -1375,3 +1375,71 @@ input {
   font-family: var(--font-adamina);
   font-size: var(--font-size-mini);
 }
+
+
+.group-child117,
+.keep-me-signed {
+  position: absolute;
+  top: 0;
+  height: 20px;
+}
+.keep-me-signed {
+  left: 28px;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  width: 182px;
+}
+.keep-me-signed-in-parent-19,
+.keep-me-signed-in-parent-20,
+.keep-me-signed-in-parent-21,
+.keep-me-signed-in-parent-22,
+.keep-me-signed-in-parent-23,
+.keep-me-signed-in-parent-24,
+.keep-me-signed-in-parent-25,
+.keep-me-signed-in-parent-26,
+.keep-me-signed-in-parent-27,
+.keep-me-signed-in-parent-28,
+.keep-me-signed-in-parent-29 {
+  position: absolute;
+  top: 557px;
+  left: 118px;
+  width: 20px;
+  height: 20px;
+  color: var(--gray-2);
+}
+.keep-me-signed-in-parent-20{
+  top: 876px;
+}
+.keep-me-signed-in-parent-21{
+  top: 591px;
+}
+.keep-me-signed-in-parent-22{
+  top: 910px;
+}
+.keep-me-signed-in-parent-23{
+  top: 625px;
+}
+.keep-me-signed-in-parent-24{
+  top: 944px;
+}
+.keep-me-signed-in-parent-25{
+  top: 659px;
+}
+.keep-me-signed-in-parent-26{
+  top: 978px;
+}
+.keep-me-signed-in-parent-27{
+  top: 693px;
+}
+.keep-me-signed-in-parent-28{
+  top: 1012px;
+}
+.keep-me-signed-in-parent-29{
+  top: 1046px;
+}
+.group-child117 {
+position: absolute;
+left: 0;
+}
+
