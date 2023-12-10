@@ -17,7 +17,18 @@ export class IndexComponent implements OnInit {
     var searchButton = document.getElementById("searchButton");
     if (searchButton) {
       searchButton.addEventListener("click", () => {
-        this.router.navigate(['/search']);
+        
+        const roleParam = this.route.snapshot.queryParams['role'];
+
+        if (roleParam === 'admin') {
+          this.router.navigate(['/search'], { queryParams: { role: 'admin' } });
+        } else if (roleParam === 'host') {
+          this.router.navigate(['/search'], { queryParams: { role: 'host' } });
+        } else if (roleParam === 'guest') {
+          this.router.navigate(['/search'], { queryParams: { role: 'guest' } });
+        } else {
+          this.router.navigate(['/search']);
+        }
       });
     }
 
