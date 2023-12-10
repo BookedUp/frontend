@@ -2,35 +2,40 @@
 <html>
   <body>
     <div class="check-inbox">
-      <div class="back-to-sign-in-wrapper" id="frameContainer">
-        <b class="back-to-sign">Back to Sign in</b>
-      </div>
-      <div class="check-your-inbox">Check your Inbox</div>
-      <div class="we-have-just-container">
-        <span>
-          <span
-            >We have just emailed you the instrustions and a reset password link
-            to</span
-          >
-          <span> </span>
-        </span>
-        <b class="ftn-examplegmailcom">
-          <span> ftn_example</span>
-          <span class="gmailcom">&#64;email. </span>
-        </b>
-        <span> It might take a few minutes to arrive</span>
-      </div>
-      <img
-        class="logo-with-slogan-6"
-        alt=""
-        src="../../assets/public/logo-with-slogan-4@2x.png"
-      />
 
-      <img
-        class="slika6-removebg-preview-1-icon"
-        alt=""
-        src="../../assets/public/slika6removebgpreview-1@2x.png"
-      />
+      <div id="logo-left">
+        <img
+          class="logo-with-slogan-6"
+          alt=""
+          src="../../assets/public/logo-with-slogan-4@2x.png"
+        />
+      </div>
+
+      <div id="envelopes-picture">
+        <img
+          class="slika6-removebg-preview-1-icon"
+          alt=""
+          src="../../assets/public/slika6removebgpreview-1@2x.png"
+        />
+      </div>
+
+      <div id="informations">
+        <div class="check-your-inbox">Check your Inbox</div>
+        <div class="we-have-just-container">
+          <span>We have just emailed you the instrustions and a reset password linkto</span>
+          <b class="ftn-examplegmailcom">
+            <span> {{ userEmail }} </span>
+          </b>
+          <span> It might take a few minutes to arrive</span>
+        </div>
+      </div>
+
+      <div id="back-button">
+        <div class="back-to-sign-in-wrapper" id="backButton">
+          <b class="back-to-sign">Back to Sign in</b>
+        </div>
+      </div>
+
     </div>
   </body>
 </html>

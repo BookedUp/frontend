@@ -1,5 +1,5 @@
 import { Component , OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute  } from '@angular/router';
 
 @Component({
   selector: 'app-check-inbox',
@@ -8,13 +8,17 @@ import { Router } from '@angular/router';
 })
 export class CheckInboxComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  userEmail: string = '';
+
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
 
-    var frameContainer = document.getElementById("frameContainer");
-    if (frameContainer) {
-      frameContainer.addEventListener("click", () => {
+    this.userEmail = this.route.snapshot.paramMap.get('email') || '';
+
+    var backButton = document.getElementById("backButton");
+    if (backButton) {
+      backButton.addEventListener("click", () => {
         this.router.navigate(['/login']);
       });
     }
