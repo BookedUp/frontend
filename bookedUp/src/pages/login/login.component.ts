@@ -47,13 +47,13 @@ export class LoginComponent implements OnInit {
 
     if (email === 'admin' && password === 'admin') {
       // Redirect to the admin page
-    this.router.navigate(['/user-main-page'], { queryParams: { role: 'admin' } });
+    this.router.navigate(['/'], { queryParams: { role: 'admin' } });
     } else if (email === 'host' && password === 'host') {
       // Redirect to the host page
-    this.router.navigate(['/user-main-page'], { queryParams: { role: 'host' } });
+    this.router.navigate(['/'], { queryParams: { role: 'host' } });
     } else if (email === 'guest' && password === 'guest') {
       // Redirect to the guest page
-    this.router.navigate(['/user-main-page'], { queryParams: { role: 'guest' } });
+    this.router.navigate(['/'], { queryParams: { role: 'guest' } });
     } else {
       alert('Incorrect email or password');
     }
