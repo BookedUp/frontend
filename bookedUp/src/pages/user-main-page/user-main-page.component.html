@@ -30,7 +30,7 @@
             alt=""
             src="../../assets/public/location-13.svg"
           />
-          <div class="where-are-you">Where are you going?</div>
+          <input type="text" class="where-are-you" placeholder="Where are you going?"/>
         </div>
 
         <div class="component-4">
@@ -39,7 +39,7 @@
             alt=""
             src="../../assets/public/calendar-1.svg"
           />
-          <div class="check-in-date">Check in date</div>
+          <input placeholder="Check In Date" class="check-in-date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="fromDate" />
         </div>
 
         <div class="component-2">
@@ -48,7 +48,7 @@
             alt=""
             src="../../assets/public/calendar-1.svg"
           />
-          <div class="check-in-date">Check out date</div>
+          <input placeholder="Check Out Date" class="check-in-date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="toDate" />
         </div>
 
         <div class="component-3">
@@ -57,7 +57,7 @@
             alt=""
             src="../../assets/public/usersquare-12.svg"
           />
-          <div class="guests">Guests</div>
+          <input type="number" class="guests" placeholder="Guests" pattern="\d*" />
         </div>
       </div>
         

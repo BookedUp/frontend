@@ -545,7 +545,19 @@
     line-height: 140%;
     display: inline-block;
     width: 105px;
+    color: #828282;
     flex-shrink: 0;
+  }
+  .input-wrapper {
+    display: inline-block;
+  }
+  
+  input {
+    border: none;
+    outline: none;
+    background: none;
+    font-family: var(--font-adamina);
+    font-size: var(--font-size-mini);
   }
   .component-2,
   .component-4 {
@@ -555,6 +567,7 @@
     border-radius: var(--br-9xs);
     background-color: var(--gray-6);
     width: 170px;
+    height: 43px;
     display: flex;
     flex-direction: row;
     align-items: center;
