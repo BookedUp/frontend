@@ -3,206 +3,191 @@
   <body>
     <div class="search-unlogged">
 
-
       <div class="search-unlogged-child"></div>
       <div class="search-unlogged-item"></div>
 
       <app-header></app-header>
+      
+      <div id="filters">
+        <div id="main-search-box">
+          <div class="search-unlogged-child30"></div>
+          <div class="location-1-parent1">
+            <img class="location-1-icon16" alt="" src="../../assets/public/location-12.svg" />
+            <input type="text" class="melbourne3" placeholder={{place}}/>
+          </div>
+          
+          <div class="calendar-1-parent7">
+            <img class="location-1-icon16" alt="" src="../../assets/public/calendar-1.svg" />
+            <input placeholder={{fromDate}} class="feb-3-20229" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="fromDate" />
+          </div>
 
-      <div id="footer">
-        <b class="company19">Company</b>
-        <div class="about50">About</div>
-        <div class="jobs19">Jobs</div>
-        <div class="newsroom19">Newsroom</div>
-        <div class="advertising19">Advertising</div>
-        <div class="contact-us19">Contact us</div>
-        <div class="australia24">Australia</div>
-        <div class="privacy-policy19">Privacy Policy</div>
-        <div class="support19">Support</div>
-        <div class="new-zealand24">New Zealand</div>
-        <div class="terms-of-use20">Terms of use</div>
-        <div class="cancel-your-bookings19">Cancel your bookings</div>
-        <div class="united-states-america19">United States America (USA)</div>
-        <div class="acessibility19">Acessibility</div>
-        <div class="use-coupon19">Use Coupon</div>
-        <div class="greece21">Greece</div>
-        <div class="reward-system-policy19">Reward system policy</div>
-        <div class="refund-policies19">Refund Policies</div>
-        <div class="maldives19">Maldives</div>
-        <div class="international-travel-documents19">
-          International Travel Documents
+          <div class="calendar-2-parent7">
+            <img class="location-1-icon16" alt="" src="../../assets/public/calendar-2.svg" />
+            <input placeholder={{outDate}} class="feb-7-20229" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="toDate" />
+          </div>
+
+          <div class="user-square-1-parent7">
+          <img class="location-1-icon16" alt="" src="../../assets/public/usersquare-11.svg" />
+          <input type="number" class="adult-1-room14" placeholder={{guests}} pattern="\d*" />
+          </div>
         </div>
-        <div class="singapore19">Singapore</div>
-        <div class="see-more19">See more</div>
-        <b class="explore19">Explore</b>
-        <b class="terms-and-policies19">Terms and Policies</b>
-        <b class="help19">Help</b>
-        <div class="search-unlogged-inner"></div>
-        <div class="copyright-1-parent28">
-          <img class="copyright-1-icon30" alt="" src="../../assets/public/copyright-1.svg" />
-  
-          <div class="bookedup-202331">BookedUp 2023 | Team 19 FTN</div>
+
+          <div id="property-search-box">
+            <div class="search-unlogged-child10"></div>
+            <b class="search-by-property3">Search by property name</b>
+            <div class="search-1-parent1">
+              <img class="location-1-icon16" alt="" src="../../assets/public/search-1.svg" />
+              <input type="text" class="melbourne3" placeholder="eg. Beach westpalm"/>
+            </div>
+          </div>
+      
+          <div class="filter-by3">Filter by</div>
+
+          <div id="budget-filters">
+            <div class="search-unlogged-child9"></div>
+
+            <div class="div246">$ 0 - $ 50</div>
+            <div class="search-unlogged-child19"></div>
+
+            <div class="div249">$ 50 - $ 100</div>
+            <div class="search-unlogged-child21"></div>
+
+            <div class="div252">$ 100 - $ 1,000</div>
+            <div class="search-unlogged-child23"></div>
+
+            <div class="div255">$ 1,000 - $ 2,000</div>
+            <div class="search-unlogged-child25"></div>
+            
+            <div class="and-more3">$ 2,000 and more</div>
+            <div class="search-unlogged-child27"></div>
+
+            <div class="set-your-own3">Set your own budget</div>
+            <div class="your-budget-per-night-wrapper1">
+              <b class="your-budget-per3">Your budget per night</b>
+            </div>
+          </div>
+
+          <div id="popular-filters"> 
+            <div class="popular-filters-wrapper1">
+              <b class="your-budget-per3">Popular Filters</b>
+            </div>
+
+            <div class="free-cancellation3">Free cancellation</div>
+            <div class="search-unlogged-child20"></div>
+
+            <div class="spa3">Spa</div>
+            <div class="search-unlogged-child22"></div>
+
+            <div class="beach-front3">Beach front</div>
+            <div class="search-unlogged-child24"></div>
+
+            <div class="book-without-credit3">Book without credit card</div>
+            <div class="search-unlogged-child26"></div>
+
+            <div class="hot-tub-jacuzzi3">Hot tub/ jacuzzi</div>
+            <div class="search-unlogged-child28"></div>
+
+            <div class="no-prepayment3">No prepayment</div>
+            <div class="search-unlogged-child29"></div>
+          </div>
+      
+      </div>
+
+      <div id="apartment-type-filter" class="frame-parent45">
+        <div class="all-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'all-wrapper1' }" (click)="changeStyle('all-wrapper1')">
+          <b class="register1">All</b>
+        </div>
+        <div class="hotels-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'hotels-wrapper1' }" (click)="changeStyle('hotels-wrapper1')">
+          <div class="register1">Hotels</div>
+        </div>
+        <div class="hostels-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'hostels-wrapper1' }" (click)="changeStyle('hostels-wrapper1')">
+          <div class="register1">Hostels</div>
+        </div>
+        <div class="appartments-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'appartments-wrapper1' }" (click)="changeStyle('appartments-wrapper1')">
+          <div class="register1">Apartments</div>
+        </div>
+        <div class="resorts-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'resorts-wrapper1' }" (click)="changeStyle('resorts-wrapper1')">
+          <div class="register1">Resorts</div>
+        </div>
+        <div class="villas-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'villas-wrapper1' }" (click)="changeStyle('villas-wrapper1')">
+          <div class="register1">Villas</div>
+        </div>
+      </div>
+      
+      <div id="drop-down-sort-by" class="frame-parent46">
+        <div class="sort-by-parent1">
+          <b class="sort-by3">Sort by</b>
+          <div class="recommended3">Recommended</div>
         </div>
         <img
-          class="logo-with-slogan-16"
+          class="copyright-1-icon30"
           alt=""
-          src="../../assets/public/logo-with-slogan-2@2x.png"
+          src="../../assets/public/arrowdown-11.svg"
         />
       </div>
 
-      
-    <div id="frames-apartments">
-      <div class="search-unlogged-child1"></div>
-      <div class="search-unlogged-child2"></div>
-      <div class="search-unlogged-child3"></div>
-      <div class="search-unlogged-child4"></div>
-      <div class="search-unlogged-child5"></div>
-      <div class="search-unlogged-child6"></div>
-      <div class="search-unlogged-child7"></div>
-      <div class="search-unlogged-child8"></div>
-      <div class="search-unlogged-child9"></div>
-      <div class="search-unlogged-child10"></div>
-    </div>
-
-    <div id="picture-apartments">
-      <img
-        class="search-unlogged-child11"
-        alt=""
-        src="../../assets/public/rectangle-25@2x.png"
-        id="rectangleImage"
-      />
-
-      <img
-        class="search-unlogged-child12"
-        alt=""
-        src="../../assets/public/rectangle-51@2x.png"
-      />
-
-      <img
-        class="search-unlogged-child13"
-        alt=""
-        src="../../assets/public/rectangle-301@2x.png"
-      />
-
-      <img
-        class="search-unlogged-child14"
-        alt=""
-        src="../../assets/public/rectangle-52@2x.png"
-      />
-
-      <img
-        class="search-unlogged-child15"
-        alt=""
-        src="../../assets/public/rectangle-321@2x.png"
-      />
-
-      <img
-        class="search-unlogged-child16"
-        alt=""
-        src="../../assets/public/rectangle-62@2x.png"
-      />
-
-      <img
-        class="search-unlogged-child17"
-        alt=""
-        src="../../assets/public/rectangle-34@2x.png"
-      />
-
-      <img
-        class="search-unlogged-child18"
-        alt=""
-        src="../../assets/public/rectangle-63@2x.png"
-      />
-    </div>
- 
-    <div id="filters">
-      <div id="main-search-box">
-        <div class="search-unlogged-child30"></div>
-        <div class="location-1-parent1">
-          <img class="location-1-icon16" alt="" src="../../assets/public/location-12.svg" />
-          <div class="melbourne3">Melbourne</div>
-        </div>
-        
-        <div class="calendar-1-parent7">
-          <img class="location-1-icon16" alt="" src="../../assets/public/calendar-1.svg" />
-          <div class="feb-3-20229">Feb 3, 2022</div>
-        </div>
-
-        <div class="calendar-2-parent7">
-          <img class="location-1-icon16" alt="" src="../../assets/public/calendar-2.svg" />
-          <div class="feb-7-20229">Feb 7, 2022</div>
-        </div>
-
-        <div class="user-square-1-parent7">
-        <img class="location-1-icon16" alt="" src="../../assets/public/usersquare-11.svg" />
-        <div class="adult-1-room14">2 adult, 1 room</div>
+      <div id="frames-apartments">
+        <div class="search-unlogged-child1"></div>
+        <div class="search-unlogged-child2"></div>
+        <div class="search-unlogged-child3"></div>
+        <div class="search-unlogged-child4"></div>
+        <div class="search-unlogged-child5"></div>
+        <div class="search-unlogged-child6"></div>
+        <div class="search-unlogged-child7"></div>
+        <div class="search-unlogged-child8"></div>
       </div>
 
-      <div id="property-search-box">
-        <b class="search-by-property3">Search by property name</b>
-        <div class="search-1-parent1">
-          <img class="location-1-icon16" alt="" src="../../assets/public/search-1.svg" />
-          <input type="text" class="melbourne3" placeholder="eg. Beach westpalm"/>
-        </div>
+      <div id="picture-apartments">
+        <img
+          class="search-unlogged-child11"
+          alt=""
+          src="../../assets/public/rectangle-25@2x.png"
+          id="rectangleImage"
+        />
+
+        <img
+          class="search-unlogged-child12"
+          alt=""
+          src="../../assets/public/rectangle-51@2x.png"
+        />
+
+        <img
+          class="search-unlogged-child13"
+          alt=""
+          src="../../assets/public/rectangle-301@2x.png"
+        />
+
+        <img
+          class="search-unlogged-child14"
+          alt=""
+          src="../../assets/public/rectangle-52@2x.png"
+        />
+
+        <img
+          class="search-unlogged-child15"
+          alt=""
+          src="../../assets/public/rectangle-321@2x.png"
+        />
+
+        <img
+          class="search-unlogged-child16"
+          alt=""
+          src="../../assets/public/rectangle-62@2x.png"
+        />
+
+        <img
+          class="search-unlogged-child17"
+          alt=""
+          src="../../assets/public/rectangle-34@2x.png"
+        />
+
+        <img
+          class="search-unlogged-child18"
+          alt=""
+          src="../../assets/public/rectangle-63@2x.png"
+        />
       </div>
-   
-      <div class="filter-by3">Filter by</div>
-
-      <div id="budget-filters">
-        <div class="div246">$ 0 - $ 50</div>
-
-        <div class="div249">$ 50 - $ 100</div>
-        <div class="search-unlogged-child21"></div>
-
-        <div class="div252">$ 100 - $ 1,000</div>
-        <div class="search-unlogged-child23"></div>
-
-        <div class="div255">$ 1,000 - $ 2,000</div>
-        <div class="search-unlogged-child25"></div>
-        
-        <div class="and-more3">$ 2,000 and more</div>
-        <div class="search-unlogged-child27"></div>
-
-        <div class="set-your-own3">Set your own budget</div>
-        <div class="your-budget-per-night-wrapper1">
-          <b class="your-budget-per3">Your budget per night</b>
-        </div>
-      </div>
-
-      <div id="popular-filters"> 
-        <div class="popular-filters-wrapper1">
-          <b class="your-budget-per3">Popular Filters</b>
-        </div>
-
-        <div class="free-cancellation3">Free cancellation</div>
-        <div class="search-unlogged-child20"></div>
-
-        <div class="spa3">Spa</div>
-        <div class="search-unlogged-child22"></div>
-
-        <div class="beach-front3">Beach front</div>
-        <div class="search-unlogged-child24"></div>
-
-        <div class="book-without-credit3">Book without credit card</div>
-        <div class="search-unlogged-child26"></div>
-
-        <div class="hot-tub-jacuzzi3">Hot tub/ jacuzzi</div>
-        <div class="search-unlogged-child28"></div>
-
-        <div class="no-prepayment3">No prepayment</div>
-        <div class="search-unlogged-child29"></div>
-      </div>
-    
-    </div>
-
-      <!-- <input type="checkbox" [(ngModel)]="isChecked" class="hidden-checkbox" />
-      <div (click)="toggleCheckbox()" [class.checked]="isChecked" class="search-unlogged-child19">
-        <i class="fas fa-check"></i>
-      </div> -->
-      
-    </div>
-
-    
+  
       <div id="list-apartments">
         <div class="melbourne-17583">Melbourne : 1,758 search results found</div>
 
@@ -401,36 +386,44 @@
         </div>
       </div>
 
-      <div id="apartment-type-filter" class="frame-parent45">
-        <div class="all-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'all-wrapper1' }" (click)="changeStyle('all-wrapper1')">
-          <b class="register1">All</b>
+      <div id="footer">
+        <b class="company19">Company</b>
+        <div class="about50">About</div>
+        <div class="jobs19">Jobs</div>
+        <div class="newsroom19">Newsroom</div>
+        <div class="advertising19">Advertising</div>
+        <div class="contact-us19">Contact us</div>
+        <div class="australia24">Australia</div>
+        <div class="privacy-policy19">Privacy Policy</div>
+        <div class="support19">Support</div>
+        <div class="new-zealand24">New Zealand</div>
+        <div class="terms-of-use20">Terms of use</div>
+        <div class="cancel-your-bookings19">Cancel your bookings</div>
+        <div class="united-states-america19">United States America (USA)</div>
+        <div class="acessibility19">Acessibility</div>
+        <div class="use-coupon19">Use Coupon</div>
+        <div class="greece21">Greece</div>
+        <div class="reward-system-policy19">Reward system policy</div>
+        <div class="refund-policies19">Refund Policies</div>
+        <div class="maldives19">Maldives</div>
+        <div class="international-travel-documents19">
+          International Travel Documents
         </div>
-        <div class="hotels-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'hotels-wrapper1' }" (click)="changeStyle('hotels-wrapper1')">
-          <div class="register1">Hotels</div>
-        </div>
-        <div class="hostels-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'hostels-wrapper1' }" (click)="changeStyle('hostels-wrapper1')">
-          <div class="register1">Hostels</div>
-        </div>
-        <div class="appartments-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'appartments-wrapper1' }" (click)="changeStyle('appartments-wrapper1')">
-          <div class="register1">Apartments</div>
-        </div>
-        <div class="resorts-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'resorts-wrapper1' }" (click)="changeStyle('resorts-wrapper1')">
-          <div class="register1">Resorts</div>
-        </div>
-        <div class="villas-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'villas-wrapper1' }" (click)="changeStyle('villas-wrapper1')">
-          <div class="register1">Villas</div>
-        </div>
-      </div>
-      
-      <div id="drop-down-sort-by" class="frame-parent46">
-        <div class="sort-by-parent1">
-          <b class="sort-by3">Sort by</b>
-          <div class="recommended3">Recommended</div>
+        <div class="singapore19">Singapore</div>
+        <div class="see-more19">See more</div>
+        <b class="explore19">Explore</b>
+        <b class="terms-and-policies19">Terms and Policies</b>
+        <b class="help19">Help</b>
+        <div class="search-unlogged-inner"></div>
+        <div class="copyright-1-parent28">
+          <img class="copyright-1-icon30" alt="" src="../../assets/public/copyright-1.svg" />
+  
+          <div class="bookedup-202331">BookedUp 2023 | Team 19 FTN</div>
         </div>
         <img
-          class="copyright-1-icon30"
+          class="logo-with-slogan-16"
           alt=""
-          src="../../assets/public/arrowdown-11.svg"
+          src="../../assets/public/logo-with-slogan-2@2x.png"
         />
       </div>
 
