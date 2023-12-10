@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-main-page',
@@ -7,10 +7,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-main-page.component.css', '../../styles.css']
 })
 export class UserMainPageComponent implements OnInit {
+  userRole: string = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    
+    // Retrieve the role from the query parameters
+    this.route.queryParams.subscribe(params => {
+      this.userRole = params['role'];
+    });
   }
 }
+
