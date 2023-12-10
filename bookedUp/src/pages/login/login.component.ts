@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     var continueEmail = document.getElementById("continueEmail");
     if (continueEmail) {
       continueEmail.addEventListener("click", () => {
-        this.router.navigate(['/user-main-page']);
+        this.login();
       });
     }
 
@@ -36,6 +36,27 @@ export class LoginComponent implements OnInit {
   }
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  login() {
+    const emailInput = document.querySelector('.email-address21') as HTMLInputElement;
+    const passwordInput = document.querySelector('.enter-password4') as HTMLInputElement;
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
+    if (email === 'admin' && password === 'admin') {
+      // Redirect to the admin page
+    this.router.navigate(['/user-main-page'], { queryParams: { role: 'admin' } });
+    } else if (email === 'host' && password === 'host') {
+      // Redirect to the host page
+    this.router.navigate(['/user-main-page'], { queryParams: { role: 'host' } });
+    } else if (email === 'guest' && password === 'guest') {
+      // Redirect to the guest page
+    this.router.navigate(['/user-main-page'], { queryParams: { role: 'guest' } });
+    } else {
+      alert('Incorrect email or password');
+    }
   }
 
 }
