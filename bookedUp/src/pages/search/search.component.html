@@ -45,6 +45,9 @@
 
           <div id="budget-filters">
             <div class="search-unlogged-child9"></div>
+            <div class="your-budget-per-night-wrapper1">
+              <b class="your-budget-per3">Budget Filters</b>
+            </div>
 
             <div class="div246">$ 0 - $ 50</div>
             <div class="keep-me-signed-in-parent-19">
@@ -76,10 +79,13 @@
               <div class="group-child117"></div>
             </div>
 
-            <div class="set-your-own3">Set your own budget</div>
-            <div class="your-budget-per-night-wrapper1">
-              <b class="your-budget-per3">Your budget per night</b>
-            </div>
+            <div class="budget-slider">
+              <label for="budget">Custom:</label>
+              <input type="range" id="budget" [(ngModel)]="customBudget" (input)="updateBudget()"  min="0" max="5000" step="5"/>
+              <span>{{ customBudget }}</span>
+            </div>              
+
+            
           </div>
 
           <div id="popular-filters"> 
@@ -128,7 +134,7 @@
 
       <div id="apartment-type-filter" class="frame-parent45">
         <div class="all-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'all-wrapper1' }" (click)="changeStyle('all-wrapper1')">
-          <b class="register1">All</b>
+          <div class="register1">All</div>
         </div>
         <div class="hotels-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'hotels-wrapper1' }" (click)="changeStyle('hotels-wrapper1')">
           <div class="register1">Hotels</div>
@@ -145,18 +151,6 @@
         <div class="villas-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'villas-wrapper1' }" (click)="changeStyle('villas-wrapper1')">
           <div class="register1">Villas</div>
         </div>
-      </div>
-      
-      <div id="drop-down-sort-by" class="frame-parent46">
-        <div class="sort-by-parent1">
-          <b class="sort-by3">Sort by</b>
-          <div class="recommended3">Recommended</div>
-        </div>
-        <img
-          class="copyright-1-icon30"
-          alt=""
-          src="../../assets/public/arrowdown-11.svg"
-        />
       </div>
 
       <div id="frames-apartments">
