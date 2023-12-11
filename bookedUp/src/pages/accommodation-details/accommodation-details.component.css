@@ -47,7 +47,7 @@
     left: 0;
     background-color: var(--color-white);
     width: 1440px;
-    height: 68px;
+    height: 80px;
   }
   .home29 {
     position: relative;
@@ -607,7 +607,7 @@
   }
   .ad-unlogged-child15 {
     position: absolute;
-    top: 1894px;
+    top: 1393px;
     left: 0;
     background-color: var(--color-whitesmoke-400);
     width: 1440px;
@@ -626,7 +626,7 @@
   }
   .copyright-1-parent27 {
     position: absolute;
-    top: 1906px;
+    top: 1405px;
     left: 553px;
     height: 18px;
     display: flex;
@@ -639,7 +639,7 @@
     position: relative;
     background-color: var(--color-whitesmoke-100);
     width: 100%;
-    height: 1935px;
+    height: 1435px;
     overflow: hidden;
     text-align: left;
     font-size: var(--font-size-sm);
