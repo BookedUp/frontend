@@ -27,11 +27,11 @@ export class HeaderHostComponent {
   }
 
   navigateToMyAmenities(): void {
-    this.router.navigate(['/'], { queryParams: { role: 'host' } });
+    this.router.navigate(['/accommodations'], { queryParams: { role: 'host' } });
   }
 
   navigateToReservations(): void {
-    this.router.navigate(['/'], { queryParams: { role: 'host' } });
+    this.router.navigate(['/reservation-requests'], { queryParams: { role: 'host' } });
   }
 
   navigateToComments(): void {
