@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -16,24 +16,27 @@ export class SearchComponent implements OnInit {
   selectedClass: string = 'all-wrapper1';
   customBudget: number = 50;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-
-    var rectangleImage = document.getElementById("rectangleImage");
-    if (rectangleImage) {
-      rectangleImage.addEventListener("click", () => {
-        this.router.navigate(['/accommodation-details']);
-      });
-    }
-
     var frameContainer19 = document.getElementById("frameContainer19");
     if (frameContainer19) {
       frameContainer19.addEventListener("click", () => {
-        this.router.navigate(['/accommodation-details']);
-      });
+          const roleParam = this.route.snapshot.queryParams['role'];
+
+          if (roleParam === 'admin') {
+            this.router.navigate(['/accommodation-details'], { queryParams: { role: 'admin' } });
+          } else if (roleParam === 'host') {
+            this.router.navigate(['/accommodation-details'], { queryParams: { role: 'host' } });
+          } else if (roleParam === 'guest') {
+            this.router.navigate(['/accommodation-details'], { queryParams: { role: 'guest' } });
+          } else {
+            this.router.navigate(['/accommodation-details']);
+          }
+        });
+      }
     }
-  }
+  
   
   updateBudget(): void {
     // Handle any additional logic when the budget is updated
@@ -46,9 +49,7 @@ export class SearchComponent implements OnInit {
 
   changeStyle(className: string): void {
     this.selectedClass = className;
-}
-
-
+  }
 
 }
 
