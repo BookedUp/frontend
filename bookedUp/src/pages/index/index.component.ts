@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccommodationService } from '../../app/core/services/accommodation.service';
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-index',
@@ -20,12 +21,12 @@ export class IndexComponent implements OnInit {
                 const roleParam = this.route.snapshot.queryParams['role'];
                 const location = (document.getElementById("locationTxt") as HTMLInputElement).value;
                 const guestNumber = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10);
-                
+
                 const fromDateInput = document.getElementById("fromDate") as HTMLInputElement;
                 console.log("from date: ", fromDateInput);
 
                 const selectedFromDate = new Date(fromDateInput.value);
-          
+
                 const toDateInput = document.getElementById("toDate") as HTMLInputElement;
                 const selectedToDate = new Date(toDateInput.value);
 
