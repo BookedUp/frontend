@@ -9,35 +9,38 @@ import { Observable } from 'rxjs';
   styleUrls: ['./accommodation-requests.component.css', '../../styles.css']
 })
 export class AccommodationRequestsComponent implements OnInit{
-  stars: string[] = [];
   accommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
-  
+  selectedClass: string = 'all-accommodations';
   constructor(private accommodationService: AccommodationService) { }
 
   ngOnInit(): void {
     this.colorAccommodationFrame();
     this.accommodations = this.accommodationService.getAllModifiedAccommodations();
-    //this.generateStars();
-    console.log("accommodations, ", this.accommodations);
-  
   }
 
   private colorAccommodationFrame(){
 
   }
 
-  private generateStars() {
-    const ratingElement = document.getElementById("reviews-average");
-    const rating = parseFloat(ratingElement!.innerText);
-    console.log(rating);
+  generateStars(rating: number): string[] {
+    const stars: string[] = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
-        this.stars.push('★');
+        stars.push('★');
       } else if (i - 0.5 === rating) {
-        this.stars.push('✯');
+        stars.push('✯');
       } else {
-        this.stars.push('☆');
+        stars.push('☆');
       }
     }
+    return stars;
+  }
+
+  roundHalf(value: number): number {
+    return Math.round(value * 2) / 2;
+  }
+
+  changeStyle(className: string): void {
+    this.selectedClass = className;
   }
 }

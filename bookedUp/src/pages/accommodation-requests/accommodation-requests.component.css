@@ -8,7 +8,8 @@
   text-align: left;
   font-size: var(--font-size-2xs);
   color: var(--gray-2);
-  font-family: var(--font-sansation);
+  font-family: var(--font-sansation); 
+  flex-direction: column;
 }
 .amenities-admin-child {
   position: absolute;
@@ -45,9 +46,14 @@
   left: 519px;
   letter-spacing: 0.02em;
 }
-
+.clicked {
+  color: var(--blue-1);
+  font-weight: bold;
+}
 .main-content{
   position: relative;
+  margin-top: 105px;
+  padding-bottom: 50px;
   left: 0;
   width: 100%;
   height: auto;
@@ -55,16 +61,18 @@
 }
 .acc-frame {
   position: relative;
-  top: 105px;
   left: 15%;
   border-radius: var(--br-8xs);
-  background-color: var(--color-lemonchiffon-100);
+  background-color: #ffffe0;
   border: 1px solid var(--gray-5);
   box-sizing: border-box;
   width: 70%;
   height: 240px;
   display: flex;
   margin-bottom: 20px;
+}
+.created-status {
+  background-color: #d1ded7;
 }
 .accommodation-image {
   position: absolute;
@@ -112,27 +120,30 @@
 .reviews-frame {
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
+}
+.stars-container,
+.reviews-average {
+  font-size: (--font-size-xl);
 }
 .stars-container {
-  display: inline-block;
-  font-size: 20px;
   color: var(--blue-1);
 }
 .star {
   display: inline-block;
   margin-right: 2px;
 }
-.reviews,
 .location-text {
   font-size: var(--font-size-sm);
 }
-.reviews,
+.reviews-average,
 .location-text {
   margin-left: 2px;
 }
 .location-frame{
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
 }
 .location-icon {
   width: 20px;
@@ -140,6 +151,13 @@
 }
 .location-text {
   color: var(--gray-1);
+}
+.status-text,
+.created-status-text{
+  color: var(--gray-1);
+}
+.created-status-text{
+  color: var(--color-seagreen-100);
 }
 .right-buttons{
   top: 20%;
@@ -154,7 +172,6 @@
 .reject-button,
 .view-details-button {
   border-radius: var(--br-7xs);
-  background-color: var(--color-firebrick);
   width: 100%;
   display: flex;
   flex-direction: row;

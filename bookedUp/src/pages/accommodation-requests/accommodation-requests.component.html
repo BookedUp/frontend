@@ -6,13 +6,19 @@
         <app-header-admin></app-header-admin>
       
         <div id="sort-bar" class="sort-bar">
-            <div class="all-accommodations">All Accommodations</div>
-            <div class="new-accommodations">New Accommodations</div>
-            <div class="changed-accommodations">Changed Accommodations</div>
+            <div class="all-accommodations" [ngClass]="{ 'clicked': selectedClass === 'all-accommodations' }" (click)="changeStyle('all-accommodations')">
+              All Accommodations
+            </div>
+            <div class="new-accommodations" [ngClass]="{ 'clicked': selectedClass === 'new-accommodations' }" (click)="changeStyle('new-accommodations')">
+              New Accommodations
+            </div>
+            <div class="changed-accommodations" [ngClass]="{ 'clicked': selectedClass === 'changed-accommodations' }" (click)="changeStyle('changed-accommodations')">
+              Changed Accommodations
+            </div>
         </div>
 
         <div class="main-content" id="main-content">
-            <div *ngFor="let accommodation of accommodations | async" class="acc-frame">
+          <div *ngFor="let accommodation of accommodations | async" class="acc-frame" [ngClass]="{'created-status': accommodation.status === 'CREATED'}">
               <img
                 class="accommodation-image"
                 alt=""
@@ -25,23 +31,24 @@
           
                   <div class="reviews-frame">
                     <div class="stars-container">
-                      <span class="star" *ngFor="let star of stars">
+                      <span class="star" *ngFor="let star of generateStars(roundHalf(accommodation.averageRating/2))">
                         {{ star }}
                       </span>
                     </div>
-                    <div class="reviews-average">{{ accommodation.averageRating }}</div>
-                    <!-- <div class="reviews-number">({{ accommodation.reviewCount }} Reviews)</div> -->
+                    <div class="reviews-average">{{ roundHalf(accommodation.averageRating/2) }}</div>
                   </div>
           
                   <div class="location-frame">
                     <img class="location-icon" alt="" src="../../assets/public/location-1.svg" />
-                    <div class="location-text">{{ accommodation.address }}</div>
+                    <div class="location-text">{{ accommodation.address.streetAndNumber }}, {{accommodation.address.city}} {{accommodation.address.postalCode}}, {{ accommodation.address.city }}</div>
                   </div>
+                  
+                  <b class="status-text" [ngClass]="{'created-status-text': accommodation.status === 'CREATED'}">{{ accommodation.status }}</b>
                 </div>
           
                 <div class="bottom-data-box">
                     <div class="includes-taxes">Includes taxes and fees</div>
-                    <b class="per-night">{{ accommodation.price }}/per night</b>
+                    <b class="per-night">{{ accommodation.price }}$/per night</b>
                 </div>
               </div>
           
