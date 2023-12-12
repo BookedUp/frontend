@@ -1,0 +1,68 @@
+<html>
+<body>
+    <div class="amenities-admin">
+
+        <div class="amenities-admin-child"></div>
+        <app-header-admin></app-header-admin>
+      
+        <div id="sort-bar" class="sort-bar">
+            <div class="all-accommodations">All Accommodations</div>
+            <div class="new-accommodations">New Accommodations</div>
+            <div class="changed-accommodations">Changed Accommodations</div>
+        </div>
+
+        <div class="main-content" id="main-content">
+
+            <div class="acc-frame">
+                <img id="accommodation-image" class="accommodation-image" alt="" src="../../assets/public/rectangle-32@2x.png" />
+
+                <div id="left-data" class="left-data">
+
+                    <div id="top-box" class="top-data-box">
+                        <b class="title" id="title">Lakeside Motel Warefront</b>
+
+                        <div id="reviews" class="reviews-frame">
+                            <div class="stars-container">
+                                <span class="star" *ngFor="let star of stars">
+                                  {{ star }}
+                                </span>
+                            </div>
+                            <div id="reviews-average" class="reviews">4.5</div>
+                            <div id="reviews-number" class="reviews">(1200 Reviews)</div>
+                        </div>
+    
+                        <div id="location" class="location-frame">
+                            <img class="location-icon" alt="" src="../../assets/public/location-1.svg" />
+                            <div class="location-text"> Lorem ipsum road, Tantruim-2322, Melbourne, Australia </div>
+                        </div>
+                    </div>
+                    
+                    <div id="bottom-box" class="bottom-data-box">
+                        <div class="includes-taxes">Includes taxes and fees</div>
+                        <b id="price" class="per-night">$130/per night</b>
+                    </div>
+
+                </div>
+
+                <div id="right-buttons" class="right-buttons">
+                    <div class="accept-button" id="accept-button">
+                        <b class="button-text">Accept</b>
+                    </div>
+                    <div class="reject-button" id="reject-button">
+                        <b class="button-text">Reject</b>
+                    </div>
+                    <div class="view-details-button" id="view-details-button">
+                        <b class="button-text">View Details</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer" class="footer-acc">
+            <img class="copyright-1-icon" alt="" src="../../assets/public/copyright-1.svg" />
+            <div class="bookedup-2023">BookedUp 2023 | Team 19 FTN</div>
+        </div>
+
+    </div>
+  </body>
+</html>
