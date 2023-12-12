@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AccommodationService } from '../../app/core/services/accommodation.service';
+import { Accommodation } from '../../app/core/model/Accommodation';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-accommodation-requests',
@@ -7,9 +10,20 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AccommodationRequestsComponent implements OnInit{
   stars: string[] = [];
+  accommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
+  
+  constructor(private accommodationService: AccommodationService) { }
 
   ngOnInit(): void {
-    this.generateStars();
+    this.colorAccommodationFrame();
+    this.accommodations = this.accommodationService.getAllModifiedAccommodations();
+    //this.generateStars();
+    console.log("accommodations, ", this.accommodations);
+  
+  }
+
+  private colorAccommodationFrame(){
+
   }
 
   private generateStars() {

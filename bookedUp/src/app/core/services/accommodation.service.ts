@@ -84,7 +84,4 @@ export class AccommodationService {
     return this.http.get<Accommodation[]>(`${this.apiUrl}/filter`, { params });
   }
 
-  // Dodatne metode prema potrebama vašeg backenda
-
-
 }
