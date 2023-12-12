@@ -18,17 +18,19 @@ export class IndexComponent implements OnInit {
         if (searchButton) {
             searchButton.addEventListener("click", () => {
                 const roleParam = this.route.snapshot.queryParams['role'];
-                const location = document.getElementById("locationTxt") as HTMLInputElement;
-                const guestNumber = document.getElementById("guestNumberTxt") as HTMLInputElement;
+                const location = (document.getElementById("locationTxt") as HTMLInputElement).value;
+                const guestNumber = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10);
                 
                 const fromDateInput = document.getElementById("fromDate") as HTMLInputElement;
-                const selectedFromDate = fromDateInput.value;
+                console.log("from date: ", fromDateInput);
+
+                const selectedFromDate = new Date(fromDateInput.value);
           
                 const toDateInput = document.getElementById("toDate") as HTMLInputElement;
-                const selectedToDate = toDateInput.value;
+                const selectedToDate = new Date(toDateInput.value);
 
 
-                this.accommodationService.searchAccommodations(location, selectedFromDate, selectedToDate, guestNumber)
+                this.accommodationService.searchAccommodations(location, guestNumber, selectedFromDate, selectedToDate)
                     .subscribe((results) => {
                         if (roleParam === 'admin') {
                             this.router.navigate(['/search'], { queryParams: { role: 'admin', location: location } });
