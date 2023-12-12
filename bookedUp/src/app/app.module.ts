@@ -25,6 +25,8 @@ import { AccommodationsComponent } from '../pages/accommodations/accommodations.
 import { CreateAccommodationComponent } from '../pages/create-accommodation/create-accommodation.component';
 import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
 
+import { HttpClientModule} from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +54,7 @@ import { ReservationRequestsComponent } from '../pages/reservation-requests/rese
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
