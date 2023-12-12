@@ -27,7 +27,7 @@ export class HeaderAdminComponent {
   }
 
   navigateToAmenities(): void {
-    this.router.navigate(['/accommodation-requests']);
+    this.router.navigate(['/accommodation-requests'], { queryParams: { filter: 'all' } });
   }
 
   navigateToHome(): void {

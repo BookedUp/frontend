@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AccommodationService } from '../../app/core/services/accommodation.service';
+import { Router, ActivatedRoute} from '@angular/router';
 import { Accommodation } from '../../app/core/model/Accommodation';
 import { Observable } from 'rxjs';
 
@@ -11,15 +12,36 @@ import { Observable } from 'rxjs';
 export class AccommodationRequestsComponent implements OnInit{
   accommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
   selectedClass: string = 'all-accommodations';
-  constructor(private accommodationService: AccommodationService) { }
+  filter: string = 'all';
+  constructor(private accommodationService: AccommodationService, private router: Router, private route: ActivatedRoute) { }
+
 
   ngOnInit(): void {
-    this.colorAccommodationFrame();
-    this.accommodations = this.accommodationService.getAllModifiedAccommodations();
+    this.route.queryParams.subscribe(params => {
+      this.filter = params['filter'] || 'all';
+      this.loadAccommodations();
+    });
   }
 
-  private colorAccommodationFrame(){
+  changeStyle(className: string): void {
+    this.selectedClass = className;
+    if (className === 'changed-accommodations') {
+      this.router.navigate(['/accommodation-requests'], { queryParams: { filter: 'changed' } });
+    } else if (className === 'new-accommodations') {
+      this.router.navigate(['/accommodation-requests'], { queryParams: { filter: 'new' } });
+    } else {
+      this.router.navigate(['/accommodation-requests'], { queryParams: { filter: 'all' } });
+    }
+  }
 
+  private loadAccommodations(): void {
+    if (this.filter === 'all') {
+      this.accommodations = this.accommodationService.getAllModifiedAccommodations();
+    } else if (this.filter === 'new') {
+      this.accommodations = this.accommodationService.getAllCreatedAccommodations();
+    } else {
+      this.accommodations = this.accommodationService.getAllChangedAccommodations();
+    }
   }
 
   generateStars(rating: number): string[] {
@@ -38,9 +60,5 @@ export class AccommodationRequestsComponent implements OnInit{
 
   roundHalf(value: number): number {
     return Math.round(value * 2) / 2;
-  }
-
-  changeStyle(className: string): void {
-    this.selectedClass = className;
   }
 }
