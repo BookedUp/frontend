@@ -13,13 +13,16 @@
               Waiting For Approval
             </div>
             <div class="accepted-reservation" [ngClass]="{ 'clicked': selectedClass === 'accepted-reservation' }" (click)="changeStyle('accepted-reservation')">
-              Accepted Reservations
+              Accepted
             </div>
             <div class="rejected-reservation" [ngClass]="{ 'clicked': selectedClass === 'rejected-reservation' }" (click)="changeStyle('rejected-reservation')">
-              Rejected Reservations
+              Rejected
+            </div>
+            <div class="cancelled-reservation" [ngClass]="{ 'clicked': selectedClass === 'cancelled-reservation' }" (click)="changeStyle('cancelled-reservation')">
+              Cancelled
             </div>
             <div class="finished-reservation" [ngClass]="{ 'clicked': selectedClass === 'finished-reservation' }" (click)="changeStyle('finished-reservation')">
-              Finished Reservations
+              Finished
             </div>
         </div>
 

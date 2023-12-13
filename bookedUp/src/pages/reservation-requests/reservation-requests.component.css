@@ -43,19 +43,26 @@
 .accepted-reservation {
   position: absolute;
   top: 16px;
-  left: 460px;
+  left: 445px;
   letter-spacing: 0.02em;
 }
 .rejected-reservation {
   position: absolute;
   top: 16px;
-  left: 670px;
+  left: 538px;
   letter-spacing: 0.02em;
 }
+.cancelled-reservation {
+  position: absolute;
+  top: 16px;
+  left: 625px;
+  letter-spacing: 0.02em;
+}
+
 .finished-reservation {
   position: absolute;
   top: 16px;
-  left: 870px;
+  left: 715px;
   letter-spacing: 0.02em;
 }
 .clicked {

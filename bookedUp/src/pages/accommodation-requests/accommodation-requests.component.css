@@ -8,7 +8,7 @@
   text-align: left;
   font-size: var(--font-size-2xs);
   color: var(--gray-2);
-  font-family: var(--font-sansation); 
+  font-family: var(--font-sansation);
   flex-direction: column;
 }
 .amenities-admin-child {
@@ -124,7 +124,7 @@
 }
 .stars-container,
 .reviews-average {
-  font-size: (--font-size-xl);
+  font-size: var(--font-size-xl);
 }
 .stars-container {
   color: var(--blue-1);

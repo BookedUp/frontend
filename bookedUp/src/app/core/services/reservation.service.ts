@@ -25,7 +25,7 @@ export class ReservationService {
     return this.http.get<Reservation[]>(`${this.apiUrl}/host/${hostId}`);
   }
 
-  getReservationsCreatedByHostId(hostId: number): Observable<Reservation[]> {
+  getCreatedReservationsByHostId(hostId: number): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(`${this.apiUrl}/host/${hostId}/created`);
   }
 

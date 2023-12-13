@@ -28,14 +28,16 @@ export class ReservationRequestsComponent implements OnInit {
 
   changeStyle(className: string): void {
     this.selectedClass = className;
-    if (className === 'waiting-accommodations') {
+    if (className === 'waiting-reservation') {
       this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'waiting' } });
-    } else if (className === 'accepted-accommodations') {
+    } else if (className === 'accepted-reservation') {
       this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'accepted' } });
-    } else if (className === 'rejected-accommodations') {
+    } else if (className === 'rejected-reservation') {
       this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'rejected' } });
-    } else if (className === 'finished-accommodations') {
+    } else if (className === 'finished-reservation') {
       this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'finished' } });
+    } else if (className === 'cancelled-reservation') {
+      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'cancelled' } });
     } else {
       this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'all' } });
     }
@@ -62,16 +64,19 @@ export class ReservationRequestsComponent implements OnInit {
     //this.reservations = this.reservationService.getReservationsByHostId(2);
 
     if (this.filter === 'waiting') {
-      this.reservations = this.reservationService.getReservationsCreatedByHostId(2);
+      this.reservations = this.reservationService.getCreatedReservationsByHostId(2);
     } else if (this.filter === 'accepted') {
       this.reservations = this.reservationService.getAcceptedReservationsByHostId(2);
     } else if (this.filter === 'rejected') {
       this.reservations = this.reservationService.getRejectedReservationsByHostId(2);
     } else if (this.filter === 'finished') {
       this.reservations = this.reservationService.getCompletedReservationsByHostId(2);
-    }
-    else {
+    } else if (this.filter === 'cancelled') {
       this.reservations = this.reservationService.getCancelledReservationsByHostId(2);
+    }
+
+    else {
+      this.reservations = this.reservationService.getReservationsByHostId(2);
     }
   }
 
