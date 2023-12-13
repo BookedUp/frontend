@@ -78,7 +78,7 @@
   <div id="popular-hotels-main">
     <div class="popular-hotels">Popular hotels</div>
 
-    <div class="card1" *ngFor="let accommodation of popularAccommodations | async">
+    <div class="card1" *ngFor="let accommodation of popularAccommodations | async" (click)="navigateToDetails(accommodation.id)">
       <img class="image-icon" alt="" [src]="accommodation.photos[0].url" />
 
       <div class="information">

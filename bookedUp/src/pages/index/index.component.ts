@@ -72,4 +72,8 @@ export class IndexComponent implements OnInit {
     roundHalf(value: number): number {
         return Math.round(value * 2) / 2;
     }
+
+  navigateToDetails(id: number) {
+    this.router.navigate(['/accommodation-details', id]);
+  }
 }
