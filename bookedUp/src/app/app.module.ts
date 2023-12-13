@@ -24,6 +24,8 @@ import { AppComponent } from './app.component';
 import { AccommodationsComponent } from '../pages/accommodations/accommodations.component';
 import { CreateAccommodationComponent } from '../pages/create-accommodation/create-accommodation.component';
 import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
+import { MatCardModule } from '@angular/material/card';
+
 
 import { HttpClientModule} from '@angular/common/http';
 
@@ -54,7 +56,8 @@ import { HttpClientModule} from '@angular/common/http';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

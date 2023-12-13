@@ -13,7 +13,7 @@
           <div class="search-unlogged-child30"></div>
           <div class="location-1-parent1">
             <img class="location-1-icon16" alt="" src="../../assets/public/location-12.svg" />
-            <input type="text" class="melbourne3" placeholder={{place}}/>
+            <input type="text" class="melbourne3" placeholder={{location}}/>
           </div>
           
           <div class="calendar-1-parent7">
@@ -51,31 +51,31 @@
 
             <div class="div246">$ 0 - $ 50</div>
             <div class="keep-me-signed-in-parent-19">
-              <input type="checkbox" id="keepMeSignedIn" class="keep-me-signed-checkbox" />
+              <input type="radio" id="0-50" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '0-50')"/>
               <div class="group-child117"></div>
             </div>
 
             <div class="div249">$ 50 - $ 100</div>
             <div class="keep-me-signed-in-parent-21">
-              <input type="checkbox" id="keepMeSignedIn" class="keep-me-signed-checkbox" />
+              <input type="radio" id="50-100" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '50-100')"/>
               <div class="group-child117"></div>
             </div>
 
-            <div class="div252">$ 100 - $ 1,000</div>
+            <div class="div252">$ 100 - $ 150</div>
             <div class="keep-me-signed-in-parent-23">
-              <input type="checkbox" id="keepMeSignedIn" class="keep-me-signed-checkbox" />
+              <input type="radio" id="100-150" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '100-150')"/>
               <div class="group-child117"></div>
             </div>
 
             <div class="div255">$ 1,000 - $ 2,000</div>
             <div class="keep-me-signed-in-parent-25">
-              <input type="checkbox" id="keepMeSignedIn" class="keep-me-signed-checkbox" />
+              <input type="radio" id="1000-2000" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '1000-2000')"/>
               <div class="group-child117"></div>
             </div>
             
             <div class="and-more3">$ 2,000 and more</div>
             <div class="keep-me-signed-in-parent-27">
-              <input type="checkbox" id="keepMeSignedIn" class="keep-me-signed-checkbox" />
+              <input type="radio" id="2000" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '2000')"/>
               <div class="group-child117"></div>
             </div>
 
@@ -93,43 +93,47 @@
               <b class="your-budget-per3">Popular Filters</b>
             </div>
 
-            <div class="free-cancellation3">Free cancellation</div>
+            <div class="free-cancellation3">Free Wi-fi</div>
             <div class="keep-me-signed-in-parent-20">
-              <input type="checkbox" id="keepMeSignedIn" class="keep-me-signed-checkbox" />
+              <input type="checkbox" id="FREE_WIFI" class="keep-me-signed-checkbox"  (change)="checkboxChanged($event, 'FREE_WIFI')"/>
               <div class="group-child117"></div>
             </div>
 
-            <div class="spa3">Spa</div>
+            <div class="spa3">Non smoking rooms</div>
             <div class="keep-me-signed-in-parent-22">
-              <input type="checkbox" id="keepMeSignedIn" class="keep-me-signed-checkbox" />
+              <input type="checkbox" id="NON_SMOKING_ROOMS" class="keep-me-signed-checkbox"   (change)="checkboxChanged($event, 'NON_SMOKING_ROOMS')"/>
               <div class="group-child117"></div>
             </div>
 
-            <div class="beach-front3">Beach front</div>
+            <div class="beach-front3">Parking</div>
             <div class="keep-me-signed-in-parent-24">
-              <input type="checkbox" id="keepMeSignedIn" class="keep-me-signed-checkbox" />
+              <input type="checkbox" id="PARKING" class="keep-me-signed-checkbox" (change)="checkboxChanged($event, 'PARKING')"/>
               <div class="group-child117"></div>
             </div>
 
-            <div class="book-without-credit3">Book without credit card</div>
+            <div class="book-without-credit3">Restaurant</div>
             <div class="keep-me-signed-in-parent-26">
-              <input type="checkbox" id="keepMeSignedIn" class="keep-me-signed-checkbox" />
+              <input type="checkbox" id="RESTAURANT" class="keep-me-signed-checkbox" (change)="checkboxChanged($event, 'RESTAURANT')"/>
               <div class="group-child117"></div>
             </div>
 
-            <div class="hot-tub-jacuzzi3">Hot tub/ jacuzzi</div>
+            <div class="hot-tub-jacuzzi3">Swimming pool</div>
             <div class="keep-me-signed-in-parent-28">
-              <input type="checkbox" id="keepMeSignedIn" class="keep-me-signed-checkbox" />
+              <input type="checkbox" id="SWIMMING_POOL" class="keep-me-signed-checkbox"  (change)="checkboxChanged($event, 'SWIMMING_POOL')"/>
               <div class="group-child117"></div>
             </div>
 
-            <div class="no-prepayment3">No prepayment</div>
+            <div class="no-prepayment3">Fitness centre</div>
             <div class="keep-me-signed-in-parent-29">
-              <input type="checkbox" id="keepMeSignedIn" class="keep-me-signed-checkbox" />
+              <input type="checkbox" id="FITNESS_CENTRE" class="keep-me-signed-checkbox" (change)="checkboxChanged($event, 'FITNESS_CENTRE')"/>
               <div class="group-child117"></div>
             </div>
           </div>
       
+      </div>
+
+      <div class="search-wrapper4">
+        <b class="register1">Search</b>
       </div>
 
       <div id="apartment-type-filter" class="frame-parent45">
@@ -153,265 +157,51 @@
         </div>
       </div>
 
+    
+      
+      <div class="melbourne-17583">{{ location }}: {{ searchResults.length }} search results found</div>
+      
+      <!-- search.component.html -->
+
       <div id="frames-apartments">
-        <div class="search-unlogged-child1"></div>
-        <div class="search-unlogged-child2"></div>
-        <div class="search-unlogged-child3"></div>
-        <div class="search-unlogged-child4"></div>
-        <div class="search-unlogged-child5"></div>
-        <div class="search-unlogged-child6"></div>
-        <div class="search-unlogged-child7"></div>
-        <div class="search-unlogged-child8"></div>
+        <ng-container *ngIf="searchResults && searchResults.length > 0; else noResults">
+          <div *ngFor="let result of searchResults" class="search-unlogged-child1">
+            <div id="picture-apartments">
+              <img
+                class="search-unlogged-child11"
+                alt=""
+                [src]="result.photos && result.photos.length > 0 ? result.photos[0].url : 'path/to/default/image.jpg'"
+                id="rectangleImage"
+              />
+            </div>
+
+            <div id="list-apartments">
+              <div class="lakeside-motel-warefront30">{{ result.name }}</div>
+              <div class="parent28">
+                <b class="b82">{{ result.totalPrice }}</b>
+              </div>
+
+              <div class="includes-taxes-and33">Includes taxes and fees</div>
+              <div class="room-2-days27">1 room {{ calculateDayDifference() }} days</div>
+              <b class="live-a-little28">Live a little and celebrate with champagne</b>
+              <div class="reats-include-a28">{{ result.description }}</div>
+              <div class="reviews55">{{ result.averageRating }}</div>
+              <div class="see-availability-wrapper26" id="frameContainer19">
+                <b class="register1">See availability</b>
+              </div>
+              <div class="off-wrapper26">
+                <b class="off26">5% off</b>
+              </div>
+              <img class="group-child108" alt="" src="../../assets/public/group-5.svg" />
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #noResults>
+          <p>Nema rezultata pretrage.</p>
+        </ng-template>
       </div>
 
-      <div id="picture-apartments">
-        <img
-          class="search-unlogged-child11"
-          alt=""
-          src="../../assets/public/rectangle-25@2x.png"
-          id="rectangleImage"
-        />
-
-        <img
-          class="search-unlogged-child12"
-          alt=""
-          src="../../assets/public/rectangle-51@2x.png"
-        />
-
-        <img
-          class="search-unlogged-child13"
-          alt=""
-          src="../../assets/public/rectangle-301@2x.png"
-        />
-
-        <img
-          class="search-unlogged-child14"
-          alt=""
-          src="../../assets/public/rectangle-52@2x.png"
-        />
-
-        <img
-          class="search-unlogged-child15"
-          alt=""
-          src="../../assets/public/rectangle-321@2x.png"
-        />
-
-        <img
-          class="search-unlogged-child16"
-          alt=""
-          src="../../assets/public/rectangle-62@2x.png"
-        />
-
-        <img
-          class="search-unlogged-child17"
-          alt=""
-          src="../../assets/public/rectangle-34@2x.png"
-        />
-
-        <img
-          class="search-unlogged-child18"
-          alt=""
-          src="../../assets/public/rectangle-63@2x.png"
-        />
-      </div>
-  
-      <div id="list-apartments">
-        <div class="melbourne-17583">Melbourne : 1,758 search results found</div>
-
-        <div class="shanghai-open-house-parent3">
-          <b class="shanghai-open-house5">Shanghai Open House</b>
-          <div class="parent26">
-            <b class="b81">$160</b>
-            <b class="b82">$145</b>
-          </div>
-          <div class="includes-taxes-and33">Includes taxes and fees</div>
-          <div class="room-2-days27">1 room 2 days</div>
-          <b class="live-a-little26">Live a little and celbrate with champagne</b>
-          <div class="reats-include-a26">
-            Reats include a glass of French champagne, parking and a late
-            checkout. Gym included. Flexible cancellation applies
-          </div>
-          <div class="reviews53">4.5 (1200 Reviews)</div>
-          <div class="see-availability-wrapper24">
-            <b class="register1">See availability</b>
-          </div>
-          <div class="off-wrapper24">
-            <b class="off26">15% off</b>
-          </div>
-          <img class="group-child108" alt="" src="../../assets/public/group-5.svg" />
-        </div>
-        <div class="search-wrapper4">
-          <b class="register1">Search</b>
-        </div>
-        <div class="ocean-waves-resort-parent1">
-          <b class="shanghai-open-house5">Ocean Waves Resort</b>
-          <div class="parent26">
-            <b class="b81">$350</b>
-            <b class="b82">$310</b>
-          </div>
-          <div class="includes-taxes-and33">Includes taxes and fees</div>
-          <div class="room-2-days27">1 room 2 days</div>
-          <b class="live-a-little26">Live a little and celbrate with champagne</b>
-          <div class="reats-include-a26">
-            Reats include a glass of French champagne, parking and a late
-            checkout. Gym included. Flexible cancellation applies
-          </div>
-          <div class="reviews53">4.5 (1200 Reviews)</div>
-          <div class="see-availability-wrapper24">
-            <b class="register1">See availability</b>
-          </div>
-          <div class="off-wrapper24">
-            <b class="off26">15% off</b>
-          </div>
-          <img class="group-child108" alt="" src="../../assets/public/group-5.svg" />
-        </div>
-        <div class="lakeside-motel-warefront-parent6">
-          <div class="lakeside-motel-warefront30">Lakeside Motel Warefront</div>
-          <div class="parent28">
-            <b class="b81">$150</b>
-            <b class="b82">$130</b>
-          </div>
-          <div class="includes-taxes-and33">Includes taxes and fees</div>
-          <div class="room-2-days27">1 room 2 days</div>
-          <b class="live-a-little28">Live a little and celbrate with champagne</b>
-          <div class="reats-include-a28">
-            Reats include a glass of French champagne, parking and a late
-            checkout. Gym included. Flexible cancellation applies
-          </div>
-          <div class="reviews55">4.5 (1200 Reviews)</div>
-          <div class="see-availability-wrapper26" id="frameContainer19">
-            <b class="register1">See availability</b>
-          </div>
-          <div class="off-wrapper26">
-            <b class="off26">5% off</b>
-          </div>
-          <img class="group-child108" alt="" src="../../assets/public/group-5.svg" />
-        </div>
-        <div class="book-now-and-receive-15-off-wrapper1">
-          <b class="off26">Book now and receive 15% off</b>
-        </div>
-        <div class="julia-dens-resort-parent1">
-          <b class="shanghai-open-house5">Julia Dens Resort</b>
-          <div class="parent26">
-            <b class="b81">$250</b>
-            <b class="b82">$240</b>
-          </div>
-          <div class="includes-taxes-and33">Includes taxes and fees</div>
-          <div class="room-2-days27">1 room 2 days</div>
-          <b class="live-a-little26">Live a little and celbrate with champagne</b>
-          <div class="reats-include-a26">
-            Reats include a glass of French champagne, parking and a late
-            checkout. Gym included. Flexible cancellation applies
-          </div>
-          <div class="reviews53">4.5 (1200 Reviews)</div>
-          <div class="see-availability-wrapper24">
-            <b class="register1">See availability</b>
-          </div>
-          <div class="off-wrapper24">
-            <b class="off26">15% off</b>
-          </div>
-          <img class="group-child108" alt="" src="../../assets/public/group-5.svg" />
-        </div>
-        <div class="aghnim-scepter-hotel-parent1">
-          <b class="shanghai-open-house5">Aghnim Scepter Hotel</b>
-          <div class="parent26">
-            <b class="b81">$150</b>
-            <b class="b82">$300</b>
-          </div>
-          <div class="includes-taxes-and33">Includes taxes and fees</div>
-          <div class="room-2-days27">1 room 2 days</div>
-          <b class="live-a-little26">Live a little and celbrate with champagne</b>
-          <div class="reats-include-a26">
-            Reats include a glass of French champagne, parking and a late
-            checkout. Gym included. Flexible cancellation applies
-          </div>
-          <div class="reviews53">4.5 (1200 Reviews)</div>
-          <div class="see-availability-wrapper24">
-            <b class="register1">See availability</b>
-          </div>
-          <div class="off-wrapper28">
-            <b class="off26">15% off</b>
-          </div>
-          <img class="group-child108" alt="" src="../../assets/public/group-5.svg" />
-
-          <div class="receive-30-discount-on-a-rest-wrapper4">
-            <b class="off26">Receive 30% discount on a restaurant</b>
-          </div>
-        </div>
-        <div class="maimi-city-frontier-parent2">
-          <b class="shanghai-open-house5">Maimi City frontier</b>
-          <div class="parent28">
-            <b class="b81">$200</b>
-            <b class="b82">$190</b>
-          </div>
-          <div class="includes-taxes-and33">Includes taxes and fees</div>
-          <div class="room-2-days27">1 room 2 days</div>
-          <b class="live-a-little28">Live a little and celbrate with champagne</b>
-          <div class="reats-include-a28">
-            Reats include a glass of French champagne, parking and a late
-            checkout. Gym included. Flexible cancellation applies
-          </div>
-          <div class="reviews55">4.5 (1200 Reviews)</div>
-          <div class="see-availability-wrapper29">
-            <b class="register1">See availability</b>
-          </div>
-          <div class="off-wrapper26">
-            <b class="off26">15% off</b>
-          </div>
-          <img class="group-child108" alt="" src="../../assets/public/group-5.svg" />
-
-          <div class="receive-30-discount-on-a-rest-wrapper5">
-            <b class="off26">Receive 30% discount on a restaurant</b>
-          </div>
-        </div>
-        <div class="marineford-hotel-parent1">
-          <b class="shanghai-open-house5">Marineford Hotel</b>
-          <div class="parent26">
-            <b class="b81">$140</b>
-            <b class="b82">$120</b>
-          </div>
-          <div class="includes-taxes-and33">Includes taxes and fees</div>
-          <div class="room-2-days27">1 room 2 days</div>
-          <b class="live-a-little26">Live a little and celbrate with champagne</b>
-          <div class="reats-include-a26">
-            Reats include a glass of French champagne, parking and a late
-            checkout. Gym included. Flexible cancellation applies
-          </div>
-          <div class="reviews53">4.5 (1200 Reviews)</div>
-          <div class="see-availability-wrapper24">
-            <b class="register1">See availability</b>
-          </div>
-          <div class="off-wrapper24">
-            <b class="off26">15% off</b>
-          </div>
-          <img class="group-child108" alt="" src="../../assets/public/group-5.svg" />
-        </div>
-        <div class="lakeside-motel-warefront-parent7">
-          <b class="shanghai-open-house5">Lakeside Motel Warefront</b>
-          <div class="parent28">
-            <b class="b81">$320</b>
-            <b class="b82">$300</b>
-          </div>
-          <div class="includes-taxes-and33">Includes taxes and fees</div>
-          <div class="room-2-days27">1 room 2 days</div>
-          <b class="live-a-little28">Live a little and celbrate with champagne</b>
-          <div class="reats-include-a28">
-            Reats include a glass of French champagne, parking and a late
-            checkout. Gym included. Flexible cancellation applies
-          </div>
-          <div class="reviews55">4.5 (1200 Reviews)</div>
-          <div class="see-availability-wrapper29">
-            <b class="register1">See availability</b>
-          </div>
-          <div class="off-wrapper26">
-            <b class="off26">15% off</b>
-          </div>
-          <img class="group-child108" alt="" src="../../assets/public/group-5.svg" />
-        </div>
-        <div class="load-more-results-wrapper9">
-          <b class="register1">Load more results</b>
-        </div>
-      </div>
 
       <div id="footer">
         <b class="company19">Company</b>

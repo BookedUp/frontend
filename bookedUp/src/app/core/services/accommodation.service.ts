@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Accommodation } from '../model/Accommodation';
 import { PriceChange } from '../model/PriceChange';
+import { Amenity } from '../model/Amenity';
 
 @Injectable({
   providedIn: 'root',
@@ -58,33 +59,22 @@ export class AccommodationService {
     location?: string,
     guestsNumber?: number,
     startDate?: Date,
-    endDate?: Date
+    endDate?: Date,
+    amenities?: Amenity[],
+    minPrice?: number,
+    maxPrice?: number
   ): Observable<Accommodation[]> {
     const params: any = {
       location,
       guestsNumber,
       startDate,
       endDate,
+      amenities: amenities || [],
+      minPrice: minPrice || 0.0,
+      maxPrice: maxPrice || 0.0
     };
-    return this.http.get<Accommodation[]>(`${this.apiUrl}/search`, { params });
+    return this.http.get<Accommodation[]>(`${this.apiUrl}/search-filter`, { params });
   }
-
-  filterAccommodations(
-    amenities?: string[],
-    accommodationType?: string,
-    minPrice?: number,
-    maxPrice?: number
-  ): Observable<Accommodation[]> {
-    const params: any = {
-      amenities,
-      accommodationType,
-      minPrice,
-      maxPrice,
-    };
-    return this.http.get<Accommodation[]>(`${this.apiUrl}/filter`, { params });
-  }
-
-  // Dodatne metode prema potrebama vašeg backenda
 
 
 }
