@@ -28,6 +28,7 @@
 
         <div class="main-content" id="main-content">
           <div *ngFor="let reservation of reservations | async" class="acc-frame" [class.created-status]="reservation.status === 'CREATED'"
+                                                                                  [class.cancelled-status]="reservation.status === 'CANCELLED'"
                                                                                   [class.rejected-status]="reservation.status === 'REJECTED'"
                                                                                   [class.accepted-status]="reservation.status === 'ACCEPTED'">
 
@@ -64,6 +65,7 @@
 
                   <b class="status-text" [class.created-status-text]="reservation.status === 'CREATED'"
                                         [class.accepted-status-text]="reservation.status === 'ACCEPTED'"
+                                        [class.cancelled-status-text]="reservation.status === 'CANCELLED'"
                                         [class.rejected-status-text]="reservation.status === 'REJECTED'">{{ reservation.status }}</b>
                 </div>
 

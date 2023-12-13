@@ -87,24 +87,26 @@
   position: relative;
   left: 15%;
   border-radius: var(--br-8xs);
-  background-color: var(--gray-5);
-  border: 1px solid var(--gray-5);
+  background-color: #FFFFFF;
+  border: 1px solid #E0E0E0;
   box-sizing: border-box;
   width: 70%;
   height: 240px;
   display: flex;
   margin-bottom: 20px;
 }
+/*.accepted-status {*/
+/*  background-color: rgba(90, 227, 161, 0.35);*/
+/*}*/
 .created-status {
-  background-color: #d1ded7;
-  border: 1px solid var(--color-seagreen-100);
+  background-color: #FFF9C1;
 }
-.accepted-status{
-  border: 1px solid #1823BC;
-}
-.rejected-status{
-  border: 1px solid var(--color-firebrick);
-}
+/*.cancelled-status{*/
+/*  background-color: rgba(47, 128, 237, 0.1);*/
+/*}*/
+/*.rejected-status{*/
+/*  background-color: rgba(255, 129, 129, 0.35);*/
+/*}*/
 .accommodation-image {
   position: absolute;
   top: 50%;
@@ -158,7 +160,7 @@
   font-size: var(--font-size-xl);
 }
 .stars-container {
-  color: var(--blue-1);
+  color: #FBBC04;
 }
 .star {
   display: inline-block;
@@ -190,9 +192,12 @@
   color: var(--gray-1);
 }
 .created-status-text{
-  color: var(--color-seagreen-100);
+  color: #FBBC04;
 }
 .accepted-status-text{
+  color: #037940;
+}
+.cancelled-status-text{
   color: #1823BC;
 }
 .rejected-status-text{

@@ -76,7 +76,8 @@ export class ReservationRequestsComponent implements OnInit {
     }
 
     else {
-      this.reservations = this.reservationService.getReservationsByHostId(2);
+      //this.reservations = this.reservationService.getReservationsByHostId(2);
+      this.reservations = this.reservationService.getAllReservations();
     }
   }
 
