@@ -6,11 +6,11 @@ import { Guest } from './Guest';
 
 export interface Reservation {
   id: number;
-  accommodation: Accommodation;
   startDate: Date;
   endDate: Date;
-  guestsNumber: number;
   totalPrice: number;
+  guestsNumber: number;
+  accommodation: Accommodation;
+  guest: Guest;
   status: ReservationStatus;
-  active: boolean;
 }
