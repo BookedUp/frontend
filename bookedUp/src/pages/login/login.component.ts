@@ -60,11 +60,11 @@ export class LoginComponent implements OnInit {
           if (email === user.email && password === user.password && user.active == true){
             logged = true;
             if (user.role == Role.Admin) {
-            this.router.navigate(['/'], { queryParams: { role: 'admin' } });
+              this.router.navigate(['/'], { queryParams: { role: 'admin' } });
             } else if (user.role == Role.Host) {
-            this.router.navigate(['/'], { queryParams: { role: 'host' } });
+              this.router.navigate(['/'], { queryParams: { role: 'host' } });
             } else if (user.role == Role.Guest) {
-            this.router.navigate(['/'], { queryParams: { role: 'guest' } });
+              this.router.navigate(['/'], { queryParams: { role: 'guest' } });
             }
           }
         });
@@ -80,8 +80,8 @@ export class LoginComponent implements OnInit {
 
 
 
-    
-   
+
+
   }
 
 }

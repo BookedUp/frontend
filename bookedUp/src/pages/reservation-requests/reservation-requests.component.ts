@@ -57,15 +57,22 @@ export class ReservationRequestsComponent implements OnInit {
         return 'acc-frame';
     }
   }
-  
+
   private loadReservations(): void {
-    this.reservations = this.reservationService.getReservations();
-    
-    //  else if (this.filter === 'new') {
-    //   this.accommodations = this.reservationService.getAllCreatedAccommodations();
-    // } else {
-    //   this.accommodations = this.accommodationService.getAllChangedAccommodations();
-    // }
+    //this.reservations = this.reservationService.getReservationsByHostId(2);
+
+    if (this.filter === 'waiting') {
+      this.reservations = this.reservationService.getReservationsCreatedByHostId(2);
+    } else if (this.filter === 'accepted') {
+      this.reservations = this.reservationService.getAcceptedReservationsByHostId(2);
+    } else if (this.filter === 'rejected') {
+      this.reservations = this.reservationService.getRejectedReservationsByHostId(2);
+    } else if (this.filter === 'finished') {
+      this.reservations = this.reservationService.getCompletedReservationsByHostId(2);
+    }
+    else {
+      this.reservations = this.reservationService.getCancelledReservationsByHostId(2);
+    }
   }
 
   generateStars(rating: number): string[] {
@@ -85,5 +92,5 @@ export class ReservationRequestsComponent implements OnInit {
   roundHalf(value: number): number {
     return Math.round(value * 2) / 2;
   }
-  
+
 }
