@@ -31,28 +31,14 @@
                                                                                   [class.cancelled-status]="reservation.status === 'CANCELLED'"
                                                                                   [class.rejected-status]="reservation.status === 'REJECTED'"
                                                                                   [class.accepted-status]="reservation.status === 'ACCEPTED'">
-
               <img
                 class="accommodation-image"
                 alt=""
                 [src]="reservation.accommodation.photos[0]"
               />
 
-
-
               <div class="left-data">
                 <div class="top-data-box">
-<!--                  <b class="title">Accommodation Title</b>-->
-
-<!--                  <div class="reviews-frame">-->
-<!--                    <div class="stars-container">-->
-<!--                      <span class="star" *ngFor="let star of generateStars(roundHalf(4.3))">-->
-<!--                        {{ star }}-->
-<!--                      </span>-->
-<!--                    </div>-->
-<!--                    <div class="reviews-average">{{ roundHalf(4.3) }}</div>-->
-<!--                  </div>-->
-
                    <b class="title">{{ reservation.accommodation.name }}</b>
                   <div class="reviews-frame">
                     <div class="stars-container">
@@ -77,16 +63,40 @@
               </div>
 
               <div class="right-buttons">
-                <div class="accept-button" id="accept-button">
+                <!-- Prikaži dugmad Accept i Reject ako je status 'CREATED' -->
+                <div *ngIf="reservation.status === 'CREATED'" class="accept-button" id="accept-button" (click)="acceptReservation()">
                   <b class="button-text">Accept</b>
                 </div>
-                <div class="reject-button" id="reject-button">
+                <div *ngIf="reservation.status === 'CREATED'" class="reject-button" id="reject-button" (click)="rejectReservation()">
                   <b class="button-text">Reject</b>
                 </div>
+
+                <!-- Prikaži samo dugme Accept ako je status 'ACCEPTED' -->
+                <div *ngIf="reservation.status === 'ACCEPTED'" class="accepted-button" id="accepted-button">
+                  <b class="button-text">Accepted</b>
+                </div>
+
+                <!-- Prikaži samo dugme Accept ako je status 'ACCEPTED' -->
+                <div *ngIf="reservation.status === 'REJECTED'" class="rejected-button" id="rejected-button">
+                  <b class="button-text">Rejected</b>
+                </div>
+
+                <!-- Prikaži samo dugme Accept ako je status 'ACCEPTED' -->
+                <div *ngIf="reservation.status === 'CANCELLED'" class="cancelled-button" id="cancelled-button">
+                  <b class="button-text">Cancelled</b>
+                </div>
+
+                <!-- Prikaži samo dugme Accept ako je status 'ACCEPTED' -->
+                <div *ngIf="reservation.status === 'COMPLETED'" class="completed-button" id="completed-button">
+                  <b class="button-text">Completed</b>
+                </div>
+
                 <div class="view-details-button" id="view-details-button">
                   <b class="button-text">View Details</b>
                 </div>
               </div>
+
+
             </div>
           </div>
 

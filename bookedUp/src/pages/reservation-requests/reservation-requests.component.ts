@@ -99,4 +99,10 @@ export class ReservationRequestsComponent implements OnInit {
     return Math.round(value * 2) / 2;
   }
 
+  acceptReservation() {
+  }
+
+  rejectReservation() {
+
+  }
 }

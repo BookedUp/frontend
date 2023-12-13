@@ -213,6 +213,10 @@
   height: 100%;
 }
 .accept-button,
+.accepted-button,
+.cancelled-button,
+.completed-button,
+.rejected-button,
 .reject-button,
 .view-details-button {
   border-radius: var(--br-7xs);
@@ -228,8 +232,17 @@
   background-color: var(--color-seagreen-100);
   margin-bottom: 10px;
 }
+
+.rejected-button,
 .reject-button{
   background-color: var(--color-firebrick);
+}
+
+.completed-button{
+  background-color: #FBBC04;
+}
+.cancelled-button{
+  background-color: #1823BC;
 }
 .view-details-button{
   background-color: var(--blue-1);
