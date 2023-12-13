@@ -4,7 +4,7 @@
 
         <div class="amenities-admin-child"></div>
         <app-header-admin></app-header-admin>
-      
+
         <div id="sort-bar" class="sort-bar">
             <div class="all-accommodations" [ngClass]="{ 'clicked': selectedClass === 'all-accommodations' }" (click)="changeStyle('all-accommodations')">
               All Accommodations
@@ -18,17 +18,18 @@
         </div>
 
         <div class="main-content" id="main-content">
-          <div *ngFor="let accommodation of accommodations | async" class="acc-frame" [ngClass]="{'created-status': accommodation.status === 'CREATED'}">
+          <div *ngFor="let accommodation of accommodations | async" class="acc-frame" [class.created-status]="accommodation.status === 'CREATED'"
+               [class.changed-status]="accommodation.status === 'CHANGED'">
               <img
                 class="accommodation-image"
                 alt=""
                 [src]="accommodation.photos[0].url"
               />
-          
+
               <div class="left-data">
                 <div class="top-data-box">
                   <b class="title">{{ accommodation.name }}</b>
-          
+
                   <div class="reviews-frame">
                     <div class="stars-container">
                       <span class="star" *ngFor="let star of generateStars(roundHalf(accommodation.averageRating/2))">
@@ -37,26 +38,27 @@
                     </div>
                     <div class="reviews-average">{{ roundHalf(accommodation.averageRating/2) }}</div>
                   </div>
-          
+
                   <div class="location-frame">
                     <img class="location-icon" alt="" src="../../assets/public/location-1.svg" />
                     <div class="location-text">{{ accommodation.address.streetAndNumber }}, {{accommodation.address.city}} {{accommodation.address.postalCode}}, {{ accommodation.address.city }}</div>
                   </div>
-                  
-                  <b class="status-text" [ngClass]="{'created-status-text': accommodation.status === 'CREATED'}">{{ accommodation.status }}</b>
+
+                  <b class="status-text" [class.created-status-text]="accommodation.status === 'CREATED'"
+                     [class.changed-status-text]="accommodation.status === 'CHANGED'">{{ accommodation.status }}</b>
                 </div>
-          
+
                 <div class="bottom-data-box">
                     <div class="includes-taxes">Includes taxes and fees</div>
                     <b class="per-night">{{ accommodation.price }}$/{{accommodation.priceType}}</b>
                 </div>
               </div>
-          
+
               <div class="right-buttons">
-                <div class="accept-button" id="accept-button">
+                <div class="accept-button" id="accept-button" (click)="approveAccommodation(accommodation)">
                   <b class="button-text">Accept</b>
                 </div>
-                <div class="reject-button" id="reject-button">
+                <div class="reject-button" id="reject-button" (click)="rejectAccommodation(accommodation)">
                   <b class="button-text">Reject</b>
                 </div>
                 <div class="view-details-button" id="view-details-button">
@@ -65,7 +67,7 @@
               </div>
             </div>
           </div>
-          
+
 
         <div id="footer" class="footer-acc">
             <img class="copyright-1-icon" alt="" src="../../assets/public/copyright-1.svg" />

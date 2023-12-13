@@ -72,7 +72,10 @@
   margin-bottom: 20px;
 }
 .created-status {
-  background-color: #d1ded7;
+  background-color: rgba(90, 227, 161, 0.35);
+}
+.changed-status{
+  background-color: #FFF9C1;
 }
 .accommodation-image {
   position: absolute;
@@ -127,7 +130,7 @@
   font-size: var(--font-size-xl);
 }
 .stars-container {
-  color: var(--blue-1);
+  color: #FBBC04;
 }
 .star {
   display: inline-block;
@@ -153,11 +156,17 @@
   color: var(--gray-1);
 }
 .status-text,
-.created-status-text{
+.created-status-text,
+.changed-status-text
+{
   color: var(--gray-1);
 }
 .created-status-text{
-  color: var(--color-seagreen-100);
+  color: #037940;
+}
+
+.changed-status-text{
+  color: #FBBC04;
 }
 .right-buttons{
   top: 20%;

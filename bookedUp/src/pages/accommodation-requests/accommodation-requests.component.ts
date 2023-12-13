@@ -61,4 +61,13 @@ export class AccommodationRequestsComponent implements OnInit{
   roundHalf(value: number): number {
     return Math.round(value * 2) / 2;
   }
+
+  approveAccommodation(accommodation: Accommodation) {
+    this.approveAccommodation(accommodation);
+
+  }
+
+  rejectAccommodation(accommodation: Accommodation) {
+    this.rejectAccommodation(accommodation)
+  }
 }
