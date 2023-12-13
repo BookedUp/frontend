@@ -54,6 +54,10 @@ export class AccommodationService {
     return this.http.get<Accommodation[]>(`${this.apiUrl}/changed`);
   }
 
+  getMostPopularAccommodations(): Observable<Accommodation[]> {
+    return this.http.get<Accommodation[]>(`${this.apiUrl}/mostPopular`);
+  }
+
   searchAccommodations(
     location?: string,
     guestsNumber?: number,

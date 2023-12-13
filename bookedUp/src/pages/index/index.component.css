@@ -1,25 +1,255 @@
+body {
+  margin: 0; /* Uklanja defaultni margin body elementa */
+}
+
+.logged-admin-main {
+  position: relative;
+  min-height: 100vh; /* Postavlja minimalnu visinu glavnog kontejnera na visinu prozora pregledača */
+  box-sizing: border-box;
+}
+
+#search-main {
+  /* Stilovi za search-main */
+  margin-bottom: 100px; /* Postavite visinu margine prema visini vašeg footera */
+}
+
 .logged-admin-main-child {
-  position: absolute;
-  top: 80px;
-  left: 101px;
+  position: relative;
+  left: 50%; /* Pomeri element do sredine ekrana */
+  transform: translateX(-50%); /* Centriraj element po horizontali */
   border-radius: var(--br-3xs);
-  width: 1239px;
-  height: 500px;
+  width: 100%;
+  max-width: 1239px; /* Postavi maksimalnu širinu */
+  height: auto; /* Da bi se zadržao odnos stranica slike */
   object-fit: cover;
 }
-.logged-admin-main-inner,
+
+.the-perfect-stay {
+  position: absolute;
+  top: 12%; /* Promenljiva vrednost za visinu u procentima */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5vw; /* Korišćenje vw (viewport width) za font-size */
+  color: var(--color-white);
+  text-align: center;
+  display: inline-block;
+  width: 80%; /* Promenljiva vrednost za širinu u procentima */
+  max-width: 1239px; /* Postavljanje maksimalne širine ako želite */
+}
+
+.find-your-perfect {
+  position: absolute;
+  top: 15%; /* Promenljiva vrednost za visinu u procentima */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2vw; /* Korišćenje vw (viewport width) za font-size */
+  color: var(--color-white);
+  text-align: center;
+  display: inline-block;
+  width: 80%; /* Promenljiva vrednost za širinu u procentima */
+  max-width: 1239px; /* Postavljanje maksimalne širine ako želite */
+  letter-spacing: 0.02em;
+  line-height: 140%;
+}
+
+
 .logged-admin-main-item {
   position: absolute;
   background-color: var(--color-white);
-}
-.logged-admin-main-item {
-  top: 548px;
-  left: 205px;
+  top: 24.4%; /* Prilagodite visinu u procentima prema potrebi */
+  left: 50%;
+  transform: translateX(-50%);
   border-radius: var(--br-5xs);
   box-shadow: 0 4px 37px rgba(0, 0, 0, 0.15);
-  width: 1030px;
-  height: 64px;
+  width: 80%; /* Prilagodite širinu u procentima prema potrebi */
+  max-width: 1030px; /* Postavite maksimalnu širinu ako želite */
+  height: 6vw; /* Koristite viewport width za visinu */
+  max-height: 64px; /* Postavite maksimalnu visinu ako želite */
 }
+
+.search-container {
+  position: absolute;
+  top: 24.88%; /* Prilagodite visinu u procentima prema potrebi */
+  left: 77%; /* Prilagodite levi razmak u procentima prema potrebi */
+  transform: translateX(-50%);
+  border-radius: var(--br-7xs);
+  background-color: var(--blue-1);
+  width: 40%; /* Prilagodite širinu u procentima prema potrebi */;
+  max-width: 148px; /* Postavite maksimalnu širinu ako želite */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-lg);
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 1.1vw; /* Korišćenje vw (viewport width) za font-size */
+  color: var(--color-white);
+}
+
+.component-1 {
+  position: absolute;
+  top: 558px;
+  left: 270px;
+  border-radius: var(--br-9xs);
+  background-color: var(--gray-6);
+  width: 210px;
+  height: 43px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  font-size: var(--font-size-sm);
+}
+
+.ant-designstar-filled-icon,
+.where-are-you {
+  position: relative;
+  flex-shrink: 0;
+  height: 20px !important;
+
+}
+
+.ant-designstar-filled-icon {
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+
+}
+
+.where-are-you {
+  letter-spacing: 0.02em;
+  line-height: 100%;
+
+}
+
+.component-2,
+.component-4 {
+  position: absolute;
+  top: 558px;
+  left: 492px;
+  border-radius: var(--br-9xs);
+  background-color: var(--gray-6);
+  width: 170px;
+  height: 43px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  font-size: var(--font-size-sm);
+}
+.component-2 {
+  left: 674px;
+}
+
+.check-in-date {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 140%;
+  display: inline-block;
+  width: 105px;
+  color: #828282;
+  flex-shrink: 0;
+}
+
+.component-3 {
+  position: absolute;
+  top: 558px;
+  left: 856px;
+  border-radius: var(--br-9xs);
+  background-color: var(--gray-6);
+  width: 207px;
+  height:43px ;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
+  box-sizing: border-box;
+  gap: var(--gap-3xs);
+  font-size: var(--font-size-sm);
+}
+
+.guests {
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 140%;
+  display: inline-block;
+  width: 140px;
+  flex-shrink: 0;
+}
+
+/*Odavde ide next div*/
+
+.logged-admin-main-child1 {
+  position: absolute;
+  top: 12px;
+  left: 1296px;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+}
+
+.logged-admin-main-child2 {
+  position: absolute;
+  top: 740px;
+  left: 100px;
+  border-radius: var(--br-5xs);
+  width: 295px;
+  height: 345px;
+  object-fit: cover;
+}
+
+.logged-admin-main-child3 {
+  position: absolute;
+  top: 740px;
+  left: 415px;
+  border-radius: var(--br-5xs);
+  width: 295px;
+  height: 345px;
+  object-fit: cover;
+}
+.logged-admin-main-child4 {
+  position: absolute;
+  top: 2208px;
+  left: 0;
+  background-color: var(--color-whitesmoke-400);
+  width: 1440px;
+  height: 41px;
+}
+
+.logged-admin-main-child5 {
+  position: absolute;
+  top: 740px;
+  left: 730px;
+  border-radius: var(--br-5xs);
+  width: 295px;
+  height: 345px;
+  object-fit: cover;
+}
+
+logged-admin-main-child6 {
+  position: absolute;
+  border-radius: var(--br-7xs);
+  top: 722px;
+  left: 1043px;
+  width: 298px;
+  height: 345px;
+}
+
+
+.logged-admin-main-inner{
+  position: absolute;
+  background-color: var(--color-white);
+}
+
 .logged-admin-main-inner {
   top: 0;
   left: 0;
@@ -42,15 +272,7 @@
   font-size: var(--font-size-base);
   color: var(--gray-1);
 }
-.logged-admin-main-child1 {
-  position: absolute;
-  top: 12px;
-  left: 1296px;
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  object-fit: cover;
-}
+
 .about12,
 .advertising5,
 .company5,
@@ -260,15 +482,7 @@
   top: 1194px;
   height: 26px;
 }
-.logged-admin-main-child2 {
-  position: absolute;
-  top: 740px;
-  left: 100px;
-  border-radius: var(--br-5xs);
-  width: 295px;
-  height: 345px;
-  object-fit: cover;
-}
+
 .australia-wrapper {
   position: absolute;
   top: 1103px;
@@ -282,23 +496,7 @@
   color: var(--color-gray-400);
   font-family: var(--font-adamina);
 }
-.logged-admin-main-child3 {
-  position: absolute;
-  top: 740px;
-  left: 415px;
-  border-radius: var(--br-5xs);
-  width: 295px;
-  height: 345px;
-  object-fit: cover;
-}
-.logged-admin-main-child4 {
-  position: absolute;
-  top: 2208px;
-  left: 0;
-  background-color: var(--color-whitesmoke-400);
-  width: 1440px;
-  height: 41px;
-}
+
 .japan {
   position: relative;
   display: inline-block;
@@ -317,15 +515,7 @@
   color: var(--color-gray-400);
   font-family: var(--font-adamina);
 }
-.logged-admin-main-child5 {
-  position: absolute;
-  top: 740px;
-  left: 730px;
-  border-radius: var(--br-5xs);
-  width: 295px;
-  height: 345px;
-  object-fit: cover;
-}
+
 .new-zealand-wrapper {
   position: absolute;
   top: 1103px;
@@ -355,25 +545,7 @@
   color: var(--color-gray-400);
   font-family: var(--font-adamina);
 }
-.find-your-perfect,
-.the-perfect-stay {
-  position: absolute;
-  top: 270px;
-  left: 415px;
-  font-size: var(--font-size-13xl);
-  color: var(--color-white);
-  text-align: center;
-  display: inline-block;
-  width: 610px;
-}
-.find-your-perfect {
-  top: 328px;
-  left: 395px;
-  font-size: var(--font-size-xl);
-  letter-spacing: 0.02em;
-  line-height: 140%;
-  width: 650px;
-}
+
 .discover-new-places,
 .explore-the-world {
   position: absolute;
@@ -406,23 +578,7 @@
   font-size: var(--font-size-9xl);
   color: var(--color-gray-400);
 }
-.search-container {
-  position: absolute;
-  top: 558px;
-  left: 1075px;
-  border-radius: var(--br-7xs);
-  background-color: var(--blue-1);
-  width: 148px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: var(--padding-xs) var(--padding-lg);
-  box-sizing: border-box;
-  cursor: pointer;
-  font-size: var(--font-size-mini);
-  color: var(--color-white);
-}
+
 .copyright-1-icon6 {
   position: relative;
   width: 16px;
@@ -461,11 +617,7 @@
   display: inline-block;
   width: 580px;
 }
-.download-mobile-app {
-  position: relative;
-  letter-spacing: 0.02em;
-  line-height: 20px;
-}
+
 .download-mobile-app-wrapper {
   border-radius: var(--br-7xs);
   background-color: var(--blue-1);
@@ -517,37 +669,9 @@
   font-size: var(--font-size-9xl);
   color: var(--color-white);
 }
-.where-are-you {
-  position: relative;
-  letter-spacing: 0.02em;
-  line-height: 140%;
-}
-.component-1 {
-  position: absolute;
-  top: 558px;
-  left: 217px;
-  border-radius: var(--br-9xs);
-  background-color: var(--gray-6);
-  width: 242px;
-  height: 43px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
-  box-sizing: border-box;
-  gap: var(--gap-3xs);
-  font-size: var(--font-size-sm);
-}
-.check-in-date {
-  position: relative;
-  letter-spacing: 0.02em;
-  line-height: 140%;
-  display: inline-block;
-  width: 105px;
-  color: #828282;
-  flex-shrink: 0;
-}
+
+
+
 .input-wrapper {
   display: inline-block;
 }
@@ -559,51 +683,9 @@ input {
   font-family: var(--font-adamina);
   font-size: var(--font-size-mini);
 }
-.component-2,
-.component-4 {
-  position: absolute;
-  top: 558px;
-  left: 477px;
-  border-radius: var(--br-9xs);
-  background-color: var(--gray-6);
-  width: 170px;
-  height: 43px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
-  box-sizing: border-box;
-  gap: var(--gap-3xs);
-  font-size: var(--font-size-sm);
-}
-.component-2 {
-  left: 665px;
-}
-.guests {
-  position: relative;
-  letter-spacing: 0.02em;
-  line-height: 140%;
-  display: inline-block;
-  width: 140px;
-  flex-shrink: 0;
-}
-.component-3 {
-  position: absolute;
-  top: 558px;
-  left: 856px;
-  border-radius: var(--br-9xs);
-  background-color: var(--gray-6);
-  width: 207px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
-  box-sizing: border-box;
-  gap: var(--gap-3xs);
-  font-size: var(--font-size-sm);
-}
+
+
+
 .logo-1-icon,
 .logo-with-slogan-11 {
   position: absolute;
@@ -619,8 +701,7 @@ input {
   width: 352px;
   height: 172px;
 }
-.hotel1-1-icon,
-.logged-admin-main-child6 {
+.hotel1-1-icon{
   position: absolute;
   border-radius: var(--br-7xs);
   top: 722px;
@@ -645,13 +726,7 @@ input {
   line-height: 150%;
   z-index: 0;
 }
-.ant-designstar-filled-icon {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
+
 .star {
   display: flex;
   flex-direction: row;
@@ -755,7 +830,6 @@ input {
   position: relative;
   line-height: 20px;
 }
-.card1,
 .card2,
 .card3 {
   position: absolute;
@@ -832,7 +906,7 @@ input {
   align-items: center;
   justify-content: flex-start;
   padding: var(--padding-3xs) var(--padding-3xs) var(--padding-3xs)
-    var(--padding-sm);
+  var(--padding-sm);
   gap: var(--gap-3xs);
   cursor: pointer;
 }
@@ -855,7 +929,7 @@ input {
   flex-direction: row;
   align-items: center;
   padding: var(--padding-3xs) var(--padding-10xs) var(--padding-3xs)
-    var(--padding-3xs);
+  var(--padding-3xs);
   box-sizing: border-box;
   gap: var(--gap-3xs);
   cursor: pointer;
@@ -872,7 +946,7 @@ input {
   flex-direction: row;
   align-items: center;
   padding: var(--padding-3xs) var(--padding-3xs) var(--padding-3xs)
-    var(--padding-sm);
+  var(--padding-sm);
   gap: var(--gap-3xs);
   cursor: pointer;
 }
@@ -893,4 +967,32 @@ input {
   font-size: var(--font-size-mini);
   color: var(--gray-2);
   font-family: var(--font-sansation);
+}
+
+
+#popular-hotels-main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2px;
+  margin: 0 100px;
+}
+
+.card1 {
+  width: calc(25% - 20px);
+  margin-bottom: 20px;
+}
+
+/* Dodatni stilovi ako želite održati određenu visinu na većim ekranima */
+@media only screen and (min-width: 1200px) {
+  .logged-admin-main-child {
+    height: 500px; /* Prilagodite visinu prema potrebi */
+  }
+  .the-perfect-stay {
+    font-size: 30px; /* Prilagodite veličinu fonta po potrebi */
+  }
+
+  .find-your-perfect {
+    font-size: 24px; /* Prilagodite veličinu fonta po potrebi */
+  }
 }

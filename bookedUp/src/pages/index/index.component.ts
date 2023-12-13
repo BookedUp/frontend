@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccommodationService } from '../../app/core/services/accommodation.service';
-import {formatDate} from "@angular/common";
+import { Accommodation } from '../../app/core/model/Accommodation';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-index',
@@ -10,11 +11,15 @@ import {formatDate} from "@angular/common";
 })
 
 export class IndexComponent implements OnInit {
-
+    popularAccommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
 
   constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService) { }
 
     ngOnInit() {
+
+        this.popularAccommodations = this.accommodationService.getMostPopularAccommodations();
+
+        console.log(this.popularAccommodations)
         var searchButton = document.getElementById("searchButton");
         if (searchButton) {
             searchButton.addEventListener("click", () => {
@@ -45,5 +50,26 @@ export class IndexComponent implements OnInit {
                     });
             });
         }
+
+
+
+    }
+
+    generateStars(rating: number): string[] {
+        const stars: string[] = [];
+        for (let i = 1; i <= 5; i++) {
+            if (i <= rating) {
+                stars.push('★');
+            } else if (i - 0.5 === rating) {
+                stars.push('✯');
+            } else {
+                stars.push('☆');
+            }
+        }
+        return stars;
+    }
+
+    roundHalf(value: number): number {
+        return Math.round(value * 2) / 2;
     }
 }
