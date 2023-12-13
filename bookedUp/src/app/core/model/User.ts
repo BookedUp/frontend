@@ -1,5 +1,6 @@
 import { Address } from './Address';
 import { Photo } from './Photo';
+import { Role } from './enum/Role';
 
 export interface User{
   id: number;
@@ -13,4 +14,5 @@ export interface User{
   verified: boolean;
   active: boolean;
   profilePicture: Photo;
+  role: Role;
 }

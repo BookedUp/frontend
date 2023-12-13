@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../app/core/services/user.service';
 import { User } from 'src/app/core/model/User';
 import { Observable } from 'rxjs';
+import { Role } from 'src/app/core/model/enum/Role';
 
 @Component({
   selector: 'app-login',
@@ -52,21 +53,25 @@ export class LoginComponent implements OnInit {
     this.userService.getUsers().subscribe(
       (users: User[]) => {
         this.users = users;
+        var logged: boolean = false;
 
         this.users.forEach(user => {
           console.log(user.email);
           if (email === user.email && password === user.password && user.active == true){
-            if (email === 'jovan.jovanovic@example.com' && password === 'jovanpass') {
+            logged = true;
+            if (user.role == Role.Admin) {
             this.router.navigate(['/'], { queryParams: { role: 'admin' } });
-            } else if (email === 'ana.anic@example.com' && password === 'anapass') {
+            } else if (user.role == Role.Host) {
             this.router.navigate(['/'], { queryParams: { role: 'host' } });
-            } else if (email === 'nenad.nenadic@example.com' && password === 'nenadpass') {
+            } else if (user.role == Role.Guest) {
             this.router.navigate(['/'], { queryParams: { role: 'guest' } });
-            } else {
-              alert('Incorrect email or password');
             }
           }
         });
+
+        if(logged == false){
+          alert('Incorrect email or password');
+        }
       },
       error => {
         console.error('Error fetching users:', error);
