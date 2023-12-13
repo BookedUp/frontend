@@ -31,7 +31,7 @@ export class HeaderHostComponent {
   }
 
   navigateToReservations(): void {
-    this.router.navigate(['/reservation-requests'], { queryParams: { role: 'host' } });
+    this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'all' },  });
   }
 
   navigateToComments(): void {
