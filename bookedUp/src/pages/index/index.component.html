@@ -1,65 +1,40 @@
 <!DOCTYPE html>
 <html>
 <body>
-<div class="logged-admin-main">
+<div class="logged">
 
   <app-header></app-header>
 
-  <div id="search-main">
+  <div id="search-box" class="search-box">
+    <img class="search-image" alt="" src="../../assets/public/rectangle-78@2x.png"/>
 
-    <img
-            class="logged-admin-main-child"
-            alt=""
-            src="../../assets/public/rectangle-78@2x.png"
-    />
-    <div class="the-perfect-stay">The Perfect Stay, One Click Away</div>
-    <div class="find-your-perfect">
-      Find your perfect stay with expert hotel and apartment recommendations,
+    <div class="search-title">The Perfect Stay, One Click Away</div>
+    <div class="search-description">
+      Find your perfect stay with expert hotel and apartment recommendations, <br>
       travel tips, and destination inspiration.
     </div>
 
-    <div class="logged-admin-main-item"></div>
-
-    <div class="search-container" id="searchButton">
-      <b >Search</b>
+    <div class="search-container">
+      <div class="input-container-location">
+        <img class="icon" alt="" src="../../assets/public/location-13.svg" />
+        <input id="locationTxt" class="text" type="text" placeholder="Where are you going?"/>
+      </div>
+      <div class="input-container">
+        <img class="icon" alt="" src="../../assets/public/calendar-1.svg" />
+        <input placeholder="Check In Date" class="text" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="fromDate" />
+      </div>
+      <div class="input-container">
+        <img class="icon" alt="" src="../../assets/public/calendar-1.svg" />
+        <input placeholder="Check Out Date" class="text" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="toDate" />
+      </div>
+      <div class="input-container-guest">
+        <img class="icon" alt="" src="../../assets/public/usersquare-12.svg" />
+        <input id="guestNumberTxt" type="number" class="text" placeholder="Guests" pattern="\d*" />
+      </div>
+      <div class="search-button" id="searchButton">
+        <b >Search</b>
+      </div>
     </div>
-
-    <div class="component-1">
-      <img
-              class="ant-designstar-filled-icon"
-              alt=""
-              src="../../assets/public/location-13.svg"
-      />
-      <input id="locationTxt" type="text" class="where-are-you" placeholder="Where are you going?"/>
-    </div>
-
-    <div class="component-4">
-      <img
-              class="ant-designstar-filled-icon"
-              alt=""
-              src="../../assets/public/calendar-1.svg"
-      />
-      <input placeholder="Check In Date" class="check-in-date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="fromDate" />
-    </div>
-
-    <div class="component-2">
-      <img
-              class="ant-designstar-filled-icon"
-              alt=""
-              src="../../assets/public/calendar-1.svg"
-      />
-      <input placeholder="Check Out Date" class="check-in-date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="toDate" />
-    </div>
-
-    <div class="component-3">
-      <img
-              class="ant-designstar-filled-icon"
-              alt=""
-              src="../../assets/public/usersquare-12.svg"
-      />
-      <input id="guestNumberTxt" type="number" class="guests" placeholder="Guests" pattern="\d*" />
-    </div>
-  </div>
 
 <!--  <div id="popular-destinations-main">-->
 <!--    <div class="popular-destinations">Popular destinations</div>-->
@@ -74,7 +49,7 @@
 <!--      </div>-->
 <!--    </div>-->
 <!--  </div>-->
-
+<!-- 
   <div id="popular-hotels-main">
     <div class="popular-hotels">Popular hotels</div>
 
@@ -103,7 +78,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
 <!--  <div id="download-app-main">-->
 <!--    <div class="rectangle-parent3">-->
@@ -140,50 +115,9 @@
 <!--    </div>-->
 <!--  </div>-->
 
-<!--  <div id="footer-main">-->
-<!--    <img-->
-<!--            class="logo-with-slogan-11"-->
-<!--            alt=""-->
-<!--            src="../../assets/public/logo-with-slogan-2@2x.png"-->
-<!--    />-->
 
-<!--    <b class="company5">Company</b>-->
-<!--    <div class="about12">About</div>-->
-<!--    <div class="jobs5">Jobs</div>-->
-<!--    <div class="newsroom5">Newsroom</div>-->
-<!--    <div class="advertising5">Advertising</div>-->
-<!--    <div class="contact-us5">Contact us</div>-->
-<!--    <div class="australia5">Australia</div>-->
-<!--    <div class="privacy-policy5">Privacy Policy</div>-->
-<!--    <div class="support5">Support</div>-->
-<!--    <div class="new-zealand5">New Zealand</div>-->
-<!--    <div class="terms-of-use5">Terms of use</div>-->
-<!--    <div class="cancel-your-bookings5">Cancel your bookings</div>-->
-<!--    <div class="united-states-america5">United States America (USA)</div>-->
-<!--    <div class="acessibility5">Acessibility</div>-->
-<!--    <div class="use-coupon5">Use Coupon</div>-->
-<!--    <div class="greece5">Greece</div>-->
-<!--    <div class="reward-system-policy5">Reward system policy</div>-->
-<!--    <div class="refund-policies5">Refund Policies</div>-->
-<!--    <div class="maldives5">Maldives</div>-->
-<!--    <div class="international-travel-documents5">-->
-<!--      International Travel Documents-->
-<!--    </div>-->
-<!--    <div class="singapore5">Singapore</div>-->
-<!--    <div class="see-more5">See more</div>-->
-<!--    <b class="explore5">Explore</b>-->
-<!--    <b class="terms-and-policies5">Terms and Policies</b>-->
-<!--    <b class="help5">Help</b>-->
-
-<!--    <div class="copyright-1-parent4">-->
-<!--      <img class="copyright-1-icon6" alt="" src="../../assets/public/copyright-1.svg" />-->
-<!--      <div class="bookedup-20236">BookedUp 2023 | Team 19 FTN</div>-->
-<!--    </div>-->
-
-<!--  </div>-->
-
+  </div>
   <app-footer></app-footer>
-
 </div>
 </body>
 </html>
