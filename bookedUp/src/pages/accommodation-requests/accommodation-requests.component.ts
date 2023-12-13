@@ -63,11 +63,11 @@ export class AccommodationRequestsComponent implements OnInit{
   }
 
   approveAccommodation(accommodation: Accommodation) {
-    this.approveAccommodation(accommodation);
+    this.accommodationService.approveAccommodation(accommodation.id);
 
   }
 
   rejectAccommodation(accommodation: Accommodation) {
-    this.rejectAccommodation(accommodation)
+    this.accommodationService.rejectAccommodation(accommodation.id)
   }
 }

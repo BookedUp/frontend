@@ -71,9 +71,10 @@
   display: flex;
   margin-bottom: 20px;
 }
-.created-status {
-  background-color: rgba(90, 227, 161, 0.35);
+.rejected-status {
+  background-color: rgba(255, 129, 129, 0.35);
 }
+.created-status,
 .changed-status{
   background-color: #FFF9C1;
 }
@@ -161,10 +162,16 @@
 {
   color: var(--gray-1);
 }
-.created-status-text{
+.active-status-text{
   color: #037940;
 }
 
+.rejected-status-text{
+  color: var(--color-firebrick);
+
+}
+
+.created-status-text,
 .changed-status-text{
   color: #FBBC04;
 }

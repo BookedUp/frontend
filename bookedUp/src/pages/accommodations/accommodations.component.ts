@@ -101,14 +101,12 @@ export class AccommodationsComponent implements OnInit {
 
     private loadAccommodations(): void {
         if (this.filter === 'active') {
-            this.accommodations = this.accommodationService.getAllModifiedAccommodations();
+            this.accommodations = this.accommodationService.getAllActiveAccommodationsByHostId(2);
         } else if (this.filter === 'requests') {
-            this.accommodations = this.accommodationService.getAllCreatedAccommodations();
-        } else if (this.filter === 'rejected') {
-            this.accommodations = this.accommodationService.getAllCreatedAccommodations();
-
+            this.accommodations = this.accommodationService.getAllRequestsByHostId(2);
         } else {
-            this.accommodations = this.accommodationService.getAllChangedAccommodations();
+            this.accommodations = this.accommodationService.getAllRejectedByHostId(2);
+
         }
     }
 

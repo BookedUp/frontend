@@ -6,20 +6,23 @@
   <app-header-host></app-header-host>
 
   <div id="sort-bar" class="sort-bar">
-    <div class="active-accommodations" [ngClass]="{ 'clicked': selectedClass === 'all-accommodations' }" (click)="changeStyle('all-accommodations')">
+    <div class="active-accommodations" [ngClass]="{ 'clicked': selectedClass === 'active-accommodations' }" (click)="changeStyle('active-accommodations')">
       My Accommodations
     </div>
-    <div class="requests-accommodations" [ngClass]="{ 'clicked': selectedClass === 'new-accommodations' }" (click)="changeStyle('new-accommodations')">
+    <div class="requests-accommodations" [ngClass]="{ 'clicked': selectedClass === 'requests-accommodations' }" (click)="changeStyle('requests-accommodations')">
       Waiting For Approval
     </div>
-    <div class="rejected-accommodations" [ngClass]="{ 'clicked': selectedClass === 'changed-accommodations' }" (click)="changeStyle('changed-accommodations')">
+    <div class="rejected-accommodations" [ngClass]="{ 'clicked': selectedClass === 'rejected-accommodations' }" (click)="changeStyle('rejected-accommodations')">
       Rejected
     </div>
   </div>
 
   <div class="main-content" id="main-content">
     <div *ngFor="let accommodation of accommodations | async" class="acc-frame" [class.created-status]="accommodation.status === 'CREATED'"
-         [class.changed-status]="accommodation.status === 'CHANGED'">
+         [class.changed-status]="accommodation.status === 'CHANGED'"
+         [class.rejected-status]="accommodation.status === 'REJECTED'"
+         [class.active-status]="accommodation.status === 'ACTIVE'"
+    >
       <img
         class="accommodation-image"
         alt=""
@@ -45,7 +48,9 @@
           </div>
 
           <b class="status-text" [class.created-status-text]="accommodation.status === 'CREATED'"
-             [class.changed-status-text]="accommodation.status === 'CHANGED'">{{ accommodation.status }}</b>
+             [class.changed-status-text]="accommodation.status === 'CHANGED'"
+             [class.active-status-text]="accommodation.status === 'ACTIVE'"
+             [class.rejected-status-text]="accommodation.status === 'REJECTED'">{{ accommodation.status }}</b>
         </div>
 
         <div class="bottom-data-box">

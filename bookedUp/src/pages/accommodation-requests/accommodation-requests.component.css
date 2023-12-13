@@ -156,9 +156,7 @@
   color: var(--gray-1);
 }
 .status-text,
-.created-status-text,
-.changed-status-text
-{
+.created-status-text{
   color: var(--gray-1);
 }
 .created-status-text{
