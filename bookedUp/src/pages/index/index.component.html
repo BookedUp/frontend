@@ -63,13 +63,15 @@
 
 <!--  <div id="popular-destinations-main">-->
 <!--    <div class="popular-destinations">Popular destinations</div>-->
-<!--    <img-->
-<!--            class="logged-admin-main-child2"-->
-<!--            alt=""-->
-<!--            src="../../assets/public/rectangle-8@2x.png"-->
-<!--    />-->
-<!--    <div class="australia-wrapper">-->
-<!--      <div class="japan">Australia</div>-->
+<!--    <div class="destination-card" *ngFor="let destination of popularAccommodations | async">-->
+<!--      <img-->
+<!--        class="logged-admin-main-child2"-->
+<!--        alt=""-->
+<!--        [src]="destination.photos[0].url"-->
+<!--      />-->
+<!--      <div class="australia-wrapper">-->
+<!--        <div class="japan">{{ destination.address.country }}</div>-->
+<!--      </div>-->
 <!--    </div>-->
 <!--  </div>-->
 

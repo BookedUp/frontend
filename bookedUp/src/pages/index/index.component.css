@@ -467,8 +467,7 @@ logged-admin-main-child6 {
   left: 1141px;
   width: 34px;
 }
-.popular-destinations,
-.popular-hotels {
+.popular-destination{
   position: absolute;
   top: 692px;
   left: 101px;
@@ -478,10 +477,7 @@ logged-admin-main-child6 {
   width: 504px;
   height: 29px;
 }
-.popular-hotels {
-  top: 1194px;
-  height: 26px;
-}
+
 
 .australia-wrapper {
   position: absolute;
@@ -970,12 +966,24 @@ input {
 }
 
 
+
 #popular-hotels-main {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 2px;
   margin: 0 100px;
+}
+
+.popular-hotels {
+  position: absolute;
+  top: 660px;
+  left: 101px;
+  font-size: var(--font-size-9xl);
+  color: var(--color-gray-400);
+  display: inline-block;
+  width: 504px;
+  height: 29px;
 }
 
 .card1 {
