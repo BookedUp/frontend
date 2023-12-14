@@ -1,5 +1,7 @@
 import { Component , OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {User} from "../../app/core/model/User";
+import {UserService} from "../../app/core/services/user.service";
 
 @Component({
   selector: 'app-manage-profile',
@@ -8,9 +10,21 @@ import { Router } from '@angular/router';
 })
 export class ManageProfileComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  loggedUser!: User;
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
+    this.userService.getUser(2).subscribe(
+        (user: User) => {
+          this.loggedUser = user;
+        },
+        (error) => {
+          console.error('Error loading user:', error);
+          // Handle error as needed
+        }
+    );
+
+
     const frameContainer10 = document.getElementById("delete-button");
 
     if (frameContainer10) {
