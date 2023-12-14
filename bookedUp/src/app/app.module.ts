@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -11,8 +11,10 @@ import { HeaderHostComponent } from '../shared/header-host/header-host.component
 import { HeaderGuestComponent } from '../shared/header-guest/header-guest.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { IndexComponent } from '../pages/index/index.component';
-import { LoginComponent } from '../pages/login/login.component';
+//import { LoginComponent } from '../pages/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
+import { LoginComponent } from './auth/login/login.component';
+
 import { RegisterStep2Component } from '../pages/register-step-2/register-step-2.component';
 import { ForgotPasswordComponent } from '../pages/forgot-password/forgot-password.component';
 import { CheckInboxComponent } from '../pages/check-inbox/check-inbox.component';
@@ -57,7 +59,8 @@ import { HttpClientModule} from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatCardModule
+    MatCardModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

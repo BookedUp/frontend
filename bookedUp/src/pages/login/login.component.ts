@@ -56,15 +56,17 @@ export class LoginComponent implements OnInit {
         var logged: boolean = false;
 
         this.users.forEach(user => {
-          console.log(user.email);
+          //console.log(user.email);
           if (email === user.email && password === user.password && user.active == true){
+            console.log(user.email);
+
             logged = true;
             if (user.role == Role.Admin) {
-              this.router.navigate(['/'], { queryParams: { role: 'admin' } });
+            this.router.navigate(['/'], { queryParams: { role: 'admin' } });
             } else if (user.role == Role.Host) {
-              this.router.navigate(['/'], { queryParams: { role: 'host' } });
+            this.router.navigate(['/'], { queryParams: { role: 'host' } });
             } else if (user.role == Role.Guest) {
-              this.router.navigate(['/'], { queryParams: { role: 'guest' } });
+            this.router.navigate(['/'], { queryParams: { role: 'guest' } });
             }
           }
         });
