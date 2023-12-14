@@ -28,42 +28,32 @@
   font-size: var(--font-size-base);
   color: var(--gray-1);
 }
-.all-reservation {
+.all-reservation,
+.waiting-reservation,
+.accepted-reservation,
+.rejected-reservation,
+.cancelled-reservation,
+.finished-reservation {
+  cursor: pointer;
   position: absolute;
   top: 16px;
   left: 122px;
   letter-spacing: 0.02em;
 }
 .waiting-reservation {
-  position: absolute;
-  top: 16px;
   left: 270px;
-  letter-spacing: 0.02em;
 }
 .accepted-reservation {
-  position: absolute;
-  top: 16px;
   left: 445px;
-  letter-spacing: 0.02em;
 }
 .rejected-reservation {
-  position: absolute;
-  top: 16px;
   left: 538px;
-  letter-spacing: 0.02em;
 }
 .cancelled-reservation {
-  position: absolute;
-  top: 16px;
   left: 625px;
-  letter-spacing: 0.02em;
 }
-
 .finished-reservation {
-  position: absolute;
-  top: 16px;
   left: 715px;
-  letter-spacing: 0.02em;
 }
 .clicked {
   color: var(--blue-1);
