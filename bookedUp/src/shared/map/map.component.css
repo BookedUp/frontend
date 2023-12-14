@@ -1,0 +1,15 @@
+.map{
+    border-radius: var(--br-8xs);
+    min-height: 48%;
+    max-height: 48%;
+    width: 100%;
+    border: 0;
+    &:hover {
+      box-shadow: 0 10px 50px -10px rgba(0,0,0,0.25);
+    }
+  }
+  .no-icon {
+    display: none;
+  }
+  
+  
