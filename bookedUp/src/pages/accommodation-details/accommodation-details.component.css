@@ -167,6 +167,7 @@
 .singlePrice,
 .normal-text{
   font-size:var(--font-size-mini);
+  word-wrap: break-word;
 
 }
 .description{

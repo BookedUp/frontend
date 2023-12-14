@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AccommodationService } from '../../app/core/services/accommodation.service';
+import { Router, ActivatedRoute} from '@angular/router';
+import { Accommodation } from '../../app/core/model/Accommodation';
+import { Observable, map } from 'rxjs';
+import { Photo } from 'src/app/core/model/Photo';
 
 @Component({
   selector: 'app-accommodation-details',
@@ -7,20 +11,34 @@ import { Router } from '@angular/router';
   styleUrls: ['./accommodation-details.component.css'],
 })
 export class AccommodationDetailsComponent implements OnInit {
-  pictureUrls: string[] = [
-    'https://www.essexapartmenthomes.com/-/media/Project/EssexPropertyTrust/Sites/EssexApartmentHomes/Blog/2021/2021-01-12-Studio-vs-One-Bedroom-Apartment-How-They-Measure-Up/Studio-vs-One-Bedroom-Apartment-How-They-Measure-Up-1.jpg',
-    'https://www.thespruce.com/thmb/cPaZ1eA5WqKLYH4kSry7wrMYsDM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/EleanorEmail-847750221ae1499c972c977f279d2d5e.png',
-    'https://assets.nestiostatic.com/building_medias/full/d1c6422ba404e8cc5f87bdf76e0e96b7.jpg',
-    'https://images1.forrent.com/i2/LetRViB02weV_zpN2v0D_VvhdCiiYoo0lNQuCtRUKBo/112/image.jpg',
-    'https://i.pinimg.com/736x/f9/e2/53/f9e253dc1d18b53cacc560896cad8789.jpg',
-  ];
-
+  pictureUrls: string[] = [];
+  accommodationId: number = 1;
+  accommodation: Observable<Accommodation> = new Observable<Accommodation>();
   selectedClass: string = 'bar-text';
   currentIndex: number = 0;
 
-  constructor( private router: Router ) {}
+  constructor( private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.accommodationId = params['id'];
+    });
+    this.accommodation = this.accommodationService.getAccommodationById(this.accommodationId);
+    
+    this.accommodation.subscribe((data) => {
+      console.log(data);
+      // You can perform further actions with the data here
+    });
+    this.getUrls().subscribe((urls) => {
+      this.pictureUrls = urls;
+    });
+  }
+
+  getUrls(): Observable<string[]> {
+    return this.accommodation.pipe(
+      map((accommodation: { photos: Photo[]; }) => accommodation?.photos?.map((photo) => photo.url) || [])
+    );
+  }
 
   nextImage() {
     if (this.currentIndex < this.pictureUrls.length - 1) {

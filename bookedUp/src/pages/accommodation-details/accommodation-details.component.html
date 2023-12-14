@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <div class="acc-details">
+    <div class="acc-details" *ngIf="accommodation | async as accommodation">
     
       <app-header style="background-color: var(--color-white);"></app-header>
       
@@ -28,28 +28,28 @@
         <div id="right-data" class="right-container">
           <div class="right-data">
             <div class="right-box">
-              <div id="apartmentName" class="title-text">Lakeside Motel Warefront</div>
+              <div id="apartmentName" class="title-text">{{accommodation.name}}</div>
   
               <div class="reviews-frame">
                 <div class="stars-container">
-                  <span class="star" *ngFor="let star of generateStars(roundHalf(4.5))">
+                  <span class="star" *ngFor="let star of generateStars(roundHalf(accommodation.averageRating/2))">
                     {{ star }}
                   </span>
                 </div>
-                <div class="reviews-average">{{ roundHalf(4.5) }}</div>
+                <div class="reviews-average">{{ roundHalf(accommodation.averageRating/2) }}</div>
               </div>
   
               <div id="address" class="address">
                 <img class="icon" alt="" src="../../assets/public/location-1.svg" />
                 <div class="" id="normal-text">
-                  Lorem ipsum road, Tantruim-2322, Melbourne, Australia
+                  {{ accommodation.address.streetAndNumber }}, {{accommodation.address.city}} {{accommodation.address.postalCode}}, {{ accommodation.address.city }}
                 </div>
               </div>
               
             </div>
             <div class="left-box">
               <b class="totalPrice">$240</b><br>
-              <b class="singlePrice">$120/per night</b><br>
+              <b class="singlePrice">${{accommodation.price}}/{{accommodation.priceType}}</b><br>
               <div class="normal-text" style="margin-top: 10px;">2 adult, 2 days</div>
             </div>
           </div>
@@ -60,32 +60,14 @@
               <b class="totalPrice">Overview</b>
               <div id="about" style="margin-top: 10px;">
                 <div class="normal-text">
-                  <p>
-                    Featuring free WiFi throughout the property, Lakeside Motel Waterfront
-                    offers accommodations in Lakes Entrance, 19 mi from Bairnsdale. Free
-                    private parking is available on site.
-                  </p>
-                  <p class="normal-text"></p>
-                  <p class="normal-text">
-                    Each room at this motel is air conditioned and comes with a
-                    flat-screen TV. You will find a kettle, toaster and a microwave in the
-                    room. Each room is fitted with a private bathroom. Guests have access
-                    to barbecue facilities and a lovely large lawn area. Metung is 6.8 mi
-                    from Lakeside Motel Waterfront, while Paynesville is 14 mi from the
-                    property.
-                  </p>
-                  <p class="normal-text"></p>
-                  <p class="normal-text">
-                    Couples in particular like the location – they rated it 9.2 for a
-                    two-person trip.
-                  </p>
+                  {{accommodation.description}}
                 </div>
               </div>
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <b class="totalPrice">Top Facilities</b>
-              <div id="" class="address" style="margin-top: 10px;">
+              <div id="" class="address" style="margin-top: 10px;" *ngFor="let facility of accommodation.amenities;">
                 <img class="icon" alt="" src="../../assets/public/output-onlinepngtools.png" />
-                <div class="normal-text">Air Conditioning</div>
+                <div class="normal-text">{{facility}}</div>
               </div>
             </div>
           </div>
@@ -93,7 +75,10 @@
 
         
         <div id="left-data" class="left-container">
-          <app-map></app-map>
+          <app-map *ngIf="accommodation && accommodation.address"
+            [latitude]="accommodation.address.latitude"
+            [longitude]="accommodation.address.longitude">
+          </app-map>
 
           <!-- src="http://maps.google.com/?q=[lat],[long]"  -->
         </div>
