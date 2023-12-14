@@ -1,6 +1,4 @@
-// map.component.ts
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as L from 'leaflet';
 
 @Component({
@@ -9,10 +7,13 @@ import * as L from 'leaflet';
   styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements OnInit {
+  @Input() latitude: number = 0;
+  @Input() longitude: number = 0;
+
   constructor() {}
 
   ngOnInit(): void {
-    this.initializeMap(-15.800513, -47.91378);
+    this.initializeMap(this.latitude, this.longitude);
   }
 
   private initializeMap(latitude: number, longitude: number): void {
