@@ -60,19 +60,26 @@ export class AccommodationService {
     guestsNumber?: number,
     startDate?: Date,
     endDate?: Date,
-    amenities?: Amenity[],
+    amenitiesStrings?: string[],
     minPrice?: number,
-    maxPrice?: number
+    maxPrice?: number,
+    customMaxBudget?:number,
+    selectedType?:string,
+    name?:string
   ): Observable<Accommodation[]> {
     const params: any = {
       location,
       guestsNumber,
       startDate,
       endDate,
-      amenities: amenities || [],
+      amenitiesStrings: amenitiesStrings || [],
       minPrice: minPrice || 0.0,
-      maxPrice: maxPrice || 0.0
+      maxPrice: maxPrice || 0.0,
+      customMaxBudget: customMaxBudget || 50.0,
+      selectedType: selectedType || "",
+      name:name || ""
     };
+    console.log(amenitiesStrings);
     return this.http.get<Accommodation[]>(`${this.apiUrl}/search-filter`, { params });
   }
 

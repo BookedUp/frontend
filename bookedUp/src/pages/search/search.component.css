@@ -10,6 +10,7 @@
   width: 295px;
   height: 287px;
 }
+
 .search-unlogged-item {
   position: absolute;
   top: 0;
@@ -317,7 +318,8 @@
   border: 1px solid var(--gray-5);
   box-sizing: border-box;
   width: 915px;
-  height: 240px;
+  height: 224px;
+  margin-bottom: 20px;
 }
 .search-unlogged-child10,
 .search-unlogged-child9 {
@@ -338,15 +340,15 @@
   background-color: var(--gray-6);
   height: 119px;
 }
-.search-unlogged-child11 {
-  padding-left: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+.search-unlogged-child1 .search-unlogged-child11 {
   border-radius: var(--br-8xs);
   width: 285px;
   height: 200px;
   object-fit: cover;
   cursor: pointer;
+  margin-top: 10px; /* Odmak od gornjeg dela */
+  margin-bottom: 10px; /* Odmak od donjeg dela */
+  margin-left: 10px; /* Odmak sa leve strane */
 }
 .search-unlogged-child19,
 .search-unlogged-child20 {
@@ -625,11 +627,28 @@
   height: 32px;
 }
 .filter-by3 {
+  position: absolute;
   top: 443px;
   left: 118px;
   font-size: var(--font-size-lg);
   letter-spacing: 0.02em;
   color: var(--gray-1);
+  display: flex;
+  align-items: center;
+}
+.filter-by3 .filter,
+.filter-by3 .no-filter {
+  margin-right: 100px; /* Udaljenost između .filter i .no-filter */
+}
+.filter{
+  margin-left: -10px;
+}
+.no-filter {
+  display: flex;
+  align-items: center;
+}
+.no-filter label {
+  margin-right: 5px; /* Udaljenost između labele i checkbox-a */
 }
 .your-budget-per3 {
   position: relative;
@@ -738,6 +757,7 @@
   justify-content: flex-start;
   padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
   gap: var(--gap-3xs);
+  cursor: pointer;
 }
 .location-1-parent1 {
   top: 178px;
@@ -828,25 +848,42 @@
   gap: var(--gap-3xs);
   color: var(--gray-1);
 }
-.b81,
+
+
+.b81 {
+  color: #544c37;
+  font-size: larger; /* Prilagodite veličinu fonta prema vašim potrebama */
+  font-weight: bold;
+  z-index: 2; /* Postavite z-index na veći broj za .b81 */
+}
+
 .b82 {
-  position: relative;
-  letter-spacing: 0.01em;
-}
-.b82{
+  padding-top: 20px;
   font-size: x-large;
+  font-weight: bold;
+  z-index: 1; /* Postavite z-index na manji broj za .b82 */
 }
+
 .includes-taxes-and33,
 .room-2-days27{
   position: absolute;
-  top: 90px;
+  top: 10px;
   right: 20px;
   letter-spacing: 0.02em;
   color: var(--gray-1);
   text-align: right;
 }
+.includes-taxes-and33 {
+  padding-top: 5px;
+  font-size: large;
+  font-weight: bold;
+  z-index: 2; /* Podešavanje z-index na veći broj za .includes-taxes-and33 */
+}
+
 .room-2-days27 {
-  top: 70px;
+  z-index: 1;
+  top:80px;
+  /* Podešavanje z-index na manji broj za .room-2-days27 */
 }
 .off26 {
   position: relative;
@@ -884,6 +921,7 @@
   box-sizing: border-box;
   font-size: var(--font-size-mini);
   color: var(--color-white);
+  cursor: pointer;
 }
 .ocean-waves-resort-parent1 {
   position: absolute;
@@ -912,7 +950,7 @@
 }
 .parent28 {
   position: absolute;
-  top: 115px;
+  top: 105px;
   right: 20px;
   flex-direction: row;
   justify-content: flex-start;
@@ -946,7 +984,6 @@
   top: 42px;
   left: 500px;
 }
-.off-wrapper26,
 .see-availability-wrapper26 {
   position: absolute;
   border-radius: var(--br-7xs);
@@ -964,13 +1001,7 @@
   cursor: pointer;
   font-size: var(--font-size-mini);
 }
-.off-wrapper26 {
-  top: 10px;
-  right: 20px;
-  background-color: var(--color-seagreen-100);
-  padding: var(--padding-9xs) var(--padding-5xs);
-  font-size: var(--font-size-smi);
-}
+
 .lakeside-motel-warefront-parent6 {
   position: absolute;
   top: 450px;
@@ -1053,18 +1084,19 @@
   letter-spacing: 0.02em;
   line-height: 20px;
 }
-.all-wrapper1,
-.hotels-wrapper1,
-.hostels-wrapper1,
-.appartments-wrapper1,
-.resorts-wrapper1,
+.all,
+.HOTEL,
+.HOSTEL,
+.APARTMENT,
+.RESORT,
 .load-more-results-wrapper9,
-.villas-wrapper1 {
+.VILLA {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: var(--padding-3xs) var(--padding-lg);
+  cursor: pointer;
 }
 .load-more-results-wrapper9 {
   position: absolute;
@@ -1075,25 +1107,25 @@
   font-size: var(--font-size-mini);
   color: var(--blue-1);
 }
-.all-wrapper1,
-.hotels-wrapper1,
-.hostels-wrapper1,
-.appartments-wrapper1,
-.resorts-wrapper1,
-.villas-wrapper1 {
+.all,
+.HOTEL,
+.HOSTEL,
+.APARTMENT,
+.RESORT,
+.VILLA {
   border: 1px solid var(--blue-1);
 }
-.all-wrapper1 {
+.all {
   border-radius: var(--br-7xs) 0 0 var(--br-7xs);
 }
-.hotels-wrapper1,
-.hostels-wrapper1,
-.appartments-wrapper1,
-.resorts-wrapper1,
-.villas-wrapper1 {
+.HOTEL,
+.HOSTEL,
+.APARTMENT,
+.RESORT,
+.VILLA {
   background-color: var(--color-white);
 }
-.villas-wrapper1 {
+.VILLA {
   border-radius: 0 var(--br-7xs) var(--br-7xs) 0;
 }
 .load-more-results-wrapper9 {

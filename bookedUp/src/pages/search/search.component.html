@@ -11,24 +11,24 @@
       <div id="filters">
         <div id="main-search-box">
           <div class="search-unlogged-child30"></div>
-          <div class="location-1-parent1">
+          <div class="location-1-parent1" >
             <img class="location-1-icon16" alt="" src="../../assets/public/location-12.svg" />
-            <input type="text" class="melbourne3" placeholder={{location}}/>
+            <input id="locationTxt" type="text" class="melbourne3" placeholder={{location}}/>
           </div>
           
-          <div class="calendar-1-parent7">
+          <div class="calendar-1-parent7" >
             <img class="location-1-icon16" alt="" src="../../assets/public/calendar-1.svg" />
-            <input placeholder={{fromDate}} class="feb-3-20229" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="fromDate" />
+            <input placeholder={{fromDate}} [min]="minFromDate" class="feb-3-20229" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="fromDate" />
           </div>
 
-          <div class="calendar-2-parent7">
+          <div class="calendar-2-parent7" >
             <img class="location-1-icon16" alt="" src="../../assets/public/calendar-2.svg" />
-            <input placeholder={{outDate}} class="feb-7-20229" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="toDate" />
+            <input placeholder={{outDate}} [min]="minFromDate"  class="feb-7-20229" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="toDate" />
           </div>
 
           <div class="user-square-1-parent7">
           <img class="location-1-icon16" alt="" src="../../assets/public/usersquare-11.svg" />
-          <input type="number" class="adult-1-room14" placeholder={{guests}} pattern="\d*" />
+          <input id="guestNumberTxt" type="number" class="adult-1-room14" placeholder={{guests}} pattern="\d*" />
           </div>
         </div>
 
@@ -37,11 +37,20 @@
             <b class="search-by-property3">Search by property name</b>
             <div class="search-1-parent1">
               <img class="location-1-icon16" alt="" src="../../assets/public/search-1.svg" />
-              <input type="text" class="melbourne3" placeholder="eg. Beach westpalm"/>
+              <input type="text" class="melbourne3" placeholder="eg. Beach westpalm" [(ngModel)]="name" (ngModelChange)="onNameChange($event)"/>
             </div>
           </div>
       
-          <div class="filter-by3">Filter by</div>
+          <!-- <div class="filter-by3">Filter by</div> -->
+          <div class="filter-by3">
+            <b class="filter">  Filter by</b>
+            <b class="no-filter">
+              
+              <input type="checkbox" id="NofilterCheckbox" (change)="checkboxChanged($event, 'NofilterCheckBox')">
+              <label for="filterCheckbox">Disable all</label>
+            </b>
+          </div>
+          
 
           <div id="budget-filters">
             <div class="search-unlogged-child9"></div>
@@ -51,37 +60,37 @@
 
             <div class="div246">$ 0 - $ 50</div>
             <div class="keep-me-signed-in-parent-19">
-              <input type="radio" id="0-50" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '0-50')"/>
+              <input type="radio" [disabled]="customBudget > 50" id="0-50" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '0-50')"/>
               <div class="group-child117"></div>
             </div>
 
             <div class="div249">$ 50 - $ 100</div>
             <div class="keep-me-signed-in-parent-21">
-              <input type="radio" id="50-100" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '50-100')"/>
+              <input type="radio" [disabled]="customBudget > 50" id="50-100" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '50-100')"/>
               <div class="group-child117"></div>
             </div>
 
             <div class="div252">$ 100 - $ 150</div>
             <div class="keep-me-signed-in-parent-23">
-              <input type="radio" id="100-150" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '100-150')"/>
+              <input type="radio" [disabled]="customBudget > 50" id="100-150" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '100-150')"/>
               <div class="group-child117"></div>
             </div>
 
             <div class="div255">$ 1,000 - $ 2,000</div>
             <div class="keep-me-signed-in-parent-25">
-              <input type="radio" id="1000-2000" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '1000-2000')"/>
+              <input type="radio" [disabled]="customBudget > 50" id="1000-2000" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '1000-2000')"/>
               <div class="group-child117"></div>
             </div>
             
             <div class="and-more3">$ 2,000 and more</div>
             <div class="keep-me-signed-in-parent-27">
-              <input type="radio" id="2000" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '2000')"/>
+              <input type="radio" [disabled]="customBudget > 50" id="2000" class="keep-me-signed-checkbox" name="budget" (change)="checkboxChanged($event, '2000')"/>
               <div class="group-child117"></div>
             </div>
 
             <div class="budget-slider">
               <label for="budget">Custom:</label>
-              <input type="range" id="budget" [(ngModel)]="customBudget" (input)="updateBudget()"  min="0" max="5000" step="5"/>
+              <input type="range" id="budget" [(ngModel)]="customBudget" (input)="updateBudget()" [disabled]="budgetSliderDisabled" min="0" max="5000" step="5"/>
               <span>{{ customBudget }}</span>
             </div>              
 
@@ -111,15 +120,16 @@
               <div class="group-child117"></div>
             </div>
 
-            <div class="book-without-credit3">Restaurant</div>
-            <div class="keep-me-signed-in-parent-26">
-              <input type="checkbox" id="RESTAURANT" class="keep-me-signed-checkbox" (change)="checkboxChanged($event, 'RESTAURANT')"/>
-              <div class="group-child117"></div>
-            </div>
-
-            <div class="hot-tub-jacuzzi3">Swimming pool</div>
+            <div class="book-without-credit3">Swimming pool</div>
             <div class="keep-me-signed-in-parent-28">
               <input type="checkbox" id="SWIMMING_POOL" class="keep-me-signed-checkbox"  (change)="checkboxChanged($event, 'SWIMMING_POOL')"/>
+              <div class="group-child117"></div>
+            </div>
+            
+
+            <div class="hot-tub-jacuzzi3">Restaurant</div>
+            <div class="keep-me-signed-in-parent-26">
+              <input type="checkbox" id="RESTAURANT" class="keep-me-signed-checkbox" (change)="checkboxChanged($event, 'RESTAURANT')"/>
               <div class="group-child117"></div>
             </div>
 
@@ -132,27 +142,27 @@
       
       </div>
 
-      <div class="search-wrapper4">
+      <div class="search-wrapper4" (click)="onSearchClick()">
         <b class="register1">Search</b>
       </div>
 
       <div id="apartment-type-filter" class="frame-parent45">
-        <div class="all-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'all-wrapper1' }" (click)="changeStyle('all-wrapper1')">
+        <div class="all" [ngClass]="{ 'clicked': selectedType === 'all' }" (click)="changeStyle('all')">
           <div class="register1">All</div>
         </div>
-        <div class="hotels-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'hotels-wrapper1' }" (click)="changeStyle('hotels-wrapper1')">
+        <div class="HOTEL" [ngClass]="{ 'clicked': selectedType === 'HOTEL' }" (click)="changeStyle('HOTEL')">
           <div class="register1">Hotels</div>
         </div>
-        <div class="hostels-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'hostels-wrapper1' }" (click)="changeStyle('hostels-wrapper1')">
+        <div class="HOSTEL" [ngClass]="{ 'clicked': selectedType === 'HOSTEL' }" (click)="changeStyle('HOSTEL')">
           <div class="register1">Hostels</div>
         </div>
-        <div class="appartments-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'appartments-wrapper1' }" (click)="changeStyle('appartments-wrapper1')">
+        <div class="APARTMENT" [ngClass]="{ 'clicked': selectedType === 'APARTMENT' }" (click)="changeStyle('APARTMENT')">
           <div class="register1">Apartments</div>
         </div>
-        <div class="resorts-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'resorts-wrapper1' }" (click)="changeStyle('resorts-wrapper1')">
+        <div class="RESORT" [ngClass]="{ 'clicked': selectedType === 'RESORT' }" (click)="changeStyle('RESORT')">
           <div class="register1">Resorts</div>
         </div>
-        <div class="villas-wrapper1" [ngClass]="{ 'clicked': selectedClass === 'villas-wrapper1' }" (click)="changeStyle('villas-wrapper1')">
+        <div class="VILLA" [ngClass]="{ 'clicked': selectedType === 'VILLA' }" (click)="changeStyle('VILLA')">
           <div class="register1">Villas</div>
         </div>
       </div>
@@ -160,8 +170,7 @@
     
       
       <div class="melbourne-17583">{{ location }}: {{ searchResults.length }} search results found</div>
-      
-      <!-- search.component.html -->
+    
 
       <div id="frames-apartments">
         <ng-container *ngIf="searchResults && searchResults.length > 0; else noResults">
@@ -178,10 +187,14 @@
             <div id="list-apartments">
               <div class="lakeside-motel-warefront30">{{ result.name }}</div>
               <div class="parent28">
-                <b class="b82">{{ result.totalPrice }}</b>
+                <b class="b81">Total price:</b>
+              </div>
+              
+              <div class="parent28">
+                <b class="b82">{{ result.totalPrice }}$</b>
               </div>
 
-              <div class="includes-taxes-and33">Includes taxes and fees</div>
+              <div class="includes-taxes-and33">{{result.type}}</div>
               <div class="room-2-days27">1 room {{ calculateDayDifference() }} days</div>
               <b class="live-a-little28">Live a little and celebrate with champagne</b>
               <div class="reats-include-a28">{{ result.description }}</div>
@@ -189,9 +202,7 @@
               <div class="see-availability-wrapper26" id="frameContainer19">
                 <b class="register1">See availability</b>
               </div>
-              <div class="off-wrapper26">
-                <b class="off26">5% off</b>
-              </div>
+    
               <img class="group-child108" alt="" src="../../assets/public/group-5.svg" />
             </div>
           </div>

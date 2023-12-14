@@ -1,8 +1,6 @@
-
 import { Component, OnInit } from '@angular/core';
 import { AccommodationService } from '../../app/core/services/accommodation.service';
 import { Accommodation } from '../../app/core/model/Accommodation';
-import { Amenity } from '../../app/core/model/Amenity';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -16,21 +14,24 @@ export class SearchComponent implements OnInit {
   fromDate: Date = new Date();
   outDate: Date = new Date();
   guests: number = 0;
-  selectedClass: string = 'all-wrapper1';
+  selectedType: string = 'all';
   customBudget: number = 50;
   searchResults: Accommodation[] = [];
   budgetCheckboxIds: string[] = [];
-  popularCheckboxIds: Amenity[] = [];
-
-
+  popularCheckboxIds: string[] = [];
+  updateTimeout: any;
+  budgetSliderDisabled: boolean = false;
+  radioButtonsState: { [key: string]: boolean } = {};
+  name: string = "";
+  minFromDate: string;
 
   checkboxChanged(event: any, checkboxId: string) {
     console.log("hej");
     const isBudgetFilter = event.target.closest('#budget-filters') !== null;
     const isPopularFilter = event.target.closest('#popular-filters') !== null;
+
   
     if (isBudgetFilter) {
-      // Očisti sve prethodno čekirane opcije
       this.budgetCheckboxIds = [];
   
       const idParts = checkboxId.split('-');
@@ -41,27 +42,47 @@ export class SearchComponent implements OnInit {
         this.budgetCheckboxIds.push(`Min: ${minPrice}, Max: ${maxPrice}`);
       }
     } else if (isPopularFilter) {
-      // Očisti sve prethodno čekirane opcije
-      this.popularCheckboxIds = [];
-  
       if (event.target.checked) {
-        if (checkboxId in Amenity) {
-          const amenity: Amenity = checkboxId as Amenity;
-          this.popularCheckboxIds.push(amenity);;
-        }
+          // Add the checkbox to the list only if it is not already present
+          if (!this.popularCheckboxIds.includes(checkboxId)) {
+            this.popularCheckboxIds.push(checkboxId);
+          }
+        
+      } else {
+        // Remove the checkbox from the list
+        this.popularCheckboxIds = this.popularCheckboxIds.filter(
+          checkbox => checkbox !== checkboxId
+        );
       }
     }
-  
-    // Provjerite ima li barem jedan čekirani checkbox prije poziva callFilterAccommodations
+    
     if (this.budgetCheckboxIds.length > 0 || this.popularCheckboxIds.length > 0) {
-      console.log('USAAAAAAAAAAAAAAAAAAAAAO');
-      this.filterAccommodations();
+      this.searchAndFilterAccommodations();
+    } else if (this.budgetCheckboxIds.length > 0 || this.popularCheckboxIds.length == 0) {
+      this.searchAndFilterAccommodations();
+    } else if (this.popularCheckboxIds.length > 0 || this.budgetCheckboxIds.length == 0){
+      this.searchAndFilterAccommodations();
     }
-  }
   
+  }
 
+  onNameChange(newValue: string): void {
+    this.name = newValue;
+    this.searchAndFilterAccommodations();
+  }
 
-  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService) { 
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    this.minFromDate = this.formatDate(tomorrow);
+  }
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
 
   ngOnInit() {
     
@@ -70,8 +91,6 @@ export class SearchComponent implements OnInit {
     this.outDate = this.route.snapshot.queryParams['selectedToDate'];
     this.guests = this.route.snapshot.queryParams['guestNumber'];
     this.searchResults = JSON.parse(this.route.snapshot.queryParams['searchResults']);
-
-    
 
     const parsedFromDate = new Date(this.fromDate);
     const parsedToDate = new Date(this.outDate);
@@ -100,11 +119,30 @@ export class SearchComponent implements OnInit {
         });
       }
     }
-  
+
+    
+  onSearchClick(): void {
+    this.location = (document.getElementById("locationTxt") as HTMLInputElement).value;
+    this.guests = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10);
+
+    const fromDateInput = document.getElementById("fromDate") as HTMLInputElement;
+    this.fromDate = new Date(fromDateInput.value);
+
+    const toDateInput = document.getElementById("toDate") as HTMLInputElement;
+    this.outDate = new Date(toDateInput.value);
+    this.searchAndFilterAccommodations();
+  }
   
   updateBudget(): void {
-    // Handle any additional logic when the budget is updated
-    // For example, you can use this.customBudget in your search logic
+    
+    if (this.updateTimeout) {
+      clearTimeout(this.updateTimeout);
+    }
+    this.updateTimeout = setTimeout(() => {
+      
+  
+      this.searchAndFilterAccommodations();
+    }, 500);
   }
 
   toggleCheckbox() {
@@ -112,7 +150,9 @@ export class SearchComponent implements OnInit {
   }
 
   changeStyle(className: string): void {
-    this.selectedClass = className;
+    console.log(className)
+    this.selectedType = className;
+    this.searchAndFilterAccommodations();
   }
 
   calculateDayDifference(): number{
@@ -121,22 +161,28 @@ export class SearchComponent implements OnInit {
     return dayDifference;
   }
 
-  filterAccommodations() {
+  searchAndFilterAccommodations() {
+    if (this.customBudget > 50) {
+      this.budgetCheckboxIds = [];
+    }
     let minPrice: number = 0.0;
-    let maxPrice: number = 100000000000.0;
-
+    let maxPrice: number = 0.0;
     if (this.budgetCheckboxIds.length > 0) {
       const idParts = this.budgetCheckboxIds[0].split(','); 
       minPrice = parseFloat(idParts[0].replace('Min:', '').trim());
       maxPrice = parseFloat(idParts[1].replace('Max:', '').trim());
-    }
+      if (Number.isNaN(maxPrice)){
+        maxPrice = 100000.0;
+      }
+    } 
+    
 
     console.log('Request Params:', this.searchResults);
     console.log(this.popularCheckboxIds);
     console.log(minPrice)
     console.log(maxPrice)
     this.accommodationService
-      .searchAccommodations(this.location, this.guests, this.fromDate, this.outDate, this.popularCheckboxIds.length > 0 ? this.popularCheckboxIds : [], minPrice, maxPrice)
+      .searchAccommodations(this.location, this.guests, this.fromDate, this.outDate, this.popularCheckboxIds, minPrice, maxPrice, this.customBudget, this.selectedType, this.name)
       .subscribe(
         (filterResults: Accommodation[]) => {
           console.log('Accommodations:', filterResults);
@@ -147,9 +193,6 @@ export class SearchComponent implements OnInit {
         }
       );
   }
-
-
-
 }
 
 
