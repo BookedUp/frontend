@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AccommodationService } from '../../app/core/services/accommodation.service';
 import { Accommodation } from '../../app/core/model/Accommodation';
 import {Observable} from "rxjs";
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-index',
@@ -13,13 +14,15 @@ import {Observable} from "rxjs";
 export class IndexComponent implements OnInit {
     popularAccommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
 
-  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService) { }
+    constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService) { }
 
     ngOnInit() {
 
-        this.popularAccommodations = this.accommodationService.getMostPopularAccommodations();
+        this.popularAccommodations = this.accommodationService.getMostPopularAccommodations().pipe(
+            map((accommodations: Accommodation[]) => accommodations.slice(0, 4))
+          );
 
-        console.log(this.popularAccommodations)
+        console.log(this.popularAccommodations);
         var searchButton = document.getElementById("searchButton");
         if (searchButton) {
             searchButton.addEventListener("click", () => {
@@ -55,25 +58,11 @@ export class IndexComponent implements OnInit {
 
     }
 
-    generateStars(rating: number): string[] {
-        const stars: string[] = [];
-        for (let i = 1; i <= 5; i++) {
-            if (i <= rating) {
-                stars.push('★');
-            } else if (i - 0.5 === rating) {
-                stars.push('✯');
-            } else {
-                stars.push('☆');
-            }
-        }
-        return stars;
-    }
-
     roundHalf(value: number): number {
         return Math.round(value * 2) / 2;
     }
 
-  navigateToDetails(id: number) {
-    this.router.navigate(['/accommodation-details', id]);
-  }
+    navigateToDetails(id: number) {
+        this.router.navigate(['/accommodation-details', id]);
+    }
 }
