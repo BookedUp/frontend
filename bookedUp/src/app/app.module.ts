@@ -25,7 +25,7 @@ import { AccommodationsComponent } from '../pages/accommodations/accommodations.
 import { CreateAccommodationComponent } from '../pages/create-accommodation/create-accommodation.component';
 import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
 import { AccommodationRequestsComponent } from '../pages/accommodation-requests/accommodation-requests.component';
-
+import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
@@ -56,7 +56,8 @@ import { HttpClientModule} from '@angular/common/http';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
