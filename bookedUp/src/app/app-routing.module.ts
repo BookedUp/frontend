@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'check-inbox', component: CheckInboxComponent },
   { path: 'search', component: SearchComponent },
-  { path: 'accommodation-details', component: AccommodationDetailsComponent },
+  { path: 'accommodation-details/:id', component: AccommodationDetailsComponent },
   { path: 'manage-profile', component: ManageProfileComponent },
   { path: 'accommodations', component: AccommodationsComponent },
   { path: 'add-new-accommodation', component: CreateAccommodationComponent },
