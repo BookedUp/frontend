@@ -18,6 +18,7 @@ import { ManageProfileComponent } from '../pages/manage-profile/manage-profile.c
 import { AccommodationsComponent } from '../pages/accommodations/accommodations.component';
 import { CreateAccommodationComponent } from '../pages/create-accommodation/create-accommodation.component';
 import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
+import { AccommodationRequestsComponent } from '../pages/accommodation-requests/accommodation-requests.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'accommodations', component: AccommodationsComponent },
   { path: 'add-new-accommodation', component: CreateAccommodationComponent },
   { path: 'reservation-requests', component: ReservationRequestsComponent },
+  { path: 'accommodation-requests', component: AccommodationRequestsComponent },
 ];
 
 @NgModule({

@@ -1,3 +1,4 @@
+
 .search-unlogged-child {
   position: absolute;
   top: 802px;
@@ -9,6 +10,7 @@
   width: 295px;
   height: 287px;
 }
+
 .search-unlogged-item {
   position: absolute;
   top: 0;
@@ -307,65 +309,17 @@
   height: 172px;
   object-fit: cover;
 }
-.search-unlogged-child1,
-.search-unlogged-child2,
-.search-unlogged-child3,
-.search-unlogged-child4,
-.search-unlogged-child5,
-.search-unlogged-child6,
-.search-unlogged-child7,
-.search-unlogged-child8 {
-  position: absolute;
-  top: 426px;
+.search-unlogged-child1{ 
+  position: relative;
+  top: 340px;
   left: 425px;
   border-radius: var(--br-8xs);
   background-color: var(--color-white);
   border: 1px solid var(--gray-5);
   box-sizing: border-box;
   width: 915px;
-  height: 240px;
-}
-.search-unlogged-child2,
-.search-unlogged-child3,
-.search-unlogged-child4,
-.search-unlogged-child5,
-.search-unlogged-child6,
-.search-unlogged-child7,
-.search-unlogged-child8 {
-  top: 690px;
-}
-.search-unlogged-child3,
-.search-unlogged-child4,
-.search-unlogged-child5,
-.search-unlogged-child6,
-.search-unlogged-child7,
-.search-unlogged-child8 {
-  top: 954px;
-}
-.search-unlogged-child4,
-.search-unlogged-child5,
-.search-unlogged-child6,
-.search-unlogged-child7,
-.search-unlogged-child8 {
-  top: 1482px;
-}
-.search-unlogged-child5,
-.search-unlogged-child6,
-.search-unlogged-child7,
-.search-unlogged-child8 {
-  top: 2010px;
-}
-.search-unlogged-child6,
-.search-unlogged-child7,
-.search-unlogged-child8 {
-  top: 1746px;
-}
-.search-unlogged-child7,
-.search-unlogged-child8 {
-  top: 1218px;
-}
-.search-unlogged-child8 {
-  top: 2274px;
+  height: 224px;
+  margin-bottom: 20px;
 }
 .search-unlogged-child10,
 .search-unlogged-child9 {
@@ -386,57 +340,15 @@
   background-color: var(--gray-6);
   height: 119px;
 }
-.search-unlogged-child11 {
-  position: absolute;
-  top: 446px;
-  left: 445px;
+.search-unlogged-child1 .search-unlogged-child11 {
   border-radius: var(--br-8xs);
   width: 285px;
   height: 200px;
   object-fit: cover;
   cursor: pointer;
-}
-.search-unlogged-child12,
-.search-unlogged-child13,
-.search-unlogged-child14 {
-  position: absolute;
-  top: 1502px;
-  left: 445px;
-  border-radius: var(--br-8xs);
-  width: 285px;
-  height: 200px;
-  object-fit: cover;
-}
-.search-unlogged-child13,
-.search-unlogged-child14 {
-  top: 710px;
-}
-.search-unlogged-child14 {
-  top: 1766px;
-}
-.search-unlogged-child15,
-.search-unlogged-child16,
-.search-unlogged-child17,
-.search-unlogged-child18 {
-  position: absolute;
-  top: 974px;
-  left: 445px;
-  border-radius: var(--br-8xs);
-  width: 285px;
-  height: 200px;
-  object-fit: cover;
-}
-.search-unlogged-child16,
-.search-unlogged-child17,
-.search-unlogged-child18 {
-  top: 2030px;
-}
-.search-unlogged-child17,
-.search-unlogged-child18 {
-  top: 1238px;
-}
-.search-unlogged-child18 {
-  top: 2294px;
+  margin-top: 10px; /* Odmak od gornjeg dela */
+  margin-bottom: 10px; /* Odmak od donjeg dela */
+  margin-left: 10px; /* Odmak sa leve strane */
 }
 .search-unlogged-child19,
 .search-unlogged-child20 {
@@ -715,11 +627,28 @@
   height: 32px;
 }
 .filter-by3 {
+  position: absolute;
   top: 443px;
   left: 118px;
   font-size: var(--font-size-lg);
   letter-spacing: 0.02em;
   color: var(--gray-1);
+  display: flex;
+  align-items: center;
+}
+.filter-by3 .filter,
+.filter-by3 .no-filter {
+  margin-right: 100px; /* Udaljenost između .filter i .no-filter */
+}
+.filter{
+  margin-left: -10px;
+}
+.no-filter {
+  display: flex;
+  align-items: center;
+}
+.no-filter label {
+  margin-right: 5px; /* Udaljenost između labele i checkbox-a */
 }
 .your-budget-per3 {
   position: relative;
@@ -828,6 +757,7 @@
   justify-content: flex-start;
   padding: var(--padding-2xs) var(--padding-xs) var(--padding-xs);
   gap: var(--gap-3xs);
+  cursor: pointer;
 }
 .location-1-parent1 {
   top: 178px;
@@ -899,7 +829,7 @@
   height: 21px;
   flex-shrink: 0;
 }
-.shanghai-open-house5,
+/* .shanghai-open-house5, */
 .user-square-1-parent7 {
   position: absolute;
   display: flex;
@@ -918,113 +848,53 @@
   gap: var(--gap-3xs);
   color: var(--gray-1);
 }
-.shanghai-open-house5 {
-  top: 0;
-  left: 0;
-  font-size: var(--font-size-xl);
-  letter-spacing: 0.01em;
-  color: var(--color-gray-300);
-  width: 380px;
-  height: 32px;
-}
-.b81,
-.b82 {
-  position: relative;
-  letter-spacing: 0.01em;
-}
+
+
 .b81 {
-  text-decoration: line-through;
+  color: #544c37;
+  font-size: larger; /* Prilagodite veličinu fonta prema vašim potrebama */
+  font-weight: bold;
+  z-index: 2; /* Postavite z-index na veći broj za .b81 */
 }
+
 .b82 {
-  font-size: var(--font-size-xl);
-  color: var(--gray-1);
+  padding-top: 20px;
+  font-size: x-large;
+  font-weight: bold;
+  z-index: 1; /* Postavite z-index na manji broj za .b82 */
 }
-.parent26 {
-  position: absolute;
-  top: 145px;
-  right: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: var(--gap-5xs);
-  text-align: right;
-}
+
 .includes-taxes-and33,
-.room-2-days27 {
+.room-2-days27{
   position: absolute;
-  top: 175px;
-  right: 0;
+  top: 10px;
+  right: 20px;
   letter-spacing: 0.02em;
   color: var(--gray-1);
   text-align: right;
 }
+.includes-taxes-and33 {
+  padding-top: 5px;
+  font-size: large;
+  font-weight: bold;
+  z-index: 2; /* Podešavanje z-index na veći broj za .includes-taxes-and33 */
+}
+
 .room-2-days27 {
-  top: 122px;
-}
-.live-a-little26 {
-  top: 76px;
-  left: 0;
-  font-size: var(--font-size-smi);
-  display: flex;
-  align-items: center;
-  width: 380px;
-}
-.live-a-little26,
-.reats-include-a26,
-.reviews53 {
-  position: absolute;
-  letter-spacing: 0.02em;
-  line-height: 140%;
-  color: var(--gray-2);
-}
-.reats-include-a26 {
-  top: 98px;
-  left: 0;
-  font-size: var(--font-size-smi);
-  display: flex;
-  align-items: center;
-  width: 380px;
-}
-.reviews53 {
-  top: 39px;
-  left: 94px;
-}
-.see-availability-wrapper24 {
-  position: absolute;
-  top: 152px;
-  left: 0;
-  border-radius: var(--br-7xs);
-  background-color: var(--blue-1);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: var(--padding-3xs) var(--padding-lg);
-  font-size: var(--font-size-mini);
+  z-index: 1;
+  top:80px;
+  /* Podešavanje z-index na manji broj za .room-2-days27 */
 }
 .off26 {
   position: relative;
   letter-spacing: 0.02em;
   line-height: 18px;
 }
-.off-wrapper24 {
-  position: absolute;
-  top: 90px;
-  right: 0;
-  border-radius: var(--br-7xs);
-  background-color: var(--color-white);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: var(--padding-9xs) var(--padding-5xs);
-  font-size: var(--font-size-smi);
-}
+
 .group-child108 {
-  position: absolute;
-  top: 39px;
-  left: 0;
+  position: relative;
+  top: -180px;
+  left: 400px;
   width: 82px;
   height: 20px;
 }
@@ -1051,6 +921,7 @@
   box-sizing: border-box;
   font-size: var(--font-size-mini);
   color: var(--color-white);
+  cursor: pointer;
 }
 .ocean-waves-resort-parent1 {
   position: absolute;
@@ -1062,8 +933,8 @@
 }
 .lakeside-motel-warefront30 {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10px;
+  left: 400px;
   font-size: var(--font-size-xl);
   letter-spacing: 0.01em;
   font-family: var(--font-adamina);
@@ -1079,17 +950,18 @@
 }
 .parent28 {
   position: absolute;
-  top: 145px;
-  right: 0;
+  top: 105px;
+  right: 20px;
   flex-direction: row;
   justify-content: flex-start;
   gap: var(--gap-5xs);
   text-align: right;
   color: var(--red);
 }
+
 .live-a-little28 {
   top: 76px;
-  left: 0;
+  left: 400px;
   font-size: var(--font-size-smi);
   width: 380px;
 }
@@ -1102,17 +974,16 @@
 }
 .reats-include-a28 {
   top: 98px;
-  left: 0;
+  left: 400px;
   font-size: var(--font-size-smi);
   display: flex;
   align-items: center;
   width: 380px;
 }
 .reviews55 {
-  top: 39px;
-  left: 94px;
+  top: 42px;
+  left: 500px;
 }
-.off-wrapper26,
 .see-availability-wrapper26 {
   position: absolute;
   border-radius: var(--br-7xs);
@@ -1124,19 +995,13 @@
 }
 .see-availability-wrapper26 {
   top: 152px;
-  left: 0;
+  left: 400px;
   background-color: var(--blue-1);
   padding: var(--padding-3xs) var(--padding-lg);
   cursor: pointer;
   font-size: var(--font-size-mini);
 }
-.off-wrapper26 {
-  top: 90px;
-  right: 0;
-  background-color: var(--color-seagreen-100);
-  padding: var(--padding-9xs) var(--padding-5xs);
-  font-size: var(--font-size-smi);
-}
+
 .lakeside-motel-warefront-parent6 {
   position: absolute;
   top: 450px;
@@ -1156,14 +1021,6 @@
   justify-content: center;
   padding: var(--padding-9xs) var(--padding-5xs);
   font-size: var(--font-size-smi);
-  color: var(--color-white);
-}
-.julia-dens-resort-parent1 {
-  position: absolute;
-  top: 714px;
-  left: 754px;
-  width: 562px;
-  height: 192px;
   color: var(--color-white);
 }
 .off-wrapper28,
@@ -1186,14 +1043,6 @@
   top: 0;
   right: 0;
   background-color: var(--orange);
-}
-.aghnim-scepter-hotel-parent1 {
-  position: absolute;
-  top: 978px;
-  left: 754px;
-  width: 562px;
-  height: 192px;
-  color: var(--color-white);
 }
 .receive-30-discount-on-a-rest-wrapper5,
 .see-availability-wrapper29 {
@@ -1219,25 +1068,7 @@
   padding: var(--padding-9xs) var(--padding-5xs);
   font-size: var(--font-size-smi);
 }
-.maimi-city-frontier-parent2,
-.marineford-hotel-parent1 {
-  position: absolute;
-  top: 2034px;
-  left: 754px;
-  width: 562px;
-  height: 192px;
-}
-.marineford-hotel-parent1 {
-  top: 1242px;
-  color: var(--color-white);
-}
-.lakeside-motel-warefront-parent7 {
-  position: absolute;
-  top: 2298px;
-  left: 754px;
-  width: 562px;
-  height: 192px;
-}
+
 .frame-parent45 {
   position: absolute;
   top: 358px;
@@ -1253,18 +1084,19 @@
   letter-spacing: 0.02em;
   line-height: 20px;
 }
-.all-wrapper1,
-.hotels-wrapper1,
-.hostels-wrapper1,
-.appartments-wrapper1,
-.resorts-wrapper1,
+.all,
+.HOTEL,
+.HOSTEL,
+.APARTMENT,
+.RESORT,
 .load-more-results-wrapper9,
-.villas-wrapper1 {
+.VILLA {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: var(--padding-3xs) var(--padding-lg);
+  cursor: pointer;
 }
 .load-more-results-wrapper9 {
   position: absolute;
@@ -1275,25 +1107,25 @@
   font-size: var(--font-size-mini);
   color: var(--blue-1);
 }
-.all-wrapper1,
-.hotels-wrapper1,
-.hostels-wrapper1,
-.appartments-wrapper1,
-.resorts-wrapper1,
-.villas-wrapper1 {
+.all,
+.HOTEL,
+.HOSTEL,
+.APARTMENT,
+.RESORT,
+.VILLA {
   border: 1px solid var(--blue-1);
 }
-.all-wrapper1 {
+.all {
   border-radius: var(--br-7xs) 0 0 var(--br-7xs);
 }
-.hotels-wrapper1,
-.hostels-wrapper1,
-.appartments-wrapper1,
-.resorts-wrapper1,
-.villas-wrapper1 {
+.HOTEL,
+.HOSTEL,
+.APARTMENT,
+.RESORT,
+.VILLA {
   background-color: var(--color-white);
 }
-.villas-wrapper1 {
+.VILLA {
   border-radius: 0 var(--br-7xs) var(--br-7xs) 0;
 }
 .load-more-results-wrapper9 {

@@ -14,7 +14,9 @@ import { map } from 'rxjs/operators';
 export class IndexComponent implements OnInit {
     popularAccommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
 
-    constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService) { }
+  searchResults: any[] = [];
+
 
     ngOnInit() {
 
@@ -41,14 +43,15 @@ export class IndexComponent implements OnInit {
 
                 this.accommodationService.searchAccommodations(location, guestNumber, selectedFromDate, selectedToDate)
                     .subscribe((results) => {
+                        this.searchResults = results;
                         if (roleParam === 'admin') {
-                            this.router.navigate(['/search'], { queryParams: { role: 'admin', location: location } });
+                            this.router.navigate(['/search'], { queryParams: { role: 'admin', location: location, selectedFromDate: selectedFromDate, selectedToDate: selectedToDate, guestNumber, searchResults: JSON.stringify(results)} });
                         } else if (roleParam === 'host') {
-                            this.router.navigate(['/search'], { queryParams: { role: 'host', location: location } });
+                            this.router.navigate(['/search'], { queryParams: { role: 'host', location: location, selectedFromDate: selectedFromDate, selectedToDate: selectedToDate, guestNumber, searchResults: JSON.stringify(results)} });
                         } else if (roleParam === 'guest') {
-                            this.router.navigate(['/search'], { queryParams: { role: 'guest', location: location } });
+                            this.router.navigate(['/search'], { queryParams: { role: 'guest', location: location, selectedFromDate: selectedFromDate, selectedToDate: selectedToDate, guestNumber, searchResults: JSON.stringify(results)} });
                         } else {
-                            this.router.navigate(['/search'], { queryParams: { location: location} });
+                            this.router.navigate(['/search'], { queryParams: { location: location, selectedFromDate: selectedFromDate, selectedToDate: selectedToDate, guestNumber, searchResults: JSON.stringify(results)} });
                         }
                     });
             });

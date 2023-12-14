@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute} from '@angular/router';
+import { Observable } from 'rxjs';
+import { Reservation } from 'src/app/core/model/Reservation';
+import { ReservationStatus } from 'src/app/core/model/enum/ReservationStatus';
+import { ReservationService } from 'src/app/core/services/reservation.service';
 
 @Component({
   selector: 'app-reservation-requests',
@@ -8,68 +12,97 @@ import { Router } from '@angular/router';
 })
 export class ReservationRequestsComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  reservations: Observable<Reservation[]> = new Observable<Reservation[]>();
+  selectedClass: string = 'all-reservation';
+  filter: string = 'all';
+  constructor(private reservationService: ReservationService, private router: Router, private route: ActivatedRoute) { }
 
-  ngOnInit() {
-    var adminManage = document.getElementById("ownerManage-reservation");
-    if (adminManage) {
-      adminManage.addEventListener("click", () => {
-        var popup = document.getElementById("ownerDropdownContainer");
-        var popupStyle = popup?.style;
 
-        if (popupStyle) {
-          popupStyle.display = "flex";
-          popupStyle.zIndex = "100";
-          popupStyle.backgroundColor = "rgba(113, 113, 113, 0.3)";
-          popupStyle.alignItems = "center";
-          popupStyle.justifyContent = "center";
-        }
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.filter = params['filter'] || 'all';
+      this.loadReservations();
+      console.log(this.reservations);
+    });
+  }
 
-        popup?.setAttribute("closable", "");
+  changeStyle(className: string): void {
+    this.selectedClass = className;
+    if (className === 'waiting-reservation') {
+      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'waiting' } });
+    } else if (className === 'accepted-reservation') {
+      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'accepted' } });
+    } else if (className === 'rejected-reservation') {
+      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'rejected' } });
+    } else if (className === 'finished-reservation') {
+      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'finished' } });
+    } else if (className === 'cancelled-reservation') {
+      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'cancelled' } });
+    } else {
+      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'all' } });
+    }
+  }
 
-        var onClick = (popup && popup.onclick) || function (e: Event) {
-          if (e.target === popup && popup && popup.hasAttribute("closable")) {
-            popup.style.display = "none";
-          }
-        };
+  getStatusClass(status: ReservationStatus): string {
+    switch (status) {
+      case ReservationStatus.Created:
+        return 'created-status';
+      case ReservationStatus.Reject:
+        return 'rejected-status';
+      case ReservationStatus.Accept:
+        return 'accepted-status';
+      case ReservationStatus.Cancelled:
+        return 'cancelled-status';
+      case ReservationStatus.Completed:
+        return 'completed-status';
+      default:
+        return 'acc-frame';
+    }
+  }
 
-        popup?.addEventListener("click", onClick);
-      });
+  private loadReservations(): void {
+    //this.reservations = this.reservationService.getReservationsByHostId(2);
+
+    if (this.filter === 'waiting') {
+      this.reservations = this.reservationService.getCreatedReservationsByHostId(2);
+    } else if (this.filter === 'accepted') {
+      this.reservations = this.reservationService.getAcceptedReservationsByHostId(2);
+    } else if (this.filter === 'rejected') {
+      this.reservations = this.reservationService.getRejectedReservationsByHostId(2);
+    } else if (this.filter === 'finished') {
+      this.reservations = this.reservationService.getCompletedReservationsByHostId(2);
+    } else if (this.filter === 'cancelled') {
+      this.reservations = this.reservationService.getCancelledReservationsByHostId(2);
     }
 
-    var manageProfile = document.getElementById("manageProfile-reservation");
-      if (manageProfile) {
-        manageProfile.addEventListener("click", () => {
-          this.router.navigate(['/manage-profile']);
-        });
+    else {
+      //this.reservations = this.reservationService.getReservationsByHostId(2);
+      this.reservations = this.reservationService.getAllReservations();
+    }
+  }
+
+  generateStars(rating: number): string[] {
+    const stars: string[] = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push('★');
+      } else if (i - 0.5 === rating) {
+        stars.push('✯');
+      } else {
+        stars.push('☆');
       }
-    
-    var myAccommodations = document.getElementById("myAccommodations-reservation");
-      if (myAccommodations) {
-        myAccommodations.addEventListener("click", () => {
-          this.router.navigate(['/accommodations']);
-        });
     }
+    return stars;
+  }
 
-    var reservationRequests = document.getElementById("reservation-requests-reservation");
-      if (reservationRequests) {
-        reservationRequests.addEventListener("click", () => {
-          this.router.navigate(['/accommodations']);
-        });
-    }
-      
-    var logOut = document.getElementById("logOut-reservation");
-    if (logOut) {
-      logOut.addEventListener("click", () => {
-        this.router.navigate(['/']);
-      });
-    }
+  roundHalf(value: number): number {
+    return Math.round(value * 2) / 2;
+  }
 
-    var homeText = document.getElementById("homeText-reservation");
-    if (homeText) {
-      homeText.addEventListener("click", () => {
-        this.router.navigate(['/owner-main-page']);
-      });
-    }
+  acceptReservation() {
+  }
+
+  rejectReservation() {
+
   }
 }
