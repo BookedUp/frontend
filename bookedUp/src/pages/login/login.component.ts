@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../../app/core/services/user.service';
+import { User } from 'src/app/core/model/User';
+import { Observable } from 'rxjs';
+import { Role } from 'src/app/core/model/enum/Role';
 
 @Component({
   selector: 'app-login',
@@ -8,9 +12,10 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   isPasswordVisible: boolean = false;
+  users: User[] = [];
 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit() {
     var alreadyHaveAn = document.getElementById("dontHaveAn");
@@ -39,24 +44,44 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    const emailInput = document.querySelector('.email-address21') as HTMLInputElement;
-    const passwordInput = document.querySelector('.enter-password4') as HTMLInputElement;
+    const emailInput = document.getElementById('emailInput') as HTMLInputElement;
+    const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
 
     const email = emailInput.value;
     const password = passwordInput.value;
 
-    if (email === 'admin' && password === 'admin') {
-      // Redirect to the admin page
-    this.router.navigate(['/'], { queryParams: { role: 'admin' } });
-    } else if (email === 'host' && password === 'host') {
-      // Redirect to the host page
-    this.router.navigate(['/'], { queryParams: { role: 'host' } });
-    } else if (email === 'guest' && password === 'guest') {
-      // Redirect to the guest page
-    this.router.navigate(['/'], { queryParams: { role: 'guest' } });
-    } else {
-      alert('Incorrect email or password');
-    }
+    this.userService.getUsers().subscribe(
+      (users: User[]) => {
+        this.users = users;
+        var logged: boolean = false;
+
+        this.users.forEach(user => {
+          console.log(user.email);
+          if (email === user.email && password === user.password && user.active == true){
+            logged = true;
+            if (user.role == Role.Admin) {
+              this.router.navigate(['/'], { queryParams: { role: 'admin' } });
+            } else if (user.role == Role.Host) {
+              this.router.navigate(['/'], { queryParams: { role: 'host' } });
+            } else if (user.role == Role.Guest) {
+              this.router.navigate(['/'], { queryParams: { role: 'guest' } });
+            }
+          }
+        });
+
+        if(logged == false){
+          alert('Incorrect email or password');
+        }
+      },
+      error => {
+        console.error('Error fetching users:', error);
+      }
+    );
+
+
+
+
+
   }
 
 }

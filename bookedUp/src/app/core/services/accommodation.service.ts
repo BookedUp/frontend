@@ -19,6 +19,21 @@ export class AccommodationService {
     return this.http.get<Accommodation[]>(this.apiUrl);
   }
 
+  getAllActiveAccommodationsByHostId(hostId: number): Observable<Accommodation[]> {
+    const url = `${this.apiUrl}/host/${hostId}/active`;
+    return this.http.get<Accommodation[]>(url);
+  }
+
+  getAllRequestsByHostId(hostId: number): Observable<Accommodation[]> {
+    const url = `${this.apiUrl}/host/${hostId}/requests`;
+    return this.http.get<Accommodation[]>(url);
+  }
+
+  getAllRejectedByHostId(hostId: number): Observable<Accommodation[]> {
+    const url = `${this.apiUrl}/host/${hostId}/rejected`;
+    return this.http.get<Accommodation[]>(url);
+  }
+
   getAccommodationById(id: number): Observable<Accommodation> {
     return this.http.get<Accommodation>(`${this.apiUrl}/${id}`);
   }
@@ -82,6 +97,4 @@ export class AccommodationService {
     console.log(amenitiesStrings);
     return this.http.get<Accommodation[]>(`${this.apiUrl}/search-filter`, { params });
   }
-
-
 }

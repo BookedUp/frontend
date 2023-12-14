@@ -1,5 +1,5 @@
 
-.accommodations-host {
+.amenities-admin {
   position: relative;
   background-color: var(--color-whitesmoke-100);
   min-height: 100vh;
@@ -11,7 +11,7 @@
   font-family: var(--font-sansation);
   flex-direction: column;
 }
-.accommodations-host-child {
+.amenities-admin-child {
   position: absolute;
   top: 0;
   left: 0;
@@ -28,19 +28,19 @@
   font-size: var(--font-size-base);
   color: var(--gray-1);
 }
-.active-accommodations {
+.all-accommodations {
   position: absolute;
   top: 16px;
   left: 122px;
   letter-spacing: 0.02em;
 }
-.requests-accommodations {
+.new-accommodations {
   position: absolute;
   top: 16px;
   left: 316px;
   letter-spacing: 0.02em;
 }
-.rejected-accommodations {
+.changed-accommodations {
   position: absolute;
   top: 16px;
   left: 519px;
@@ -71,10 +71,9 @@
   display: flex;
   margin-bottom: 20px;
 }
-.rejected-status {
-  background-color: rgba(255, 129, 129, 0.35);
+.created-status {
+  background-color: rgba(90, 227, 161, 0.35);
 }
-.created-status,
 .changed-status{
   background-color: #FFF9C1;
 }
@@ -157,21 +156,13 @@
   color: var(--gray-1);
 }
 .status-text,
-.created-status-text,
-.changed-status-text
-{
+.created-status-text{
   color: var(--gray-1);
 }
-.active-status-text{
+.created-status-text{
   color: #037940;
 }
 
-.rejected-status-text{
-  color: var(--color-firebrick);
-
-}
-
-.created-status-text,
 .changed-status-text{
   color: #FBBC04;
 }
@@ -184,7 +175,8 @@
   width: 15%;
   height: 100%;
 }
-
+.accept-button,
+.reject-button,
 .view-details-button {
   border-radius: var(--br-7xs);
   width: 100%;
@@ -198,6 +190,9 @@
   color: var(--color-white);
   background-color: var(--color-seagreen-100);
   margin-bottom: 10px;
+}
+.reject-button{
+  background-color: var(--color-firebrick);
 }
 .view-details-button{
   background-color: var(--blue-1);

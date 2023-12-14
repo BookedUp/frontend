@@ -26,6 +26,10 @@ export class HeaderAdminComponent {
     this.router.navigate(['/manage-profile'], { queryParams: { role: 'admin' } });
   }
 
+  navigateToAmenities(): void {
+    this.router.navigate(['/accommodation-requests'], { queryParams: { filter: 'all' } });
+  }
+
   navigateToHome(): void {
     this.router.navigate(['/'], { queryParams: { role: 'admin' } });
   }

@@ -18,12 +18,13 @@
       <div id="inputs-login">
         <b class="email-address19">Email address</b>
         <div class="email-address20">
-          <input type="email" class="email-address21" placeholder="Enter email address..." />
+          <input id="emailInput" type="email" class="email-address21" placeholder="Enter email address..." />
         </div>
 
         <b class="password6">Password</b>
         <div class="password7">
           <input
+            id="passwordInput"
             type="{{ isPasswordVisible ? 'text' : 'password' }}"
             class="enter-password4"
             placeholder="Enter password..."
