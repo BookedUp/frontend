@@ -13,6 +13,7 @@ export class IndexComponent implements OnInit {
 
 
   constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService) { }
+  searchResults: any[] = [];
 
     ngOnInit() {
         var searchButton = document.getElementById("searchButton");
@@ -33,14 +34,15 @@ export class IndexComponent implements OnInit {
 
                 this.accommodationService.searchAccommodations(location, guestNumber, selectedFromDate, selectedToDate)
                     .subscribe((results) => {
+                        this.searchResults = results;
                         if (roleParam === 'admin') {
-                            this.router.navigate(['/search'], { queryParams: { role: 'admin', location: location } });
+                            this.router.navigate(['/search'], { queryParams: { role: 'admin', location: location} });
                         } else if (roleParam === 'host') {
                             this.router.navigate(['/search'], { queryParams: { role: 'host', location: location } });
                         } else if (roleParam === 'guest') {
                             this.router.navigate(['/search'], { queryParams: { role: 'guest', location: location } });
                         } else {
-                            this.router.navigate(['/search'], { queryParams: { location: location} });
+                            this.router.navigate(['/search'], { queryParams: { location: location, selectedFromDate: selectedFromDate, selectedToDate: selectedToDate, guestNumber, searchResults: JSON.stringify(results)} });
                         }
                     });
             });
