@@ -10,6 +10,7 @@ import { HeaderAdminComponent } from '../shared/header-admin/header-admin.compon
 import { HeaderHostComponent } from '../shared/header-host/header-host.component';
 import { HeaderGuestComponent } from '../shared/header-guest/header-guest.component';
 import { FooterComponent } from '../shared/footer/footer.component';
+import { ShorterFooterComponent } from '../shared/shorter-footer/shorter-footer.component';
 import { IndexComponent } from '../pages/index/index.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
@@ -37,6 +38,7 @@ import { HttpClientModule} from '@angular/common/http';
     HeaderHostComponent,
     HeaderGuestComponent,
     FooterComponent,
+    ShorterFooterComponent,
     IndexComponent,
     LoginComponent,
     RegisterComponent,

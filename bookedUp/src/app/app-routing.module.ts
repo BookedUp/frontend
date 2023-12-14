@@ -6,6 +6,7 @@ import { HeaderAdminComponent } from '../shared/header-admin/header-admin.compon
 import { HeaderHostComponent } from '../shared/header-host/header-host.component';
 import { HeaderGuestComponent } from '../shared/header-guest/header-guest.component';
 import { FooterComponent } from 'src/shared/footer/footer.component';
+import { ShorterFooterComponent } from '../shared/shorter-footer/shorter-footer.component';
 import { IndexComponent } from '../pages/index/index.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'header-host', component: HeaderHostComponent },
   { path: 'header-guest', component: HeaderGuestComponent },
   { path: 'footer', component: FooterComponent },
+  { path: 'shorter-footer', component: ShorterFooterComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register-step-2', component: RegisterStep2Component },
