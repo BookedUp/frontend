@@ -61,7 +61,7 @@ export class ReservationRequestsComponent implements OnInit {
   }
 
   private loadReservations(): void {
-    //this.reservations = this.reservationService.getReservationsByHostId(2);
+    //this.reservations = this.reservationService.getReservationsByHostId();
 
     if (this.filter === 'waiting') {
       this.reservations = this.reservationService.getCreatedReservationsByHostId(2);

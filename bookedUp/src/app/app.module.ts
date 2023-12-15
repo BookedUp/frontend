@@ -13,7 +13,8 @@ import { FooterComponent } from '../shared/footer/footer.component';
 import { IndexComponent } from '../pages/index/index.component';
 //import { LoginComponent } from '../pages/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
-import { LoginComponent } from './auth/login/login.component';
+//import { LoginComponent } from './auth/login/login.component';
+import {AuthModule} from "./auth/auth.module";
 
 import { RegisterStep2Component } from '../pages/register-step-2/register-step-2.component';
 import { ForgotPasswordComponent } from '../pages/forgot-password/forgot-password.component';
@@ -28,7 +29,8 @@ import { CreateAccommodationComponent } from '../pages/create-accommodation/crea
 import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
 import { AccommodationRequestsComponent } from '../pages/accommodation-requests/accommodation-requests.component';
 import { MatCardModule } from '@angular/material/card';
-import { HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {Interceptor} from "./auth/interceptor";
 
 @NgModule({
   declarations: [
@@ -40,7 +42,7 @@ import { HttpClientModule} from '@angular/common/http';
     HeaderGuestComponent,
     FooterComponent,
     IndexComponent,
-    LoginComponent,
+    //LoginComponent,
     RegisterComponent,
     RegisterStep2Component,
     ForgotPasswordComponent,
@@ -60,9 +62,16 @@ import { HttpClientModule} from '@angular/common/http';
     BrowserAnimationsModule,
     HttpClientModule,
     MatCardModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AuthModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
