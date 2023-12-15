@@ -63,7 +63,7 @@
   position: relative;
   left: 15%;
   border-radius: var(--br-8xs);
-  background-color: #ffffe0;
+  background-color: var(--color-white);
   border: 1px solid var(--gray-5);
   box-sizing: border-box;
   width: 70%;
@@ -72,11 +72,11 @@
   margin-bottom: 20px;
 }
 .rejected-status {
-  background-color: rgba(255, 129, 129, 0.35);
+  background-color: #ba888b;
 }
 .created-status,
 .changed-status{
-  background-color: #FFF9C1;
+  background-color: #ffffe0;
 }
 .accommodation-image {
   position: absolute;
