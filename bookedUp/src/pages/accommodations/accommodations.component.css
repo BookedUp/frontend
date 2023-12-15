@@ -28,23 +28,20 @@
   font-size: var(--font-size-base);
   color: var(--gray-1);
 }
-.active-accommodations {
+.active-accommodations,
+.requests-accommodations,
+.rejected-accommodations {
+  cursor: pointer;
   position: absolute;
   top: 16px;
   left: 122px;
   letter-spacing: 0.02em;
 }
 .requests-accommodations {
-  position: absolute;
-  top: 16px;
   left: 316px;
-  letter-spacing: 0.02em;
 }
 .rejected-accommodations {
-  position: absolute;
-  top: 16px;
   left: 519px;
-  letter-spacing: 0.02em;
 }
 .clicked {
   color: var(--blue-1);
