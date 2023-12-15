@@ -76,11 +76,10 @@
         
         <div id="left-data" class="left-container">
           <app-map *ngIf="accommodation && accommodation.address"
-          [latitude]="41.9062"
-          [longitude]="12.4784">
+          [latitude]="accommodation.address.latitude"
+          [longitude]="accommodation.address.longitude">
           </app-map>
 
-          <!-- src="http://maps.google.com/?q=[lat],[long]"  -->
         </div>
       </div>
       
