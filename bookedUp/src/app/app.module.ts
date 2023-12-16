@@ -3,9 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { FooterComponent } from '../shared/layout/footer/footer.component';
-import { ShorterFooterComponent } from '../shared/layout/shorter-footer/shorter-footer.component';
-
 import { CalendarComponent } from 'src/shared/calendar/calendar.component';
 import { ImageFrameComponent } from 'src/shared/image-frame/image-frame.component';
 
@@ -41,8 +38,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
-    ShorterFooterComponent,
     IndexComponent,
     //LoginComponent,
     //RegisterComponent,
