@@ -13,6 +13,8 @@ import { FooterComponent } from '../shared/layout/footer/footer.component';
 import { ShorterFooterComponent } from '../shared/layout/shorter-footer/shorter-footer.component';
 
 import { CalendarComponent } from 'src/shared/calendar/calendar.component';
+import { DateCellComponent } from 'src/shared/date-cell/date-cell.component';
+
 import { MapComponent } from 'src/shared/map/map.component';
 import { IndexComponent } from '../pages/index/index.component';
 import { LoginComponent } from '../pages/login/login.component';
@@ -30,6 +32,11 @@ import { CreateAccommodationComponent } from '../pages/create-accommodation/crea
 import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
 import { AccommodationRequestsComponent } from '../pages/accommodation-requests/accommodation-requests.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
 import { HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
@@ -56,7 +63,8 @@ import { HttpClientModule} from '@angular/common/http';
     AccommodationRequestsComponent,
 
     MapComponent, 
-    CalendarComponent
+    CalendarComponent,
+    DateCellComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +72,10 @@ import { HttpClientModule} from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatCardModule
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent, MapComponent, CalendarComponent]
