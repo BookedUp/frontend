@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-header-host',
   templateUrl: './header-host.component.html',
-  styleUrls: ['./header-host.component.css', '../../styles.css']
+  styleUrls: ['./header-host.component.css', '../../../styles.css']
 })
 export class HeaderHostComponent {
   isPopupVisible = false;

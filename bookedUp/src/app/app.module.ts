@@ -4,12 +4,18 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
-import { HeaderComponent } from '../shared/header/header.component';
-import { HeaderUnloggedComponent } from '../shared/header-unlogged/header-unlogged.component';
-import { HeaderAdminComponent } from '../shared/header-admin/header-admin.component';
-import { HeaderHostComponent } from '../shared/header-host/header-host.component';
-import { HeaderGuestComponent } from '../shared/header-guest/header-guest.component';
-import { FooterComponent } from '../shared/footer/footer.component';
+import { HeaderComponent } from '../shared/layout/header/header.component';
+import { HeaderUnloggedComponent } from '../shared/layout/header-unlogged/header-unlogged.component';
+import { HeaderAdminComponent } from '../shared/layout/header-admin/header-admin.component';
+import { HeaderHostComponent } from '../shared/layout/header-host/header-host.component';
+import { HeaderGuestComponent } from '../shared/layout/header-guest/header-guest.component';
+import { FooterComponent } from '../shared/layout/footer/footer.component';
+import { ShorterFooterComponent } from '../shared/layout/shorter-footer/shorter-footer.component';
+
+import { CalendarComponent } from 'src/shared/calendar/calendar.component';
+import { ImageFrameComponent } from 'src/shared/image-frame/image-frame.component';
+
+import { MapComponent } from 'src/shared/map/map.component';
 import { IndexComponent } from '../pages/index/index.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
@@ -26,8 +32,13 @@ import { CreateAccommodationComponent } from '../pages/create-accommodation/crea
 import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
 import { AccommodationRequestsComponent } from '../pages/accommodation-requests/accommodation-requests.component';
 import { MatCardModule } from '@angular/material/card';
-import { HttpClientModule} from '@angular/common/http';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatNativeDateModule } from '@angular/material/core';
 
+
+import { HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +48,7 @@ import { HttpClientModule} from '@angular/common/http';
     HeaderHostComponent,
     HeaderGuestComponent,
     FooterComponent,
+    ShorterFooterComponent,
     IndexComponent,
     LoginComponent,
     RegisterComponent,
@@ -49,7 +61,11 @@ import { HttpClientModule} from '@angular/common/http';
     AccommodationsComponent,
     CreateAccommodationComponent,
     ReservationRequestsComponent,
-    AccommodationRequestsComponent
+    AccommodationRequestsComponent,
+
+    MapComponent, 
+    CalendarComponent,
+    ImageFrameComponent
   ],
   imports: [
     BrowserModule,
@@ -57,10 +73,14 @@ import { HttpClientModule} from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatCardModule
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatIconModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, MapComponent, CalendarComponent]
 })
 export class AppModule { }
 
