@@ -13,7 +13,7 @@ import { FooterComponent } from '../shared/layout/footer/footer.component';
 import { ShorterFooterComponent } from '../shared/layout/shorter-footer/shorter-footer.component';
 
 import { CalendarComponent } from 'src/shared/calendar/calendar.component';
-import { DateCellComponent } from 'src/shared/date-cell/date-cell.component';
+import { ImageFrameComponent } from 'src/shared/image-frame/image-frame.component';
 
 import { MapComponent } from 'src/shared/map/map.component';
 import { IndexComponent } from '../pages/index/index.component';
@@ -65,7 +65,7 @@ import { HttpClientModule} from '@angular/common/http';
 
     MapComponent, 
     CalendarComponent,
-    DateCellComponent
+    ImageFrameComponent
   ],
   imports: [
     BrowserModule,
