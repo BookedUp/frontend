@@ -34,6 +34,7 @@ import { AccommodationRequestsComponent } from '../pages/accommodation-requests/
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 
 
@@ -75,7 +76,8 @@ import { HttpClientModule} from '@angular/common/http';
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent, MapComponent, CalendarComponent]

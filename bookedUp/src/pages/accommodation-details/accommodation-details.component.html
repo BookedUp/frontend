@@ -75,20 +75,15 @@
 
         
         <div id="left-data" class="left-container">
-          <div class="left-components" style=" height: 10%;">
           <app-calendar ></app-calendar>
-          </div>
-          <div class="left-components" style="padding-top: 5%; height: 86%;">
-            <app-map *ngIf="accommodation && accommodation.address"
-            [latitude]="accommodation.address.latitude"
-            [longitude]="accommodation.address.longitude"          
-            >
-            </app-map>
-          </div>
         </div>
       </div>
       
-
+      <div class="map-container">
+        <app-map *ngIf="accommodation && accommodation.address"
+        [latitude]="accommodation.address.latitude"
+        [longitude]="accommodation.address.longitude" ></app-map>
+      </div>
 
       <app-shorter-footer></app-shorter-footer>
 

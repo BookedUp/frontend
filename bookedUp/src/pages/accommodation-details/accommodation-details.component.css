@@ -54,7 +54,6 @@
     box-shadow: 0 10px 50px -10px rgba(0,0,0,0.25);
   }
 }
-
 .active {
   display: block;
 }
@@ -99,7 +98,7 @@
   position: relative;
   font-size: var(--font-size-base);
   color: var(--gray-1);
-  margin-bottom: 10%;
+  margin-bottom: 5%;
   margin-top: 5%;
 }
 .right-container{
@@ -192,8 +191,13 @@
 .left-container{
   position: relative;
   width: 20%;
-  margin-right: 10%;
+  margin-right: 10%; 
+  justify-content: center;
+  align-items: center;
 }
-.left-components{
-  width: 100%;
+.map-container{
+  margin-left: 7%;
+  margin-bottom: 5%;
+  width: 86%;
+  height: 100px;
 }
