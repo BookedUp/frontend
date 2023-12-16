@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Accommodation } from '../model/Accommodation';
 import { PriceChange } from '../model/PriceChange';
 import { Amenity } from '../model/Amenity';
+import { AccommodationType } from '../model/enum/AccommodationType';
 
 @Injectable({
   providedIn: 'root',
@@ -79,11 +80,11 @@ export class AccommodationService {
     guestsNumber?: number,
     startDate?: Date,
     endDate?: Date,
-    amenitiesStrings?: string[],
+    amenities?: Amenity[] | null,
     minPrice?: number,
     maxPrice?: number,
     customMaxBudget?:number,
-    selectedType?:string,
+    selectedType?:AccommodationType | null,
     name?:string
   ): Observable<Accommodation[]> {
     const params: any = {
@@ -91,14 +92,13 @@ export class AccommodationService {
       guestsNumber,
       startDate,
       endDate,
-      amenitiesStrings: amenitiesStrings || [],
+      amenities: amenities || [],
       minPrice: minPrice || 0.0,
       maxPrice: maxPrice || 0.0,
-      customMaxBudget: customMaxBudget || 50.0,
-      selectedType: selectedType || "",
+      customMaxBudget: customMaxBudget || 0,
+      selectedType: selectedType || null,
       name:name || ""
     };
-    console.log(amenitiesStrings);
     return this.http.get<Accommodation[]>(`${this.apiUrl}/search-filter`, { params });
   }
 }
