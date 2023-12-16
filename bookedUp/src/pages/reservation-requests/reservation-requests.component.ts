@@ -42,7 +42,9 @@ export class ReservationRequestsComponent implements OnInit {
       this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'all' } });
     }
   }
-
+  navigateToDetails(id: number) {
+    this.router.navigate(['/accommodation-details', id], { queryParams: { role: 'host' }});
+  }
   getStatusClass(status: ReservationStatus): string {
     switch (status) {
       case ReservationStatus.Created:

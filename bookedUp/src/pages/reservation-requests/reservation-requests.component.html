@@ -71,27 +71,7 @@
                   <b class="button-text">Reject</b>
                 </div>
 
-                <!-- Prikaži samo dugme Accept ako je status 'ACCEPTED' -->
-                <div *ngIf="reservation.status === 'ACCEPTED'" class="accepted-button" id="accepted-button">
-                  <b class="button-text">Accepted</b>
-                </div>
-
-                <!-- Prikaži samo dugme Accept ako je status 'ACCEPTED' -->
-                <div *ngIf="reservation.status === 'REJECTED'" class="rejected-button" id="rejected-button">
-                  <b class="button-text">Rejected</b>
-                </div>
-
-                <!-- Prikaži samo dugme Accept ako je status 'ACCEPTED' -->
-                <div *ngIf="reservation.status === 'CANCELLED'" class="cancelled-button" id="cancelled-button">
-                  <b class="button-text">Cancelled</b>
-                </div>
-
-                <!-- Prikaži samo dugme Accept ako je status 'ACCEPTED' -->
-                <div *ngIf="reservation.status === 'COMPLETED'" class="completed-button" id="completed-button">
-                  <b class="button-text">Completed</b>
-                </div>
-
-                <div class="view-details-button" id="view-details-button">
+                <div class="view-details-button" id="view-details-button" (click)="navigateToDetails(reservation.accommodation.id)">
                   <b class="button-text">View Details</b>
                 </div>
               </div>
