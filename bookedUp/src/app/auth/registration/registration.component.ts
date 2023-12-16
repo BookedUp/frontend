@@ -41,10 +41,12 @@ export class RegistrationComponent {
           city: this.registrationForm.value.address || '',
           postalCode: this.registrationForm.value.address || '',
           streetAndNumber: this.registrationForm.value.address|| '',
+          latitude: 0,
+          longitude: 0
         },
         phone: this.registrationForm.value.phone || 0,
         email: this.registrationForm.value.email || '',
-        password: '', //this.registrationForm.value.password, // Postavite šifru ako je potrebno
+        password: 'sifra', //this.registrationForm.value.password, // Postavite šifru ako je potrebno
         role: this.registrationForm.value.role || Role.Guest,
       };
 
