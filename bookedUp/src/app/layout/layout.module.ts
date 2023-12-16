@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {RouterModule} from "@angular/router";
 import {AdminNavBarComponent} from "./nav-bar/admin-nav-bar/admin-nav-bar.component";
 import {NavBarComponent} from "./nav-bar/nav-bar.component";
 import {GuestNavBarComponent} from "./nav-bar/guest-nav-bar/guest-nav-bar.component";
@@ -7,8 +8,8 @@ import {HostNavBarComponent} from "./nav-bar/host-nav-bar/host-nav-bar.component
 import { UnloggedNavBarComponent } from './nav-bar/unlogged-nav-bar/unlogged-nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { ShorterFooterComponent } from './shorter-footer/shorter-footer.component';
-import {RouterModule} from "@angular/router";
-
+import { IndexComponent } from './index/index.component';
+import { MaterialModule } from '../infrastructure/material/material.module';
 
 
 @NgModule({
@@ -22,16 +23,19 @@ import {RouterModule} from "@angular/router";
     UnloggedNavBarComponent,
     FooterComponent,
     ShorterFooterComponent,
+    IndexComponent,
   ],
   exports: [
     NavBarComponent,
     FooterComponent,
     ShorterFooterComponent,
-    //HeaderComponent
+    IndexComponent, //?
+    MaterialModule
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    MaterialModule
   ]
 })
 export class LayoutModule { }
