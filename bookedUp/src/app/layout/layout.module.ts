@@ -4,6 +4,7 @@ import {AdminNavBarComponent} from "./nav-bar/admin-nav-bar/admin-nav-bar.compon
 import {NavBarComponent} from "./nav-bar/nav-bar.component";
 import {GuestNavBarComponent} from "./nav-bar/guest-nav-bar/guest-nav-bar.component";
 import {HostNavBarComponent} from "./nav-bar/host-nav-bar/host-nav-bar.component";
+import { UnloggedNavBarComponent } from './nav-bar/unlogged-nav-bar/unlogged-nav-bar.component';
 import {RouterModule} from "@angular/router";
 
 
@@ -15,7 +16,8 @@ import {RouterModule} from "@angular/router";
     NavBarComponent,
     AdminNavBarComponent,
     GuestNavBarComponent,
-    HostNavBarComponent
+    HostNavBarComponent,
+    UnloggedNavBarComponent
   ],
   exports: [
     NavBarComponent
