@@ -204,32 +204,23 @@
   letter-spacing: 0.02em;
   line-height: 20px;
 }
-.footer-acc {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+.add-new-container{
+
+  position: relative;
+  border-radius: var(--br-7xs);
+  background-color: var(--blue-1);
+  width: 250px;
   display: flex;
+  left:41.5%;
+  margin-bottom: 5%;
   flex-direction: row;
   align-items: center;
-  align-content: center;
   justify-content: center;
-  background-color: var(--color-whitesmoke-400);
-  gap: var(--gap-7xs);
-  height: 41px;
-  z-index: 1;
-}
-.copyright-1-icon {
-  position: relative;
-  width: 16px;
-  height: 18px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.bookedup-2023 {
-  font-size: var(--font-size-sm);
-  margin-left: 5px;
-  position: relative;
-  height: 18px;
-  line-height: 140%;
+  padding: var(--padding-3xs) var(--padding-lg);
+  box-sizing: border-box;
+  cursor: pointer;
+  border: none;
+  font-size: var(--font-size-mini);
+  font-family: var(--font-sansation);
+  color: var(--color-white);
 }
