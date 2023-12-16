@@ -1,3 +1,5 @@
+// calendar.component.ts
+
 import { Component } from '@angular/core';
 
 @Component({
@@ -5,6 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent {
 
+export class CalendarComponent {
 }
+
