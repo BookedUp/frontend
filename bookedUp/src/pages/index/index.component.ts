@@ -12,10 +12,22 @@ import { map } from 'rxjs/operators';
 })
 
 export class IndexComponent implements OnInit {
+    minFromDate: string | undefined;
     popularAccommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
-
-  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService) { }
+    
+  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService) { 
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    this.minFromDate = this.formatDate(tomorrow);
+  }
   searchResults: any[] = [];
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
 
 
     ngOnInit() {
@@ -29,16 +41,24 @@ export class IndexComponent implements OnInit {
         if (searchButton) {
             searchButton.addEventListener("click", () => {
                 const roleParam = this.route.snapshot.queryParams['role'];
-                const location = (document.getElementById("locationTxt") as HTMLInputElement).value;
-                const guestNumber = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10);
+                const location = (document.getElementById("locationTxt") as HTMLInputElement).value || "";
+                console.log(location)
+                const guestNumber = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10) || 0;
+                console.log(guestNumber);
+                
 
                 const fromDateInput = document.getElementById("fromDate") as HTMLInputElement;
-                console.log("from date: ", fromDateInput);
+            
+                const selectedFromDateInputValue = fromDateInput.value;
+                const selectedFromDate = selectedFromDateInputValue ? new Date(selectedFromDateInputValue) : new Date();
 
-                const selectedFromDate = new Date(fromDateInput.value);
+                console.log("from date: ", selectedFromDate);
 
                 const toDateInput = document.getElementById("toDate") as HTMLInputElement;
-                const selectedToDate = new Date(toDateInput.value);
+
+                const selectedToDateInputValue = toDateInput.value;
+                const selectedToDate = selectedToDateInputValue ? new Date(selectedToDateInputValue) : new Date();
+                console.log("To date " + selectedToDate)
 
 
                 this.accommodationService.searchAccommodations(location, guestNumber, selectedFromDate, selectedToDate)

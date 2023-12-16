@@ -852,17 +852,24 @@
 
 .b81 {
   color: #544c37;
-  font-size: larger; /* Prilagodite veličinu fonta prema vašim potrebama */
+  font-size: larger;
   font-weight: bold;
-  z-index: 2; /* Postavite z-index na veći broj za .b81 */
+  z-index: 2; 
 }
 
 .b82 {
   padding-top: 20px;
   font-size: x-large;
   font-weight: bold;
-  z-index: 1; /* Postavite z-index na manji broj za .b82 */
+  z-index: 1; 
 }
+.b83,
+.b84 {
+  color: #544c37;
+  padding-top: 60px;
+  z-index: 3
+}
+
 
 .includes-taxes-and33,
 .room-2-days27{

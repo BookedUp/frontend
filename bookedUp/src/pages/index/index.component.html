@@ -23,11 +23,11 @@
       </div>
       <div class="input-container" style="margin-left: 2%;">
         <img class="icon" alt="" src="../../assets/public/calendar-1.svg" />
-        <input placeholder="Check In Date" class="text" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="fromDate" />
+        <input placeholder="Check In Date" [min]="minFromDate" class="text" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="fromDate" />
       </div>
       <div class="input-container" style="margin-left: 2%;">
         <img class="icon" alt="" src="../../assets/public/calendar-1.svg" />
-        <input placeholder="Check Out Date" class="text" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="toDate" />
+        <input placeholder="Check Out Date" [min]="minFromDate" class="text" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="toDate" />
       </div>
       <div class="input-container-guest" style="margin-left: 2%;">
         <img class="icon" alt="" src="../../assets/public/usersquare-12.svg" />
