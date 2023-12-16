@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   logout(): Observable<string> {
-    return this.http.get(environment.apiHost + 'logOut', {
+    return this.http.get(`${this.apiUrl}/logout`, {
       responseType: 'text',
     });
   }
