@@ -60,7 +60,7 @@
       </div>
     </div>
   </div>
-  
+
   <div id="popular-hotels" class="populars">
     <div class="populars-title" style="margin-top: 3%;">Popular Hotels</div>
 
@@ -70,12 +70,12 @@
                               (click)="navigateToDetails(accommodation.id)">
 
         <img class="hotel-image" alt="" [src]="accommodation.photos[0].url" />
-        
+
         <div id="hotel-data" class="hotel-data">
           <div id="popular-text-left" class="popular-text-left">
             <div id="hotel-title">{{ accommodation.name }}</div>
             <div id="hotel-address" class="hotel-smaller-text">{{ accommodation.address.streetAndNumber }}, {{accommodation.address.city}} {{accommodation.address.postalCode}}, {{ accommodation.address.city }}</div>
-            <div id="hotel-price" class="hotel-price">
+            <div  class="hotel-price">
               <div id="hotel-price">${{ accommodation.price }}</div>
               <div class="hotel-smaller-text">&nbsp;/{{ accommodation.priceType }}</div>
             </div>
@@ -97,7 +97,7 @@
         <b>Download mobile app</b>
       </div>
   </div>
-  
+
 
   <div class="explore-container">
     <div class="explore-text">Explore the world with BookedUp</div><br>

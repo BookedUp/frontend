@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -17,8 +17,11 @@ import { ImageFrameComponent } from 'src/shared/image-frame/image-frame.componen
 
 import { MapComponent } from 'src/shared/map/map.component';
 import { IndexComponent } from '../pages/index/index.component';
-import { LoginComponent } from '../pages/login/login.component';
+//import { LoginComponent } from '../pages/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
+//import { LoginComponent } from './auth/login/login.component';
+import {AuthModule} from "./auth/auth.module";
+
 import { RegisterStep2Component } from '../pages/register-step-2/register-step-2.component';
 import { ForgotPasswordComponent } from '../pages/forgot-password/forgot-password.component';
 import { CheckInboxComponent } from '../pages/check-inbox/check-inbox.component';
@@ -32,6 +35,8 @@ import { CreateAccommodationComponent } from '../pages/create-accommodation/crea
 import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
 import { AccommodationRequestsComponent } from '../pages/accommodation-requests/accommodation-requests.component';
 import { MatCardModule } from '@angular/material/card';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {Interceptor} from "./auth/interceptor";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -50,7 +55,7 @@ import { HttpClientModule} from '@angular/common/http';
     FooterComponent,
     ShorterFooterComponent,
     IndexComponent,
-    LoginComponent,
+    //LoginComponent,
     RegisterComponent,
     RegisterStep2Component,
     ForgotPasswordComponent,
@@ -74,13 +79,22 @@ import { HttpClientModule} from '@angular/common/http';
     BrowserAnimationsModule,
     HttpClientModule,
     MatCardModule,
+    ReactiveFormsModule,
+    AuthModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent, MapComponent, CalendarComponent]
+
 })
 export class AppModule { }
 
