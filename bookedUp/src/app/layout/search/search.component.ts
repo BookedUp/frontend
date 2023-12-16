@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { AccommodationService } from '../../app/core/services/accommodation.service';
-import { Accommodation } from '../../app/core/model/Accommodation';
+import { AccommodationService } from '../../core/services/accommodation.service';
+import { Accommodation } from '../../core/model/Accommodation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AccommodationType } from 'src/app/core/model/enum/AccommodationType';
 import { Amenity } from 'src/app/core/model/Amenity';
@@ -8,7 +8,7 @@ import { Amenity } from 'src/app/core/model/Amenity';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css', '../../styles.css']
+  styleUrls: ['./search.component.css', '../../../styles.css']
 })
 export class SearchComponent implements OnInit {
   isChecked: boolean = false;
