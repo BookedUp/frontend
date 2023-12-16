@@ -30,7 +30,7 @@ export class AccommodationsComponent implements OnInit {
   }
 
   navigateToDetails(id: number) {
-    this.router.navigate(['/accommodation-details', id]);
+    this.router.navigate(['/accommodation-details', id], { queryParams: { role: 'host' }});
   }
 
     private loadAccommodations(): void {
