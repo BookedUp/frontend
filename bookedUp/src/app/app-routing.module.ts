@@ -10,8 +10,8 @@ import { CalendarComponent } from 'src/shared/calendar/calendar.component';
 import { ShorterFooterComponent } from '../shared/layout/shorter-footer/shorter-footer.component';
 import { IndexComponent } from '../pages/index/index.component';
 import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from '../pages/register/register.component';
-import { RegisterStep2Component } from '../pages/register-step-2/register-step-2.component';
+//import { RegisterComponent } from '../pages/register/register.component';
+//import { RegisterStep2Component } from '../pages/register-step-2/register-step-2.component';
 import { ForgotPasswordComponent } from '../pages/forgot-password/forgot-password.component';
 import { CheckInboxComponent } from '../pages/check-inbox/check-inbox.component';
 import { SearchComponent } from '../pages/search/search.component';
@@ -21,6 +21,7 @@ import { AccommodationsComponent } from '../pages/accommodations/accommodations.
 import { CreateAccommodationComponent } from '../pages/create-accommodation/create-accommodation.component';
 import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
 import { AccommodationRequestsComponent } from '../pages/accommodation-requests/accommodation-requests.component';
+import {RegistrationComponent} from "./auth/registration/registration.component";
 
 
 //import { LoginComponent } from '../pages/login/login.component';
@@ -36,8 +37,8 @@ const routes: Routes = [
   { path: 'shorter-footer', component: ShorterFooterComponent},
   { path: 'calendar', component: CalendarComponent},
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'register-step-2', component: RegisterStep2Component },
+  { path: 'register', component: RegistrationComponent },
+  //{ path: 'register-step-2', component: RegisterStep2Component },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'check-inbox', component: CheckInboxComponent },
   { path: 'search', component: SearchComponent },
