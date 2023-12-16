@@ -1,10 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HeaderComponent } from '../shared/layout/header/header.component';
-import { HeaderUnloggedComponent } from '../shared/layout/header-unlogged/header-unlogged.component';
-import { HeaderAdminComponent } from '../shared/layout/header-admin/header-admin.component';
-import { HeaderHostComponent } from '../shared/layout/header-host/header-host.component';
-import { HeaderGuestComponent } from '../shared/layout/header-guest/header-guest.component';
 import { FooterComponent } from 'src/shared/layout/footer/footer.component';
 import { CalendarComponent } from 'src/shared/calendar/calendar.component';
 import { ShorterFooterComponent } from '../shared/layout/shorter-footer/shorter-footer.component';
@@ -28,11 +23,6 @@ import {RegistrationComponent} from "./auth/registration/registration.component"
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
-  { path: 'header', component: HeaderComponent },
-  { path: 'header-unlogged', component: HeaderUnloggedComponent },
-  { path: 'header-admin', component: HeaderAdminComponent },
-  { path: 'header-host', component: HeaderHostComponent },
-  { path: 'header-guest', component: HeaderGuestComponent },
   { path: 'footer', component: FooterComponent },
   { path: 'shorter-footer', component: ShorterFooterComponent},
   { path: 'calendar', component: CalendarComponent},

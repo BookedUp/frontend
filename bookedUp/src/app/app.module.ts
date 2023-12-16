@@ -3,12 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
-import { HeaderComponent } from '../shared/layout/header/header.component';
-import { HeaderUnloggedComponent } from '../shared/layout/header-unlogged/header-unlogged.component';
-import { HeaderAdminComponent } from '../shared/layout/header-admin/header-admin.component';
-import { HeaderHostComponent } from '../shared/layout/header-host/header-host.component';
-import { HeaderGuestComponent } from '../shared/layout/header-guest/header-guest.component';
 import { FooterComponent } from '../shared/layout/footer/footer.component';
 import { ShorterFooterComponent } from '../shared/layout/shorter-footer/shorter-footer.component';
 
@@ -21,6 +15,7 @@ import { IndexComponent } from '../pages/index/index.component';
 //import { RegisterComponent } from '../pages/register/register.component';
 //import { LoginComponent } from './auth/login/login.component';
 import {AuthModule} from "./auth/auth.module";
+import { LayoutModule } from './layout/layout.module';
 
 //import { RegisterStep2Component } from '../pages/register-step-2/register-step-2.component';
 import { ForgotPasswordComponent } from '../pages/forgot-password/forgot-password.component';
@@ -46,11 +41,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    HeaderUnloggedComponent,
-    HeaderAdminComponent,
-    HeaderHostComponent,
-    HeaderGuestComponent,
     FooterComponent,
     ShorterFooterComponent,
     IndexComponent,
@@ -67,28 +57,27 @@ import { MatNativeDateModule } from '@angular/material/core';
     ReservationRequestsComponent,
     AccommodationRequestsComponent,
 
-    // AdminNavBarComponent,
-    // HostNavBarComponent,
-    // GuestNavBarComponent,
-    // NavBarComponent
-
     MapComponent,
     CalendarComponent,
     ImageFrameComponent
   ],
   imports: [
-    BrowserModule,
     FormsModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
     HttpClientModule,
     MatCardModule,
     ReactiveFormsModule,
-    AuthModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+
+    
+    BrowserModule,
+    AppRoutingModule,
+    LayoutModule,
+    BrowserAnimationsModule,
+    AuthModule,
+    //AccommodationModule
   ],
   providers: [
     {
