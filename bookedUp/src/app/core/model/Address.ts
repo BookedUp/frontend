@@ -6,5 +6,7 @@ export interface Address {
   city: string;
   postalCode: string;
   streetAndNumber: string;
-  active?: boolean;
+  active?: boolean
+  latitude: number;
+  longitude: number;
 }

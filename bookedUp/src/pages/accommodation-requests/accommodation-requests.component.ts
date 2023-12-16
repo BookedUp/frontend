@@ -23,6 +23,10 @@ export class AccommodationRequestsComponent implements OnInit{
     });
   }
 
+  navigateToDetails(id: number) {
+    this.router.navigate(['/accommodation-details', id]);
+  }
+  
   changeStyle(className: string): void {
     this.selectedClass = className;
     if (className === 'changed-accommodations') {

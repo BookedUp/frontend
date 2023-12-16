@@ -1,172 +1,91 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <div class="ad-unlogged">
+    <div class="acc-details" *ngIf="accommodation | async as accommodation">
     
-      <div class="ad-unlogged-item"></div>
-      <app-header></app-header>
+      <app-header style="background-color: var(--color-white);"></app-header>
       
-      <div id="main pictures">
-        <div class="ad-unlogged-child1"></div>
-        
-        <img
-          class="ad-unlogged-child2"
-          alt=""
-          src="../../assets/public/rectangle-28@2x.png"
-        />
-
-        <img
-          class="ad-unlogged-child3"
-          alt=""
-          src="../../assets/public/rectangle-29@2x.png"
-        />
-
-        <img
-          class="ad-unlogged-child4"
-          alt=""
-          src="../../assets/public/rectangle-30@2x.png"
-        />
-      </div>
-
-      <div id="nav-bar">
-        <div class="ad-unlogged-child"></div>
-        <div class="ad-unlogged-inner">
-          <div class="frame-parent40">
-            <div class="overview-wrapper5">
-              <div class="overview13">Overview</div>
+      <div id="apartment-images" class="images-container">
+        <div id="slider" class="slider-box">
+          <div class="image-box">
+            <div *ngFor="let url of pictureUrls; let i = index" [class.active]="i === currentIndex">
+              <img class="room-image" alt="" [src]="url" (click)="nextImage()" />
             </div>
-            <div class="frame-child31"></div>
           </div>
+        </div>
+        <div id="more-images" class="more-images">
+          <img class="more" alt="" [src]="pictureUrls[1]" style="padding-bottom: 4%;"/>
+          <img class="more" alt="" [src]="pictureUrls[2]" />
         </div>
       </div>
       
-      <div id="right-data">
-        <div id="title-description">
-          <b class="overview14">Overview</b>
-
-          <div class="lakeside-motel-warefront29" id="apartmentName">Lakeside Motel Warefront</div>
-
-          <img class="location-1-icon15" alt="" src="../../assets/public/location-1.svg" />
-          <div class="lorem-ipsum-road11" id="apartmentAddress">
-            Lorem ipsum road, Tantruim-2322, Melbourne, Australia
-          </div>
-
-          <div class="reviews-parent8">
-            <div class="reviews52" id="apartmentReviews">4.5 (1200 Reviews)</div>
-            <img class="group-child105" alt="" src="../../assets/public/group-5.svg" />
-          </div>
-        </div>
-
-        <div id="apartment-descrition">
-          <div class="ad-unlogged-child6"></div>
-
-          <div id="about">
-            <div class="featuring-free-wifi-container5">
-              <p class="featuring-free-wifi5">
-                Featuring free WiFi throughout the property, Lakeside Motel Waterfront
-                offers accommodations in Lakes Entrance, 19 mi from Bairnsdale. Free
-                private parking is available on site.
-              </p>
-              <p class="featuring-free-wifi5"></p>
-              <p class="featuring-free-wifi5">
-                Each room at this motel is air conditioned and comes with a
-                flat-screen TV. You will find a kettle, toaster and a microwave in the
-                room. Each room is fitted with a private bathroom. Guests have access
-                to barbecue facilities and a lovely large lawn area. Metung is 6.8 mi
-                from Lakeside Motel Waterfront, while Paynesville is 14 mi from the
-                property.
-              </p>
-              <p class="featuring-free-wifi5"></p>
-              <p class="featuring-free-wifi5">
-                Couples in particular like the location – they rated it 9.2 for a
-                two-person trip.
-              </p>
+      <div id="nav-bar" class="nav-bar">
+        <div class="bar-text" [ngClass]="{ 'clicked': selectedClass === 'bar-text' }" (click)="changeStyle('bar-text')">Overview</div>
+        <div class="bar-text-review" [ngClass]="{ 'clicked': selectedClass === 'bar-text-review' }" (click)="changeStyle('bar-text-review')">Guest Review</div>
+      </div>
+      
+      <div id="main-data" class="main-data-box">
+        <div id="right-data" class="right-container">
+          <div class="right-data">
+            <div class="right-box">
+              <div id="apartmentName" class="title-text">{{accommodation.name}}</div>
+  
+              <div class="reviews-frame">
+                <div class="stars-container">
+                  <span class="star" *ngFor="let star of generateStars(roundHalf(accommodation.averageRating/2))">
+                    {{ star }}
+                  </span>
+                </div>
+                <div class="reviews-average">{{ roundHalf(accommodation.averageRating/2) }}</div>
+              </div>
+  
+              <div id="address" class="address">
+                <img class="icon" alt="" src="../../assets/public/location-1.svg" />
+                <div class="" id="normal-text">
+                  {{ accommodation.address.streetAndNumber }}, {{accommodation.address.city}} {{accommodation.address.postalCode}}, {{ accommodation.address.city }}
+                </div>
+              </div>
+              
+            </div>
+            <div class="left-box">
+              <b class="totalPrice">$240</b><br>
+              <b class="singlePrice">${{accommodation.price}}/{{accommodation.priceType}}</b><br>
+              <div class="normal-text" style="margin-top: 10px;">2 adult, 2 days</div>
             </div>
           </div>
-    
-          <img class="ad-unlogged-child9" alt="" src="../../assets/public/vector-1.svg" />
-    
-          <div id="top-facilities">
-            <b class="top-facilities5">Top facilities</b>
           
-            <img class="home-wifi-1-icon5" alt="" src="../../assets/public/homewifi-11.svg" />
-            <div class="free-wifi6">Free wifi</div>
-      
-            <img class="wind-1-icon5" alt="" src="../../assets/public/wind-1.svg" />
-            <div class="air-conditioning6">Air Conditioning</div>
-      
-            <img class="car-1-icon5" alt="" src="../../assets/public/car-1.svg" />
-            <div class="parking-available6">Parking available</div>
-      
-            <div class="bag-tick-2-1-parent3">
-              <img class="bag-tick-2-1-icon5" alt="" src="../../assets/public/bagtick2-1.svg" />
-              <div class="sq-ft">Business Services</div>
-            </div>
-      
-            <div class="lifebuoy-1-parent3">
-              <img class="bag-tick-2-1-icon5" alt="" src="../../assets/public/lifebuoy-11.svg" />
-              <div class="sq-ft">Swimming pool</div>
-            </div>
-            <div class="like-1-1-parent3">
-              <img class="bag-tick-2-1-icon5" alt="" src="../../assets/public/like1-1.svg" />
-              <div class="sq-ft">Top rated in area</div>
+
+          <div id="description" class="description">
+            <div class="description-box">
+              <b class="totalPrice">Overview</b>
+              <div id="about" style="margin-top: 10px; margin-bottom: 10px;">
+                <div class="normal-text">
+                  {{accommodation.description}}
+                </div>
+              </div>
+              <img class="line" alt="" src="../../assets/public/vector-1.svg" style="margin-bottom: 10px;"><br>
+              <b class="totalPrice">Top Facilities</b>
+              <div id="" class="address" style="margin-top: 10px;" *ngFor="let facility of accommodation.amenities;">
+                <img class="icon" alt="" src="../../assets/public/output-onlinepngtools.png" />
+                <div class="normal-text">{{facility}}</div>
+              </div>
             </div>
           </div>
         </div>
+
+        
+        <div id="left-data" class="left-container">
+          <app-calendar ></app-calendar>
+        </div>
       </div>
       
-      <div id="left-data">
-        <img
-        class="ad-unlogged-child5"
-        alt=""
-        src="../../assets/public/rectangle-65@2x.png"
-        />
-
-        <b class="explore-the-area4">Explore the area</b>
-        <div id="explore-area" class="frame-parent43">
-          <div class="bxs-plane-alt-2-parent2">
-            <img
-              class="bag-tick-2-1-icon6"
-              alt=""
-              src="../../assets/public/bxsplanealt-21.svg"
-            />
-            <div class="hotel-penselvenyia4">Hotel Penselvenyia</div>
-            <div class="min-drive20">2 min drive</div>
-          </div>
-
-          <div class="bxs-plane-alt-2-parent2">
-            <img class="bag-tick-2-1-icon6" alt="" src="../../assets/public/bxsmap-11.svg" />
-            <div class="hotel-penselvenyia4">Travis Bakery store house</div>
-            <div class="min-drive20">10 min drive</div>
-          </div>
-
-          <div class="bxs-plane-alt-2-parent2">
-            <img class="bag-tick-2-1-icon6" alt="" src="../../assets/public/bxsmap-11.svg" />
-            <div class="hotel-penselvenyia4">Olivia Johnson Garden</div>
-            <div class="min-drive20">15 min drive</div>
-          </div>
-
-          <div class="bxs-plane-alt-2-parent2">
-            <img class="bag-tick-2-1-icon6" alt="" src="../../assets/public/bxsmap-11.svg" />
-            <div class="hotel-penselvenyia4">Norman Opera Circus</div>
-            <div class="min-drive20">18 min drive</div>
-          </div>
-
-          <div class="bxs-plane-alt-2-parent2">
-            <img class="bag-tick-2-1-icon6" alt="" src="../../assets/public/bxsmap-11.svg" />
-            <div class="hotel-penselvenyia4">Rockdeset hotel</div>
-            <div class="min-drive20">32 min drive</div>
-          </div>
-        </div>
+      <div class="map-container">
+        <app-map *ngIf="accommodation && accommodation.address"
+        [latitude]="accommodation.address.latitude"
+        [longitude]="accommodation.address.longitude" ></app-map>
       </div>
 
-      <div id="footer">
-        <div class="ad-unlogged-child15"></div>
-        <div class="copyright-1-parent27">
-          <img class="copyright-1-icon29" alt="" src="../../assets/public/copyright-1.svg" />
-          <div class="bookedup-202330">BookedUp 2023 | Team 19 FTN</div>
-        </div>
-      </div>
+      <app-shorter-footer></app-shorter-footer>
 
     </div>
   </body>

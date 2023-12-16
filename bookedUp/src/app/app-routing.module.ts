@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HeaderComponent } from '../shared/header/header.component';
-import { HeaderUnloggedComponent } from '../shared/header-unlogged/header-unlogged.component';
-import { HeaderAdminComponent } from '../shared/header-admin/header-admin.component';
-import { HeaderHostComponent } from '../shared/header-host/header-host.component';
-import { HeaderGuestComponent } from '../shared/header-guest/header-guest.component';
-import { FooterComponent } from 'src/shared/footer/footer.component';
+import { HeaderComponent } from '../shared/layout/header/header.component';
+import { HeaderUnloggedComponent } from '../shared/layout/header-unlogged/header-unlogged.component';
+import { HeaderAdminComponent } from '../shared/layout/header-admin/header-admin.component';
+import { HeaderHostComponent } from '../shared/layout/header-host/header-host.component';
+import { HeaderGuestComponent } from '../shared/layout/header-guest/header-guest.component';
+import { FooterComponent } from 'src/shared/layout/footer/footer.component';
+import { CalendarComponent } from 'src/shared/calendar/calendar.component';
+import { ShorterFooterComponent } from '../shared/layout/shorter-footer/shorter-footer.component';
 import { IndexComponent } from '../pages/index/index.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
@@ -31,6 +33,8 @@ const routes: Routes = [
   { path: 'header-host', component: HeaderHostComponent },
   { path: 'header-guest', component: HeaderGuestComponent },
   { path: 'footer', component: FooterComponent },
+  { path: 'shorter-footer', component: ShorterFooterComponent},
+  { path: 'calendar', component: CalendarComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register-step-2', component: RegisterStep2Component },

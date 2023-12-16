@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { AccommodationService } from '../../app/core/services/accommodation.service';
 import { Accommodation } from '../../app/core/model/Accommodation';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AccommodationType } from 'src/app/core/model/enum/AccommodationType';
+import { Amenity } from 'src/app/core/model/Amenity';
 
 @Component({
   selector: 'app-search',
@@ -15,7 +17,7 @@ export class SearchComponent implements OnInit {
   outDate: Date = new Date();
   guests: number = 0;
   selectedType: string = 'all';
-  customBudget: number = 50;
+  customBudget: number = 0;
   searchResults: Accommodation[] = [];
   budgetCheckboxIds: string[] = [];
   popularCheckboxIds: string[] = [];
@@ -24,46 +26,46 @@ export class SearchComponent implements OnInit {
   radioButtonsState: { [key: string]: boolean } = {};
   name: string = "";
   minFromDate: string;
+  nofilterChecked: boolean = false;
 
   checkboxChanged(event: any, checkboxId: string) {
-    console.log("hej");
-    const isBudgetFilter = event.target.closest('#budget-filters') !== null;
-    const isPopularFilter = event.target.closest('#popular-filters') !== null;
+      const isBudgetFilter = event.target.closest('#budget-filters') !== null;
+      const isPopularFilter = event.target.closest('#popular-filters') !== null;
 
-  
-    if (isBudgetFilter) {
-      this.budgetCheckboxIds = [];
-  
-      const idParts = checkboxId.split('-');
-      const minPrice: number = parseFloat(idParts[0]);
-      const maxPrice: number = parseFloat(idParts[1]);
-  
-      if (event.target.checked) {
-        this.budgetCheckboxIds.push(`Min: ${minPrice}, Max: ${maxPrice}`);
-      }
-    } else if (isPopularFilter) {
-      if (event.target.checked) {
-          // Add the checkbox to the list only if it is not already present
-          if (!this.popularCheckboxIds.includes(checkboxId)) {
-            this.popularCheckboxIds.push(checkboxId);
-          }
+      if (isBudgetFilter) {
         
-      } else {
-        // Remove the checkbox from the list
-        this.popularCheckboxIds = this.popularCheckboxIds.filter(
-          checkbox => checkbox !== checkboxId
-        );
-      }
-    }
+        this.budgetCheckboxIds = [];
     
-    if (this.budgetCheckboxIds.length > 0 || this.popularCheckboxIds.length > 0) {
-      this.searchAndFilterAccommodations();
-    } else if (this.budgetCheckboxIds.length > 0 || this.popularCheckboxIds.length == 0) {
-      this.searchAndFilterAccommodations();
-    } else if (this.popularCheckboxIds.length > 0 || this.budgetCheckboxIds.length == 0){
-      this.searchAndFilterAccommodations();
-    }
-  
+        const idParts = checkboxId.split('-');
+        const minPrice: number = parseFloat(idParts[0]);
+        const maxPrice: number = parseFloat(idParts[1]);
+    
+        if (event.target.checked) {
+          this.budgetCheckboxIds.push(`Min: ${minPrice}, Max: ${maxPrice}`);
+        }
+      } else if (isPopularFilter) {
+        if (event.target.checked) {
+            // Add the checkbox to the list only if it is not already present
+            if (!this.popularCheckboxIds.includes(checkboxId)) {
+              this.popularCheckboxIds.push(checkboxId);
+            }
+          
+        } else {
+          // Remove the checkbox from the list
+          this.popularCheckboxIds = this.popularCheckboxIds.filter(
+            checkbox => checkbox !== checkboxId
+          );
+        }
+      }
+      
+      if (this.budgetCheckboxIds.length > 0 || this.popularCheckboxIds.length > 0) {
+        this.searchAndFilterAccommodations();
+      } else if (this.budgetCheckboxIds.length > 0 || this.popularCheckboxIds.length == 0) {
+        this.searchAndFilterAccommodations();
+      } else if (this.popularCheckboxIds.length > 0 || this.budgetCheckboxIds.length == 0){
+        this.searchAndFilterAccommodations();
+      }
+
   }
 
   onNameChange(newValue: string): void {
@@ -71,7 +73,8 @@ export class SearchComponent implements OnInit {
     this.searchAndFilterAccommodations();
   }
 
-  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService) { 
+
+  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private el: ElementRef) { 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.minFromDate = this.formatDate(tomorrow);
@@ -86,10 +89,10 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     
-    this.location = this.route.snapshot.queryParams['location'];
-    this.fromDate = this.route.snapshot.queryParams['selectedFromDate'];
-    this.outDate = this.route.snapshot.queryParams['selectedToDate'];
-    this.guests = this.route.snapshot.queryParams['guestNumber'];
+    this.location = this.route.snapshot.queryParams['location'] || "";
+    this.fromDate = this.route.snapshot.queryParams['selectedFromDate'] || new Date();
+    this.outDate = this.route.snapshot.queryParams['selectedToDate'] || new Date();
+    this.guests = this.route.snapshot.queryParams['guestNumber'] || 0;
     this.searchResults = JSON.parse(this.route.snapshot.queryParams['searchResults']);
 
     const parsedFromDate = new Date(this.fromDate);
@@ -102,6 +105,26 @@ export class SearchComponent implements OnInit {
       console.error('Invalid date format detected. Check your query parameters.');
       return;
     }  
+
+    const noFilterCheckbox = this.el.nativeElement.querySelector('#NofilterCheckbox');
+    if (noFilterCheckbox) {
+      noFilterCheckbox.addEventListener('change', () => {
+        this.nofilterChecked = false;
+        this.uncheckAllRadioButtons('budget');
+        this.uncheckAllCheckBoxes('amenities');
+        this.guests = 0;
+        this.location = "";
+        this.fromDate = new Date();
+        this.outDate = new Date();
+        this.budgetCheckboxIds = [];
+        this.popularCheckboxIds = [];
+        this.selectedType = "all";
+        this.customBudget = 0;
+        this.name = "";
+        this.searchAndFilterAccommodations();
+      });
+    }
+    
     var frameContainer19 = document.getElementById("frameContainer19");
     if (frameContainer19) {
       frameContainer19.addEventListener("click", () => {
@@ -122,15 +145,34 @@ export class SearchComponent implements OnInit {
 
     
   onSearchClick(): void {
-    this.location = (document.getElementById("locationTxt") as HTMLInputElement).value;
-    this.guests = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10);
+    this.location = (document.getElementById("locationTxt") as HTMLInputElement).value || "";
+    this.guests = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10) || 0;
 
-    const fromDateInput = document.getElementById("fromDate") as HTMLInputElement;
-    this.fromDate = new Date(fromDateInput.value);
-
+    const fromDateInput = (document.getElementById("fromDate") as HTMLInputElement);
+    const selectedFromDateInputValue = fromDateInput.value;
+    this.fromDate = selectedFromDateInputValue ? new Date(selectedFromDateInputValue) : new Date();
+    
     const toDateInput = document.getElementById("toDate") as HTMLInputElement;
-    this.outDate = new Date(toDateInput.value);
+    const selectedToDateInputValue = toDateInput.value;
+    this.outDate = selectedToDateInputValue ? new Date(selectedToDateInputValue) : new Date();
+
     this.searchAndFilterAccommodations();
+  }
+
+  uncheckAllRadioButtons(groupName: string) {
+    const radioButtons = document.querySelectorAll(`input[name=${groupName}]`) as NodeListOf<HTMLInputElement>;
+
+    radioButtons.forEach((radioButton) => {
+      radioButton.checked = false;
+    });
+  }
+
+  uncheckAllCheckBoxes(groupName: string) {
+    const checkBoxes = document.querySelectorAll(`input[type="checkbox"][name="${groupName}"]`) as NodeListOf<HTMLInputElement>;
+  
+    checkBoxes.forEach((checkBox) => {
+      checkBox.checked = false;
+    });
   }
   
   updateBudget(): void {
@@ -165,6 +207,9 @@ export class SearchComponent implements OnInit {
     if (this.customBudget > 50) {
       this.budgetCheckboxIds = [];
     }
+    const selectedTypeEnum: AccommodationType | null = this.parseAccommodationType(this.selectedType);
+    const popular = this.parseAmenities(this.popularCheckboxIds);
+    console.log(popular);
     let minPrice: number = 0.0;
     let maxPrice: number = 0.0;
     if (this.budgetCheckboxIds.length > 0) {
@@ -176,13 +221,8 @@ export class SearchComponent implements OnInit {
       }
     } 
     
-
-    console.log('Request Params:', this.searchResults);
-    console.log(this.popularCheckboxIds);
-    console.log(minPrice)
-    console.log(maxPrice)
     this.accommodationService
-      .searchAccommodations(this.location, this.guests, this.fromDate, this.outDate, this.popularCheckboxIds, minPrice, maxPrice, this.customBudget, this.selectedType, this.name)
+      .searchAccommodations(this.location, this.guests , this.fromDate, this.outDate, popular, minPrice, maxPrice, this.customBudget, selectedTypeEnum, this.name)
       .subscribe(
         (filterResults: Accommodation[]) => {
           console.log('Accommodations:', filterResults);
@@ -193,6 +233,49 @@ export class SearchComponent implements OnInit {
         }
       );
   }
+  private parseAccommodationType(typeString: string): AccommodationType | null {
+    const enumValues = Object.values(AccommodationType);
+  
+    if (enumValues.includes(typeString as AccommodationType)) {
+      return typeString as AccommodationType;
+    } else {
+      console.error(`Nije moguće konvertovati ${typeString} u AccommodationType.`);
+      return null;
+    }
+  }
+
+  private parseAmenities(amenitiesStrings: string[]): Amenity[] | null {
+    const amenities: Amenity[] = [];
+  
+    for (const str of amenitiesStrings) {
+      const amenity = this.parseAmenity(str);
+  
+      if (amenity !== null) {
+        amenities.push(amenity);
+      } else {
+        console.error(`Nije moguće konvertovati ${str} u Amenity.`);
+        return null; 
+      }
+    }
+  
+    return amenities;
+  }
+  
+  private parseAmenity(amenityString: string): Amenity | null {
+    const enumValues = Object.values(Amenity);
+  
+    if (enumValues.includes(amenityString as Amenity)) {
+      return amenityString as Amenity;
+    } else {
+      console.error(`Nije moguće konvertovati ${amenityString} u Amenity.`);
+      return null;
+    }
+  }
+  
+  
+  
+  
+  
 }
 
 

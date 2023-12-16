@@ -126,7 +126,7 @@ input {
 }
 .populars {
   position: relative;
-  margin-top: 4%;
+  margin-bottom: 5%;
   left: 7%;
   width: 86%;
 }
@@ -178,7 +178,8 @@ input {
   border-top-right-radius: var(--br-3xs);
   border-top-left-radius: var(--br-3xs);
   width: 100%;
-  height: auto;
+  max-height: 70%;
+  min-height: 70%;
   background-color: white;
 }
 .hotel-data{

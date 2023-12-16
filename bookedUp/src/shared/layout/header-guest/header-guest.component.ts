@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-header-guest',
   templateUrl: './header-guest.component.html',
-  styleUrls: ['./header-guest.component.css', '../../styles.css']
+  styleUrls: ['./header-guest.component.css', '../../../styles.css']
 })
 export class HeaderGuestComponent {
 

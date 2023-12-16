@@ -28,23 +28,20 @@
   font-size: var(--font-size-base);
   color: var(--gray-1);
 }
-.active-accommodations {
+.active-accommodations,
+.requests-accommodations,
+.rejected-accommodations {
+  cursor: pointer;
   position: absolute;
   top: 16px;
   left: 122px;
   letter-spacing: 0.02em;
 }
 .requests-accommodations {
-  position: absolute;
-  top: 16px;
   left: 316px;
-  letter-spacing: 0.02em;
 }
 .rejected-accommodations {
-  position: absolute;
-  top: 16px;
   left: 519px;
-  letter-spacing: 0.02em;
 }
 .clicked {
   color: var(--blue-1);
@@ -63,7 +60,7 @@
   position: relative;
   left: 15%;
   border-radius: var(--br-8xs);
-  background-color: #ffffe0;
+  background-color: var(--color-white);
   border: 1px solid var(--gray-5);
   box-sizing: border-box;
   width: 70%;
@@ -72,11 +69,11 @@
   margin-bottom: 20px;
 }
 .rejected-status {
-  background-color: rgba(255, 129, 129, 0.35);
+  background-color: #ba888b;
 }
 .created-status,
 .changed-status{
-  background-color: #FFF9C1;
+  background-color: #ffffe0;
 }
 .accommodation-image {
   position: absolute;
@@ -207,32 +204,23 @@
   letter-spacing: 0.02em;
   line-height: 20px;
 }
-.footer-acc {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+.add-new-container{
+
+  position: relative;
+  border-radius: var(--br-7xs);
+  background-color: var(--blue-1);
+  width: 250px;
   display: flex;
+  left:41.5%;
+  margin-bottom: 5%;
   flex-direction: row;
   align-items: center;
-  align-content: center;
   justify-content: center;
-  background-color: var(--color-whitesmoke-400);
-  gap: var(--gap-7xs);
-  height: 41px;
-  z-index: 1;
-}
-.copyright-1-icon {
-  position: relative;
-  width: 16px;
-  height: 18px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.bookedup-2023 {
-  font-size: var(--font-size-sm);
-  margin-left: 5px;
-  position: relative;
-  height: 18px;
-  line-height: 140%;
+  padding: var(--padding-3xs) var(--padding-lg);
+  box-sizing: border-box;
+  cursor: pointer;
+  border: none;
+  font-size: var(--font-size-mini);
+  font-family: var(--font-sansation);
+  color: var(--color-white);
 }

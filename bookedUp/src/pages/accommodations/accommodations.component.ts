@@ -20,17 +20,10 @@ export class AccommodationsComponent implements OnInit {
       this.filter = params['filter'] || 'active';
       this.loadAccommodations();
     });
-
-    var newAcc = document.getElementById("new-acc");
-      if (newAcc) {
-        newAcc.addEventListener("click", () => {
-          this.router.navigate(['/add-new-accommodation'], );
-      });
-    }
   }
 
   navigateToDetails(id: number) {
-    this.router.navigate(['/accommodation-details', id]);
+    this.router.navigate(['/accommodation-details', id], { queryParams: { role: 'host' }});
   }
 
     private loadAccommodations(): void {
@@ -42,6 +35,10 @@ export class AccommodationsComponent implements OnInit {
             this.accommodations = this.accommodationService.getAllRejectedByHostId(2);
 
         }
+    }
+
+    navigateToCreateAccommodation() {
+        this.router.navigate(['/add-new-accommodation']);
     }
 
     changeStyle(className: string): void {
