@@ -1,15 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-guest-nav-bar',
   templateUrl: './guest-nav-bar.component.html',
   styleUrls: ['./guest-nav-bar.component.css', '../../../../styles.css']
 })
-export class GuestNavBarComponent {
+export class GuestNavBarComponent implements OnInit{
   isPopupVisible = false;
 
-  constructor(private router: Router) {}
+  role: string = '' ;
+
+  constructor(private router: Router, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.authService.userState.subscribe((result) => {
+      this.role = result;
+    })
+  }
+
 
   onProfilePictureClick(): void {
     this.isPopupVisible = !this.isPopupVisible;
@@ -41,7 +50,13 @@ export class GuestNavBarComponent {
     this.router.navigate(['/'], { queryParams: { role: 'guest' } });
   }
 
-  navigateToSignOut(): void {
-    this.router.navigate(['/']);
+  logOut(): void {
+    this.authService.logout().subscribe({
+      next: (_) => {
+        localStorage.removeItem('user');
+        this.authService.setUser();
+        this.router.navigate(['/']);
+      }
+    })
   }
 }

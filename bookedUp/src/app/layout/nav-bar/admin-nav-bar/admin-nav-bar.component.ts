@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,10 +7,18 @@ import { Router } from '@angular/router';
   templateUrl: './admin-nav-bar.component.html',
   styleUrls: ['./admin-nav-bar.component.css', '../../../../styles.css']
 })
-export class AdminNavBarComponent {
+export class AdminNavBarComponent implements OnInit{
   isPopupVisible = false;
 
-  constructor(private router: Router) {}
+  role: string = '' ;
+
+  constructor(private router: Router, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.authService.userState.subscribe((result) => {
+      this.role = result;
+    })
+  }
 
   onProfilePictureClick(): void {
     this.isPopupVisible = !this.isPopupVisible;
@@ -33,7 +42,13 @@ export class AdminNavBarComponent {
     this.router.navigate(['/'], { queryParams: { role: 'admin' } });
   }
 
-  navigateToDefault(): void {
-    this.router.navigate(['/']);
+  logOut(): void {
+    this.authService.logout().subscribe({
+      next: (_) => {
+        localStorage.removeItem('user');
+        this.authService.setUser();
+        this.router.navigate(['/']);
+      }
+    })
   }
 }

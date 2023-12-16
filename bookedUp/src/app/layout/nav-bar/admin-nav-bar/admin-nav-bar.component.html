@@ -39,7 +39,7 @@
           <div class="my-reservations">Comments</div>
         </div>
   
-        <div class="logout-1-parent" id="popupframeContainer4" (click)="navigateToDefault()">
+        <div class="logout-1-parent" id="popupframeContainer4" *ngIf="role != null" (click)="logOut()">
           <img class="user-square-2-icon" alt="" src="../../../assets/public/logout-1.svg" />
           <div class="my-reservations">Sign out</div>
         </div>

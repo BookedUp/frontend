@@ -39,7 +39,7 @@
           <div class="my-reservations">Reviews</div>
         </div>
   
-        <div class="logout-1-parent" id="signOut" (click)="navigateToSignOut()">
+        <div class="logout-1-parent" id="signOut" *ngIf="role != null" (click)="logOut()">
           <img class="user-square-2-icon" alt="" src="../../../assets/public/logout-1.svg" />
           <div class="my-reservations">Sign out</div>
         </div>

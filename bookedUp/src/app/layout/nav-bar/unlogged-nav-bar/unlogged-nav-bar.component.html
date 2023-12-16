@@ -9,8 +9,8 @@
       </div>
   
       <div class="action-buttons">
-        <div class="register-button" id="register" (click)="navigateToRegister()">Register</div>
-        <div class="sign-in-button" id="login" (click)="navigateToLogIn()">Sign In</div>
+        <div class="register-button" id="register" [routerLink]="['register']">Register</div>
+        <div class="sign-in-button" id="login" [routerLink]="['login']">Sign In</div>
       </div>
     </div>
   </header>
