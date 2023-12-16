@@ -3,11 +3,51 @@
   <body>
     <div class="acc-details">
     
-      <!-- <app-header-host style="background-color: var(--color-white);"></app-header-host> -->
+      <app-nav-bar></app-nav-bar>
       
       <div class="images-container">
         <app-image-frame>
         </app-image-frame>
+      </div>
+
+      <div class="main-data-box">
+        <div id="right-data" class="right-container">
+          <div class="inputs-box">
+
+            <b class="title-text">Accommodation Name</b>
+            <div class="normal-text">
+              <input id="descriptionInput" type="text" placeholder='Enter name of accommodation here..'/>
+            </div>
+
+            <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
+            <b class="title-text">Address</b>
+            <div class="normal-text">
+              <input id="addresInput" type="text" placeholder='Enter address here..'/>
+            </div>
+
+            <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
+            <b class="title-text">Price</b>
+            <div class="normal-text">
+              <input id="defaultPrice" type="number" placeholder='Enter price here..' pattern="\d*" />
+            </div>
+
+            <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
+            <b class="title-text">Overview</b>
+            <div class="normal-text">
+              <input id="descriptionInput" type="text" placeholder='Enter description for accommodation here..' style="height: 100px;"/>
+            </div>
+
+            <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
+            <b class="title-text">Facilities</b>
+            <div>
+
+            </div>
+            <!-- <div id="" class="address" style="margin-top: 10px;" *ngFor="let facility of accommodation.amenities;">
+              <img class="icon" alt="" src="../../assets/public/output-onlinepngtools.png" />
+              <div class="normal-text">{{facility}}</div>
+            </div> -->
+          </div>
+        </div>
       </div>
 
       <!-- <div id="apartment-images" class="images-container">
