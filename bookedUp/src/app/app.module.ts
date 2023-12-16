@@ -43,7 +43,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 
 
-import { HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
