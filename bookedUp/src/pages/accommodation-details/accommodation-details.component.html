@@ -58,12 +58,12 @@
           <div id="description" class="description">
             <div class="description-box">
               <b class="totalPrice">Overview</b>
-              <div id="about" style="margin-top: 10px;">
+              <div id="about" style="margin-top: 10px; margin-bottom: 10px;">
                 <div class="normal-text">
                   {{accommodation.description}}
                 </div>
               </div>
-              <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
+              <img class="line" alt="" src="../../assets/public/vector-1.svg" style="margin-bottom: 10px;"><br>
               <b class="totalPrice">Top Facilities</b>
               <div id="" class="address" style="margin-top: 10px;" *ngFor="let facility of accommodation.amenities;">
                 <img class="icon" alt="" src="../../assets/public/output-onlinepngtools.png" />
@@ -75,11 +75,16 @@
 
         
         <div id="left-data" class="left-container">
-          <app-map *ngIf="accommodation && accommodation.address"
-          [latitude]="accommodation.address.latitude"
-          [longitude]="accommodation.address.longitude">
-          </app-map>
-
+          <div class="left-components" style=" height: 10%;">
+          <app-calendar ></app-calendar>
+          </div>
+          <div class="left-components" style="padding-top: 5%; height: 86%;">
+            <app-map *ngIf="accommodation && accommodation.address"
+            [latitude]="accommodation.address.latitude"
+            [longitude]="accommodation.address.longitude"          
+            >
+            </app-map>
+          </div>
         </div>
       </div>
       
