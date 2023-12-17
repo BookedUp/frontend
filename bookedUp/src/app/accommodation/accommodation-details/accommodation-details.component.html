@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="acc-details" *ngIf="accommodation | async as accommodation">
+      
+      <app-nav-bar></app-nav-bar>
+      
+      <div id="apartment-images" class="images-container">
+        <div id="slider" class="slider-box">
+          <div class="image-box">
+            <div *ngFor="let url of pictureUrls; let i = index" [class.active]="i === currentIndex">
+              <img class="room-image" alt="" [src]="url" (click)="nextImage()" />
+            </div>
+          </div>
+        </div>
+        <div id="more-images" class="more-images">
+          <img class="more" alt="" [src]="pictureUrls[1]" style="padding-bottom: 4%;"/>
+          <img class="more" alt="" [src]="pictureUrls[2]" />
+        </div>
+      </div>
+      
+      <div id="nav-bar" class="nav-bar">
+        <div class="bar-text" [ngClass]="{ 'clicked': selectedClass === 'bar-text' }" (click)="changeStyle('bar-text')">Overview</div>
+        <div class="bar-text-review" [ngClass]="{ 'clicked': selectedClass === 'bar-text-review' }" (click)="changeStyle('bar-text-review')">Guest Review</div>
+      </div>
+      
+      <div id="main-data" class="main-data-box">
+        <div id="right-data" class="right-container">
+          <div class="right-data">
+            <div class="right-box">
+              <div id="apartmentName" class="title-text">{{accommodation.name}}</div>
+  
+              <div class="reviews-frame">
+                <div class="stars-container">
+                  <span class="star" *ngFor="let star of generateStars(roundHalf(accommodation.averageRating/2))">
+                    {{ star }}
+                  </span>
+                </div>
+                <div class="reviews-average">{{ roundHalf(accommodation.averageRating/2) }}</div>
+              </div>
+  
+              <div id="address" class="address">
+                <img class="icon" alt="" src="../../assets/public/location-1.svg" />
+                <div class="" id="normal-text">
+                  {{ accommodation.address.streetAndNumber }}, {{accommodation.address.city}} {{accommodation.address.postalCode}}, {{ accommodation.address.city }}
+                </div>
+              </div>
+              
+            </div>
+            <div class="left-box">
+              <b class="totalPrice">$240</b><br>
+              <b class="singlePrice">${{accommodation.price}}/{{accommodation.priceType}}</b><br>
+              <div class="normal-text" style="margin-top: 10px;">2 adult, 2 days</div>
+            </div>
+          </div>
+          
+
+          <div id="description" class="description">
+            <div class="description-box">
+              <b class="totalPrice">Overview</b>
+              <div id="about" style="margin-top: 10px; margin-bottom: 10px;">
+                <div class="normal-text">
+                  {{accommodation.description}}
+                </div>
+              </div>
+              <img class="line" alt="" src="../../assets/public/vector-1.svg" style="margin-bottom: 10px;"><br>
+              <b class="totalPrice">Top Facilities</b>
+              <div id="" class="address" style="margin-top: 10px;" *ngFor="let facility of accommodation.amenities;">
+                <img class="icon" alt="" src="../../assets/public/output-onlinepngtools.png" />
+                <div class="normal-text">{{facility}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div id="left-data" class="left-container">
+          <app-calendar ></app-calendar>
+        </div>
+      </div>
+      
+      <div class="map-container">
+        <app-map *ngIf="accommodation && accommodation.address"
+        [latitude]="accommodation.address.latitude"
+        [longitude]="accommodation.address.longitude" ></app-map>
+      </div>
+
+      <app-shorter-footer></app-shorter-footer>
+      
+
+    </div>
+  </body>
+</html>
