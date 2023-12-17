@@ -71,7 +71,7 @@
                   <b class="button-text">Reject</b>
                 </div>
 
-                <div class="view-details-button" id="view-details-button" (click)="navigateToDetails(reservation.accommodation.id)">
+                <div class="view-details-button" id="view-details-button" routerLink="/accommodation-details/{{reservation.accommodation.id}}">
                   <b class="button-text">View Details</b>
                 </div>
               </div>

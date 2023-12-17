@@ -211,6 +211,7 @@
 .view-details-button {
   border-radius: var(--br-7xs);
   width: 100%;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
