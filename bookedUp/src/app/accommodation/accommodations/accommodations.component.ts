@@ -37,10 +37,6 @@ export class AccommodationsComponent implements OnInit {
         }
     }
 
-    navigateToCreateAccommodation() {
-        this.router.navigate(['/add-new-accommodation']);
-    }
-
     changeStyle(className: string): void {
         this.selectedClass = className;
         if (className === 'active-accommodations') {

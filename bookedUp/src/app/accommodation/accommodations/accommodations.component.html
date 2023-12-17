@@ -3,7 +3,7 @@
 <div class="accommodations-host">
 
   <div class="accommodations-host-child"></div>
-  <!-- <app-header-host></app-header-host> -->
+  <app-nav-bar></app-nav-bar>
 
   <div id="sort-bar" class="sort-bar">
     <div class="active-accommodations" [ngClass]="{ 'clicked': selectedClass === 'active-accommodations' }" (click)="changeStyle('active-accommodations')">
@@ -68,7 +68,7 @@
     </div>
   </div>
 
-  <button class="add-new-container" (click)="navigateToCreateAccommodation()">
+  <button class="add-new-container" routerLink="/create-accommodation">
     <b>Add new accommodation</b>
   </button>
 
