@@ -3,52 +3,50 @@ import { AccommodationService } from '../accommodation.service';
 import { Router, ActivatedRoute} from '@angular/router';
 import { Accommodation } from '../model/accommodation.model';
 import { Observable } from 'rxjs';
+import {AuthService} from "../../infrastructure/auth/auth.service";
 @Component({
-  selector: 'app-accommodations',
-  templateUrl: './accommodations.component.html',
-  styleUrls: ['./accommodations.component.css', '../../../styles.css']
+    selector: 'app-accommodations',
+    templateUrl: './accommodations.component.html',
+    styleUrls: ['./accommodations.component.css', '../../../styles.css']
 })
 export class AccommodationsComponent implements OnInit {
 
-  accommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
-  selectedClass: string = 'active-accommodations';
-  filter: string = 'active';
-  constructor(private accommodationService: AccommodationService, private router: Router, private route: ActivatedRoute) { }
+    accommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
+    selectedClass: string = 'active-accommodations';
+    filter: string = 'active';
 
-  ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.filter = params['filter'] || 'active';
-      this.loadAccommodations();
-    });
-  }
+    priceTypeGuest: string = 'per guest';
+    priceTypeNight: string = 'per night';
+    constructor(private accommodationService: AccommodationService, private router: Router, private route: ActivatedRoute, private authService: AuthService) { }
 
-  navigateToDetails(id: number) {
-    this.router.navigate(['/accommodation-details', id], { queryParams: { role: 'host' }});
-  }
+    ngOnInit() {
+        this.route.queryParams.subscribe(params => {
+            this.filter = params['filter'] || 'active';
+            this.loadAccommodations();
+        });
+        //this.accommodations = this.accommodationService.getAllActiveAccommodationsByHostId(this.authService.getUserID());
+
+    }
 
     private loadAccommodations(): void {
         if (this.filter === 'active') {
-            this.accommodations = this.accommodationService.getAllActiveAccommodationsByHostId(2);
+            this.accommodations = this.accommodationService.getAllActiveAccommodationsByHostId(this.authService.getUserID());
         } else if (this.filter === 'requests') {
-            this.accommodations = this.accommodationService.getAllRequestsByHostId(2);
+            this.accommodations = this.accommodationService.getAllRequestsByHostId(this.authService.getUserID());
         } else {
-            this.accommodations = this.accommodationService.getAllRejectedByHostId(2);
+            this.accommodations = this.accommodationService.getAllRejectedByHostId(this.authService.getUserID());
 
         }
-    }
-
-    navigateToCreateAccommodation() {
-        this.router.navigate(['/add-new-accommodation']);
     }
 
     changeStyle(className: string): void {
         this.selectedClass = className;
         if (className === 'active-accommodations') {
-            this.router.navigate(['/accommodations'], { queryParams: { filter: 'active' } });
+            this.router.navigate(['/my-accommodations'], { queryParams: { filter: 'active' } });
         } else if (className === 'requests-accommodations') {
-            this.router.navigate(['/accommodations'], { queryParams: { filter: 'requests' } });
+            this.router.navigate(['/my-accommodations'], { queryParams: { filter: 'requests' } });
         } else {
-            this.router.navigate(['/accommodations'], { queryParams: { filter: 'rejected' } });
+            this.router.navigate(['/my-accommodations'], { queryParams: { filter: 'rejected' } });
         }
     }
 
@@ -69,5 +67,18 @@ export class AccommodationsComponent implements OnInit {
 
     roundHalf(value: number): number {
         return Math.round(value * 2) / 2;
+    }
+
+    getRequestsAccommodations() {
+        this.accommodations = this.accommodationService.getAllRequestsByHostId(this.authService.getUserID());
+    }
+
+    getActiveAccommodations() {
+        this.accommodations = this.accommodationService.getAllActiveAccommodationsByHostId(this.authService.getUserID());
+    }
+
+    getRejectedAccommodations() {
+        this.accommodations = this.accommodationService.getAllRejectedByHostId(this.authService.getUserID());
+
     }
 }
