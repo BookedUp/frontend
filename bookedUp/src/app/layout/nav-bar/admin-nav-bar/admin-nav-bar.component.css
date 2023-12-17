@@ -27,6 +27,7 @@ header {
 }
 
 .home-item {
+    cursor: pointer;
     letter-spacing: 0.02em;
 }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -28,18 +28,6 @@ export class AdminNavBarComponent implements OnInit{
     if (this.isPopupVisible && event.target instanceof HTMLElement && event.target.hasAttribute('closable')) {
       this.isPopupVisible = false;
     }
-  }
-
-  navigateToManageProfile(): void {
-    this.router.navigate(['/manage-profile'], { queryParams: { role: 'admin' } });
-  }
-
-  navigateToAmenities(): void {
-    this.router.navigate(['/accommodation-requests'], { queryParams: { filter: 'all' } });
-  }
-
-  navigateToHome(): void {
-    this.router.navigate(['/'], { queryParams: { role: 'admin' } });
   }
 
   logOut(): void {
