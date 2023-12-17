@@ -16,31 +16,28 @@
     </div>
 
     <div id="inputs-login" [formGroup]="loginForm">
-        <b class="email-address19" [class.required-active]="isEmailRequiredActive">Email address<span class="required-mark">*</span> </b>
-        <div class="email-address20" [class.required]="loginForm.get('username')?.hasError('required')">
+        <b class="email-address19" >Email address </b>
+        <div class="email-address20">
             <input
                     id="emailInput"
                     type="email"
                     class="email-address21"
                     placeholder="Enter email address..."
                     formControlName="username"
-                    (focus)="onEmailInputFocus()"
-                    (input)="onEmailInputChange()"
                     required
             />
         </div>
 
 
-        <b class="password6" [class.required-active]="isPasswordRequiredActive">Password<span class="required-mark">*</span> </b>
-        <div class="password7" [class.required]="loginForm.get('password')?.hasError('required')">
+        <b class="password6" >Password </b>
+        <div class="password7">
             <input
                     id="passwordInput"
                     type="{{ isPasswordVisible ? 'text' : 'password' }}"
                     class="enter-password4"
                     placeholder="Enter password..."
                     formControlName="password"
-                    (focus)="onPasswordInputFocus()"
-                    (input)="onPasswordInputChange()"
+
                     required
             />
             <img
