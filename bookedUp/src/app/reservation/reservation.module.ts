@@ -9,11 +9,13 @@ import { LayoutModule } from '../layout/layout.module';
 
 import { ReservationRequestsComponent } from './reservation-requests/reservation-requests.component';
 import { CreateReservationComponent } from './create-reservation/create-reservation.component';
+import { ReservationsComponent } from './reservations/reservations.component';
 
 @NgModule({
   declarations: [
     ReservationRequestsComponent,
     CreateReservationComponent,
+    ReservationsComponent,
   ],
   imports: [
     CommonModule,
