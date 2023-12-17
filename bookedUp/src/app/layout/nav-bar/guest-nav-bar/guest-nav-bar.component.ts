@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-guest-nav-bar',
@@ -18,8 +18,7 @@ export class GuestNavBarComponent implements OnInit{
       this.role = result;
     })
   }
-
-
+  
   onProfilePictureClick(): void {
     this.isPopupVisible = !this.isPopupVisible;
   }
@@ -28,26 +27,6 @@ export class GuestNavBarComponent implements OnInit{
     if (this.isPopupVisible && event.target instanceof HTMLElement && event.target.hasAttribute('closable')) {
       this.isPopupVisible = false;
     }
-  }
-
-  navigateToManageAccount(): void {
-    this.router.navigate(['/manage-profile'], { queryParams: { role: 'guest' } });
-  }
-
-  navigateToMyReservations(): void {
-    this.router.navigate(['/'], { queryParams: { role: 'guest' } });
-  }
-
-  navigateToFavourites(): void {
-    this.router.navigate(['/'], { queryParams: { role: 'guest' } });
-  }
-
-  navigateToReviews(): void {
-    this.router.navigate(['/'], { queryParams: { role: 'guest' } });
-  }
-
-  navigateToHome(): void {
-    this.router.navigate(['/'], { queryParams: { role: 'guest' } });
   }
 
   logOut(): void {

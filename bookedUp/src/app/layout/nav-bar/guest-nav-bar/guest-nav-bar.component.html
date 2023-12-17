@@ -3,7 +3,7 @@
       <img class="logo" alt="" src="../../../assets/public/cream-black-minimalist-illustrated-luxury-real-estate-circle-logo-7-3@2x.png" />
   
       <div class="home-nav">
-        <div class="home-item" id="homeText">Home</div>
+        <div class="home-item" routerLink="/">Home</div>
         <div class="home-item">About</div>
         <div class="home-item">Contact</div>
       </div>
@@ -19,22 +19,22 @@
   
     <div id="guestDropdownContainer" class="popup-overlay" *ngIf="isPopupVisible" (click)="onPopupClick($event)">
       <div class="admin-dropdown">
-        <div class="user-square-2-parent" id="manageAcc" (click)="navigateToManageAccount()">
+        <div class="user-square-2-parent" routerLink="/manage-profile">
           <img class="user-square-2-icon" alt="" src="../../../assets/public/usersquare-2.svg" />
           <div class="my-reservations">Manage account</div>
         </div>
   
-        <div class="frame-parent6" id="myReservation" (click)="navigateToMyReservations()">
+        <div class="frame-parent6" routerLink="/">
           <img class="frame-icon" alt="" src="../../../assets/public/hotel-21.svg" />
           <div class="my-reservations">My reservations</div>
         </div>
   
-        <div class="frame-parent6" id="favourites" (click)="navigateToFavourites()">
+        <div class="frame-parent6" routerLink="/">
           <img class="frame-icon" alt="" src="../../../assets/public/bookmarkheart-1.svg" />
           <div class="my-reservations">Favourites</div>
         </div>
   
-        <div class="frame-parent6" id="reviews" (click)="navigateToReviews()">
+        <div class="frame-parent6" routerLink="/">
           <img class="frame-icon" alt="" src="../../../assets/public/frame2.svg" />
           <div class="my-reservations">Reviews</div>
         </div>
