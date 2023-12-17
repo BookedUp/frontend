@@ -69,7 +69,7 @@
   margin-bottom: 20px;
 }
 .rejected-status {
-  background-color: rgba(255, 181, 186, 0.42);
+  background-color: rgba(255, 233, 234, 0.42);
 }
 .created-status,
 .changed-status{
