@@ -28,18 +28,22 @@ export class SearchComponent implements OnInit {
   minFromDate: string;
   nofilterChecked: boolean = false;
 
+  priceTypeGuest: string = 'per guest';
+  priceTypeNight: string = 'per night';
+
+
   checkboxChanged(event: any, checkboxId: string) {
       const isBudgetFilter = event.target.closest('#budget-filters') !== null;
       const isPopularFilter = event.target.closest('#popular-filters') !== null;
 
       if (isBudgetFilter) {
-        
+
         this.budgetCheckboxIds = [];
-    
+
         const idParts = checkboxId.split('-');
         const minPrice: number = parseFloat(idParts[0]);
         const maxPrice: number = parseFloat(idParts[1]);
-    
+
         if (event.target.checked) {
           this.budgetCheckboxIds.push(`Min: ${minPrice}, Max: ${maxPrice}`);
         }
@@ -49,7 +53,7 @@ export class SearchComponent implements OnInit {
             if (!this.popularCheckboxIds.includes(checkboxId)) {
               this.popularCheckboxIds.push(checkboxId);
             }
-          
+
         } else {
           // Remove the checkbox from the list
           this.popularCheckboxIds = this.popularCheckboxIds.filter(
@@ -57,7 +61,7 @@ export class SearchComponent implements OnInit {
           );
         }
       }
-      
+
       if (this.budgetCheckboxIds.length > 0 || this.popularCheckboxIds.length > 0) {
         this.searchAndFilterAccommodations();
       } else if (this.budgetCheckboxIds.length > 0 || this.popularCheckboxIds.length == 0) {
@@ -74,7 +78,7 @@ export class SearchComponent implements OnInit {
   }
 
 
-  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private el: ElementRef) { 
+  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private el: ElementRef) {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.minFromDate = this.formatDate(tomorrow);
@@ -88,7 +92,7 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.location = this.route.snapshot.queryParams['location'] || "";
     this.fromDate = this.route.snapshot.queryParams['selectedFromDate'] || new Date();
     this.outDate = this.route.snapshot.queryParams['selectedToDate'] || new Date();
@@ -104,7 +108,7 @@ export class SearchComponent implements OnInit {
     } else {
       console.error('Invalid date format detected. Check your query parameters.');
       return;
-    }  
+    }
 
     const noFilterCheckbox = this.el.nativeElement.querySelector('#NofilterCheckbox');
     if (noFilterCheckbox) {
@@ -126,7 +130,7 @@ export class SearchComponent implements OnInit {
     }
     }
 
-    
+
   onSearchClick(): void {
     this.location = (document.getElementById("locationTxt") as HTMLInputElement).value || "";
     this.guests = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10) || 0;
@@ -134,7 +138,7 @@ export class SearchComponent implements OnInit {
     const fromDateInput = (document.getElementById("fromDate") as HTMLInputElement);
     const selectedFromDateInputValue = fromDateInput.value;
     this.fromDate = selectedFromDateInputValue ? new Date(selectedFromDateInputValue) : new Date();
-    
+
     const toDateInput = document.getElementById("toDate") as HTMLInputElement;
     const selectedToDateInputValue = toDateInput.value;
     this.outDate = selectedToDateInputValue ? new Date(selectedToDateInputValue) : new Date();
@@ -152,20 +156,20 @@ export class SearchComponent implements OnInit {
 
   uncheckAllCheckBoxes(groupName: string) {
     const checkBoxes = document.querySelectorAll(`input[type="checkbox"][name="${groupName}"]`) as NodeListOf<HTMLInputElement>;
-  
+
     checkBoxes.forEach((checkBox) => {
       checkBox.checked = false;
     });
   }
-  
+
   updateBudget(): void {
-    
+
     if (this.updateTimeout) {
       clearTimeout(this.updateTimeout);
     }
     this.updateTimeout = setTimeout(() => {
-      
-  
+
+
       this.searchAndFilterAccommodations();
     }, 500);
   }
@@ -196,14 +200,14 @@ export class SearchComponent implements OnInit {
     let minPrice: number = 0.0;
     let maxPrice: number = 0.0;
     if (this.budgetCheckboxIds.length > 0) {
-      const idParts = this.budgetCheckboxIds[0].split(','); 
+      const idParts = this.budgetCheckboxIds[0].split(',');
       minPrice = parseFloat(idParts[0].replace('Min:', '').trim());
       maxPrice = parseFloat(idParts[1].replace('Max:', '').trim());
       if (Number.isNaN(maxPrice)){
         maxPrice = 100000.0;
       }
-    } 
-    
+    }
+
     this.accommodationService
       .searchAccommodations(this.location, this.guests , this.fromDate, this.outDate, popular, minPrice, maxPrice, this.customBudget, selectedTypeEnum, this.name)
       .subscribe(
@@ -218,7 +222,7 @@ export class SearchComponent implements OnInit {
   }
   private parseAccommodationType(typeString: string): AccommodationType | null {
     const enumValues = Object.values(AccommodationType);
-  
+
     if (enumValues.includes(typeString as AccommodationType)) {
       return typeString as AccommodationType;
     } else {
@@ -229,24 +233,24 @@ export class SearchComponent implements OnInit {
 
   private parseAmenities(amenitiesStrings: string[]): Amenity[] | null {
     const amenities: Amenity[] = [];
-  
+
     for (const str of amenitiesStrings) {
       const amenity = this.parseAmenity(str);
-  
+
       if (amenity !== null) {
         amenities.push(amenity);
       } else {
         console.error(`Nije moguće konvertovati ${str} u Amenity.`);
-        return null; 
+        return null;
       }
     }
-  
+
     return amenities;
   }
-  
+
   private parseAmenity(amenityString: string): Amenity | null {
     const enumValues = Object.values(Amenity);
-  
+
     if (enumValues.includes(amenityString as Amenity)) {
       return amenityString as Amenity;
     } else {
@@ -254,11 +258,25 @@ export class SearchComponent implements OnInit {
       return null;
     }
   }
-  
-  
-  
-  
-  
+
+  generateStars(rating: number): string[] {
+    const stars: string[] = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push('★');
+      } else if (i - 0.5 === rating) {
+        stars.push('✯');
+      } else {
+        stars.push('☆');
+      }
+    }
+    return stars;
+  }
+
+  roundHalf(value: number): number {
+    return Math.round(value * 2) / 2;
+  }
+
 }
 
 

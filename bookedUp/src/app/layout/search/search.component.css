@@ -16,7 +16,7 @@
   top: 0;
   left: 0;
   background: linear-gradient(180deg, #544c37, #9e8d5f);
-  width: 1440px;
+  width: 100%;
   height: 200px;
 }
 .register-container,
@@ -309,7 +309,7 @@
   height: 172px;
   object-fit: cover;
 }
-.search-unlogged-child1{ 
+.search-unlogged-child1{
   position: relative;
   top: 340px;
   left: 425px;
@@ -854,14 +854,14 @@
   color: #544c37;
   font-size: larger;
   font-weight: bold;
-  z-index: 2; 
+  z-index: 2;
 }
 
 .b82 {
   padding-top: 20px;
   font-size: x-large;
   font-weight: bold;
-  z-index: 1; 
+  z-index: 1;
 }
 .b83,
 .b84 {
@@ -902,8 +902,9 @@
   position: relative;
   top: -180px;
   left: 400px;
-  width: 82px;
+  width: 92px;
   height: 20px;
+  color: #FBBC04;;
 }
 .shanghai-open-house-parent3 {
   position: absolute;
@@ -989,7 +990,8 @@
 }
 .reviews55 {
   top: 42px;
-  left: 500px;
+  left: 490px;
+  font-size: 18px;
 }
 .see-availability-wrapper26 {
   position: absolute;
@@ -1322,4 +1324,13 @@ input[type="range"]::-webkit-slider-thumb {
 
 span {
   font-weight: bold;
+}
+
+.stars-container {
+  color: var(--blue-1);
+  margin-right: 5px;
+}
+.star {
+  display: inline-block;
+  margin-right: 5px;
 }
