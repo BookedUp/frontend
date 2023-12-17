@@ -2,19 +2,19 @@ header {
     position: relative;
     padding: var(--padding-base);
     }
-    
+
     .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     }
-    
+
     .logo {
     max-width: 126px;
     height: auto;
     object-fit: cover;
     }
-    
+
     .home-nav {
     flex-grow: 1;
     display: flex;
@@ -25,11 +25,13 @@ header {
     font-size: var(--font-size-base);
     color: var(--gray-1);
     }
-    
-    .home-item {
-    letter-spacing: 0.02em;
-    }
-    
+
+.home-item {
+  cursor: pointer;
+  letter-spacing: 0.02em;
+}
+
+
     .manage-account-admin-item {
     position: absolute;
     top: 20px;
@@ -39,7 +41,7 @@ header {
     height: 44px;
     object-fit: cover;
     }
-    
+
     .user-square-2-icon {
     position: relative;
     width: 20px;
@@ -118,7 +120,7 @@ header {
     color: var(--gray-2);
     font-family: var(--font-sansation);
     }
-    
+
     .popup-overlay{
         display: flex;
         z-index: 100;

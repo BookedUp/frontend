@@ -15,8 +15,8 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 export class IndexComponent implements OnInit {
     minFromDate: string | undefined;
     popularAccommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
-    
-  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService) { 
+
+  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService) {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.minFromDate = this.formatDate(tomorrow);
@@ -49,10 +49,10 @@ export class IndexComponent implements OnInit {
                 console.log(location)
                 const guestNumber = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10) || 0;
                 console.log(guestNumber);
-                
+
 
                 const fromDateInput = document.getElementById("fromDate") as HTMLInputElement;
-            
+
                 const selectedFromDateInputValue = fromDateInput.value;
                 const selectedFromDate = selectedFromDateInputValue ? new Date(selectedFromDateInputValue) : new Date();
 
@@ -86,7 +86,4 @@ export class IndexComponent implements OnInit {
         return Math.round(value * 2) / 2;
     }
 
-    navigateToDetails(id: number) {
-        this.router.navigate(['/accommodation-details', id]);
-    }
 }

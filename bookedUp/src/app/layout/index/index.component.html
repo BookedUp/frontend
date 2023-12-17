@@ -66,7 +66,7 @@
     <div id="hotels-list" class="populars-list">
       <div class="hotel-box"  [ngClass]="{'no-margin-right': last}"
                               *ngFor="let accommodation of popularAccommodations | async; let last = last"
-                              (click)="navigateToDetails(accommodation.id)">
+                              routerLink="/accommodation-details/{{accommodation.id}}">
 
         <img class="hotel-image" alt="" [src]="accommodation.photos[0].url" />
 
