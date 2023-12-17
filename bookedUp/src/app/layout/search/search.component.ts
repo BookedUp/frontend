@@ -1,9 +1,9 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { AccommodationService } from '../../core/services/accommodation.service';
-import { Accommodation } from '../../core/model/Accommodation';
+import { AccommodationService } from '../../accommodation/accommodation.service';
+import { Accommodation } from '../../accommodation/model/accommodation.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AccommodationType } from 'src/app/core/model/enum/AccommodationType';
-import { Amenity } from 'src/app/core/model/Amenity';
+import { AccommodationType } from 'src/app/accommodation/model/enum/accommodationType.enum';
+import { Amenity } from 'src/app/accommodation/model/enum/amenity.enum';
 
 @Component({
   selector: 'app-search',
@@ -124,23 +124,6 @@ export class SearchComponent implements OnInit {
         this.searchAndFilterAccommodations();
       });
     }
-    
-    var frameContainer19 = document.getElementById("frameContainer19");
-    if (frameContainer19) {
-      frameContainer19.addEventListener("click", () => {
-          const roleParam = this.route.snapshot.queryParams['role'];
-
-          if (roleParam === 'admin') {
-            this.router.navigate(['/accommodation-details'], { queryParams: { role: 'admin' } });
-          } else if (roleParam === 'host') {
-            this.router.navigate(['/accommodation-details'], { queryParams: { role: 'host' } });
-          } else if (roleParam === 'guest') {
-            this.router.navigate(['/accommodation-details'], { queryParams: { role: 'guest' } });
-          } else {
-            this.router.navigate(['/accommodation-details']);
-          }
-        });
-      }
     }
 
     
