@@ -76,7 +76,8 @@
             <div id="hotel-address" class="hotel-smaller-text">{{ accommodation.address.streetAndNumber }}, {{accommodation.address.city}} {{accommodation.address.postalCode}}, {{ accommodation.address.city }}</div>
             <div  class="hotel-price">
               <div id="hotel-price">${{ accommodation.price }}</div>
-              <div class="hotel-smaller-text">&nbsp;/{{ accommodation.priceType }}</div>
+              <div class="hotel-smaller-text" *ngIf="accommodation.priceType=='PER_GUEST'">&nbsp;{{priceTypeGuest}}</div>
+              <div class="hotel-smaller-text" *ngIf="accommodation.priceType=='PER_NIGHT'">&nbsp;{{priceTypeNight}}</div>
             </div>
           </div>
           <div id="popular-text-right" class="popular-text-right">

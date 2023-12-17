@@ -15,6 +15,8 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 export class IndexComponent implements OnInit {
     minFromDate: string | undefined;
     popularAccommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
+    priceTypeGuest: string = '/per guest';
+    priceTypeNight: string= '/per night';
 
   constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService) {
     const tomorrow = new Date();
