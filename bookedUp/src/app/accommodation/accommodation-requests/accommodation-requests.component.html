@@ -55,13 +55,13 @@
               </div>
 
               <div class="right-buttons">
-                <div class="accept-button" id="accept-button" (click)="approveAccommodation(accommodation)">
+                <div class="accept-button" id="accept-button" (click)="approveAccommodation(accommodation.id)">
                   <b class="button-text">Accept</b>
                 </div>
-                <div class="reject-button" id="reject-button" (click)="rejectAccommodation(accommodation)">
+                <div class="reject-button" id="reject-button" (click)="rejectAccommodation(accommodation.id)">
                   <b class="button-text">Reject</b>
                 </div>
-                <div class="view-details-button" id="view-details-button" (click)="navigateToDetails(accommodation.id)">
+                <div class="view-details-button" id="view-details-button" routerLink="/accommodation-details/{{accommodation.id}}">
                   <b class="button-text">View Details</b>
                 </div>
               </div>

@@ -3,6 +3,7 @@ import { AccommodationService } from '../accommodation.service';
 import { Router, ActivatedRoute} from '@angular/router';
 import { Accommodation } from '../model/accommodation.model';
 import { Observable } from 'rxjs';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-accommodation-requests',
@@ -23,10 +24,6 @@ export class AccommodationRequestsComponent implements OnInit{
     });
   }
 
-  navigateToDetails(id: number) {
-    this.router.navigate(['/accommodation-details', id]);
-  }
-  
   changeStyle(className: string): void {
     this.selectedClass = className;
     if (className === 'changed-accommodations') {
@@ -66,12 +63,48 @@ export class AccommodationRequestsComponent implements OnInit{
     return Math.round(value * 2) / 2;
   }
 
-  approveAccommodation(accommodation: Accommodation) {
-    this.accommodationService.approveAccommodation(accommodation.id);
-
+  approveAccommodation(id: number): void {
+    this.accommodationService.approveAccommodation(id)
+        .subscribe(
+            (approvedReservation) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Accommodation Approved!',
+                text: 'The accommodation has been successfully approved.',
+              }).then(() => {
+                this.loadAccommodations();
+              });
+            },
+            (error) => {
+              // Handle error
+              Swal.fire({
+                icon: 'error',
+                title: 'Error Approving Accommodation',
+                text: `An error occurred: ${error.message}`,
+              });
+            }
+        );
   }
 
-  rejectAccommodation(accommodation: Accommodation) {
-    this.accommodationService.rejectAccommodation(accommodation.id)
+  rejectAccommodation(id: number): void {
+    this.accommodationService.rejectAccommodation(id)
+        .subscribe(
+            (rejectedReservation) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Accommodation Rejected!',
+                text: 'The accommodation has been successfully rejected.',
+              }).then(() => {
+                this.loadAccommodations();
+              });
+            },
+            (error) => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error Rejecting Accommodation',
+                text: `An error occurred: ${error.message}`,
+              });
+            }
+        );
   }
 }

@@ -66,20 +66,20 @@
   position: relative;
   left: 15%;
   border-radius: var(--br-8xs);
-  background-color: #ffffe0;
-  border: 1px solid var(--gray-5);
+  background-color: #FFFFFF;
+  border: 1px solid #E0E0E0;
   box-sizing: border-box;
   width: 70%;
   height: 240px;
   display: flex;
   margin-bottom: 20px;
 }
-.created-status {
-  background-color: rgba(90, 227, 161, 0.35);
-}
-.changed-status{
-  background-color: #FFF9C1;
-}
+/*.created-status {*/
+/*  background-color: rgba(90, 227, 161, 0.35);*/
+/*}*/
+/*.changed-status{*/
+/*  background-color: #FFF9C1;*/
+/*}*/
 .accommodation-image {
   position: absolute;
   top: 50%;
@@ -183,6 +183,7 @@
 .view-details-button {
   border-radius: var(--br-7xs);
   width: 100%;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
