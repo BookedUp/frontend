@@ -1,40 +1,45 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from './auth/guard/auth.guard';
+import { AuthGuard } from './infrastructure/auth/guard/auth.guard';
 import { IndexComponent } from './layout/index/index.component';
-import { LoginComponent } from './auth/login/login.component';
-import {RegistrationComponent} from "./auth/registration/registration.component";
+import { SearchComponent } from './layout/search/search.component';
 
+import { AccommodationDetailsComponent } from './accommodation/accommodation-details/accommodation-details.component';
+import { AccommodationRequestsComponent } from './accommodation/accommodation-requests/accommodation-requests.component';
+import { CreateAccommodationComponent } from './accommodation/create-accommodation/create-accommodation.component';
+import { AccommodationsComponent } from './accommodation/accommodations/accommodations.component';
 
-// import { CalendarComponent } from 'src/shared/calendar/calendar.component';
-// import { ForgotPasswordComponent } from '../pages/forgot-password/forgot-password.component';
-// import { CheckInboxComponent } from '../pages/check-inbox/check-inbox.component';
-// import { SearchComponent } from '../pages/search/search.component';
-// import { AccommodationDetailsComponent } from '../pages/accommodation-details/accommodation-details.component';
-// import { ManageProfileComponent } from '../pages/manage-profile/manage-profile.component'
-// import { AccommodationsComponent } from '../pages/accommodations/accommodations.component';
-// import { CreateAccommodationComponent } from '../pages/create-accommodation/create-accommodation.component';
-// import { ReservationRequestsComponent } from '../pages/reservation-requests/reservation-requests.component';
-// import { AccommodationRequestsComponent } from '../pages/accommodation-requests/accommodation-requests.component';
+import { ReservationRequestsComponent } from './reservation/reservation-requests/reservation-requests.component';
+import { CreateReservationComponent } from './reservation/create-reservation/create-reservation.component';
 
+import { ManageProfileComponent } from './user/manage-profile/manage-profile.component';
 
-//import { LoginComponent } from '../pages/login/login.component';
+import { CheckInboxComponent } from './layout/check-inbox/check-inbox.component';
+import { ForgotPasswordComponent } from './layout/forgot-password/forgot-password.component';
+
+import { LoginComponent } from './infrastructure/auth/login/login.component';
+import {RegistrationComponent} from "./infrastructure/auth/registration/registration.component";
+
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
+  { path: 'search', component: SearchComponent },
+
+  { path: 'accommodation-details/:id', component: AccommodationDetailsComponent },
+  { path: 'accommodation-requests', component: AccommodationRequestsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN'] }},
+  { path: 'create-accommodation', component: CreateAccommodationComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
+  { path: 'my-accommodations', component: AccommodationsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
+  
+  { path: 'reservation-requests', component: ReservationRequestsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
+  { path: 'create-reservation', component: CreateReservationComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] }},
+
+  { path: 'manage-profile', component: ManageProfileComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST'] }},
+
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
-  
-  // { path: 'forgot-password', component: ForgotPasswordComponent },
-  // { path: 'check-inbox', component: CheckInboxComponent },
-  // { path: 'search', component: SearchComponent },
-  // { path: 'accommodation-details/:id', component: AccommodationDetailsComponent },
-  // { path: 'manage-profile', component: ManageProfileComponent },
-  // { path: 'accommodations', component: AccommodationsComponent },
-  // { path: 'add-new-accommodation', component: CreateAccommodationComponent },
-  // { path: 'reservation-requests', component: ReservationRequestsComponent },
-  // { path: 'accommodation-requests', component: AccommodationRequestsComponent },
+  { path: 'check-inbox', component: CheckInboxComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
 ];
 
 @NgModule({
