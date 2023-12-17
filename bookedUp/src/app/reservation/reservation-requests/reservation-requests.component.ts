@@ -5,6 +5,7 @@ import { Reservation } from 'src/app/reservation/model/reservation.model';
 import { ReservationStatus } from 'src/app/reservation/model/reservationStatus.enum';
 import { ReservationService } from 'src/app/reservation/reservation.service';
 import {AuthService} from "../../infrastructure/auth/auth.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-reservation-requests',
@@ -99,10 +100,50 @@ export class ReservationRequestsComponent implements OnInit {
     return Math.round(value * 2) / 2;
   }
 
-  acceptReservation() {
+
+  acceptReservation(id: number): void {
+    this.reservationService.approveReservation(id)
+        .subscribe(
+            (approvedReservation) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Reservation Approved!',
+                text: 'The reservation has been successfully approved.',
+              }).then(() => {
+                this.loadReservations();
+              });
+            },
+            (error) => {
+              // Handle error
+              Swal.fire({
+                icon: 'error',
+                title: 'Error Approving Reservation',
+                text: `An error occurred: ${error.message}`,
+              });
+            }
+        );
   }
 
-  rejectReservation() {
-
+  rejectReservation(id: number): void {
+    this.reservationService.rejectReservation(id)
+        .subscribe(
+            (rejectedReservation) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Reservation Rejected!',
+                text: 'The reservation has been successfully rejected.',
+              }).then(() => {
+                this.loadReservations();
+              });
+            },
+            (error) => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error Rejecting Reservation',
+                text: `An error occurred: ${error.message}`,
+              });
+            }
+        );
   }
+
 }

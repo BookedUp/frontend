@@ -45,6 +45,14 @@ export class ReservationService {
     return this.http.get<Reservation[]>(`${this.apiUrl}/host/${hostId}/cancelled`);
   }
 
+  approveReservation(id: number): Observable<Reservation> {
+    return this.http.put<Reservation>(`${this.apiUrl}/${id}/confirmation`, {});
+  }
+
+  rejectReservation(id: number): Observable<Reservation> {
+    return this.http.put<Reservation>(`${this.apiUrl}/${id}/rejection`, {});
+  }
+
   createReservation(reservation: Reservation): Observable<Reservation> {
     return this.http.post<Reservation>(this.apiUrl, reservation);
   }
