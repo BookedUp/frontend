@@ -20,7 +20,7 @@ import { ImageFrameComponent } from './image-frame/image-frame.component';
   exports: [
     MapComponent,
     CalendarComponent,
-    ImageFrameComponent
+    ImageFrameComponent,
   ]
 })
 export class SharedModule { }
