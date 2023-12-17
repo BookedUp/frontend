@@ -13,6 +13,10 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent {
   isPasswordVisible: boolean = false;
+  isEmailRequiredActive: boolean = false;
+  isPasswordRequiredActive: boolean = false;
+
+
 
   constructor(private authService: AuthService,
               private router: Router) {
@@ -46,4 +50,37 @@ export class LoginComponent {
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
+
+  onEmailInputFocus(): void {
+    this.isEmailRequiredActive = true;
+  }
+
+  onEmailInputChange(): void {
+    const usernameControl = this.loginForm.get('username');
+
+    if (usernameControl && usernameControl.value) {
+      if (usernameControl.value.trim() === '') {
+        this.isEmailRequiredActive = true;
+      } else {
+        this.isEmailRequiredActive = false;
+      }
+    }
+  }
+
+  onPasswordInputFocus(): void {
+    this.isPasswordRequiredActive = true;
+  }
+
+  onPasswordInputChange(): void {
+    const usernameControl = this.loginForm.get('password');
+
+    if (usernameControl && usernameControl.value) {
+      if (usernameControl.value.trim() === '') {
+        this.isPasswordRequiredActive = true;
+      } else {
+        this.isPasswordRequiredActive = false;
+      }
+    }
+  }
+
 }

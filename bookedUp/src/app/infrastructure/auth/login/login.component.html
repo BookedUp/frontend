@@ -16,19 +16,32 @@
     </div>
 
     <div id="inputs-login" [formGroup]="loginForm">
-        <b class="email-address19">Email address</b>
-        <div class="email-address20">
-            <input id="emailInput" type="email" class="email-address21" placeholder="Enter email address..." formControlName="username"/>
+        <b class="email-address19" [class.required-active]="isEmailRequiredActive">Email address<span class="required-mark">*</span> </b>
+        <div class="email-address20" [class.required]="loginForm.get('username')?.hasError('required')">
+            <input
+                    id="emailInput"
+                    type="email"
+                    class="email-address21"
+                    placeholder="Enter email address..."
+                    formControlName="username"
+                    (focus)="onEmailInputFocus()"
+                    (input)="onEmailInputChange()"
+                    required
+            />
         </div>
 
-        <b class="password6">Password</b>
-        <div class="password7">
+
+        <b class="password6" [class.required-active]="isPasswordRequiredActive">Password<span class="required-mark">*</span> </b>
+        <div class="password7" [class.required]="loginForm.get('password')?.hasError('required')">
             <input
                     id="passwordInput"
                     type="{{ isPasswordVisible ? 'text' : 'password' }}"
                     class="enter-password4"
                     placeholder="Enter password..."
                     formControlName="password"
+                    (focus)="onPasswordInputFocus()"
+                    (input)="onPasswordInputChange()"
+                    required
             />
             <img
                     class="eye-1-icon4"
@@ -54,7 +67,7 @@
             <b class="continue-with-email2">Continue with email</b>
         </div>
     </div>
- 
+
     <div id="register-button" >
         <div class="dont-have-an-container" id="dontHaveAn">
             <span>Don’t have an account? </span>
