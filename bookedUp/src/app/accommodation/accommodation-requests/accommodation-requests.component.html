@@ -50,7 +50,9 @@
 
                 <div class="bottom-data-box">
                     <div class="includes-taxes">Includes taxes and fees</div>
-                    <b class="per-night">{{ accommodation.price }}$/{{accommodation.priceType}}</b>
+                    <b class="per-night" *ngIf="accommodation.priceType=='PER_GUEST'">{{ accommodation.price }}$/{{priceTypeGuest}}</b>
+                    <b class="per-night" *ngIf="accommodation.priceType=='PER_NIGHT'">{{ accommodation.price }}$/{{priceTypeNight}}</b>
+
                 </div>
               </div>
 

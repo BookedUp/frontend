@@ -14,6 +14,9 @@ export class AccommodationRequestsComponent implements OnInit{
   accommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
   selectedClass: string = 'all-accommodations';
   filter: string = 'all';
+
+  priceTypeGuest: string = 'per guest';
+  priceTypeNight: string = 'per night';
   constructor(private accommodationService: AccommodationService, private router: Router, private route: ActivatedRoute) { }
 
 
