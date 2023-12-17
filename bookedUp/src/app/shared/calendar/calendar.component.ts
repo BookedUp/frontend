@@ -1,6 +1,6 @@
 // src/app/calendar/calendar.component.ts
 
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-calendar',
@@ -8,8 +8,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./calendar.component.css', '../../../styles.css'],
 })
 
-export class CalendarComponent {
-  defaultPrice: number = 10;
+export class CalendarComponent implements OnChanges {
+  @Input() defaultPrice: number = 0;
   customPrices: { [date: string]: number } = {
     '2023-01-01': 15,
     '2023-01-05': 20,
@@ -29,6 +29,13 @@ export class CalendarComponent {
     this.selectedMonth = currentDate.getMonth() + 1; // Months are zero-based
     this.selectedYear = currentDate.getFullYear();
     this.generateCalendar();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['defaultPrice'] && !changes['defaultPrice'].firstChange) {
+      // React to changes in defaultPrice if it's not the initial change
+      this.generateCalendar();
+    }
   }
 
   handleDateClick(day: number): void {
