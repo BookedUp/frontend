@@ -277,6 +277,15 @@ export class SearchComponent implements OnInit {
     return Math.round(value * 2) / 2;
   }
 
+  navigateToAccommodationDetails(id:number): void {
+    const startDateString = this.fromDate.toISOString().split('T')[0];
+    const endDateString = this.outDate.toISOString().split('T')[0];
+
+    this.router.navigate(['/accommodation-details', id], {
+      queryParams: { startDate: startDateString, endDate: endDateString },
+    });
+  }
+
 }
 
 

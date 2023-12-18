@@ -212,7 +212,7 @@
               <!-- <div class="reviews55">{{ result.averageRating }}</div> -->
               <div class="reviews55">{{ roundHalf(result.averageRating/2) }}</div>
               <div class="see-availability-wrapper26" id="frameContainer19">
-                <b class="register1" routerLink="/accommodation-details/{{result.id}}">See availability</b>
+                <b class="register1" (click)="navigateToAccommodationDetails(result.id)">See availability</b>
               </div>
     
             </div>
