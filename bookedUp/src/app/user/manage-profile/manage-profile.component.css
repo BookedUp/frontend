@@ -35,15 +35,23 @@
   margin-right: 10%;
   align-items: center;
 }
-.left-box{
+.left-box,
+.left-box-email{
   position: relative;
   width: 30%;
   justify-content: left;
 }
-.right-box{
+.left-box-email{
+  width: 70%;
+}
+.right-box,
+.right-box-email{
   position: relative;
   width: 70%;
   justify-content: left;
+}
+.right-box-email{
+  width: 30%;
 }
 .in-line-box{
   margin-bottom: 1%;
@@ -239,8 +247,8 @@ input {
 }
 .profile-image{
   position: relative;
-  width: 60%;
-  height: 50%;
+  width: 50%;
+  height: 40%;
   border-radius: 50%;
 }
 .input-image {
