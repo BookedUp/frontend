@@ -22,9 +22,6 @@ export class ReservationService {
     return this.http.get<Reservation>(`${this.apiUrl}/${id}`);
   }
 
-  getReservationsByHostId(hostId: number): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(`${this.apiUrl}/host/${hostId}`);
-  }
 
   getCreatedReservationsByHostId(hostId: number): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(`${this.apiUrl}/host/${hostId}/created`);
@@ -75,5 +72,16 @@ export class ReservationService {
 
   getReservationsByGuestId(guestId: number): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(`${this.apiUrl}/guest/${guestId}`);
+  }
+
+  getReservationsByStatusAndHostId(hostId: number, reservationStatus: ReservationStatus): Observable<Reservation[]> {
+    const params = new HttpParams()
+        .set('reservationStatus', reservationStatus.toString());
+
+    return this.http.get<Reservation[]>(`${this.apiUrl}/host/${hostId}/filter`, { params });
+  }
+
+  getReservationsByHostId(hostId: number): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${this.apiUrl}/host/${hostId}`);
   }
 }

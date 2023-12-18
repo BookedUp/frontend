@@ -19,6 +19,7 @@ export class ReservationRequestsComponent implements OnInit {
   filter: string = 'all';
   constructor(private reservationService: ReservationService, private router: Router, private route: ActivatedRoute, private authService: AuthService) { }
 
+  protected readonly ReservationStatus = ReservationStatus;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -28,39 +29,21 @@ export class ReservationRequestsComponent implements OnInit {
     });
   }
 
-  changeStyle(className: string): void {
-    this.selectedClass = className;
-    if (className === 'waiting-reservation') {
-      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'waiting' } });
-    } else if (className === 'accepted-reservation') {
-      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'accepted' } });
-    } else if (className === 'rejected-reservation') {
-      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'rejected' } });
-    } else if (className === 'finished-reservation') {
-      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'finished' } });
-    } else if (className === 'cancelled-reservation') {
-      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'cancelled' } });
-    } else {
-      this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'all' } });
-    }
-  }
-
   private loadReservations(): void {
-    //this.reservations = this.reservationService.getReservationsByHostId();
-
     if (this.filter === 'waiting') {
-      this.reservations = this.reservationService.getCreatedReservationsByHostId(this.authService.getUserID());
+      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created);
     } else if (this.filter === 'accepted') {
-      this.reservations = this.reservationService.getAcceptedReservationsByHostId(this.authService.getUserID());
+      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created);
     } else if (this.filter === 'rejected') {
-      this.reservations = this.reservationService.getRejectedReservationsByHostId(this.authService.getUserID());
+      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created);
     } else if (this.filter === 'finished') {
-      this.reservations = this.reservationService.getCompletedReservationsByHostId(this.authService.getUserID());
+      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created);
     } else if (this.filter === 'cancelled') {
-      this.reservations = this.reservationService.getCancelledReservationsByHostId(this.authService.getUserID());
+      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created);
     }
 
     else {
+      //this.reservations = this.reservationService.getReservationsByHostId(2);
       this.reservations = this.reservationService.getReservationsByHostId(this.authService.getUserID());
     }
   }
@@ -129,4 +112,27 @@ export class ReservationRequestsComponent implements OnInit {
         );
   }
 
+  getHostsReservations() {
+    this.selectedClass = 'all-reservation';
+    this.router.navigate(['my-reservations'], { queryParams: { filter: 'all' } });
+    this.reservations = this.reservationService.getReservationsByHostId(this.authService.getUserID());
+  }
+
+
+  getHostsReservationsByStatus(className: string, status: ReservationStatus) {
+    this.selectedClass = className;
+    if (className === 'waiting-reservation') {
+      this.router.navigate(['/my-reservations'], { queryParams: { filter: 'waiting' } });
+    } else if (className === 'accepted-reservation') {
+      this.router.navigate(['/my-reservations'], { queryParams: { filter: 'accepted' } });
+    } else if (className === 'rejected-reservation') {
+      this.router.navigate(['/my-reservations'], { queryParams: { filter: 'rejected' } });
+    } else if (className === 'finished-reservation') {
+      this.router.navigate(['/my-reservations'], { queryParams: { filter: 'finished' } });
+    } else {
+      this.router.navigate(['/my-reservations'], { queryParams: { filter: 'cancelled' } });
+    }
+
+    this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), status);
+  }
 }
