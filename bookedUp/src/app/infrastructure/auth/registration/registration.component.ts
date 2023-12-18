@@ -62,10 +62,12 @@ export class RegistrationComponent {
       this.authService.register(user).subscribe({
         next: (registeredUser: User) => {
           Swal.fire('Success', 'Successfully registered user!', 'success');
-          this.router.navigate(['/check-inbox'])
+          this.router.navigate(['/'])
         },
         error: (error) => {
-          Swal.fire('Error', 'Error while registration. Please try again.', 'error');
+          Swal.fire('Info', 'Your request has been successfully created,but you must activate account.', 'success');
+          this.router.navigate(['/'])
+
         }
       });
     } else {
