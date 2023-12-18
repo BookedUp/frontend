@@ -10,6 +10,7 @@ import {UserService} from "../user.service";
 })
 export class ManageProfileComponent implements OnInit {
 
+  isPasswordVisible: boolean = false;
   loggedUser!: User;
   constructor(private userService: UserService, private router: Router) { }
 
@@ -55,4 +56,29 @@ export class ManageProfileComponent implements OnInit {
       });
     }
   }
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+  // Assuming you have a function to handle file upload in your component
+  // onFileUpload(event: any): void {
+  //     const file = event.target.files[0];
+    
+  //     // Check if loggedUser is defined and has a profilePicture property
+  //     if (this.loggedUser && this.loggedUser.profilePicture) {
+  //       // Perform the logic to upload the file and get the new URL
+  //       // Replace the following line with your actual upload logic
+  //       const newImageUrl = this.uploadImage(file);
+    
+  //       // Update the loggedUser with the new URL
+  //       if (this.loggedUser.profilePicture) {
+  //         this.loggedUser.profilePicture.url = newImageUrl;
+  //       } else {
+  //         // If profilePicture is undefined, create a new object
+  //         this.loggedUser.profilePicture = { url: newImageUrl };
+  //       }
+  //     }
+  //   }
+  
+
 }
