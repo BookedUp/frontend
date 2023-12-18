@@ -2,85 +2,94 @@
 <html>
 <body>
 <div class="register-guest">
-
-    <div id="logo-picture">
+    <div class="image-container">
         <img
-                class="logo-with-slogan-31"
-                alt=""
-                src="../../assets/public/logo-with-slogan-4@2x.png"
+            class="logo-picture"
+            alt=""
+            src="../../assets/public/cream-black-minimalist-illustrated-luxury-real-estate-circle-logo-7-3@2x.png"
         />
     </div>
 
-    <div id="inputs">
-        <div class="register4">Register</div>
+    <div class="data-container">
+        <p class="title-text">Register</p>
+        
+        <form [formGroup]="registrationForm" class="form-container">
 
-        <form [formGroup]="registrationForm">
-            <b class="email-address16">Email address</b>
-            <div class="email-address17">
-                <input type="email" formControlName="email"  placeholder="Enter email address..." class="input-transparent">
+            <b class="normal-text" >Email address</b>
+            <div class="input-frame">
+                <input type="email" formControlName="email"  placeholder="Enter email address...">
             </div>
 
-            <b class="first-name6">First Name</b>
-            <div class="first-name7">
-                <input type="text" formControlName="firstName"  placeholder="Enter first name..." class="input-transparent">
-            </div>
+            <div class="in-line-box">
+                <div class="column-box">
+                    <b class="normal-text">Password</b>
+                    <div class="input-frame-names">
+                        <input type="text" id="password" formControlName="password"  placeholder="Enter password...">
+                    </div>
+                </div>
 
-            <b class="last-name6">Last Name</b>
-            <div class="last-name7">
-                <input type="text" formControlName="lastName"  placeholder="Enter last name..."  class="input-transparent">
-            </div>
-
-            <b class="address4">Address</b>
-            <div class="adress1">
-                <input type="text" formControlName="address"  placeholder="Enter address..." class="input-transparent">
-            </div>
-
-            <b class="mobile-phone2">Mobile Phone</b>
-            <div class="mobile-phone3">
-                <input type="tel" formControlName="phone"  placeholder="Enter mobile phone..." class="input-transparent">
-            </div>
-
-            <b class="role-2">Role</b>
-            <div class="container" id="sliderContainer" (click)="toggleText()">
-                <div class="role" id="roleContainer">
-                    <div class="text-container">
-                        <div class="slider-text">{{ showHostText ? 'Host' : 'Guest' }}</div>
+                <div class="column-box">
+                    <b class="normal-text">Repeat Password</b>
+                    <div class="input-frame-names">
+                        <input type="text" id="repeatedPassword"  placeholder="Enter password again...">
                     </div>
                 </div>
             </div>
 
-            <!--            <div class="role-selector">-->
-            <!--                <label>-->
-            <!--                    <input type="radio" formControlName="role" value="Host" [checked]="showHostText">-->
-            <!--                    Host-->
-            <!--                </label>-->
-            <!--                <label>-->
-            <!--                    <input type="radio" formControlName="role" value="Guest" [checked]="!showHostText">-->
-            <!--                    Guest-->
-            <!--                </label>-->
-            <!--            </div>-->
+            <div class="in-line-box">
+                <div class="column-box">
+                    <b class="normal-text" >First Name</b>
+                    <div class="input-frame-names">
+                        <input type="text" formControlName="firstName"  placeholder="Enter first name...">
+                    </div>
+                </div>
 
-
-
-            <div id="continue-button">
-                <div class="continue-with-email-container" id="registrationStep2" (click)="register()">
-                    <b class="continue-with-email1">Continue with next step</b>
+                <div class="column-box">
+                    <b class="normal-text" >Last Name</b>
+                    <div class="input-frame-names">
+                        <input type="text" formControlName="lastName"  placeholder="Enter last name...">
+                    </div>
                 </div>
             </div>
 
-
+            <b class="normal-text">Address</b>
+            <div class="in-line-box">
+                <div class="input-frame-address">
+                    <input type="text" formControlName="streetNumber"  placeholder="Enter street and number here..">
+                </div>
+                <div class="input-frame-address">
+                    <input type="text" formControlName="city"  placeholder="Enter city here..">
+                </div>
+                <div class="input-frame-address">
+                    <input type="text" formControlName="postalCode"  placeholder="Enter postal code here..">
+                </div>
+                <div class="input-frame-address">
+                    <input type="text" formControlName="country"  placeholder="Enter country here..">
+                </div>
+            </div>
+            
+            <b class="normal-text" >Mobile phone</b>
+            <div class="input-frame" style="margin-bottom: 0% !important;">
+                <input type="tel" formControlName="phone"  placeholder="Enter mobile phone...">
+            </div>
+            
+            <b class="normal-text">Role</b>
+            <label class="toggle">
+                <input type="checkbox" (click)="toggleRole()">
+                <span class="slider"></span>
+                <span class="labels" data-on="HOST" data-off="GUEST"></span>
+            </label>
         </form>
-    </div>
 
+        <div class="button-container" (click)="register()">
+            <b>Continue with next step</b>
+        </div>
 
-
-    <div id="have-account">
-        <div class="already-have-an-container1" id="alreadyHaveAnRegistration">
+        <div class="text-container" id="alreadyHaveAnRegistration">
             <span>Already have an account? </span>
-            <span class="sign-in4" routerLink="/login">Sign in</span>
+            <span class="special-text" routerLink="/login">Sign in</span>
         </div>
     </div>
-
 </div>
 </body>
 </html>

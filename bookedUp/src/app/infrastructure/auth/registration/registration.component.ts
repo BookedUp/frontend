@@ -20,15 +20,18 @@ export class RegistrationComponent {
     email: new FormControl('', Validators.required),
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
-    address: new FormControl('', Validators.required),
+    streetNumber: new FormControl('', Validators.required),
+    city: new FormControl('', Validators.required),
+    postalCode: new FormControl('', Validators.required),
+    country: new FormControl('', Validators.required),
     phone: new FormControl(0, Validators.required),
-    role: new FormControl(Role.Guest), // Postavite početnu vrednost na Role.Host
+    role: new FormControl(Role.Guest),
+    password: new FormControl('', Validators.required),
   });
 
-  toggleText() {
-    this.showHostText = !this.showHostText;
-    const newRole = this.showHostText ? Role.Host : Role.Guest;
-    this.registrationForm.get('role')?.setValue(newRole);
+  toggleRole() {
+    const currentRole = this.registrationForm.get('role')?.value;
+    this.registrationForm.get('role')?.setValue(currentRole === Role.Host ? Role.Guest : Role.Host);
   }
 
   register() {
@@ -37,30 +40,26 @@ export class RegistrationComponent {
         firstName: this.registrationForm.value.firstName || '',
         lastName: this.registrationForm.value.lastName || '',
         address: {
-          country: this.registrationForm.value.address || '',
-          city: this.registrationForm.value.address || '',
-          postalCode: this.registrationForm.value.address || '',
-          streetAndNumber: this.registrationForm.value.address|| '',
+          country: this.registrationForm.value.country || '',
+          city: this.registrationForm.value.city || '',
+          postalCode: this.registrationForm.value.postalCode || '',
+          streetAndNumber: this.registrationForm.value.streetNumber || '',
           latitude: 0,
           longitude: 0
         },
         phone: this.registrationForm.value.phone || 0,
         email: this.registrationForm.value.email || '',
-        password: 'sifra', //this.registrationForm.value.password, // Postavite šifru ako je potrebno
+        password: this.registrationForm.value.password || '',
         role: this.registrationForm.value.role || Role.Guest,
       };
 
       this.authService.register(user).subscribe({
         next: (registeredUser: User) => {
-          console.log('Uspešno registrovan korisnik:', registeredUser);
-          //popup da se ode na mejl da proveri
-          this.router.navigate(['/']) //moze na tu stranicu
-
-          // Ovde možete dodati dalje korake, na primer, preusmeravanje na drugu stranicu
+          console.log('Successfully registered user!', registeredUser);
+          this.router.navigate(['/check-inbox'])
         },
         error: (error) => {
-          console.error('Greška prilikom registracije:', error);
-          // Ovde možete dodati odgovarajući tretman greške
+          console.error('Error while registration: ', error);
         }
       });
     }
