@@ -91,6 +91,11 @@ export class ManageProfileComponent implements OnInit {
 
   updateUser() {
     if (this.validate()) {
+      const updatedUserProfileImage = this.displayedImageUrl
+          ? this.displayedImageUrl
+          : this.loggedUser.profilePicture?.url || '';
+
+
       this.updatedUser = {
         id: this.authService.getUserID(),
         firstName: this.updateForm!.get('firstName')!.value,
@@ -99,6 +104,8 @@ export class ManageProfileComponent implements OnInit {
         phone: this.updateForm!.get('phone')!.value,
         email: this.loggedUser.email,
         role: this.loggedUser.role,
+        profilePicture: { url: updatedUserProfileImage, caption: 'profilePicture'}, // Dodajte ovo
+
         address: {
           streetAndNumber: this.updateForm!.get('streetAndNumber')!.value,
           city: this.updateForm!.get('city')!.value,
@@ -112,6 +119,7 @@ export class ManageProfileComponent implements OnInit {
       this.userService.updateUser(this.authService.getUserID(), this.updatedUser).pipe(
           tap((response) => {
             this.loggedUser = { ...this.loggedUser, ...this.updatedUser };
+            this.displayedImageUrl = null; // Resetujte sliku nakon ažuriranja
           })
       ).subscribe(
           (response) => {
@@ -120,6 +128,8 @@ export class ManageProfileComponent implements OnInit {
               title: 'User Updated',
               text: 'User information has been successfully updated.',
             });
+
+            this.router.navigate(['/']);
           },
           (error) => {
             console.error('Error updating user:', error);
@@ -135,28 +145,7 @@ export class ManageProfileComponent implements OnInit {
 
   validate(): boolean {
     if (this.updateForm && this.updateForm.dirty) {
-      const formValues = this.updateForm.value;
-
-      const changesDetected =
-          formValues.firstName !== this.loggedUser.firstName ||
-          formValues.lastName !== this.loggedUser.lastName ||
-          formValues.password !== this.loggedUser.password ||
-          formValues.phone !== this.loggedUser.phone ||
-          formValues.address.streetAndNumber !== this.loggedUser.address.streetAndNumber ||
-          formValues.address.city !== this.loggedUser.address.city ||
-          formValues.address.postalCode !== this.loggedUser.address.postalCode ||
-          formValues.address.country !== this.loggedUser.address.country;
-
-      if(!changesDetected){
-        Swal.fire({
-          icon: 'error',
-          title: 'Validation failed',
-          text: 'No changes detected.',
-        });
-        return false;
-
-      }
-      if (changesDetected && this.checkForEmptyValues() && this.updateForm.valid) {
+      if (this.checkForEmptyValues() && this.updateForm.valid) {
         return true;
       } else {
         Swal.fire({
