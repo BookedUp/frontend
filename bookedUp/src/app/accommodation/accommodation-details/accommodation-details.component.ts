@@ -24,6 +24,7 @@ export class AccommodationDetailsComponent implements OnInit {
   currentIndex: number = 0;
   startDate: string | null = null;
   endDate: string | null = null;
+  role: string = '';
   constructor( private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService ) {}
 
 
