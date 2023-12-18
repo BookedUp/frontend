@@ -904,7 +904,7 @@
   left: 400px;
   width: 92px;
   height: 20px;
-  color: #FBBC04;;
+  color: #FBBC04;
 }
 
 /* .group-child108 {
@@ -1335,7 +1335,7 @@ span {
 }
 
 .stars-container {
-  color: var(--blue-1);
+  color: #FBBC04;
   margin-right: 5px;
 }
 .star {
