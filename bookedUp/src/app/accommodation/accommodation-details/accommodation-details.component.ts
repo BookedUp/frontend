@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { AccommodationService } from '../accommodation.service';
 import { Router, ActivatedRoute} from '@angular/router';
 import { Accommodation } from '../model/accommodation.model';
 import { Observable, map } from 'rxjs';
 import { Photo } from 'src/app/shared/model/photo.model';
+import { CalendarComponent } from 'src/app/shared/calendar/calendar.component';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { PriceChange } from '../model/priceChange.model';
 
 @Component({
   selector: 'app-accommodation-details',
@@ -11,28 +14,43 @@ import { Photo } from 'src/app/shared/model/photo.model';
   styleUrls: ['./accommodation-details.component.css'],
 })
 export class AccommodationDetailsComponent implements OnInit {
+  @ViewChild('calendarRef') calendarComponent: CalendarComponent | undefined;
   pictureUrls: string[] = [];
   accommodationId: number = 1;
   accommodation: Observable<Accommodation> = new Observable<Accommodation>();
   selectedClass: string = 'bar-text';
   currentIndex: number = 0;
+  startDate: string = '';
+  endDate: string = '';
+  role: string = '' ;
 
-  constructor( private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService ) {}
+  constructor( private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.accommodationId = params['id'];
+      this.route.queryParams.subscribe(queryParams => {
+        this.startDate = queryParams['startDate'];
+        this.endDate = queryParams['endDate'];
+      });
     });
-    this.accommodation = this.accommodationService.getAccommodationById(this.accommodationId);
+
+    this.authService.userState.subscribe((result) => {
+      this.role = result;
+    })
+
     
-    this.accommodation.subscribe((data) => {
-      console.log(data);
-      // You can perform further actions with the data here
-    });
+
+    this.accommodation = this.accommodationService.getAccommodationById(this.accommodationId);
+
+
     this.getUrls().subscribe((urls) => {
       this.pictureUrls = urls;
     });
+
   }
+
+ 
 
   getUrls(): Observable<string[]> {
     return this.accommodation.pipe(
@@ -73,5 +91,17 @@ export class AccommodationDetailsComponent implements OnInit {
 
   roundHalf(value: number): number {
     return Math.round(value * 2) / 2;
+  }
+
+
+  onButtonClick(): void {
+    if (this.calendarComponent) {
+      const selectedRange = this.calendarComponent.getSelectedRange();
+      if(selectedRange.hasAlreadyPicked == false){
+        console.log("Successfully select range.", selectedRange);
+      }else{
+        console.log('You can not select this range, some dates are already reserved.', selectedRange);
+      }
+    }
   }
 }
