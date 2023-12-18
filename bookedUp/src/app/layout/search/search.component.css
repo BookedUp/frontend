@@ -898,13 +898,29 @@
   line-height: 18px;
 }
 
-.group-child108 {
+.group-child108{
+  position: relative;
+  top: -180px;
+  left: 400px;
+  width: 200px;
+  height: 20px;
+  font-size: var(--font-size-xl);
+}
+.stars-container {
+  color: var(--blue-1);
+  margin-right: 5px;
+}
+.star {
+  display: inline-block;
+  margin-right: 5px;
+}
+/* .group-child108 {
   position: relative;
   top: -180px;
   left: 400px;
   width: 82px;
   height: 20px;
-}
+} */
 .shanghai-open-house-parent3 {
   position: absolute;
   top: 1506px;
@@ -988,8 +1004,9 @@
   width: 380px;
 }
 .reviews55 {
-  top: 42px;
-  left: 500px;
+  font-size: large;
+  top: 46px;
+  left: 520px;
 }
 .see-availability-wrapper26 {
   position: absolute;
