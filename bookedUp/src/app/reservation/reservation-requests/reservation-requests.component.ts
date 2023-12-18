@@ -44,22 +44,6 @@ export class ReservationRequestsComponent implements OnInit {
       this.router.navigate(['/reservation-requests'], { queryParams: { filter: 'all' } });
     }
   }
-  getStatusClass(status: ReservationStatus): string {
-    switch (status) {
-      case ReservationStatus.Created:
-        return 'created-status';
-      case ReservationStatus.Reject:
-        return 'rejected-status';
-      case ReservationStatus.Accept:
-        return 'accepted-status';
-      case ReservationStatus.Cancelled:
-        return 'cancelled-status';
-      case ReservationStatus.Completed:
-        return 'completed-status';
-      default:
-        return 'acc-frame';
-    }
-  }
 
   private loadReservations(): void {
     //this.reservations = this.reservationService.getReservationsByHostId();
@@ -78,7 +62,6 @@ export class ReservationRequestsComponent implements OnInit {
 
     else {
       this.reservations = this.reservationService.getReservationsByHostId(this.authService.getUserID());
-      //this.reservations = this.reservationService.getAllReservations();
     }
   }
 
