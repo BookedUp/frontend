@@ -4,7 +4,7 @@
 <div class="manage-account-admin">
   <app-nav-bar></app-nav-bar>
 
-  <div class="main-container">
+  <div class="main-container" [formGroup]="updateForm!">
     <div class="left-container">
       <b class="manage-title-text">Manage Account</b>
       <div id="" class="in-line-box" style="margin-top: 5%;">
@@ -13,7 +13,8 @@
         </div>
         <div class="right-box">
           <div class="input-frame">
-            <input type="text" [(ngModel)]="loggedUser.firstName">
+<!--            <input type="text" [(ngModel)]="loggedUser.firstName" id="firstNameInput">-->
+              <input type="text" formControlName="firstName" >
           </div>
         </div>
       </div>
@@ -24,7 +25,9 @@
         </div>
         <div class="right-box">
           <div class="input-frame">
-            <input type="text" [(ngModel)]="loggedUser.lastName">
+<!--            <input type="text" [(ngModel)]="loggedUser.lastName" id="lastNameInput">-->
+            <input type="text" formControlName="lastName" >-->
+
           </div>
         </div>
       </div>
@@ -35,10 +38,11 @@
         </div>
         <div class="right-box">
           <div class="input-frame">
-            <input type="text" [(ngModel)]="loggedUser.email">
+            <input type="text" formControlName="email" [readonly]="true">
           </div>
         </div>
       </div>
+
 
       <div id="emailAddress" class="in-line-box">
         <div class="left-box">
@@ -46,12 +50,20 @@
         </div>
         <div class="right-box">
           <div class="password-container">
-              <input
-                      id="passwordInput"
-                      type="{{ isPasswordVisible ? 'text' : 'password' }}"
-                      class="passwordInput"
-                      [(ngModel)]="loggedUser.password"
-              />
+<!--              <input-->
+<!--                      id="passwordInput"-->
+<!--                      type="{{ isPasswordVisible ? 'text' : 'password' }}"-->
+<!--                      class="passwordInput"-->
+
+<!--                      [(ngModel)]="loggedUser.password"-->
+<!--              />-->
+            <input
+                    id="passwordInput"
+                    type="{{ isPasswordVisible ? 'text' : 'password' }}"
+                    class="passwordInput"
+
+                    formControlName="password"
+            />
               <img
                       class="icon-password"
                       alt="Toggle Password Visibility"
@@ -68,7 +80,8 @@
         </div>
         <div class="right-box">
           <div class="input-frame">
-            <input type="number" [(ngModel)]="loggedUser.phone">
+            <input type="number" formControlName="phone" >-->
+<!--              <input type="number" [(ngModel)]="loggedUser.phone" id="phoneInput">-->
           </div>
         </div>
       </div>
@@ -79,21 +92,26 @@
         </div>
         <div class="right-box">
           <div class="input-frame">
-            <input type="text" [(ngModel)]="loggedUser.address.streetAndNumber">
+<!--            <input type="text" [(ngModel)]="loggedUser.address.streetAndNumber" id="streetAndNumberInput">-->
+            <input type="text" formControlName="streetAndNumber" >
+
           </div>
           <div class="input-frame">
-            <input type="text" [(ngModel)]="loggedUser.address.city">
+<!--            <input type="text" [(ngModel)]="loggedUser.address.city" id="cityInput">-->
+            <input type="text" formControlName="city" >
           </div>
           <div class="input-frame">
-            <input type="text" [(ngModel)]="loggedUser.address.postalCode">
+<!--            <input type="text" [(ngModel)]="loggedUser.address.postalCode" id="postalCodeInput">-->
+            <input type="text" formControlName="postalCode" >
           </div>
           <div class="input-frame">
-            <input type="text" [(ngModel)]="loggedUser.address.country">
+<!--            <input type="text" [(ngModel)]="loggedUser.address.country" id="countryInput">-->
+            <input type="text" formControlName="country" >
           </div>
         </div>
       </div>
 
-      <div id="createdNotification" class="in-line-box" style="margin-top: 5%;">
+      <div id="createdNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'HOST'">
         <div class="left-box-email">
           <b class="title-text">New Reservation Notifications</b>
         </div>
@@ -106,7 +124,7 @@
         </div>
       </div>
 
-      <div id="cancelledNotification" class="in-line-box" style="margin-top: 5%;">
+      <div id="cancelledNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'HOST'">
         <div class="left-box-email">
           <b class="title-text">Cancelled Reservation Notifications</b>
         </div>
@@ -119,7 +137,7 @@
         </div>
       </div>
 
-      <div id="hostratingNotification" class="in-line-box" style="margin-top: 5%;">
+      <div id="hostratingNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'HOST'">
         <div class="left-box-email">
          <b class="title-text">Host Rating Notifications</b>
         </div>
@@ -132,7 +150,7 @@
         </div>
       </div>
 
-      <div id="accRatingNotification" class="in-line-box" style="margin-top: 5%;">
+      <div id="accRatingNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'HOST'">
         <div class="left-box-email">
           <b class="title-text">Accommodation Rating Notifications</b>
         </div>
@@ -145,15 +163,29 @@
         </div>
       </div>
 
+      <div id="emailNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'GUEST'">
+        <div class="left-box-email">
+          <b class="title-text">Email Notifications</b>
+        </div>
+        <div class="right-box-email">
+          <label class="toggle">
+            <input type="checkbox">
+            <span class="slider"></span>
+            <span class="labels" data-on="ON" data-off="OFF"></span>
+          </label>
+        </div>
+      </div>
+
+
       <div class="in-line-box">
         <div class="left-box"></div>
         <div class="right-box">
-          <div class="save-account-wrapper" id="save-button" style="margin-top: 5%;">
+          <div class="save-account-wrapper" id="save-button" style="margin-top: 5%;" (click)="updateUser()">
             <b class="save-account">Save Edits</b>
           </div>
         </div>
       </div>
-      
+
       <div class="in-line-box">
         <div class="left-box"></div>
         <div class="right-box">
@@ -171,10 +203,10 @@
           alt=""
           [src]="displayedImageUrl || loggedUser.profilePicture?.url"
         />
-      
+
         <input type="file" #fileInput accept="image/*" class="input-image" style="display: none;">
         <button class="custom-button" (click)="handleFileButtonClick()">Choose Image</button>
-      
+
     </div>
   </div>
 
