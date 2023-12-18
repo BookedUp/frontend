@@ -97,16 +97,19 @@
           </div>
         </div>
         <div id="left-data" class="left-container">
-          <app-calendar [defaultPrice]=defaultPrice></app-calendar>
-          <div class="normal-text">Select a date range during which you already have reservations for this accommodation.</div>
+          <app-calendar #calendarRef 
+            [defaultPrice]=defaultPrice
+            [customPrices]="customPricesInput"
+          ></app-calendar>
+          <div class="normal-text">Select a date range during which you don't have reservations for this accommodation.</div>
           <button class="button-container" routerLink="/create-accommodation" style="background-color: var(--gray-2);">
-            <b>Select as not available</b>
+            <b>Select as available</b>
           </button>
           <div class="normal-text">If you wish to set a different price for a specific date range, please select the range and enter the desired price below.</div>
           <div class="normal-text">
             <input [(ngModel)]="customPrice" type="number" placeholder='Enter price here..' pattern="\d*" class="custom-input"/>
           </div>
-          <button class="button-container" routerLink="/create-accommodation" style="background-color: var(--gray-2);">
+          <button class="button-container" (click)="applyCustomPrice()" style="background-color: var(--gray-2);">
             <b>Apply Custom Price</b>
           </button>
           <button class="button-container" routerLink="/create-accommodation">

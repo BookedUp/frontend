@@ -2,14 +2,14 @@
   <button mat-icon-button (click)="changeYear(-1)">
     <mat-icon>keyboard_arrow_left</mat-icon>
   </button>
-  <span>{{ selectedYear }}</span>
+  <span>{{ displayedYear }}</span>
   <button mat-icon-button (click)="changeYear(1)">
     <mat-icon>keyboard_arrow_right</mat-icon>
   </button>
   <button mat-icon-button (click)="changeMonth(-1)">
     <mat-icon>keyboard_arrow_left</mat-icon>
   </button>
-  <span>{{ getMonthName(selectedMonth) }}</span>
+  <span>{{ getMonthName(displayedMonth) }}</span>
   <button mat-icon-button (click)="changeMonth(1)">
     <mat-icon>keyboard_arrow_right</mat-icon>
   </button>
@@ -19,12 +19,14 @@
   <div class="day-header" *ngFor="let dayIndex of [0, 1, 2, 3, 4, 5, 6]">{{ getDayAbbreviation(dayIndex) }}</div>
   <ng-container *ngFor="let day of calendarDates">
     <div
-      [ngClass]="{ 'date': day.day !== 0, 'date-none': day.day === 0 }"
+      [ngClass]="{ 'date': day.day !== 0, 'date-none': day.day === 0, 'already-picked': !isDateAlreadyPicked(day)}"
       [class.selected]="day.selected"
-      (click)="handleDateClick(day.day)"
-    >
-      <div>{{ day.day }}</div>
-      <div class="price-text">${{ day.price }}</div>
+      (click)="handleDateClick(day.day)">
+
+        <div>{{ day.day }}</div>
+        <div class="price-text">${{ day.price }}</div>
+        
     </div>
   </ng-container>
 </div>
+

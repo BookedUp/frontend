@@ -75,7 +75,17 @@
 
         
         <div id="left-data" class="left-container">
-          <app-calendar ></app-calendar>
+          <app-calendar #calendarRef  
+            [defaultPrice]="accommodation.price"
+            [startDate]="startDate"
+            [endDate]="endDate"
+            [customPricesInput]="accommodation.priceChanges"
+            [alreadyPickedInput]="accommodation.availability"
+            >
+          </app-calendar>
+          <div class="save-account-wrapper" *ngIf="role === 'ROLE_GUEST'" id="save-button" style="margin-top: 5%;" (click)="onButtonClick()">
+            <b class="save-account">Reserve Accommodation</b>
+          </div>
         </div>
       </div>
       

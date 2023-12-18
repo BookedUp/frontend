@@ -48,6 +48,20 @@
 }
 
 .date-none {
-  background: var(--color-whitesmoke-100);
-  color: var(--color-whitesmoke-100);
+  background: var(--color-whitesmoke-100) !important;
+  color: var(--color-whitesmoke-100) !important;
 }
+.already-picked {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  background-color: var(--color-firebrick) !important;
+  color: #fff !important;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+.already-picked .price-text.hidden {
+  display: none;
+}
+
