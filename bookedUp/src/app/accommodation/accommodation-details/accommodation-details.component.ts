@@ -20,8 +20,8 @@ export class AccommodationDetailsComponent implements OnInit {
   accommodation: Observable<Accommodation> = new Observable<Accommodation>();
   selectedClass: string = 'bar-text';
   currentIndex: number = 0;
-  startDate: string = '';
-  endDate: string = '';
+  startDate: string | null = null;
+  endDate: string | null = null;
   role: string = '' ;
 
   constructor( private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService ) {}

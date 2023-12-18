@@ -4,6 +4,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AccommodationService } from 'src/app/accommodation/accommodation.service';
 import { DateRange } from 'src/app/accommodation/model/dateRange.model';
 import { PriceChange } from 'src/app/accommodation/model/priceChange.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'app-calendar',
@@ -14,7 +15,7 @@ import { PriceChange } from 'src/app/accommodation/model/priceChange.model';
 export class CalendarComponent implements OnChanges {
   @Input() defaultPrice: number = 0;
   @Input() customPricesInput: PriceChange[] | null = [];
-  customPrices: { [date: string]: number } = { };
+  @Input() customPrices: { [date: string]: number } = { };
   @Input() alreadyPickedInput: DateRange[] | null = [];
   alreadyPicked: { [date: string]: string } = { };
   @Input() startDate: string | null = null;
@@ -23,11 +24,12 @@ export class CalendarComponent implements OnChanges {
 
   displayedMonth: number;
   displayedYear: number;
+  userRole : string = '';
 
   // Initialize calendarDates with the days of the selected month
   calendarDates: { day: number; month: number; year:number; price: number; selected: boolean }[] = [];
 
-  constructor(private accommodationService: AccommodationService) {
+  constructor(private accommodationService: AccommodationService, private authService: AuthService) {
     const currentDate = new Date();
     this.displayedMonth = currentDate.getMonth() + 1; // Months are zero-based
     this.displayedYear = currentDate.getFullYear();
@@ -35,6 +37,7 @@ export class CalendarComponent implements OnChanges {
   }
 
   ngOnInit(){
+    this.userRole = this.authService.getRole();
     if(this.startDate != null && this.endDate != null){
 
       const parsedDateStart = new Date(this.startDate);
@@ -129,17 +132,24 @@ export class CalendarComponent implements OnChanges {
   }
 
   handleDateClick(day: number): void {
+    console.log("kliknuo si ovde: ", day);
     if (this.selectedRange.start === null) {
       // Selecting the start of the range
       this.selectedRange.start = day;
+      this.selectedRange.startMonth = this.displayedMonth;
+      this.selectedRange.startYear = this.displayedYear;
       this.selectedRange.end = null;
     } else if (day < this.selectedRange.start) {
       // Selecting a new start of the range
       this.selectedRange.start = day;
+      this.selectedRange.startMonth = this.displayedMonth;
+      this.selectedRange.startYear = this.displayedYear;
       this.selectedRange.end = null;
     } else if (day > this.selectedRange.start) {
       // Selecting the end of the range
       this.selectedRange.end = day;
+      this.selectedRange.endMonth = this.displayedMonth;
+      this.selectedRange.endYear = this.displayedYear;
     } else {
       // Deselecting the start of the range
       this.selectedRange.start = null;
@@ -244,7 +254,7 @@ export class CalendarComponent implements OnChanges {
   }
 
   isDateAlreadyPicked(day: { day: number }): boolean {
-    if(day.day != 0){
+    if(day.day != 0 && Object.keys(this.alreadyPicked).length != 0){
       const dateKey = this.getDateKey(day);
   
       // Check if the date falls within any already picked range

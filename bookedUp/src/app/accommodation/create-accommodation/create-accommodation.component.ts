@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Amenity } from '../model/enum/amenity.enum';
 import { AccommodationType } from '../model/enum/accommodationType.enum';
+import { PriceChange } from '../model/priceChange.model';
+import { CalendarComponent } from 'src/app/shared/calendar/calendar.component';
 
 @Component({
   selector: 'app-create-accommodation',
@@ -9,6 +11,7 @@ import { AccommodationType } from '../model/enum/accommodationType.enum';
   styleUrls: ['./create-accommodation.component.css', '../../../styles.css']
 })
 export class CreateAccommodationComponent implements OnInit {
+  @ViewChild('calendarRef') calendarComponent: CalendarComponent | undefined;
   amenitiesList : string[] = [];
   accTypeList : string[] = [];
   accTypeChecked: { [key: string]: boolean } = {};
@@ -24,6 +27,7 @@ export class CreateAccommodationComponent implements OnInit {
   city: string | undefined;
   postalCode: number | undefined;
   country: string | undefined;
+  customPricesInput: { [date: string]: number } = { };
   
   customPrice: number = 0;
 
@@ -67,6 +71,17 @@ export class CreateAccommodationComponent implements OnInit {
     return formattedString;
   }
   
+  applyCustomPrice(): void{
+    const selectedRange = this.calendarComponent?.getSelectedRange();
+    if (
+      selectedRange != null &&
+      selectedRange.start != null &&
+      selectedRange.start !== undefined
+    ) {
+      this.customPricesInput[selectedRange.start] = this.customPrice;
+    }
+  }
+
   saveAccommodation():void{
 
   }
