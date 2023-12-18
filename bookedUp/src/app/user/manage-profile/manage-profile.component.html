@@ -186,14 +186,15 @@
         </div>
       </div>
 
-      <div class="in-line-box">
-        <div class="left-box"></div>
-        <div class="right-box">
-          <div class="delete-account-wrapper" id="delete-button">
-            <b class="delete-account">Delete Account</b>
-          </div>
+        <div class="in-line-box">
+            <div class="left-box"></div>
+            <div class="right-box">
+                <div class="delete-account-wrapper" id="delete-button" (click)="deleteUser()" *ngIf="loggedUser && (loggedUser.role === 'GUEST' || loggedUser.role === 'HOST')">
+                    <b class="delete-account">Delete Account</b>
+                </div>
+            </div>
         </div>
-      </div>
+
 
     </div>
 

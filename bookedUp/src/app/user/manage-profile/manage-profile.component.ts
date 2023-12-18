@@ -1,11 +1,14 @@
-import { Component , OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 import {User} from "../model/user.model";
 import {UserService} from "../user.service";
 import {AuthService} from "../../infrastructure/auth/auth.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
 import {tap} from "rxjs";
+import {Role} from "../model/role.enum";
+import {GuestService} from "../guest/guest.service";
+import {HostService} from "../host/host.service";
 
 @Component({
   selector: 'app-manage-profile',
@@ -26,7 +29,7 @@ export class ManageProfileComponent implements OnInit {
   updateForm: FormGroup | undefined;
 
 
-  constructor(private userService: UserService, private router: Router, private authService: AuthService, private formBuilder: FormBuilder,
+  constructor(private userService: UserService, private guestService: GuestService,private hostService: HostService, private router: Router, private authService: AuthService, private formBuilder: FormBuilder,
   ) {
     this.updateForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -104,7 +107,7 @@ export class ManageProfileComponent implements OnInit {
         phone: this.updateForm!.get('phone')!.value,
         email: this.loggedUser.email,
         role: this.loggedUser.role,
-        profilePicture: { url: updatedUserProfileImage, caption: 'profilePicture'}, // Dodajte ovo
+        profilePicture: {url: updatedUserProfileImage, caption: 'profilePicture'}, // Dodajte ovo
 
         address: {
           streetAndNumber: this.updateForm!.get('streetAndNumber')!.value,
@@ -118,7 +121,7 @@ export class ManageProfileComponent implements OnInit {
 
       this.userService.updateUser(this.authService.getUserID(), this.updatedUser).pipe(
           tap((response) => {
-            this.loggedUser = { ...this.loggedUser, ...this.updatedUser };
+            this.loggedUser = {...this.loggedUser, ...this.updatedUser};
             this.displayedImageUrl = null; // Resetujte sliku nakon ažuriranja
           })
       ).subscribe(
@@ -178,5 +181,78 @@ export class ManageProfileComponent implements OnInit {
         return true;
       }
     });
+  }
+
+  deleteUser() {
+    if (this.loggedUser.role === Role.Guest) {
+      this.deleteGuest();
+    }else{
+      this.deleteHost();
+
+    }
+  }
+
+  private deleteGuest(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (this.loggedUser?.id != null) {
+          this.guestService.deleteGuest(this.loggedUser?.id).subscribe(
+              () => {
+                Swal.fire('Deleted!', 'Your account has been deleted.', 'success');
+                this.logout();
+              },
+              (error) => {
+                Swal.fire('Error', 'You cannot delete your account because you have active reservations in the future.', 'error');
+              }
+          );
+        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Cancelled', 'Your account is safe :)', 'info');
+      }
+    });
+  }
+
+  private deleteHost() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (this.loggedUser?.id != null) {
+          this.hostService.deleteHost(this.loggedUser?.id).subscribe(
+              () => {
+                Swal.fire('Deleted!', 'Your account has been deleted.', 'success');
+                this.logout();
+              },
+              (error) => {
+                Swal.fire('Error', 'You cannot delete your account because you have active reservations in the future.', 'error');
+              }
+          );
+        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Cancelled', 'Your account is safe :)', 'info');
+      }
+    });
+  }
+
+  private logout(){
+    this.authService.logout().subscribe({
+      next: (_) => {
+        localStorage.removeItem('user');
+        this.authService.setUser();
+        this.router.navigate(['/']);
+      }
+    })
   }
 }
