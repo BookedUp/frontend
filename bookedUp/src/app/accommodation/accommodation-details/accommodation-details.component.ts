@@ -4,6 +4,9 @@ import { Router, ActivatedRoute} from '@angular/router';
 import { Accommodation } from '../model/accommodation.model';
 import { Observable, map } from 'rxjs';
 import { Photo } from 'src/app/shared/model/photo.model';
+import { User } from 'src/app/user/model/user.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-accommodation-details',
@@ -16,10 +19,13 @@ export class AccommodationDetailsComponent implements OnInit {
   accommodation: Observable<Accommodation> = new Observable<Accommodation>();
   selectedClass: string = 'bar-text';
   currentIndex: number = 0;
+  role: string= "";
 
-  constructor( private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService ) {}
+  constructor( private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService ) {}
 
   ngOnInit(): void {
+    this.role = this.authService.getRole();
+    console.log(this.role);
     this.route.params.subscribe((params) => {
       this.accommodationId = params['id'];
     });

@@ -33,6 +33,7 @@ export class SearchComponent implements OnInit {
 
 
   checkboxChanged(event: any, checkboxId: string) {
+    console.log("helou");
       const isBudgetFilter = event.target.closest('#budget-filters') !== null;
       const isPopularFilter = event.target.closest('#popular-filters') !== null;
 
@@ -49,13 +50,11 @@ export class SearchComponent implements OnInit {
         }
       } else if (isPopularFilter) {
         if (event.target.checked) {
-            // Add the checkbox to the list only if it is not already present
             if (!this.popularCheckboxIds.includes(checkboxId)) {
               this.popularCheckboxIds.push(checkboxId);
             }
 
         } else {
-          // Remove the checkbox from the list
           this.popularCheckboxIds = this.popularCheckboxIds.filter(
             checkbox => checkbox !== checkboxId
           );
