@@ -69,7 +69,7 @@
   margin-bottom: 20px;
 }
 .rejected-status {
-  background-color: #ba888b;
+  background-color: rgba(255, 233, 234, 0.42);
 }
 .created-status,
 .changed-status{
@@ -125,7 +125,7 @@
 }
 .stars-container,
 .reviews-average {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
 }
 .stars-container {
   color: #FBBC04;
@@ -183,6 +183,7 @@
 }
 
 .view-details-button {
+  cursor: pointer;
   border-radius: var(--br-7xs);
   width: 100%;
   display: flex;

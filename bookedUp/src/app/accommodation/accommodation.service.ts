@@ -7,6 +7,7 @@ import { Accommodation } from './model/accommodation.model';
 import { PriceChange } from './model/priceChange.model';
 import { Amenity } from './model/enum/amenity.enum';
 import { AccommodationType } from './model/enum/accommodationType.enum';
+import {Reservation} from "../reservation/model/reservation.model";
 
 @Injectable({
   providedIn: 'root',

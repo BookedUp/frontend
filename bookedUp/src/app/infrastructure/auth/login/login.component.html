@@ -16,12 +16,20 @@
     </div>
 
     <div id="inputs-login" [formGroup]="loginForm">
-        <b class="email-address19">Email address</b>
+        <b class="email-address19" >Email address </b>
         <div class="email-address20">
-            <input id="emailInput" type="email" class="email-address21" placeholder="Enter email address..." formControlName="username"/>
+            <input
+                    id="emailInput"
+                    type="email"
+                    class="email-address21"
+                    placeholder="Enter email address..."
+                    formControlName="username"
+                    required
+            />
         </div>
 
-        <b class="password6">Password</b>
+
+        <b class="password6" >Password </b>
         <div class="password7">
             <input
                     id="passwordInput"
@@ -29,6 +37,8 @@
                     class="enter-password4"
                     placeholder="Enter password..."
                     formControlName="password"
+
+                    required
             />
             <img
                     class="eye-1-icon4"
@@ -54,7 +64,7 @@
             <b class="continue-with-email2">Continue with email</b>
         </div>
     </div>
- 
+
     <div id="register-button" >
         <div class="dont-have-an-container" id="dontHaveAn">
             <span>Don’t have an account? </span>

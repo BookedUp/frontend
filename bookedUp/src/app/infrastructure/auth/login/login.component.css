@@ -251,6 +251,26 @@
 }
 
 
+/*!* Dodajte stil za required stanje za email input *!*/
+/*.email-address20 input:required {*/
+/*    border: 2px solid red; !* Prilagodite boju i debljinu granice prema vašim potrebama *!*/
+/*}*/
 
+/*!* Dodajte stil za required stanje za password input *!*/
+/*.password7 input:required {*/
+/*    border: 2px solid red; !* Prilagodite boju i debljinu granice prema vašim potrebama *!*/
+/*}*/
+
+.required-mark {
+    color: red;
+    margin-left: 2px;
+    font-size: 14px;
+    opacity: 0; /* Inicijalno postavite opacity na 0 kako bi bio skriven */
+    transition: opacity 0.3s ease-in-out; /* Dodajte tranziciju za glatko prikazivanje/skrivanje */
+}
+
+.required-active .required-mark {
+    opacity: 1; /* Kada je required-active klasa prisutna, postavite opacity na 1 da biste prikazali znak */
+}
 
 

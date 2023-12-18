@@ -3,7 +3,7 @@
 <div class="accommodations-host">
 
   <div class="accommodations-host-child"></div>
-  <!-- <app-header-host></app-header-host> -->
+  <app-nav-bar></app-nav-bar>
 
   <div id="sort-bar" class="sort-bar">
     <div class="active-accommodations" [ngClass]="{ 'clicked': selectedClass === 'active-accommodations' }" (click)="changeStyle('active-accommodations')">
@@ -24,9 +24,9 @@
          [class.active-status]="accommodation.status === 'ACTIVE'"
     >
       <img
-        class="accommodation-image"
-        alt=""
-        [src]="accommodation.photos[0].url"
+              class="accommodation-image"
+              alt=""
+              [src]="accommodation.photos[0].url"
       />
 
       <div class="left-data">
@@ -39,7 +39,7 @@
                         {{ star }}
                       </span>
             </div>
-            <div class="reviews-average">{{ roundHalf(accommodation.averageRating/2) }}</div>
+            <div class="reviews-average">  {{ roundHalf(accommodation.averageRating/2) }}</div>
           </div>
 
           <div class="location-frame">
@@ -55,20 +55,22 @@
 
         <div class="bottom-data-box">
           <div class="includes-taxes">Includes taxes and fees</div>
-          <b class="per-night">{{ accommodation.price }}$/{{accommodation.priceType}}</b>
+          <b class="per-night" *ngIf="accommodation.priceType=='PER_GUEST'">{{ accommodation.price }}$/{{priceTypeGuest}}</b>
+          <b class="per-night" *ngIf="accommodation.priceType=='PER_NIGHT'">{{ accommodation.price }}$/{{priceTypeNight}}</b>
+
         </div>
       </div>
 
       <div class="right-buttons">
 
-        <div class="view-details-button" id="view-details-button" (click)="navigateToDetails(accommodation.id)">
+        <div class="view-details-button" id="view-details-button" routerLink="/accommodation-details/{{accommodation.id}}">
           <b class="button-text">View Details</b>
         </div>
       </div>
     </div>
   </div>
 
-  <button class="add-new-container" (click)="navigateToCreateAccommodation()">
+  <button class="add-new-container" routerLink="/create-accommodation">
     <b>Add new accommodation</b>
   </button>
 

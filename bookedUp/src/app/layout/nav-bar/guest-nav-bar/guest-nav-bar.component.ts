@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { Router } from '@angular/router';
+import {User} from "../../../user/model/user.model";
+import { UserService } from 'src/app/user/user.service';
 @Component({
   selector: 'app-guest-nav-bar',
   templateUrl: './guest-nav-bar.component.html',
@@ -10,15 +12,27 @@ export class GuestNavBarComponent implements OnInit{
   isPopupVisible = false;
 
   role: string = '' ;
+  loggedUser!: User;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService,private userService: UserService) {}
 
   ngOnInit(): void {
     this.authService.userState.subscribe((result) => {
       this.role = result;
     })
+
+    this.userService.getUser(this.authService.getUserID()).subscribe(
+        (user: User) => {
+          this.loggedUser = user;
+        },
+        (error) => {
+          console.error('Error loading user:', error);
+          // Handle error as needed
+        }
+    );
+
   }
-  
+
   onProfilePictureClick(): void {
     this.isPopupVisible = !this.isPopupVisible;
   }
