@@ -12,7 +12,7 @@
 
     <div class="data-container">
         <p class="title-text">Register</p>
-        
+
         <form [formGroup]="registrationForm" class="form-container">
 
             <b class="normal-text" >Email address</b>
@@ -31,7 +31,7 @@
                 <div class="column-box">
                     <b class="normal-text">Repeat Password</b>
                     <div class="input-frame-names">
-                        <input type="text" id="repeatedPassword"  placeholder="Enter password again...">
+                        <input type="text" id="repeatedPassword" formControlName="passwordAgain" placeholder="Enter password again...">
                     </div>
                 </div>
             </div>
@@ -67,12 +67,12 @@
                     <input type="text" formControlName="country"  placeholder="Enter country here..">
                 </div>
             </div>
-            
+
             <b class="normal-text" >Mobile phone</b>
             <div class="input-frame" style="margin-bottom: 0% !important;">
                 <input type="tel" formControlName="phone"  placeholder="Enter mobile phone...">
             </div>
-            
+
             <b class="normal-text">Role</b>
             <label class="toggle">
                 <input type="checkbox" (click)="toggleRole()">
