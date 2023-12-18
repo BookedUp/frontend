@@ -13,22 +13,22 @@
           <div class="search-unlogged-child30"></div>
           <div class="location-1-parent1" >
             <img class="location-1-icon16" alt="" src="../../assets/public/location-12.svg" />
-            <input id="locationTxt" type="text" class="melbourne3" placeholder={{location}}/>
+            <input [(ngModel)]="location" id="locationTxt" type="text" class="melbourne3" placeholder={{location}}/>
           </div>
 
           <div class="calendar-1-parent7" >
             <img class="location-1-icon16" alt="" src="../../assets/public/calendar-1.svg" />
-            <input placeholder={{fromDate}} [min]="minFromDate" class="feb-3-20229" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="fromDate" />
+            <input  [(ngModel)]="fromDate" placeholder={{fromDate}} [min]="minFromDate" class="feb-3-20229" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="fromDate" />
           </div>
 
           <div class="calendar-2-parent7" >
             <img class="location-1-icon16" alt="" src="../../assets/public/calendar-2.svg" />
-            <input placeholder={{outDate}} [min]="minFromDate"  class="feb-7-20229" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="toDate" />
+            <input [(ngModel)]="outDate" placeholder={{outDate}} [min]="minFromDate"  class="feb-7-20229" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="toDate" />
           </div>
 
           <div class="user-square-1-parent7">
           <img class="location-1-icon16" alt="" src="../../assets/public/usersquare-11.svg" />
-          <input id="guestNumberTxt" type="number" class="adult-1-room14" placeholder={{guests}} pattern="\d*" />
+          <input [(ngModel)]="guests" id="guestNumberTxt" type="number" class="adult-1-room14" placeholder={{guests}} pattern="\d*" />
           </div>
         </div>
 
@@ -200,19 +200,21 @@
               </div>
 
               <div class="includes-taxes-and33">{{result.type}}</div>
+              
               <div class="room-2-days27" *ngIf="result.totalPrice !== 0">1 room {{ calculateDayDifference() }} days</div>
-              <div class="reviews55" *ngIf="result.totalPrice !== 0">{{ roundHalf(result.averageRating/2) }}</div>
-              <div class="see-availability-wrapper26" id="frameContainer19">
-                <b class="register1" routerLink="/accommodation-details/{{result.id}}">See availability</b>
-              </div>
-
-<!--              <img class="group-child108" alt="" src="../../assets/public/group-5.svg" />-->
-<!--              <b id="averageRating" style="color: var(&#45;&#45;blue-1);">{{ roundHalf(result.averageRating/2) }} ★</b>-->
               <div class="group-child108">
+                <div class="stars-container">
                   <span class="star" *ngFor="let star of generateStars(roundHalf(result.averageRating/2))">
                     {{ star }}
                   </span>
+                </div>
               </div>
+              <!-- <div class="reviews55">{{ result.averageRating }}</div> -->
+              <div class="reviews55">{{ roundHalf(result.averageRating/2) }}</div>
+              <div class="see-availability-wrapper26" id="frameContainer19">
+                <b class="register1" routerLink="/accommodation-details/{{result.id}}">See availability</b>
+              </div>
+    
             </div>
           </div>
         </ng-container>
