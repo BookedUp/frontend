@@ -8,6 +8,10 @@ import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {User} from "../../user/model/user.model";
 import {UserService} from "../../user/user.service";
+import { ReservationService } from '../reservation.service';
+import { Reservation } from '../model/reservation.model';
+import { ReservationStatus } from '../model/reservationStatus.enum';
+import { Guest } from 'src/app/user/model/guest.model';
 
 @Component({
   selector: 'app-create-reservation',
@@ -24,13 +28,17 @@ export class CreateReservationComponent implements OnInit {
   formattedEndDate: string | null = null;
   totalPrice: number = 1;
   numberGuests: number = 0;
+  status!: ReservationStatus;
+  stringStatus : string = "CREATED";
+  guest!: Guest;
   //accommodation: Observable<Accommodation> = new Observable<Accommodation>();
   acc!: Accommodation;
+  newReservation! : Reservation;
   nightNumber: number = 1;
 
   loggedUser!: User;
 
-  constructor(private fb: FormBuilder,private userService: UserService, private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService)
+  constructor(private fb: FormBuilder,private userService: UserService, private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService, private reservationService: ReservationService)
   {
     this.reservationForm = this.fb.group({
       firstName: [{value: '', disabled: true}],
@@ -72,6 +80,8 @@ export class CreateReservationComponent implements OnInit {
           }
       );
 
+
+
       this.route.queryParams.subscribe(queryParams => {
         this.startDate = queryParams['startDate'];
         const dateStart = new Date(this.startDate ?? new Date());
@@ -83,26 +93,41 @@ export class CreateReservationComponent implements OnInit {
 
         this.totalPrice = queryParams['totalPrice'];
         this.numberGuests = queryParams['numberGuests'];
+        this.nightNumber = queryParams['days'];
 
 
 
       });
     });
+  }
 
+  reserve() {
+    
+    // this.newReservation.startDate = new Date();
+    // this.newReservation.endDate = new Date();
+    this.newReservation.totalPrice = this.totalPrice;
+    this.newReservation.guestsNumber = this.numberGuests;
+    this.newReservation.accommodation = this.acc;
+    this.newReservation.status = this.stringStatus as ReservationStatus;
+    
 
+    console.log(this.newReservation.startDate);
+    console.log(this.newReservation.endDate);
+    console.log(this.newReservation.totalPrice);
+    console.log(this.newReservation.guestsNumber);
+    console.log(this.newReservation.accommodation);
+    console.log(this.newReservation.status);
+    // this.reservationService.createReservation(this.newReservation);
   }
 
   generateStars(rating: number): string[] {
     const stars: string[] = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
-        console.log("tu sam");
         stars.push('★');
       } else if (i - 0.5 === rating) {
-        console.log("tu sam");
         stars.push('✯');
       } else {
-        console.log("tu sam");
         stars.push('☆');
       }
     }

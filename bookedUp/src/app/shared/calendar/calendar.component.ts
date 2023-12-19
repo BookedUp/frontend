@@ -1,6 +1,6 @@
 // src/app/calendar/calendar.component.ts
 
-import { Component, Input, OnChanges, OnInit, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AccommodationService } from 'src/app/accommodation/accommodation.service';
 import { DateRange } from 'src/app/accommodation/model/dateRange.model';
 import { PriceChange } from 'src/app/accommodation/model/priceChange.model';
@@ -20,9 +20,6 @@ export class CalendarComponent implements OnChanges {
   alreadyPicked: { [date: string]: string } = { };
   @Input() startDate: string | null = null;
   @Input() endDate: string | null = null;
-  @Input() newStartDate: string | null = null;
-  @Input() newEndDate: string | null = null;
-  @Output() startAndEndDateSelected: EventEmitter<{ start: string, end: string }> = new EventEmitter();
   selectedRange: { start: number | null; startMonth: number | null; startYear: number | null; end: number | null ; endMonth: number | null; endYear: number | null; } = { start: null, startMonth: null, startYear: null, end: null, endMonth: null, endYear: null };
 
   displayedMonth: number;
@@ -75,8 +72,6 @@ export class CalendarComponent implements OnChanges {
     }
     this.generateCalendar();
   }
-
-  
 
   getCustom(priceList: PriceChange[]): { [date: string]: number } {
     var customPrices: { [date: string]: number } = {};
@@ -155,10 +150,6 @@ export class CalendarComponent implements OnChanges {
       this.selectedRange.end = day;
       this.selectedRange.endMonth = this.displayedMonth;
       this.selectedRange.endYear = this.displayedYear;
-
-      if (this.selectedRange.start !== null && this.selectedRange.end !== null) {
-        this.handleStartAndEndDateSelected(this.selectedRange.start, this.selectedRange.startMonth, this.selectedRange.startYear, this.selectedRange.end, this.selectedRange.endMonth, this.selectedRange.endYear);
-      }
     } else {
       // Deselecting the start of the range
       this.selectedRange.start = null;
@@ -167,15 +158,6 @@ export class CalendarComponent implements OnChanges {
 
     this.updateSelectedStyles();
   }
-  handleStartAndEndDateSelected(start: number, startMonth: number | null, startYear: number | null, end: number, endMonth: number, endYear: number): void {
-    // console.log("JEEEEEEEEEEEEEEEA");
-    // console.log("Start " + start + " Month " + startMonth + " Year " + startYear);
-    // console.log("End " +  end + " Month " + endMonth + " Year " + endYear);
-    this.newStartDate = startYear + '-' + startMonth + '-' + start;
-    this.newEndDate = endYear + '-' + endMonth + '-' + end;
-  }
- 
-  
   // Generate the calendar for the selected month and year
   generateCalendar(): void {  
     const firstDay = new Date(this.displayedYear, this.displayedMonth - 1, 1).getDay(); // 0-indexed
