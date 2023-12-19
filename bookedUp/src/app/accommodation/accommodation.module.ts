@@ -11,6 +11,7 @@ import { AccommodationDetailsComponent } from './accommodation-details/accommoda
 import { AccommodationRequestsComponent } from './accommodation-requests/accommodation-requests.component';
 import { AccommodationsComponent } from './accommodations/accommodations.component';
 import { CreateAccommodationComponent } from './create-accommodation/create-accommodation.component';
+import { UpdateAccommodationComponent } from './update-accommodation/update-accommodation.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { CreateAccommodationComponent } from './create-accommodation/create-acco
     AccommodationRequestsComponent,
     AccommodationsComponent,
     CreateAccommodationComponent,
+    UpdateAccommodationComponent,
   ],
   imports: [
     CommonModule,

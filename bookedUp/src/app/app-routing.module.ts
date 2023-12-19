@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'accommodation-details/:id', component: AccommodationDetailsComponent },
   { path: 'accommodation-requests', component: AccommodationRequestsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN'] }},
   { path: 'create-accommodation', component: CreateAccommodationComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
+  { path: 'update-accommodation/:id', component: CreateAccommodationComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
   { path: 'my-accommodations', component: AccommodationsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
 
   { path: 'reservation-requests', component: ReservationRequestsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
