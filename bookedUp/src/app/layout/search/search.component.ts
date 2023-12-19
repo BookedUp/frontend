@@ -281,7 +281,7 @@ export class SearchComponent implements OnInit {
     const endDateString = this.outDate.toISOString().split('T')[0];
 
     this.router.navigate(['/accommodation-details', id], {
-      queryParams: { startDate: startDateString, endDate: endDateString, totalPrice: totalPrice, numberGusets: this.guests},
+      queryParams: { startDate: startDateString, endDate: endDateString, totalPrice: totalPrice, numberGuests: this.guests},
     });
   }
 
