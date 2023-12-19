@@ -37,9 +37,8 @@ export class CreateAccommodationComponent implements OnInit {
   postalCode: string | undefined;
   country: string | undefined;
   acceptReservations: boolean = false;
+  isInputReadOnly: boolean = false;
 
-
-  customPricesInput: { [date: string]: number } = { };
   customPrice: number = 0;
 
   priceType: PriceType = PriceType.PerNight;
@@ -106,20 +105,83 @@ export class CreateAccommodationComponent implements OnInit {
 
 
   applyCustomPrice(): void {
-    const selectedRange = this.calendarComponent?.getSelectedRange();
-
-    if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined) {
-      const newPriceChange: PriceChange = {
-        changeDate: new Date(selectedRange.start),
-        newPrice: this.customPrice,
-      };
-
-      // Dodajte novi PriceChange u customPricesInput
-      this.accPriceChange.push(newPriceChange);
-
-      console.log(this.accPriceChange);
-      this.calendarComponent?.generateCalendar();
+    if(this.isInputReadOnly == false){
+      Swal.fire({
+        title: 'Default Price Changed!',
+        text: 'You can no longer change it in this window.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if(this.defaultPrice != 0){
+            this.isInputReadOnly = true;
+            const selectedRange = this.calendarComponent?.getSelectedRange();
+            if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
+              
+              const startDate = new Date(selectedRange.start);
+              const endDate = new Date(selectedRange.end);
+      
+              const newPriceChangeStart: PriceChange = {
+                changeDate: startDate,
+                newPrice: this.customPrice,
+              };
+      
+              this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
+      
+      
+              var lastDate = new Date(selectedRange.end);
+              lastDate.setDate(lastDate.getDate() + 1);
+              const newPriceChange: PriceChange = {
+                changeDate: lastDate,
+                newPrice: this.defaultPrice,
+              };
+        
+              this.accPriceChange = [...this.accPriceChange, newPriceChange];
+          }
+          }else{
+            alert("You didn't input default price. Please provide a default price before entering a custom one.");
+            return;
+          }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          return;
+        }
+      });
+    }else{
+      if(this.defaultPrice != 0){
+        this.isInputReadOnly = true;
+        const selectedRange = this.calendarComponent?.getSelectedRange();
+        if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
+          
+          const startDate = new Date(selectedRange.start);
+          const endDate = new Date(selectedRange.end);
+  
+          const newPriceChangeStart: PriceChange = {
+            changeDate: startDate,
+            newPrice: this.customPrice,
+          };
+  
+          this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
+  
+  
+          var lastDate = new Date(selectedRange.end);
+          lastDate.setDate(lastDate.getDate() + 1);
+          const newPriceChange: PriceChange = {
+            changeDate: lastDate,
+            newPrice: this.defaultPrice,
+          };
+    
+          this.accPriceChange = [...this.accPriceChange, newPriceChange];
+      }
+      }else{
+        alert("You didn't input default price. Please provide a default price before entering a custom one.");
+        return;
+      }
     }
+    
+
+    
   }
 
 
@@ -206,9 +268,6 @@ export class CreateAccommodationComponent implements OnInit {
 
     if (selectedDates?.start !== null && selectedDates?.end !== null && selectedDates?.hasAlreadyPicked) {
       this.addedDates.push({ start: selectedDates.start, end: selectedDates.end });
-
-      console.log(this.addedDates);
-
       this.addedDates = this.mergeOverlappingDateRanges(this.addedDates);
 
       if (this.calendarComponent?.selectedRange) {
@@ -218,39 +277,35 @@ export class CreateAccommodationComponent implements OnInit {
 
       this.calendarComponent?.generateCalendar();
     } else {
-      alert('Molimo vas da odaberete validan datumski opseg.');
+      alert('Please select valid date range!');
     }
   }
-
 
   private mergeOverlappingDateRanges(dateRanges: { start: string, end: string }[]): { start: string, end: string }[] {
     dateRanges.sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
     const mergedRanges: { start: string, end: string }[] = [];
     let currentRange = dateRanges[0];
-
     for (let i = 1; i < dateRanges.length; i++) {
       const nextRange = dateRanges[i];
 
+      const currentStartDate = new Date(currentRange.start);
       const currentEndDate = new Date(currentRange.end);
       const nextStartDate = new Date(nextRange.start);
+      const nextEndDate = new Date(nextRange.end);
 
-      if (currentEndDate >= nextStartDate || nextStartDate <= currentEndDate) {
-        // Ranges overlap or touch, merge them
-        currentRange.end = nextRange.end;
-      } else if (nextRange.start >= currentRange.start && nextRange.end <= currentRange.end) {
-        // Next range is completely within the current range, skip it
-        continue;
+
+      if (currentEndDate >= nextStartDate) {
+        if(currentEndDate >= nextEndDate){
+          continue;
+        }else{
+          currentRange.end = nextRange.end;
+        }
       } else {
-        // Ranges don't overlap and next range is not completely within the current range, add the current range to the result
         mergedRanges.push(currentRange);
         currentRange = nextRange;
       }
-
-      console.log(dateRanges);
-
     }
 
-    // Add the last range
     mergedRanges.push(currentRange);
 
     return mergedRanges;
@@ -259,39 +314,43 @@ export class CreateAccommodationComponent implements OnInit {
 
   deleteDateRange(): void {
     const selectedDates = this.calendarComponent?.getSelectedRange();
-
+  
     if (selectedDates?.start && selectedDates?.end) {
       const startSelectedDate = new Date(selectedDates.start);
       const endSelectedDate = new Date(selectedDates.end);
-
+  
       this.addedDates.forEach((dateRange, index) => {
         const startDate = new Date(dateRange.start);
         const endDate = new Date(dateRange.end);
-
-        if (
-            (startDate >= startSelectedDate && startDate <= endSelectedDate) ||
-            (endDate >= startSelectedDate && endDate <= endSelectedDate) ||
-            (startDate <= startSelectedDate && endDate >= endSelectedDate)
-        ) {
-          // Datum iz liste se preklapa sa odabranim opsegom, treba ga smanjiti
-          if (startDate < startSelectedDate) {
-            dateRange.end = this.subtractDays(startSelectedDate, 1).toISOString().split('T')[0];
-          }
-
-          if (endDate > endSelectedDate) {
-            dateRange.start = this.addDays(endSelectedDate, 1).toISOString().split('T')[0];
-          }
+  
+        if (endSelectedDate < startDate || startSelectedDate > endDate) {
+          // No overlap, do nothing
+        } else if (startSelectedDate <= startDate && endSelectedDate >= endDate) {
+          // Selected range completely covers the current range, remove it
+          this.addedDates.splice(index, 1);
+        } else if (startSelectedDate <= startDate && endSelectedDate < endDate) {
+          // Overlapping on the left side, adjust start date
+          dateRange.start = endSelectedDate.toISOString().split('T')[0];
+        } else if (startSelectedDate > startDate && endSelectedDate >= endDate) {
+          // Overlapping on the right side, adjust end date
+          dateRange.end = startSelectedDate.toISOString().split('T')[0];
+        } else if (startSelectedDate > startDate && endSelectedDate < endDate) {
+          // Selected range is in the middle, split the current range
+          const newEndDate = endSelectedDate.toISOString().split('T')[0];
+          dateRange.end = startSelectedDate.toISOString().split('T')[0];
+  
+          // Insert a new range for the right side
+          this.addedDates.splice(index + 1, 0, {
+            start: newEndDate,
+            end: endDate.toISOString().split('T')[0]
+          });
         }
       });
-
-      // Ponovno spoji datume nakon brisanja
+  
       this.addedDates = this.mergeOverlappingDateRanges(this.addedDates);
-
-      // Ako želite ažurirati i kalendar, pozovite odgovarajuće metode
-      // this.calendarComponent?.generateCalendar();
     }
   }
-
+  
 
   private subtractDays(date: Date, days: number): Date {
     const result = new Date(date);

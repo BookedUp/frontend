@@ -37,7 +37,7 @@
               <b class="title-text">Price</b>
               <div id="price-inputs" class="in-line-box">
                 <div class="normal-text" style="width: 30% !important;">
-                  <input [(ngModel)]="defaultPrice" type="number" placeholder='Enter price here..' pattern="\d*" />
+                  <input [(ngModel)]="defaultPrice" type="number" placeholder='Enter price here..' pattern="\d*" [readonly]="isInputReadOnly"/>
                 </div>
                 <div class="in-line-box" style="width: 70% !important; justify-content: right;">
                   <input type="checkbox" id="perNight" name="amenities" class="icon" [(ngModel)]="perNightChecked" (change)="handlePerNightChange()" />
@@ -99,7 +99,7 @@
         <div id="left-data" class="left-container">
           <app-calendar #calendarRef
             [defaultPrice]=defaultPrice
-            [customPrices]="customPricesInput"
+            [customPricesInput]=accPriceChange
           ></app-calendar>
           <button class="button-container" (click)="addDateRange()"  style="background-color: var(--gray-2);">
             <b>Add</b>
@@ -120,9 +120,6 @@
             </ul>
           </div>
 
-          <button class="button-container" routerLink="/create-accommodation" style="background-color: var(--gray-2);">
-            <b>Select as available</b>
-          </button>
           <div class="normal-text">If you wish to set a different price for a specific date range, please select the range and enter the desired price below.</div>
           <div class="normal-text">
             <input [(ngModel)]="customPrice" type="number" placeholder='Enter price here..' pattern="\d*" class="custom-input"/>

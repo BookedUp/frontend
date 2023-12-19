@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 export class CalendarComponent implements OnChanges {
   @Input() defaultPrice: number = 0;
+  private isFirstChange = true;
   @Input() customPricesInput: PriceChange[] | null = [];
   @Input() customPrices: { [date: string]: number } = { };
   @Input() alreadyPickedInput: DateRange[] | null = [];
@@ -76,11 +77,11 @@ export class CalendarComponent implements OnChanges {
 
     for (var i = 0; i < priceList.length; i++) {
       var priceChange = priceList[i];
-      var dateString: string = priceChange.changeDate.toString().split('T')[0];
+      var dateString: string = priceChange.changeDate.toISOString().split('T')[0];
       var nextDateString: string | undefined;
 
       if (i < priceList.length - 1) {
-        nextDateString = priceList[i + 1].changeDate.toString().split('T')[0];
+        nextDateString = priceList[i + 1].changeDate.toISOString().split('T')[0];
       }
 
       customPrices[dateString] = priceChange.newPrice;
@@ -96,18 +97,15 @@ export class CalendarComponent implements OnChanges {
         }
       }
 
-      // If it's the last date, extend for an additional 30 days with the last known price
       if (i === priceList.length - 1) {
         var lastDate = new Date(dateString);
-        for (var j = 0; j < 30; j++) {
-          lastDate.setDate(lastDate.getDate() + 1);
-          customPrices[lastDate.toISOString().split('T')[0]] = priceChange.newPrice;
-        }
+        customPrices[lastDate.toISOString().split('T')[0]] = priceChange.newPrice;
       }
     }
 
     return customPrices;
   }
+
 
   getAlreadyPicked(dateRanges: DateRange[]): { [date: string]: string } {
     var alreadyPicked: { [date: string]: string } = {};
@@ -125,7 +123,17 @@ export class CalendarComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['defaultPrice'] && !changes['defaultPrice'].firstChange) {
-      this.generateCalendar();
+      if (this.isFirstChange) {
+        this.generateCalendar();
+        
+      }
+    }
+    if (changes['customPricesInput'] && !changes['customPricesInput'].firstChange){
+      if(this.customPricesInput){
+        this.isFirstChange = false;
+        this.customPrices = this.getCustom(this.customPricesInput);
+        this.generateCalendar();
+      }
     }
   }
 
