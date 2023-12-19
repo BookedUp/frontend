@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from "@angular/router";
+import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { AdminNavBarComponent } from "./nav-bar/admin-nav-bar/admin-nav-bar.component";
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
@@ -39,6 +40,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     CommonModule,
     RouterModule,
     MaterialModule,
+    ReactiveFormsModule,
   ]
 })
 export class LayoutModule { }

@@ -190,6 +190,21 @@ export class SearchComponent implements OnInit {
   }
 
   searchAndFilterAccommodations() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    this.fromDate.setHours(0, 0, 0, 0);
+    this.outDate.setHours(0, 0, 0, 0);
+    console.log(today);
+    console.log(this.fromDate);
+    console.log(this.outDate);
+    if (
+      (this.fromDate.getTime() === today.getTime() && this.outDate.getTime() !== today.getTime()) ||
+      (this.fromDate.getTime() !== today.getTime() && this.outDate.getTime() === today.getTime())
+    ) {
+      alert('Please enter both check-in and check-out dates.');
+      return;
+    }
+
     if (this.customBudget > 50) {
       this.budgetCheckboxIds = [];
     }
