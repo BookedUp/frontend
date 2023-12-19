@@ -196,6 +196,8 @@ export class SearchComponent implements OnInit {
     const selectedTypeEnum: AccommodationType | null = this.parseAccommodationType(this.selectedType);
     const popular = this.parseAmenities(this.popularCheckboxIds);
     console.log(popular);
+    this.fromDate.setHours(12, 0, 0, 0);
+    this.outDate.setHours(12, 0, 0, 0);
     let minPrice: number = 0.0;
     let maxPrice: number = 0.0;
     if (this.budgetCheckboxIds.length > 0) {
@@ -279,9 +281,11 @@ export class SearchComponent implements OnInit {
   navigateToAccommodationDetails(id:number, totalPrice:number): void {
     const startDateString = this.fromDate.toISOString().split('T')[0];
     const endDateString = this.outDate.toISOString().split('T')[0];
+    const days = this.calculateDayDifference();
+    console.log(days);
 
     this.router.navigate(['/accommodation-details', id], {
-      queryParams: { startDate: startDateString, endDate: endDateString, totalPrice: totalPrice, numberGusets: this.guests},
+      queryParams: { startDate: startDateString, endDate: endDateString, totalPrice: totalPrice, numberGuests: this.guests, days: days},
     });
   }
 

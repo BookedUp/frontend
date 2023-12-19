@@ -48,9 +48,14 @@
               
             </div>
             <div class="left-box">
-              <b class="totalPrice">$240</b><br>
+              <b class="totalPrice">{{totalPrice}} $</b><br>
               <b class="singlePrice">${{accommodation.price}}/{{accommodation.priceType}}</b><br>
-              <div class="normal-text" style="margin-top: 10px;">2 adult, 2 days</div>
+              <div *ngIf="numberGuests !== 0" class="normal-text" style="margin-top: 10px;">
+                {{ numberGuests }} adult, {{days}} days
+              </div>
+              <div *ngIf="numberGuests === 0" class="normal-text" style="margin-top: 10px;">
+                adults, {{days}} days
+              </div>             
             </div>
           </div>
           
@@ -81,7 +86,7 @@
             [endDate]="endDate"
             [customPricesInput]="accommodation.priceChanges"
             [alreadyPickedInput]="accommodation.availability"
-            >
+            (click)="handleCalendarClick($event)">
           </app-calendar>
           <div class="save-account-wrapper" *ngIf="role === 'ROLE_GUEST'" id="save-button" style="margin-top: 5%;" (click)="onButtonClick()">
             <b class="save-account">Reserve Accommodation</b>
