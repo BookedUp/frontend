@@ -212,7 +212,7 @@
               <!-- <div class="reviews55">{{ result.averageRating }}</div> -->
               <div class="reviews55">{{ result?.averageRating !== undefined ? result.averageRating: 0.0 }}</div>
               <div class="see-availability-wrapper26" id="frameContainer19">
-                <b class="register1" (click)="navigateToAccommodationDetails(result?.id ?? 0)">See availability</b>
+                <b class="register1" (click)="navigateToAccommodationDetails(result?.id ?? 0, result.totalPrice)">See availability</b>
               </div>
 
             </div>

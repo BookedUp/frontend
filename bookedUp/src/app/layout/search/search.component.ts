@@ -190,12 +190,29 @@ export class SearchComponent implements OnInit {
   }
 
   searchAndFilterAccommodations() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    this.fromDate.setHours(0, 0, 0, 0);
+    this.outDate.setHours(0, 0, 0, 0);
+    console.log(today);
+    console.log(this.fromDate);
+    console.log(this.outDate);
+    if (
+      (this.fromDate.getTime() === today.getTime() && this.outDate.getTime() !== today.getTime()) ||
+      (this.fromDate.getTime() !== today.getTime() && this.outDate.getTime() === today.getTime())
+    ) {
+      alert('Please enter both check-in and check-out dates.');
+      return;
+    }
+
     if (this.customBudget > 50) {
       this.budgetCheckboxIds = [];
     }
     const selectedTypeEnum: AccommodationType | null = this.parseAccommodationType(this.selectedType);
     const popular = this.parseAmenities(this.popularCheckboxIds);
     console.log(popular);
+    this.fromDate.setHours(12, 0, 0, 0);
+    this.outDate.setHours(12, 0, 0, 0);
     let minPrice: number = 0.0;
     let maxPrice: number = 0.0;
     if (this.budgetCheckboxIds.length > 0) {
@@ -276,12 +293,15 @@ export class SearchComponent implements OnInit {
     return Math.round(value * 2) / 2;
   }
 
-  navigateToAccommodationDetails(id:number): void {
+  navigateToAccommodationDetails(id:number, totalPrice:number): void {
     const startDateString = this.fromDate.toISOString().split('T')[0];
     const endDateString = this.outDate.toISOString().split('T')[0];
+    const days = this.calculateDayDifference();
+    console.log(days);
 
     this.router.navigate(['/accommodation-details', id], {
-      queryParams: { startDate: startDateString, endDate: endDateString },
+
+      queryParams: { startDate: startDateString, endDate: endDateString, totalPrice: totalPrice, numberGuests: this.guests, days: days},
     });
   }
 
