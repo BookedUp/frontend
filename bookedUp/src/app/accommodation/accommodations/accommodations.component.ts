@@ -4,6 +4,7 @@ import { Router, ActivatedRoute} from '@angular/router';
 import { Accommodation } from '../model/accommodation.model';
 import { Observable } from 'rxjs';
 import {AuthService} from "../../infrastructure/auth/auth.service";
+import {AccommodationStatus} from "../model/enum/accommodationStatus.enum";
 @Component({
     selector: 'app-accommodations',
     templateUrl: './accommodations.component.html',
@@ -81,4 +82,6 @@ export class AccommodationsComponent implements OnInit {
         this.accommodations = this.accommodationService.getAllRejectedByHostId(this.authService.getUserID());
 
     }
+
+    protected readonly AccommodationStatus = AccommodationStatus;
 }
