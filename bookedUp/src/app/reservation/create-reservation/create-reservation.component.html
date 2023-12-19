@@ -6,7 +6,7 @@
 
       <div id="main-data" class="main-data-box">
 
-        <div id="right-data" class="right-container">
+        <div id="right-data" class="right-container" [formGroup]="reservationForm">
           <div class="title-text" style="margin-bottom: 5%;">Secure Your Reservation</div>
           <div id="inputs" class="description">
             <div class="container-title">
@@ -15,20 +15,20 @@
               <b class="normal-text">{{numberGuests}} adults</b>
             </div>
             <div class="description-box">
-              
+
               <div id="accommodation-details" style="margin-top: 10px; margin-bottom: 10px;">
                 <div class="in-line-box">
                   <div class="column-box">
                       <b class="normal-text" >First Name</b>
                       <div class="input-frame-names">
-                          <input type="text" formControlName="firstName"  placeholder="Enter first name...">
+                          <input type="text" formControlName="firstName" [readonly]="true" placeholder="Enter first name...">
                       </div>
                   </div>
-  
+
                   <div class="column-box">
                       <b class="normal-text" >Last Name</b>
                       <div class="input-frame-names">
-                          <input type="text" formControlName="lastName"  placeholder="Enter last name...">
+                          <input type="text" formControlName="lastName" [readonly]="true" placeholder="Enter last name...">
                       </div>
                   </div>
                 </div>
@@ -37,18 +37,18 @@
                   <div class="column-box">
                       <b class="normal-text" >Email</b>
                       <div class="input-frame-names">
-                          <input type="text" formControlName="email"  placeholder="Enter email...">
+                          <input type="text" formControlName="email"  [readonly]="true" placeholder="Enter email...">
                       </div>
                   </div>
                   <div class="column-box">
                     <b class="normal-text" >Phone Number</b>
                     <div class="input-frame-names">
-                        <input type="text" formControlName="phoneNumber"  placeholder="Enter phone number...">
+                        <input type="text" formControlName="phoneNumber" [readonly]="true" placeholder="Enter phone number...">
                     </div>
 
                 </div>
                 </div>
-                
+
                 <div class="in-line-box" style=" margin-top: 5%;">
                   <input type="checkbox" class="checkbox-notification" />
                   <label class="normal-text">Receive text alerts about this trip.</label>
@@ -102,15 +102,16 @@
                 <b class="complete-booking">Complete Booking</b>
               </div>
 
-              
+
             </div>
           </div>
         </div>
 
         <div id="left-data" class="left-container">
           <div id="reservationDetails" class="hotel-box">
-            <img class="hotel-image" alt="" src="../../../assets/public/rectangle-68@2x.png" />
-        
+           <img class="hotel-image" alt="" [src]="acc.photos && acc.photos.length > 0 ? acc.photos[0].url : 'path/to/default/image.jpg'">
+
+
             <div class="hotel-data">
               <div class="text-hotel-box">
                 <b id="normal-text" style="font-size: var(--font-size-lg);">{{acc?.name}}</b><br>
@@ -123,9 +124,9 @@
                   <div class="reviews-average">{{ roundHalf(4) }}</div>
                 </div>
                 <div id="hotel-address" class="normal-text" style="color: var(--color-gray-100); margin-top: 20%;">{{acc?.address?.streetAndNumber}}, {{acc?.address?.city}} {{acc?.address?.postalCode}}, {{acc?.address?.country}}</div>
-                <div id="hotel-address" class="normal-text" style="color: var(--color-gray-100);">Check in: {{formattedStartDate}}</div>
-                <div id="hotel-address" class="normal-text" style="color: var(--color-gray-100);">Check out: {{formattedEndDate}}</div>
-                <div id="hotel-address" class="hotel-smaller-text">{{nightNumber}} night stay</div>
+                <div  class="normal-text" style="color: var(--color-gray-100);">Check in: {{formattedStartDate}}</div>
+                <div  class="normal-text" style="color: var(--color-gray-100);">Check out: {{formattedEndDate}}</div>
+                <div  class="hotel-smaller-text">{{nightNumber}} night stay</div>
               </div>
             </div>
           </div>
@@ -145,7 +146,7 @@
                   <div class="normal-text" style="text-align: right;">${{totalPrice}}</div>
                 </div>
               </div>
-              
+
               <div class="in-line-box" style="margin-top: 5%;">
                 <div class="column-box">
                   <div class="normal-text">Tax and service fees</div>
@@ -175,8 +176,8 @@
         </div>
 
       </div>
-        
-      
+
+
       <app-shorter-footer></app-shorter-footer>
 
     </div>

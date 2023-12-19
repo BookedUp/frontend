@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {User} from "../../user/model/user.model";
+import {UserService} from "../../user/user.service";
 
 @Component({
   selector: 'app-create-reservation',
@@ -22,23 +24,54 @@ export class CreateReservationComponent implements OnInit {
   formattedEndDate: string | null = null;
   totalPrice: number = 1;
   numberGuests: number = 0;
-  accommodation: Observable<Accommodation> = new Observable<Accommodation>();
-  acc?: Accommodation | null;
+  //accommodation: Observable<Accommodation> = new Observable<Accommodation>();
+  acc!: Accommodation;
   nightNumber: number = 1;
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService) 
+  loggedUser!: User;
+
+  constructor(private fb: FormBuilder,private userService: UserService, private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService)
   {
     this.reservationForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', Validators.required],
+      firstName: [{value: '', disabled: true}],
+      lastName: [{value: '', disabled: true}],
+      email: [{value: '', disabled: true}],
+      phoneNumber: [{value: '', disabled: true}],
     });
   }
 
   ngOnInit(): void {
+
+
     this.route.params.subscribe((params) => {
       this.accommodationId = params['id'];
+
+
+      this.accommodationService.getAccommodationById(this.accommodationId).subscribe(
+          (acc: Accommodation) => {
+            this.acc = acc;
+          },
+          (error) => {
+            console.error('Error loading acc:', error);
+          }
+      );
+
+      this.userService.getUser(this.authService.getUserID()).subscribe(
+          (user: User) => {
+            this.loggedUser = user;
+
+            this.reservationForm!.setValue({
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.email,
+              phoneNumber: user.phone,
+            });
+          },
+          (error) => {
+            console.error('Error loading user:', error);
+          }
+      );
+
       this.route.queryParams.subscribe(queryParams => {
         this.startDate = queryParams['startDate'];
         const dateStart = new Date(this.startDate ?? new Date());
@@ -47,18 +80,15 @@ export class CreateReservationComponent implements OnInit {
         this.endDate = queryParams['endDate'];
         const dateEnd = new Date(this.endDate ?? new Date());
         this.formattedEndDate = new DatePipe('en-US').transform(dateEnd, 'EEEE, MMMM d, y');
-        
+
         this.totalPrice = queryParams['totalPrice'];
         this.numberGuests = queryParams['numberGuests'];
+
+
+
       });
     });
-    
-    this.accommodation = this.accommodationService.getAccommodationById(this.accommodationId);
 
-    this.accommodation.subscribe(data => {
-      this.acc = data;
-    });
-    console.log("total ", this.totalPrice);
 
   }
 
