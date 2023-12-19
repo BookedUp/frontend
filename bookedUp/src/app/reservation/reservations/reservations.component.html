@@ -42,11 +42,16 @@
                     <b class="title">{{ reservation.accommodation.name }}</b>
                     <div class="reviews-frame">
                         <div class="stars-container">
-                      <span class="star" *ngFor="let star of generateStars(roundHalf(reservation.accommodation.averageRating/2))">
-                        {{ star }}
-                      </span>
+                        <span *ngIf="reservation.accommodation?.averageRating !== undefined">
+<!--                            <span class="star" *ngFor="let star of generateStars(roundHalf(reservation.accommodation.averageRating/2))"></span>-->
+                        </span>
+
+
+
                         </div>
-                        <div class="reviews-average">{{ roundHalf(reservation.accommodation.averageRating/2) }}</div>
+                        <div class="reviews-average">
+                            {{ reservation.accommodation && reservation.accommodation.averageRating ? roundHalf(reservation.accommodation.averageRating/2) : 'N/A' }}
+                        </div>
                     </div>
 
                     <b class="status-text" [class.created-status-text]="reservation.status === 'CREATED'"

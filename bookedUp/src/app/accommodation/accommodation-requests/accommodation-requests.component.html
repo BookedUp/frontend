@@ -32,11 +32,11 @@
 
                   <div class="reviews-frame">
                     <div class="stars-container">
-                      <span class="star" *ngFor="let star of generateStars(roundHalf(accommodation.averageRating/2))">
-                        {{ star }}
-                      </span>
+<!--                      <span class="star" *ngFor="let star of generateStars(roundHalf(accommodation.averageRating/2))">-->
+<!--                        {{ star }}-->
+<!--                      </span>-->
                     </div>
-                    <div class="reviews-average">{{ roundHalf(accommodation.averageRating/2) }}</div>
+<!--                      <div class="reviews55">{{ accommodation?.averageRating !== undefined ? roundHalf(accommodation.averageRating / 2) : 'N/A' }}</div>-->
                   </div>
 
                   <div class="location-frame">
@@ -57,10 +57,10 @@
               </div>
 
               <div class="right-buttons">
-                <div class="accept-button" id="accept-button" (click)="approveAccommodation(accommodation.id)">
+                  <div class="accept-button" id="accept-button" (click)="approveAccommodation(accommodation?.id ?? 0)">
                   <b class="button-text">Accept</b>
                 </div>
-                <div class="reject-button" id="reject-button" (click)="rejectAccommodation(accommodation.id)">
+                <div class="reject-button" id="reject-button" (click)="rejectAccommodation(accommodation?.id ?? 0)">
                   <b class="button-text">Reject</b>
                 </div>
                 <div class="view-details-button" id="view-details-button" routerLink="/accommodation-details/{{accommodation.id}}">

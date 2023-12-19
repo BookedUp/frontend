@@ -2,9 +2,9 @@
 <html>
   <body>
     <div class="acc-details">
-    
+
       <app-nav-bar></app-nav-bar>
-      
+
       <div class="images-container">
         <app-image-frame>
         </app-image-frame>
@@ -19,7 +19,7 @@
               <div id="name-input" class="normal-text">
                 <input [(ngModel)]="name" type="text" placeholder='Enter name of accommodation here..'/>
               </div>
-  
+
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <b class="title-text">Address</b>
               <div id="address-input">
@@ -28,11 +28,11 @@
                   <input [(ngModel)]="city" class="normal-text" type="text" placeholder='Enter city here..'/>
                 </div>
                 <div class="in-line-box">
-                  <input [(ngModel)]="postalCode" type="number" placeholder='Enter postal code here..' pattern="\d*" style="margin-right: 10%;"/>
-                  <input [(ngModel)]="country" class="normal-text" type="text" placeholder='Enter country here..'/>                  
+                  <input [(ngModel)]="postalCode" type="text" placeholder='Enter postal code here..' pattern="\d*" style="margin-right: 10%;"/>
+                  <input [(ngModel)]="country" class="normal-text" type="text" placeholder='Enter country here..'/>
                 </div>
               </div>
-  
+
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <b class="title-text">Price</b>
               <div id="price-inputs" class="in-line-box">
@@ -46,58 +46,58 @@
                   <div class="normal-text">Per Guest</div>
                 </div>
               </div>
-  
+
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <b class="title-text">Overview</b>
               <div id="description-input" class="normal-text">
                 <input [(ngModel)]="description" type="text" placeholder='Enter description for accommodation here..' style="height: 100px;"/>
               </div>
-  
+
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <b class="title-text">Facilities</b>
               <div id="facilities" class="in-line-box" style="margin-top: 10px;" *ngFor="let amenity of amenitiesList;">
-                <input type="checkbox" name="facilities" class="icon"/>
+                <input type="checkbox" name="facilities" class="icon" (change)="toggleAmenity(amenity)"/>
                 <div class="normal-text">{{amenity}}</div>
               </div>
-  
+
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <b class="title-text">Accommodaton Type</b>
               <div id="accommodationType" class="in-line-box" style="margin-top: 10px;"  *ngFor="let accType of accTypeList;">
                 <input type="checkbox" name="accommodationType" class="icon" [(ngModel)]="accTypeChecked[accType]" (change)="handleAccTypeChange(accType)" />
                 <div class="normal-text">{{accType}}</div>
               </div>
-  
+
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <div class="in-line-box">
-                <b class="title-text" style="margin-right: 10%;">Minimum Price</b>
+                <b class="title-text" style="margin-right: 10%;">Minimum Guests</b>
                 <div class="normal-text" >
-                  <input [(ngModel)]="minimumPrice" type="number" placeholder='Enter minimum price here..' pattern="\d*" />
+                  <input [(ngModel)]="minimumPrice" type="number" placeholder='Enter minimum number of guests here..' pattern="\d*" />
                 </div>
               </div>
 
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <div class="in-line-box">
-                <b class="title-text" style="margin-right: 10%;">Maximum Price</b>
+                <b class="title-text" style="margin-right: 10%;">Maximum Guests</b>
                 <div class="normal-text">
-                  <input [(ngModel)]="maximumPrice" type="number" placeholder='Enter maximum price here..' pattern="\d*" />
+                  <input [(ngModel)]="maximumPrice" type="number" placeholder='Enter maximum number of guests here..' pattern="\d*" />
                 </div>
               </div>
-  
+
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <div id="accept-reservarion-input" class="in-line-box">
                 <b class="title-text" style="margin-right: 5%;">Automatically Accept Reservations</b>
                 <label class="toggle">
-                  <input type="checkbox">
+                  <input type="checkbox" [(ngModel)]="acceptReservations">
                   <span class="slider"></span>
                   <span class="labels" data-on="ON" data-off="OFF"></span>
                 </label>
               </div>
-  
+
             </div>
           </div>
         </div>
         <div id="left-data" class="left-container">
-          <app-calendar #calendarRef 
+          <app-calendar #calendarRef
             [defaultPrice]=defaultPrice
             [customPrices]="customPricesInput"
           ></app-calendar>
@@ -112,7 +112,7 @@
           <button class="button-container" (click)="applyCustomPrice()" style="background-color: var(--gray-2);">
             <b>Apply Custom Price</b>
           </button>
-          <button class="button-container" routerLink="/create-accommodation">
+          <button class="button-container" (click)="saveAccommodation()">
             <b>Add new accommodation</b>
           </button>
         </div>

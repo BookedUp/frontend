@@ -9,7 +9,7 @@ import { Host } from '../../user/model/host.model';
 import { AccommodationStatus } from './enum/accommodationStatus.enum';
 
 export interface Accommodation {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   address: Address;
@@ -25,7 +25,7 @@ export interface Accommodation {
   status: AccommodationStatus;
   host: Host;
   price: number;
-  totalPrice: number;
-  averageRating: number;
+  totalPrice?: number;
+  averageRating?: number;
   cancellationDeadline: number;
 }
