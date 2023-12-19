@@ -285,6 +285,7 @@ export class SearchComponent implements OnInit {
     console.log(days);
 
     this.router.navigate(['/accommodation-details', id], {
+
       queryParams: { startDate: startDateString, endDate: endDateString, totalPrice: totalPrice, numberGuests: this.guests, days: days},
     });
   }
