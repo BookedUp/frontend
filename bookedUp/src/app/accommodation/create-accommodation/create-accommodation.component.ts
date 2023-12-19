@@ -210,7 +210,7 @@ export class CreateAccommodationComponent implements OnInit {
           endDate: new Date(addedDate.end),
         })),
         priceType: this.priceType,
-        priceChanges: [],//
+        priceChanges: this.accPriceChange,//
         automaticReservationAcceptance: this.acceptReservations,
         status: AccommodationStatus.Created,
         host: this.loggedUser,
@@ -218,19 +218,19 @@ export class CreateAccommodationComponent implements OnInit {
         cancellationDeadline: 10, //videcemo
       };
 
-      Swal.fire({icon: 'success', title: 'Accommodation created successfully!', text: 'You will be redirected to the home page.',}).then(() => {
-                 //this.router.navigate(['/']);
-               });
+      // Swal.fire({icon: 'success', title: 'Accommodation created successfully!', text: 'You will be redirected to the home page.',}).then(() => {
+      //            this.router.navigate(['/']);
+      //          });
 
-      // this.accommodationService.createAccommodation(accommodation).subscribe(
-      //     (createdAccommodation: Accommodation) => {
-      //       Swal.fire({icon: 'success', title: 'Accommodation created successfully!', text: 'You will be redirected to the home page.',}).then(() => {
-      //         this.router.navigate(['/']);
-      //       });        },
-      //     (error) => {
-      //       Swal.fire({icon: 'error', title: 'Error creating accommodation', text: 'Please try again.',});
-      //     }
-      // );
+      this.accommodationService.createAccommodation(accommodation).subscribe(
+          (createdAccommodation: Accommodation) => {
+            Swal.fire({icon: 'success', title: 'Accommodation created successfully!', text: 'You will be redirected to the home page.',}).then(() => {
+              this.router.navigate(['/']);
+            });        },
+          (error) => {
+            Swal.fire({icon: 'error', title: 'Error creating accommodation', text: 'Please try again.',});
+          }
+      );
 
     }
 
@@ -243,6 +243,7 @@ export class CreateAccommodationComponent implements OnInit {
         (this.minimumPrice !== undefined && (this.minimumPrice <= 0 ||
         (this.maximumPrice !== undefined && this.minimumPrice > this.maximumPrice))) ||
         (this.maximumPrice !== undefined && this.maximumPrice <= 0) ||
+        (this.availability.length == 0 ) ||
         Object.values(this.accTypeChecked).every(value => value === false)) {
       Swal.fire({
       icon: 'error',
