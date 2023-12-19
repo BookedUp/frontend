@@ -1,7 +1,7 @@
 // price-change.dto.ts
 
 export interface PriceChange {
-  id: number;
+  id?: number;
   changeDate: Date;
   newPrice: number;
 }

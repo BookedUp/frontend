@@ -101,7 +101,25 @@
             [defaultPrice]=defaultPrice
             [customPrices]="customPricesInput"
           ></app-calendar>
-          <div class="normal-text">Select a date range during which you don't have reservations for this accommodation.</div>
+          <button class="button-container" (click)="addDateRange()"  style="background-color: var(--gray-2);">
+            <b>Add</b>
+          </button>
+          <button class="button-container" (click)="deleteDateRange()"  style="background-color: var(--gray-2);">
+            <b>Delete</b>
+          </button>
+
+
+          <div class="normal-text">Select a date range during which you will have reservations for this accommodation.</div>
+
+          <div class="normal-text">Availaiblity: </div>
+          <div class="normal-text" *ngIf="addedDates.length > 0">
+            <ul>
+              <li *ngFor="let date of addedDates">
+                {{ date.start }} to {{ date.end }}
+              </li>
+            </ul>
+          </div>
+
           <button class="button-container" routerLink="/create-accommodation" style="background-color: var(--gray-2);">
             <b>Select as available</b>
           </button>

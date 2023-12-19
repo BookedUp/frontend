@@ -51,7 +51,7 @@ export class CalendarComponent implements OnChanges {
       const yearEnd = parsedDateEnd.getFullYear();
       const monthEnd = parsedDateEnd.getMonth() + 1;
       const dayEnd = parsedDateEnd.getDate();
-      
+
       this.displayedYear = yearStart;
       this.displayedMonth = monthStart;
 
@@ -66,38 +66,36 @@ export class CalendarComponent implements OnChanges {
       this.customPrices = this.getCustom(this.customPricesInput);
     }
     if(this.alreadyPickedInput != null){
-      console.log("ovo je input", this.alreadyPickedInput);
       this.alreadyPicked = this.getAlreadyPicked(this.alreadyPickedInput);
-      console.log("ovo je posle funkcije", this.alreadyPicked);
     }
     this.generateCalendar();
   }
 
   getCustom(priceList: PriceChange[]): { [date: string]: number } {
     var customPrices: { [date: string]: number } = {};
-  
+
     for (var i = 0; i < priceList.length; i++) {
       var priceChange = priceList[i];
       var dateString: string = priceChange.changeDate.toString().split('T')[0];
       var nextDateString: string | undefined;
-  
+
       if (i < priceList.length - 1) {
         nextDateString = priceList[i + 1].changeDate.toString().split('T')[0];
       }
-  
+
       customPrices[dateString] = priceChange.newPrice;
-  
+
       // Fill in intermediate dates within the range
       if (nextDateString) {
         var currentDate = new Date(dateString);
         var nextDate = new Date(nextDateString);
-  
+
         while (currentDate < nextDate) {
           currentDate.setDate(currentDate.getDate() + 1);
           customPrices[currentDate.toISOString().split('T')[0]] = priceChange.newPrice;
         }
       }
-  
+
       // If it's the last date, extend for an additional 30 days with the last known price
       if (i === priceList.length - 1) {
         var lastDate = new Date(dateString);
@@ -107,23 +105,23 @@ export class CalendarComponent implements OnChanges {
         }
       }
     }
-  
+
     return customPrices;
   }
-  
+
   getAlreadyPicked(dateRanges: DateRange[]): { [date: string]: string } {
     var alreadyPicked: { [date: string]: string } = {};
-  
+
     dateRanges.forEach((range) => {
       var fromDate: string = range.startDate.toString().split('T')[0];
       var toDate: string = range.endDate.toString().split('T')[0];
       alreadyPicked[fromDate] = toDate;
     });
-  
+
     return alreadyPicked;
   }
-  
-  
+
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['defaultPrice'] && !changes['defaultPrice'].firstChange) {
@@ -132,7 +130,6 @@ export class CalendarComponent implements OnChanges {
   }
 
   handleDateClick(day: number): void {
-    console.log("kliknuo si ovde: ", day);
     if (this.selectedRange.start === null) {
       // Selecting the start of the range
       this.selectedRange.start = day;
@@ -159,17 +156,17 @@ export class CalendarComponent implements OnChanges {
     this.updateSelectedStyles();
   }
   // Generate the calendar for the selected month and year
-  generateCalendar(): void {  
+  generateCalendar(): void {
     const firstDay = new Date(this.displayedYear, this.displayedMonth - 1, 1).getDay(); // 0-indexed
     const daysInMonth = new Date(this.displayedYear, this.displayedMonth, 0).getDate();
-  
+
     this.calendarDates = [];
-  
+
     // Fill in the days before the 1st day of the month with a placeholder
     for (let i = 0; i < firstDay; i++) {
       this.calendarDates.push({ day: 0, month: 0, year: 0, price: 0, selected: false });
     }
-  
+
     // Fill in the actual days of the month
     for (let day = 1; day <= daysInMonth; day++) {
       const dateKey = `${this.displayedYear}-${this.displayedMonth.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
@@ -181,23 +178,23 @@ export class CalendarComponent implements OnChanges {
         selected: false,
       });
     }
-  
+
     this.updateSelectedStyles();
   }
-  
+
 
   updateDefaultPrice(newDefaultPrice: number, changeDate: string): void {
-  
+
     // Update the default price for the specific date change
     this.customPrices[changeDate] = newDefaultPrice;
-  
+
     // Update default price for all subsequent dates
     let foundChangeDate = false;
     for (const dateKey in this.customPrices) {
       if (foundChangeDate) {
         this.customPrices[dateKey] = newDefaultPrice;
       }
-  
+
       if (dateKey === changeDate) {
         foundChangeDate = true;
       }
@@ -256,49 +253,62 @@ export class CalendarComponent implements OnChanges {
   isDateAlreadyPicked(day: { day: number }): boolean {
     if(day.day != 0 && Object.keys(this.alreadyPicked).length != 0){
       const dateKey = this.getDateKey(day);
-  
+
       // Check if the date falls within any already picked range
       return Object.entries(this.alreadyPicked).some(([start, end]) => {
         const startDate = new Date(start);
         const endDate = new Date(end);
         const currentDate = new Date(dateKey);
-    
+
         return currentDate >= startDate && currentDate <= endDate;
       });
     }else{
       return true;
     }
-    
+
   }
   getDateKey(day: { day: number }): string {
     return `${this.displayedYear}-${this.displayedMonth.toString().padStart(2, '0')}-${day.day.toString().padStart(2, '0')}`;
   }
-    
+
   getSelectedRange(): { start: string | null; end: string | null; hasAlreadyPicked: boolean } {
     if (this.selectedRange.start !== null && this.selectedRange.end !== null) {
       const startKey = this.getDateKey({ day: this.selectedRange.start });
       const endKey = this.getDateKey({ day: this.selectedRange.end });
-  
+
       // Check if there are already picked dates within the selected range
       const hasAlreadyPicked = Object.entries(this.alreadyPicked).some(([start, end]) => {
         const startDate = new Date(start);
         const endDate = new Date(end);
         const selectedStartDate = new Date(startKey);
         const selectedEndDate = new Date(endKey);
-  
+
         // Proveri da li se izabrani opseg nalazi unutar opsega iz this.alreadyPicked
         return (
-          (selectedStartDate >= startDate && selectedEndDate <= endDate) ||
-          (selectedStartDate <= startDate && selectedEndDate >= endDate)
+            (selectedStartDate >= startDate && selectedEndDate <= endDate) ||
+            (selectedStartDate <= startDate && selectedEndDate >= endDate)
         );
       });
-  
+
       return { start: startKey, end: endKey, hasAlreadyPicked: !hasAlreadyPicked };
+    } else if (this.selectedRange.start !== null) {
+      const startKey = this.getDateKey({ day: this.selectedRange.start });
+
+      // Check if the start date is already picked
+      const hasAlreadyPicked = Object.entries(this.alreadyPicked).some(([start, end]) => {
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+        const selectedStartDate = new Date(startKey);
+
+        return selectedStartDate >= startDate && selectedStartDate <= endDate;
+      });
+
+      return { start: startKey, end: null, hasAlreadyPicked: !hasAlreadyPicked };
     } else {
       return { start: null, end: null, hasAlreadyPicked: true };
     }
   }
-  
-  
-  
+
+
+
 }
