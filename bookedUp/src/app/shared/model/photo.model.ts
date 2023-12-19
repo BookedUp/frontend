@@ -1,6 +1,6 @@
 export interface Photo {
-  id: number;
+  id?: number;
   url: string;
-  caption: string;
-  active: boolean;
+  caption?: string;
+  active?: boolean;
 }

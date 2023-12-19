@@ -7,7 +7,7 @@
   text-align: left;
   font-size: var(--font-size-2xs);
   color: var(--gray-2);
-  font-family: var(--font-sansation); 
+  font-family: var(--font-sansation);
   display: flex;
   flex-direction: column;
 }
@@ -241,6 +241,8 @@ input {
   box-sizing: border-box;
   font-size: var(--font-size-smi);
   color: var(--color-white);
+  cursor: pointer;
+
 }
 .delete-account-wrapper{
   background-color: var(--color-firebrick);
