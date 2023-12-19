@@ -25,6 +25,8 @@ export class AccommodationDetailsComponent implements OnInit {
   startDate: string | null = null;
   endDate: string | null = null;
   role: string = '';
+  totalPrice: number = 0;
+  numberGuests: number = 0;
   constructor( private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService ) {}
 
 
@@ -36,6 +38,8 @@ export class AccommodationDetailsComponent implements OnInit {
       this.route.queryParams.subscribe(queryParams => {
         this.startDate = queryParams['startDate'];
         this.endDate = queryParams['endDate'];
+        this.totalPrice = queryParams['totalPrice'];
+        this.numberGuests = queryParams['numberGuests'];
       });
     });
 
@@ -103,6 +107,7 @@ export class AccommodationDetailsComponent implements OnInit {
       const selectedRange = this.calendarComponent.getSelectedRange();
       if(selectedRange.hasAlreadyPicked == false){
         console.log("Successfully select range.", selectedRange);
+        this.router.navigate(['/create-reservation', this.accommodationId], { queryParams: { startDate: selectedRange.start, endDate: selectedRange.end, totalPrice: this.totalPrice, numberGuests: this.numberGuests} })
       }else{
         console.log('You can not select this range, some dates are already reserved.', selectedRange);
       }
