@@ -89,7 +89,7 @@ export class AccommodationDetailsComponent implements OnInit {
             if(foundAccommodation){
               this.foundAccommodation = foundAccommodation;
               console.log("TOTAAAAAAAAAL "  + this.foundAccommodation.totalPrice);
-              this.totalPrice = this.foundAccommodation.totalPrice;
+              this.totalPrice = this.foundAccommodation?.totalPrice ?? 0;
             }
           }
         )
