@@ -209,7 +209,7 @@ export class CreateAccommodationComponent implements OnInit {
 
       console.log(this.addedDates);
 
-      //this.addedDates = this.mergeOverlappingDateRanges(this.addedDates);
+      this.addedDates = this.mergeOverlappingDateRanges(this.addedDates);
 
       if (this.calendarComponent?.selectedRange) {
         this.calendarComponent.selectedRange.start = null;
