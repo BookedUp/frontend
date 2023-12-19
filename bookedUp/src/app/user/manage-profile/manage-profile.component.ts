@@ -55,10 +55,10 @@ export class ManageProfileComponent implements OnInit {
             email: user.email,
             password: user.password,
             phone: user.phone,
-            streetAndNumber: user.address.streetAndNumber,
-            city: user.address.city,
-            postalCode: user.address.postalCode,
-            country: user.address.country,
+            streetAndNumber: user.address?.streetAndNumber,
+            city: user.address?.city,
+            postalCode: user.address?.postalCode,
+            country: user.address?.country,
           });
         },
         (error) => {
