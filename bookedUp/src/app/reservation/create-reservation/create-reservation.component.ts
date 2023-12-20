@@ -12,6 +12,7 @@ import { ReservationService } from '../reservation.service';
 import { Reservation } from '../model/reservation.model';
 import { ReservationStatus } from '../model/reservationStatus.enum';
 import { Guest } from 'src/app/user/model/guest.model';
+import {PhotoService} from "../../shared/photo/photo.service";
 
 @Component({
   selector: 'app-create-reservation',
@@ -31,14 +32,14 @@ export class CreateReservationComponent implements OnInit {
   status!: ReservationStatus;
   stringStatus : string = "CREATED";
   guest!: Guest;
-  //accommodation: Observable<Accommodation> = new Observable<Accommodation>();
+  pictureUrls: string[] = [];
   acc!: Accommodation;
   newReservation! : Reservation;
   nightNumber: number = 1;
 
   loggedUser!: User;
 
-  constructor(private fb: FormBuilder,private userService: UserService, private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService, private reservationService: ReservationService)
+  constructor(private fb: FormBuilder,private userService: UserService, private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService, private reservationService: ReservationService, private photoService: PhotoService)
   {
     this.reservationForm = this.fb.group({
       firstName: [{value: '', disabled: true}],
@@ -58,6 +59,7 @@ export class CreateReservationComponent implements OnInit {
       this.accommodationService.getAccommodationById(this.accommodationId).subscribe(
           (acc: Accommodation) => {
             this.acc = acc;
+            this.loadPhotos();
           },
           (error) => {
             console.error('Error loading acc:', error);
@@ -102,14 +104,14 @@ export class CreateReservationComponent implements OnInit {
   }
 
   reserve() {
-    
+
     // this.newReservation.startDate = new Date();
     // this.newReservation.endDate = new Date();
     this.newReservation.totalPrice = this.totalPrice;
     this.newReservation.guestsNumber = this.numberGuests;
     this.newReservation.accommodation = this.acc;
     this.newReservation.status = this.stringStatus as ReservationStatus;
-    
+
 
     console.log(this.newReservation.startDate);
     console.log(this.newReservation.endDate);
@@ -136,5 +138,33 @@ export class CreateReservationComponent implements OnInit {
 
   roundHalf(value: number): number {
     return Math.round(value * 2) / 2;
+  }
+
+  loadPhotos() {
+    this.acc.photos.forEach((imageName) => {
+      this.photoService.loadPhoto(imageName).subscribe(
+          (data) => {
+            this.createImageFromBlob(data).then((url: string) => {
+              this.pictureUrls.push(url);
+            }).catch(error => {
+              console.error("Greška prilikom konverzije slike ${imageName}:" , error);
+            });
+          },
+          (error) => {
+            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
+          }
+      );
+    });
+  }
+  createImageFromBlob(imageBlob: Blob): Promise<string> {
+    const reader = new FileReader();
+
+    return new Promise<string>((resolve, reject) => {
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(imageBlob);
+    });
   }
 }
