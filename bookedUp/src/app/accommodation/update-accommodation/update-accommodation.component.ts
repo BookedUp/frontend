@@ -107,6 +107,11 @@ export class UpdateAccommodationComponent implements OnInit {
               this.perNightChecked = true;
               this.perGuestChecked = false;
             }
+            
+            this.availability = acc.availability;
+            this.defaultPrice = acc.price;
+            this.accPriceChange = acc.priceChanges;
+
             this.updateForm!.setValue({
               name: acc.name,
               streetAndNumber: acc.address.streetAndNumber,
