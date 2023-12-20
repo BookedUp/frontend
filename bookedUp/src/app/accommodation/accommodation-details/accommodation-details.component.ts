@@ -8,6 +8,7 @@ import { CalendarComponent } from 'src/app/shared/calendar/calendar.component';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { UserService } from 'src/app/user/user.service';
 import { differenceInDays } from 'date-fns';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-accommodation-details',
@@ -34,7 +35,6 @@ export class AccommodationDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.role = this.authService.getRole();
-    console.log(this.role);
     
     this.route.params.subscribe((params) => {
       if ('id' in params) {
@@ -94,11 +94,9 @@ export class AccommodationDetailsComponent implements OnInit {
         });
         this.accommodationService.searchAccommodations(this.location, this.numberGuests , start, end, [], 0.0, 0.0, 0.0, null, "")
           .subscribe((filterResults: Accommodation[]) => {
-            // console.log('Accommodations:', filterResults);
             this.accommodations = filterResults;
             const foundAccommodation = this.findAccommodationById(this.accommodations, this.accommodationId);
 
-            console.log(foundAccommodation);
             if(foundAccommodation){
               this.foundAccommodation = foundAccommodation;
               this.totalPrice = this.foundAccommodation?.totalPrice ?? 0;
@@ -112,9 +110,7 @@ export class AccommodationDetailsComponent implements OnInit {
   }
   
   findAccommodationById(accommodations: Accommodation[], targetId: number): Accommodation | undefined {
-    console.log(targetId);
     for (const accommodation of accommodations) {
-      console.log(accommodation.id);
       if (accommodation.id == targetId) {
         return accommodation;
       }
@@ -169,11 +165,15 @@ export class AccommodationDetailsComponent implements OnInit {
   onButtonClick(): void {
     if (this.calendarComponent) {
       const selectedRange = this.calendarComponent.getSelectedRange();
-      if(selectedRange.hasAlreadyPicked == false){
+      if(this.totalPrice != 0){
         console.log("Successfully select range.", selectedRange);
         this.router.navigate(['/create-reservation', this.accommodationId], { queryParams: { startDate: selectedRange.start, endDate: selectedRange.end, totalPrice: this.totalPrice, numberGuests: this.numberGuests, days: this.days} })
       }else{
-        console.log('You can not select this range, some dates are already reserved.', selectedRange);
+        Swal.fire({
+          icon: 'error',
+          title: 'Can Not Complete Reservation!',
+          text: 'You can not select this range, some dates are already reserved.',
+        });
       }
     }
   }
