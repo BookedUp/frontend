@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { ChangeDetectorRef } from '@angular/core';
 import {DateRange} from "../model/dateRange.model";
 import {PriceChange} from "../model/priceChange.model";
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -39,6 +40,10 @@ export class CreateAccommodationComponent implements OnInit {
   acceptReservations: boolean = false;
   isInputReadOnly: boolean = false;
 
+  pictureUrls: string[] = [];
+  currentIndex: number = 0;
+  
+  customPricesInput: { [date: string]: number } = { };
   customPrice: number = 0;
 
   priceType: PriceType = PriceType.PerNight;
@@ -352,6 +357,47 @@ export class CreateAccommodationComponent implements OnInit {
     }
   }
   
+  nextImage() {
+    if (this.currentIndex < this.pictureUrls.length - 1) {
+      this.currentIndex++;
+    } else {
+      this.currentIndex = 0;
+    }
+  }
+
+  uploadNewImage(): void {
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    fileInput.click();
+  }
+  
+  handleFileInputChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+  
+    if (inputElement.files && inputElement.files.length > 0) {
+      const file = inputElement.files[0];
+  
+      const imageUrl = URL.createObjectURL(file);
+  
+      this.pictureUrls.push(imageUrl);
+  
+      // Update currentIndex to point to the newly added image
+      this.currentIndex = this.pictureUrls.length - 1;
+  
+      inputElement.value = '';
+    }
+  }
+  
+  
+  deleteImage():void{
+    if (this.currentIndex >= 0 && this.currentIndex < this.pictureUrls.length) {
+      this.pictureUrls.splice(this.currentIndex, 1);
+      if (this.currentIndex >= this.pictureUrls.length) {
+        this.currentIndex = this.pictureUrls.length - 1;
+      }
+    } else {
+      console.error('Invalid currentIndex value');
+    }
+  }
 
   private subtractDays(date: Date, days: number): Date {
     const result = new Date(date);

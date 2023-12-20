@@ -5,10 +5,28 @@
 
       <app-nav-bar></app-nav-bar>
 
-      <div class="images-container">
-        <app-image-frame>
-        </app-image-frame>
-      </div>
+      <div id="apartment-images" class="images-container">
+          <div class="image-box">
+            <ng-container *ngIf="pictureUrls.length > 0; else defaultImage">
+              <div *ngFor="let url of pictureUrls; let i = index" [class.active]="i === currentIndex">
+                <img class="room-image" alt="" [src]="url" (click)="nextImage()" />
+              </div>
+            </ng-container>
+            <ng-template #defaultImage>
+              <img class="room-image" src="../../assets/public/rectangle-281@2x.png" alt="" />
+            </ng-template>
+          </div>
+          
+          <div class="in-line-box" style="margin-top: 3%;">
+              <input type="file" id="fileInput" style="display: none" (change)="handleFileInputChange($event)" />
+              <button class="button-container" (click)="uploadNewImage()"  style="background-color: var(--color-seagreen-100); width: 30%; margin-right: 10%; margin-left: 15%;">
+                  <b>Add New Image</b>
+              </button>
+              <button class="button-container" (click)="deleteImage()"  style="background-color: var(--color-firebrick); width: 30%;">
+                  <b>Delete Image</b>
+              </button>
+          </div>
+    </div>
 
       <div class="main-data-box">
         <div id="right-data" class="right-container">
@@ -70,7 +88,7 @@
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <div class="in-line-box">
                 <b class="title-text" style="margin-right: 10%;">Minimum Guests</b>
-                <div class="normal-text" >
+                <div class="normal-text" style="width: 60%;">
                   <input [(ngModel)]="minimumPrice" type="number" placeholder='Enter minimum number of guests here..' pattern="\d*" />
                 </div>
               </div>
@@ -78,7 +96,7 @@
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <div class="in-line-box">
                 <b class="title-text" style="margin-right: 10%;">Maximum Guests</b>
-                <div class="normal-text">
+                <div class="normal-text" style="width: 60%;">
                   <input [(ngModel)]="maximumPrice" type="number" placeholder='Enter maximum number of guests here..' pattern="\d*" />
                 </div>
               </div>
