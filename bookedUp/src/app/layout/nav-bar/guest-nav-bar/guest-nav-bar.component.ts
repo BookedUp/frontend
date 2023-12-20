@@ -43,9 +43,14 @@ export class GuestNavBarComponent implements OnInit{
   }
 
   onPopupClick(event: Event): void {
-    if (this.isPopupVisible && event.target instanceof HTMLElement && event.target.hasAttribute('closable')) {
-      this.isPopupVisible = false;
+    if (this.isPopupVisible && event.target instanceof HTMLElement && !event.target.closest('.admin-dropdown')) {
+       this.isPopupVisible = false;
     }
+  }
+  
+  navigateTo(route: string): void {
+    this.isPopupVisible = false; // Close the popup when navigating
+    this.router.navigate([route]);
   }
 
   logOut(): void {
