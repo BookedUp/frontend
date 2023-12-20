@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { Observable, map } from 'rxjs';
 import { Photo } from 'src/app/shared/model/photo.model';
+import {PhotoService} from "../../shared/photo/photo.service";
 
 @Component({
   selector: 'app-update-accommodation',
@@ -40,6 +41,7 @@ export class UpdateAccommodationComponent implements OnInit {
   acceptReservations: boolean = false;
   isInputReadOnly: boolean = false;
   pictureUrls: string[] = [];
+  orgPictureUrls: string[] = [];
   currentIndex: number = 0;
 
 
@@ -63,7 +65,7 @@ export class UpdateAccommodationComponent implements OnInit {
 
   updateForm: FormGroup | undefined;
 
-  constructor(private router: Router,  private route: ActivatedRoute,private hostService: HostService, private authService: AuthService, private accommodationService: AccommodationService, private fb: FormBuilder) {
+  constructor(private router: Router,  private route: ActivatedRoute,private hostService: HostService, private authService: AuthService, private accommodationService: AccommodationService, private fb: FormBuilder, private photoService:PhotoService) {
     this.updateForm = this.fb.group({
       name: ['', Validators.required],
       streetAndNumber: ['', Validators.required],
@@ -89,8 +91,7 @@ export class UpdateAccommodationComponent implements OnInit {
     for (const type of accTypeValues) {
       this.accTypeList.push(this.transformEnumToDisplayFormat(type));
     }
-    console.log("ovo je ispis ranije", this.selectedAccommodation);
-    
+
     this.route.params.subscribe((params) => {
       this.selectedAccommodationId = params['id'];
 
@@ -98,6 +99,7 @@ export class UpdateAccommodationComponent implements OnInit {
       this.accommodationService.getAccommodationById(this.selectedAccommodationId).subscribe(
           (acc: Accommodation) => {
             this.selectedAccommodation = acc;
+            this.loadPhotos();
 
             if(acc.priceType == PriceType.PerGuest){
               this.perGuestChecked = true;
@@ -148,11 +150,11 @@ export class UpdateAccommodationComponent implements OnInit {
     //console.log("sta je default ", this.selectedAccommodation.price);
 
     this.getUrls().subscribe((urls) => {
-      this.pictureUrls = urls;
+      this.orgPictureUrls = urls;
     });
   }
 
-  
+
 
 handlePerNightChange() {
   if (this.perNightChecked) {
@@ -182,6 +184,7 @@ transformEnumToDisplayFormat(enumValue: string): string {
   const formattedString = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
   return formattedString;
 }
+
 
 applyCustomPrice(): void {
   if(this.isInputReadOnly == false){
@@ -396,16 +399,34 @@ deleteImage():void{
   console.log("ovo je posle brisanja ", this.pictureUrls);
 }
 
-private subtractDays(date: Date, days: number): Date {
-    const result = new Date(date);
-    result.setDate(result.getDate() - days);
-    return result;
+  loadPhotos() {
+    this.selectedAccommodation.photos.forEach((imageName) => {
+      this.photoService.loadPhoto(imageName).subscribe(
+          (data) => {
+            this.createImageFromBlob(data).then((url: string) => {
+              this.pictureUrls.push(url);
+            }).catch(error => {
+              console.error("Greška prilikom konverzije slike ${imageName}:" , error);
+            });
+          },
+          (error) => {
+            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
+          }
+      );
+    });
   }
 
-private addDays(date: Date, days: number): Date {
-    const result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-  }
 
+  createImageFromBlob(imageBlob: Blob): Promise<string> {
+    const reader = new FileReader();
+
+    return new Promise<string>((resolve, reject) => {
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(imageBlob);
+    });
+  }
 }
+

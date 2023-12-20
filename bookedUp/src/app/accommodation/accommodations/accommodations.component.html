@@ -26,7 +26,7 @@
       <img
               class="accommodation-image"
               alt=""
-              [src]="accommodation.photos[0].url"
+              [src]="getPhotoUrl(accommodation?.id)"
       />
 
       <div class="left-data">
@@ -35,11 +35,13 @@
 
           <div class="reviews-frame">
             <div class="stars-container">
-<!--                      <span class="star" *ngFor="let star of generateStars(roundHalf(accommodation.averageRating/2))">-->
+<!--                      <span class="star" *ngFor="let star of generateStars(roundHalf(accommodation.averageRating ? accommodation.averageRating / 2 : 0))">-->
 <!--                        {{ star }}-->
 <!--                      </span>-->
             </div>
 <!--            <div class="reviews-average">  {{ roundHalf(accommodation.averageRating/2) }}</div>-->
+              <div class="reviews-average" *ngIf="accommodation">{{ roundHalf(accommodation.averageRating ? accommodation.averageRating / 2 : 0) }}</div>
+
           </div>
 
           <div class="location-frame">

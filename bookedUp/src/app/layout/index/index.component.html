@@ -68,7 +68,7 @@
                               *ngFor="let accommodation of popularAccommodations | async; let last = last"
                               routerLink="/accommodation-details/{{accommodation.id}}">
 
-        <img class="hotel-image" alt="" [src]="accommodation.photos[0].url" />
+        <img class="hotel-image" alt="" [src]="getPhotoUrl(accommodation?.id)" />
 
         <div id="hotel-data" class="hotel-data">
           <div id="popular-text-left" class="popular-text-left">
@@ -81,7 +81,7 @@
             </div>
           </div>
           <div id="popular-text-right" class="popular-text-right">
-<!--            <b id="averageRating" style="color: var(&#45;&#45;blue-1);">{{ roundHalf(accommodation.averageRating/2) }} ★</b>-->
+            <b id="averageRating" style="color: var(--blue-1);" *ngIf="accommodation">{{ roundHalf(accommodation.averageRating ? accommodation.averageRating / 2 : 0) }} ★</b>
           </div>
         </div>
 

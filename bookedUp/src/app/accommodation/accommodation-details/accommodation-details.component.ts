@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { UserService } from 'src/app/user/user.service';
 import { differenceInDays } from 'date-fns';
 import Swal from 'sweetalert2';
+import {PhotoService} from "../../shared/photo/photo.service";
 
 @Component({
   selector: 'app-accommodation-details',
@@ -18,6 +19,8 @@ import Swal from 'sweetalert2';
 export class AccommodationDetailsComponent implements OnInit {
   @ViewChild('calendarRef') calendarComponent: CalendarComponent | undefined;
   pictureUrls: string[] = [];
+  orgPictureUrls: string[] = [];
+
   accommodationId: number = 1;
   accommodation: Observable<Accommodation> = new Observable<Accommodation>();
   selectedClass: string = 'bar-text';
@@ -31,7 +34,9 @@ export class AccommodationDetailsComponent implements OnInit {
   location: string = "";
   accommodations: Accommodation[] = [];
   foundAccommodation!: Accommodation;
-  constructor( private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService) {}
+
+  acc!:Accommodation;
+  constructor( private router: Router, private route: ActivatedRoute,private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.role = this.authService.getRole();
@@ -59,6 +64,12 @@ export class AccommodationDetailsComponent implements OnInit {
           }
         });
       }
+
+      this.accommodationService.getAccommodationById(this.accommodationId).subscribe((result) =>{
+        this.acc=result;
+        this.loadPhotos();
+      })
+
     });
     
 
@@ -66,12 +77,13 @@ export class AccommodationDetailsComponent implements OnInit {
       this.role = result;
     })
 
-    
+
 
     this.accommodation = this.accommodationService.getAccommodationById(this.accommodationId);
 
     this.getUrls().subscribe((urls) => {
-      this.pictureUrls = urls;
+      this.orgPictureUrls = urls;
+      console.log(this.orgPictureUrls);
     });
 
   }
@@ -103,22 +115,22 @@ export class AccommodationDetailsComponent implements OnInit {
             }
           }
         )
-      } 
-     
+      }
+
     }
-    
+
   }
-  
+
   findAccommodationById(accommodations: Accommodation[], targetId: number): Accommodation | undefined {
     for (const accommodation of accommodations) {
       if (accommodation.id == targetId) {
         return accommodation;
       }
     }
-    return undefined; 
+    return undefined;
   }
 
- 
+
 
   getUrls(): Observable<string[]> {
     return this.accommodation.pipe(
@@ -142,7 +154,7 @@ export class AccommodationDetailsComponent implements OnInit {
       this.router.navigate(['/accommodation-details'], { queryParams: { filter: 'overview' } });
     }
   }
-  
+
   generateStars(rating: number): string[] {
     const stars: string[] = [];
     for (let i = 1; i <= 5; i++) {
@@ -176,5 +188,53 @@ export class AccommodationDetailsComponent implements OnInit {
         });
       }
     }
+  }
+
+  // loadImages() {
+  //   this.accommodation..forEach((imageName) => {
+  //     this.accommodationService.getImage(imageName).subscribe(
+  //       (data) => {
+  //         this.createImageFromBlob(data).then((url: string) => {
+  //           this.slike.push({ ime: imageName.path, url: url });
+  //         }).catch(error => {
+  //           console.error(Greška prilikom konverzije slike ${imageName}: , error);
+  //         });
+  //       },
+  //       (error) => {
+  //         console.log(Doslo je do greske pri ucitavanju slike ${imageName}: , error);
+  //       }
+  //     );
+  //   });
+  // }
+
+
+  loadPhotos() {
+    this.acc.photos.forEach((imageName) => {
+      this.photoService.loadPhoto(imageName).subscribe(
+        (data) => {
+          this.createImageFromBlob(data).then((url: string) => {
+            this.pictureUrls.push(url);
+          }).catch(error => {
+            console.error("Greška prilikom konverzije slike ${imageName}:" , error);
+          });
+        },
+        (error) => {
+          console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
+        }
+      );
+    });
+  }
+
+
+  createImageFromBlob(imageBlob: Blob): Promise<string> {
+    const reader = new FileReader();
+
+    return new Promise<string>((resolve, reject) => {
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(imageBlob);
+    });
   }
 }

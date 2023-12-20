@@ -52,6 +52,7 @@ export class ReservationService {
   }
 
   createReservation(reservation: Reservation): Observable<Reservation> {
+    console.log(reservation.accommodation);
     return this.http.post<Reservation>(this.apiUrl, reservation);
   }
 

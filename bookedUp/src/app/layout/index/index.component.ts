@@ -6,6 +6,7 @@ import {Observable, from} from "rxjs";
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import {  FormGroup, FormBuilder, FormControl, Validators, NgForm, AbstractControl, ValidationErrors } from '@angular/forms';
+import {PhotoService} from "../../shared/photo/photo.service";
 
 @Component({
   selector: 'app-index',
@@ -19,14 +20,17 @@ export class IndexComponent implements OnInit {
     priceTypeGuest: string = '/per guest';
     priceTypeNight: string= '/per night';
     searchResults: Accommodation[] = [];
-    searchForm!: FormGroup;
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService) {
+    photoDict: {accId: number, url: string}[] =[];
+    searchForm!: FormGroup;
+    popularAcc: Accommodation[]=[];
+
+  constructor(private router: Router, private photoService:PhotoService,private formBuilder: FormBuilder, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService) {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.minFromDate = this.formatDate(tomorrow);
   }
-  
+
 
   private formatDate(date: Date): string {
     const year = date.getFullYear();
@@ -40,12 +44,15 @@ export class IndexComponent implements OnInit {
       this.popularAccommodations = this.accommodationService.getMostPopularAccommodations().pipe(
           map((accommodations: Accommodation[]) => accommodations.slice(0, 4))
         );
+
+      this.accommodationService.getMostPopularAccommodations().subscribe((results) => {
+          this.popularAcc = results;
+
+          this.loadPhotos();
+      });
+
   }
 
-
-  roundHalf(value: number): number {
-      return Math.round(value * 2) / 2;
-  }
 
   searchAccommodations() {
 
@@ -53,8 +60,8 @@ export class IndexComponent implements OnInit {
     this.authService.userState.subscribe((result) => {
         roleParam = result;
     })
-  
-    
+
+
       const location = (document.getElementById("locationTxt") as HTMLInputElement).value || "";
       const guestNumber = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10) || 0;
 
@@ -92,7 +99,7 @@ export class IndexComponent implements OnInit {
             this.router.navigate(['/search'], { queryParams: { location: location, selectedFromDate: selectedFromDate, selectedToDate: selectedToDate, guestNumber, searchResults: JSON.stringify(results)} });
           }
         });
-    
+
 
   }
 
@@ -114,7 +121,7 @@ export class IndexComponent implements OnInit {
         const selectedToDateInputValue = toDateInput.value;
         const selectedToDate = selectedToDateInputValue ? new Date(selectedToDateInputValue) : new Date();
 
-        
+
 
         this.accommodationService.searchAccommodations(country, guestNumber, selectedFromDate, selectedToDate)
             .subscribe((results) => {
@@ -130,4 +137,50 @@ export class IndexComponent implements OnInit {
                 }
             });
     }
+    loadPhotos() {
+        this.popularAcc.forEach((acc) => {
+            this.photoService.loadPhoto(acc.photos[0]).subscribe(
+                (data) => {
+                    this.createImageFromBlob(data).then((url: string) => {
+                        if(acc.id){
+                            this.photoDict.push({accId: acc.id, url: url});
+                        }
+                    }).catch(error => {
+                        console.error("Greška prilikom konverzije slike ${imageName}:" , error);
+                    });
+                },
+                (error) => {
+                    console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
+                }
+            );
+        });
+    }
+
+
+    createImageFromBlob(imageBlob: Blob): Promise<string> {
+        const reader = new FileReader();
+
+        return new Promise<string>((resolve, reject) => {
+            reader.onloadend = () => {
+                resolve(reader.result as string);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(imageBlob);
+        });
+    }
+
+    getPhotoUrl(accId: number | undefined): string | undefined {
+        const photo = this.photoDict.find((item) => item.accId === accId);
+        return photo ? photo.url : '';
+    }
+
+
+
+    roundHalf(value: number| undefined): number| undefined {
+      if(value){
+          return Math.round(value * 2) / 2;
+      }
+      return 0;
+    }
+
 }
