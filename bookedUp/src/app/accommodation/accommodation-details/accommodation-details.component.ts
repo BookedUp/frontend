@@ -37,15 +37,30 @@ export class AccommodationDetailsComponent implements OnInit {
     console.log(this.role);
     
     this.route.params.subscribe((params) => {
-      this.accommodationId = params['id'];
-      this.route.queryParams.subscribe(queryParams => {
-        this.startDate = queryParams['startDate'];
-        this.endDate = queryParams['endDate'];
-        this.totalPrice = queryParams['totalPrice'];
-        this.numberGuests = queryParams['numberGuests'];
-        this.days = queryParams['days'];
-      });
+      if ('id' in params) {
+        this.accommodationId = params['id'];
+    
+        // Now, check for query parameters
+        this.route.queryParams.subscribe(queryParams => {
+          if ('startDate' in queryParams) {
+            this.startDate = queryParams['startDate'];
+          }
+          if ('endDate' in queryParams) {
+            this.endDate = queryParams['endDate'];
+          }
+          if ('totalPrice' in queryParams) {
+            this.totalPrice = queryParams['totalPrice'];
+          }
+          if ('numberGuests' in queryParams) {
+            this.numberGuests = queryParams['numberGuests'];
+          }
+          if ('days' in queryParams) {
+            this.days = queryParams['days'];
+          }
+        });
+      }
     });
+    
 
     this.authService.userState.subscribe((result) => {
       this.role = result;
@@ -54,7 +69,6 @@ export class AccommodationDetailsComponent implements OnInit {
     
 
     this.accommodation = this.accommodationService.getAccommodationById(this.accommodationId);
-
 
     this.getUrls().subscribe((urls) => {
       this.pictureUrls = urls;
@@ -82,13 +96,11 @@ export class AccommodationDetailsComponent implements OnInit {
           .subscribe((filterResults: Accommodation[]) => {
             // console.log('Accommodations:', filterResults);
             this.accommodations = filterResults;
-            console.log("IDDDDD" + this.accommodationId)
             const foundAccommodation = this.findAccommodationById(this.accommodations, this.accommodationId);
 
             console.log(foundAccommodation);
             if(foundAccommodation){
               this.foundAccommodation = foundAccommodation;
-              console.log("TOTAAAAAAAAAL "  + this.foundAccommodation.totalPrice);
               this.totalPrice = this.foundAccommodation?.totalPrice ?? 0;
             }
           }
