@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { Observable, map } from 'rxjs';
 import { Photo } from 'src/app/shared/model/photo.model';
+import {PhotoService} from "../../shared/photo/photo.service";
 
 @Component({
   selector: 'app-update-accommodation',
@@ -40,6 +41,7 @@ export class UpdateAccommodationComponent implements OnInit {
   acceptReservations: boolean = false;
   isInputReadOnly: boolean = false;
   pictureUrls: string[] = [];
+  orgPictureUrls: string[] = [];
   currentIndex: number = 0;
 
 
@@ -63,7 +65,7 @@ export class UpdateAccommodationComponent implements OnInit {
 
   updateForm: FormGroup | undefined;
 
-  constructor(private router: Router,  private route: ActivatedRoute,private hostService: HostService, private authService: AuthService, private accommodationService: AccommodationService, private fb: FormBuilder) {
+  constructor(private router: Router,  private route: ActivatedRoute,private hostService: HostService, private authService: AuthService, private accommodationService: AccommodationService, private fb: FormBuilder, private photoService:PhotoService) {
     this.updateForm = this.fb.group({
       name: ['', Validators.required],
       streetAndNumber: ['', Validators.required],
@@ -90,7 +92,7 @@ export class UpdateAccommodationComponent implements OnInit {
       this.accTypeList.push(this.transformEnumToDisplayFormat(type));
     }
 
-    
+
 
     this.route.params.subscribe((params) => {
       this.selectedAccommodationId = params['id'];
@@ -99,6 +101,7 @@ export class UpdateAccommodationComponent implements OnInit {
       this.accommodationService.getAccommodationById(this.selectedAccommodationId).subscribe(
           (acc: Accommodation) => {
             this.selectedAccommodation = acc;
+            this.loadPhotos();
 
             if(acc.priceType == PriceType.PerGuest){
               this.perGuestChecked = true;
@@ -137,11 +140,11 @@ export class UpdateAccommodationComponent implements OnInit {
     });
 
     this.getUrls().subscribe((urls) => {
-      this.pictureUrls = urls;
+      this.orgPictureUrls = urls;
     });
   }
 
-  
+
 
   handlePerNightChange() {
     if (this.perNightChecked) {
@@ -188,25 +191,25 @@ export class UpdateAccommodationComponent implements OnInit {
             this.isInputReadOnly = true;
             const selectedRange = this.calendarComponent?.getSelectedRange();
             if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
-              
+
               const startDate = new Date(selectedRange.start);
               const endDate = new Date(selectedRange.end);
-      
+
               const newPriceChangeStart: PriceChange = {
                 changeDate: startDate,
                 newPrice: this.customPrice,
               };
-      
+
               this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
-      
-      
+
+
               var lastDate = new Date(selectedRange.end);
               lastDate.setDate(lastDate.getDate() + 1);
               const newPriceChange: PriceChange = {
                 changeDate: lastDate,
                 newPrice: this.defaultPrice,
               };
-        
+
               this.accPriceChange = [...this.accPriceChange, newPriceChange];
           }
           }else{
@@ -222,25 +225,25 @@ export class UpdateAccommodationComponent implements OnInit {
         this.isInputReadOnly = true;
         const selectedRange = this.calendarComponent?.getSelectedRange();
         if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
-          
+
           const startDate = new Date(selectedRange.start);
           const endDate = new Date(selectedRange.end);
-  
+
           const newPriceChangeStart: PriceChange = {
             changeDate: startDate,
             newPrice: this.customPrice,
           };
-  
+
           this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
-  
-  
+
+
           var lastDate = new Date(selectedRange.end);
           lastDate.setDate(lastDate.getDate() + 1);
           const newPriceChange: PriceChange = {
             changeDate: lastDate,
             newPrice: this.defaultPrice,
           };
-    
+
           this.accPriceChange = [...this.accPriceChange, newPriceChange];
       }
       }else{
@@ -248,9 +251,9 @@ export class UpdateAccommodationComponent implements OnInit {
         return;
       }
     }
-    
 
-    
+
+
   }
 
 
@@ -388,16 +391,34 @@ deleteImage():void{
   console.log("ovo je posle brisanja ", this.pictureUrls);
 }
 
-private subtractDays(date: Date, days: number): Date {
-    const result = new Date(date);
-    result.setDate(result.getDate() - days);
-    return result;
+  loadPhotos() {
+    this.selectedAccommodation.photos.forEach((imageName) => {
+      this.photoService.loadPhoto(imageName).subscribe(
+          (data) => {
+            this.createImageFromBlob(data).then((url: string) => {
+              this.pictureUrls.push(url);
+            }).catch(error => {
+              console.error("Greška prilikom konverzije slike ${imageName}:" , error);
+            });
+          },
+          (error) => {
+            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
+          }
+      );
+    });
   }
 
-private addDays(date: Date, days: number): Date {
-    const result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-  }
 
+  createImageFromBlob(imageBlob: Blob): Promise<string> {
+    const reader = new FileReader();
+
+    return new Promise<string>((resolve, reject) => {
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(imageBlob);
+    });
+  }
 }
+
