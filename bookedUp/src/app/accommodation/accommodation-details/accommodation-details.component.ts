@@ -8,6 +8,7 @@ import { CalendarComponent } from 'src/app/shared/calendar/calendar.component';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { UserService } from 'src/app/user/user.service';
 import { differenceInDays } from 'date-fns';
+import {PhotoService} from "../../shared/photo/photo.service";
 
 @Component({
   selector: 'app-accommodation-details',
@@ -17,6 +18,8 @@ import { differenceInDays } from 'date-fns';
 export class AccommodationDetailsComponent implements OnInit {
   @ViewChild('calendarRef') calendarComponent: CalendarComponent | undefined;
   pictureUrls: string[] = [];
+  orgPictureUrls: string[] = [];
+
   accommodationId: number = 1;
   accommodation: Observable<Accommodation> = new Observable<Accommodation>();
   selectedClass: string = 'bar-text';
@@ -30,12 +33,14 @@ export class AccommodationDetailsComponent implements OnInit {
   location: string = "";
   accommodations: Accommodation[] = [];
   foundAccommodation!: Accommodation;
-  constructor( private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService) {}
+
+  acc!:Accommodation;
+  constructor( private router: Router, private route: ActivatedRoute,private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.role = this.authService.getRole();
     console.log(this.role);
-    
+
     this.route.params.subscribe((params) => {
       this.accommodationId = params['id'];
       this.route.queryParams.subscribe(queryParams => {
@@ -45,19 +50,26 @@ export class AccommodationDetailsComponent implements OnInit {
         this.numberGuests = queryParams['numberGuests'];
         this.days = queryParams['days'];
       });
+
+      this.accommodationService.getAccommodationById(this.accommodationId).subscribe((result) =>{
+        this.acc=result;
+        this.loadPhotos();
+      })
+
     });
 
     this.authService.userState.subscribe((result) => {
       this.role = result;
     })
 
-    
+
 
     this.accommodation = this.accommodationService.getAccommodationById(this.accommodationId);
 
 
     this.getUrls().subscribe((urls) => {
-      this.pictureUrls = urls;
+      this.orgPictureUrls = urls;
+      console.log(this.orgPictureUrls);
     });
 
   }
@@ -93,12 +105,12 @@ export class AccommodationDetailsComponent implements OnInit {
             }
           }
         )
-      } 
-     
+      }
+
     }
-    
+
   }
-  
+
   findAccommodationById(accommodations: Accommodation[], targetId: number): Accommodation | undefined {
     console.log(targetId);
     for (const accommodation of accommodations) {
@@ -107,10 +119,10 @@ export class AccommodationDetailsComponent implements OnInit {
         return accommodation;
       }
     }
-    return undefined; 
+    return undefined;
   }
 
- 
+
 
   getUrls(): Observable<string[]> {
     return this.accommodation.pipe(
@@ -134,7 +146,7 @@ export class AccommodationDetailsComponent implements OnInit {
       this.router.navigate(['/accommodation-details'], { queryParams: { filter: 'overview' } });
     }
   }
-  
+
   generateStars(rating: number): string[] {
     const stars: string[] = [];
     for (let i = 1; i <= 5; i++) {
@@ -164,5 +176,53 @@ export class AccommodationDetailsComponent implements OnInit {
         console.log('You can not select this range, some dates are already reserved.', selectedRange);
       }
     }
+  }
+
+  // loadImages() {
+  //   this.accommodation..forEach((imageName) => {
+  //     this.accommodationService.getImage(imageName).subscribe(
+  //       (data) => {
+  //         this.createImageFromBlob(data).then((url: string) => {
+  //           this.slike.push({ ime: imageName.path, url: url });
+  //         }).catch(error => {
+  //           console.error(Greška prilikom konverzije slike ${imageName}: , error);
+  //         });
+  //       },
+  //       (error) => {
+  //         console.log(Doslo je do greske pri ucitavanju slike ${imageName}: , error);
+  //       }
+  //     );
+  //   });
+  // }
+
+
+  loadPhotos() {
+    this.acc.photos.forEach((imageName) => {
+      this.photoService.loadPhoto(imageName).subscribe(
+        (data) => {
+          this.createImageFromBlob(data).then((url: string) => {
+            this.pictureUrls.push(url);
+          }).catch(error => {
+            console.error("Greška prilikom konverzije slike ${imageName}:" , error);
+          });
+        },
+        (error) => {
+          console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
+        }
+      );
+    });
+  }
+
+
+  createImageFromBlob(imageBlob: Blob): Promise<string> {
+    const reader = new FileReader();
+
+    return new Promise<string>((resolve, reject) => {
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(imageBlob);
+    });
   }
 }
