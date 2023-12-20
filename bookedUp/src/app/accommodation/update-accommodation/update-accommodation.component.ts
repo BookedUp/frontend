@@ -92,8 +92,6 @@ export class UpdateAccommodationComponent implements OnInit {
       this.accTypeList.push(this.transformEnumToDisplayFormat(type));
     }
 
-
-
     this.route.params.subscribe((params) => {
       this.selectedAccommodationId = params['id'];
 
@@ -110,6 +108,14 @@ export class UpdateAccommodationComponent implements OnInit {
               this.perNightChecked = true;
               this.perGuestChecked = false;
             }
+
+            this.availability = acc.availability;
+            this.accPriceChange = acc.priceChanges;
+            this.defaultPrice = acc.price;
+            console.log("sta je default unutar servisa ", this.defaultPrice);
+            console.log("sta je accPriceChange unutar servisa ", this.accPriceChange);
+            console.log("sta je availability unutar servisa ", this.availability );
+
             this.updateForm!.setValue({
               name: acc.name,
               streetAndNumber: acc.address.streetAndNumber,
@@ -127,7 +133,7 @@ export class UpdateAccommodationComponent implements OnInit {
           },
           (error) => {console.error('Error loading user:', error);
           });
-
+      
 
       this.hostService.getHost(this.authService.getUserID()).subscribe(
           (host: Host) => {
@@ -139,6 +145,10 @@ export class UpdateAccommodationComponent implements OnInit {
       );
     });
 
+    
+    console.log("sta je selected date ", this.selectedAccommodation);
+    //console.log("sta je default ", this.selectedAccommodation.price);
+
     this.getUrls().subscribe((urls) => {
       this.orgPictureUrls = urls;
     });
@@ -146,117 +156,115 @@ export class UpdateAccommodationComponent implements OnInit {
 
 
 
-  handlePerNightChange() {
-    if (this.perNightChecked) {
-      this.perGuestChecked = false;
-      this.priceType = PriceType.PerNight;
+handlePerNightChange() {
+  if (this.perNightChecked) {
+    this.perGuestChecked = false;
+    this.priceType = PriceType.PerNight;
+  }
+}
+
+handlePerGuestChange() {
+  if (this.perGuestChecked) {
+    this.perNightChecked = false;
+    this.priceType = PriceType.PerGuest;
+  }
+}
+
+handleAccTypeChange(selectedAccType: string): void {
+  this.accType = AccommodationType[selectedAccType as keyof typeof AccommodationType];
+  Object.keys(this.accTypeChecked).forEach(accType => {
+    if (accType !== selectedAccType) {
+      this.accTypeChecked[accType] = false;
     }
-  }
+  });
+}
 
-  handlePerGuestChange() {
-    if (this.perGuestChecked) {
-      this.perNightChecked = false;
-      this.priceType = PriceType.PerGuest;
-    }
-  }
-
-  handleAccTypeChange(selectedAccType: string): void {
-    this.accType = AccommodationType[selectedAccType as keyof typeof AccommodationType];
-    Object.keys(this.accTypeChecked).forEach(accType => {
-      if (accType !== selectedAccType) {
-        this.accTypeChecked[accType] = false;
-      }
-    });
-  }
-
-  transformEnumToDisplayFormat(enumValue: string): string {
-    const words = enumValue.split('_');
-    const formattedString = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-    return formattedString;
-  }
+transformEnumToDisplayFormat(enumValue: string): string {
+  const words = enumValue.split('_');
+  const formattedString = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+  return formattedString;
+}
 
 
-  applyCustomPrice(): void {
-    if(this.isInputReadOnly == false){
-      Swal.fire({
-        title: 'Default Price Changed!',
-        text: 'You can no longer change it in this window.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          if(this.defaultPrice != 0){
-            this.isInputReadOnly = true;
-            const selectedRange = this.calendarComponent?.getSelectedRange();
-            if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
-
-              const startDate = new Date(selectedRange.start);
-              const endDate = new Date(selectedRange.end);
-
-              const newPriceChangeStart: PriceChange = {
-                changeDate: startDate,
-                newPrice: this.customPrice,
-              };
-
-              this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
-
-
-              var lastDate = new Date(selectedRange.end);
-              lastDate.setDate(lastDate.getDate() + 1);
-              const newPriceChange: PriceChange = {
-                changeDate: lastDate,
-                newPrice: this.defaultPrice,
-              };
-
-              this.accPriceChange = [...this.accPriceChange, newPriceChange];
-          }
-          }else{
-            alert("You didn't input default price. Please provide a default price before entering a custom one.");
-            return;
-          }
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
+applyCustomPrice(): void {
+  if(this.isInputReadOnly == false){
+    Swal.fire({
+      title: 'Default Price Changed!',
+      text: 'You can no longer change it in this window.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if(this.defaultPrice != 0){
+          this.isInputReadOnly = true;
+          const selectedRange = this.calendarComponent?.getSelectedRange();
+          if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
+            
+            const startDate = new Date(selectedRange.start);
+            const endDate = new Date(selectedRange.end);
+    
+            const newPriceChangeStart: PriceChange = {
+              changeDate: startDate,
+              newPrice: this.customPrice,
+            };
+    
+            this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
+    
+    
+            var lastDate = new Date(selectedRange.end);
+            lastDate.setDate(lastDate.getDate() + 1);
+            const newPriceChange: PriceChange = {
+              changeDate: lastDate,
+              newPrice: this.defaultPrice,
+            };
+      
+            this.accPriceChange = [...this.accPriceChange, newPriceChange];
+        }
+        }else{
+          alert("You didn't input default price. Please provide a default price before entering a custom one.");
           return;
         }
-      });
-    }else{
-      if(this.defaultPrice != 0){
-        this.isInputReadOnly = true;
-        const selectedRange = this.calendarComponent?.getSelectedRange();
-        if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
-
-          const startDate = new Date(selectedRange.start);
-          const endDate = new Date(selectedRange.end);
-
-          const newPriceChangeStart: PriceChange = {
-            changeDate: startDate,
-            newPrice: this.customPrice,
-          };
-
-          this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
-
-
-          var lastDate = new Date(selectedRange.end);
-          lastDate.setDate(lastDate.getDate() + 1);
-          const newPriceChange: PriceChange = {
-            changeDate: lastDate,
-            newPrice: this.defaultPrice,
-          };
-
-          this.accPriceChange = [...this.accPriceChange, newPriceChange];
-      }
-      }else{
-        alert("You didn't input default price. Please provide a default price before entering a custom one.");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
         return;
       }
+    });
+  }else{
+    if(this.defaultPrice != 0){
+      this.isInputReadOnly = true;
+      const selectedRange = this.calendarComponent?.getSelectedRange();
+      if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
+        
+        const startDate = new Date(selectedRange.start);
+        const endDate = new Date(selectedRange.end);
+
+        const newPriceChangeStart: PriceChange = {
+          changeDate: startDate,
+          newPrice: this.customPrice,
+        };
+
+        this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
+
+
+        var lastDate = new Date(selectedRange.end);
+        lastDate.setDate(lastDate.getDate() + 1);
+        const newPriceChange: PriceChange = {
+          changeDate: lastDate,
+          newPrice: this.defaultPrice,
+        };
+  
+        this.accPriceChange = [...this.accPriceChange, newPriceChange];
     }
-
-
-
+    }else{
+      alert("You didn't input default price. Please provide a default price before entering a custom one.");
+      return;
+    }
   }
+  
 
-
+  
+}
 
 addDateRange() {
   const selectedDates = this.calendarComponent?.getSelectedRange();
@@ -306,7 +314,6 @@ private mergeOverlappingDateRanges(dateRanges: { start: string, end: string }[])
   return mergedRanges;
 }
 
-
 deleteDateRange(): void {
   const selectedDates = this.calendarComponent?.getSelectedRange();
 
@@ -345,6 +352,7 @@ deleteDateRange(): void {
     this.addedDates = this.mergeOverlappingDateRanges(this.addedDates);
   }
 }
+
 nextImage() {
   if (this.currentIndex < this.pictureUrls.length - 1) {
     this.currentIndex++;

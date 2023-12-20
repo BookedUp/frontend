@@ -119,8 +119,8 @@
         <div id="left-data" class="left-container">
            <app-calendar #calendarRef
                 [defaultPrice]="defaultPrice"
+                [customPricesInput]="accPriceChange"
                 [alreadyPickedInput]="availability"
-                [customPrices]="customPricesInput"
            ></app-calendar>
             <button class="button-container" (click)="addDateRange()"  style="background-color: var(--gray-2);">
                 <b>Add</b>
