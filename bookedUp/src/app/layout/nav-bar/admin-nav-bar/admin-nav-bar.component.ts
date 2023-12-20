@@ -27,6 +27,7 @@ export class AdminNavBarComponent implements OnInit{
     this.userService.getUser(this.authService.getUserID()).subscribe(
         (user: User) => {
           this.loggedUser = user;
+          this.loadPhoto();
         },
         (error) => {
           console.error('Error loading user:', error);
@@ -53,5 +54,21 @@ export class AdminNavBarComponent implements OnInit{
         this.router.navigate(['/']);
       }
     })
+  }
+
+  private loadPhoto() {
+
+  }
+
+  createImageFromBlob(imageBlob: Blob): Promise<string> {
+    const reader = new FileReader();
+
+    return new Promise<string>((resolve, reject) => {
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(imageBlob);
+    });
   }
 }
