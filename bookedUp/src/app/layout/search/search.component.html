@@ -178,7 +178,7 @@
               <img
                 class="search-unlogged-child11"
                 alt=""
-                [src]="result.photos && result.photos.length > 0 ? result.photos[0].url : 'path/to/default/image.jpg'"
+                [src]="getPhotoUrl(result?.id)"
                 id="rectangleImage"
               />
             </div>
@@ -203,14 +203,15 @@
 
               <div class="room-2-days27" *ngIf="result.totalPrice !== 0">1 room {{ calculateDayDifference() }} days</div>
               <div class="group-child108">
-                <div class="stars-container">
-<!--                  <span class="star" *ngFor="let star of generateStars(roundHalf(result.averageRating/2))">-->
-<!--                    {{ star }}-->
-<!--                  </span>-->
+                <div class="stars-container" *ngIf="result">
+                    <span class="star" *ngFor="let star of generateStars(roundHalf(result?.averageRating ?? 0))">
+                      {{ star }}
+                    </span>
+
                 </div>
               </div>
-              <!-- <div class="reviews55">{{ result.averageRating }}</div> -->
-              <div class="reviews55">{{ result?.averageRating !== undefined ? result.averageRating: 0.0 }}</div>
+               <div class="reviews55" *ngIf="result">{{ roundHalf(result.averageRating ? result.averageRating / 2 : 0) }}</div>
+<!--              <div class="reviews55">{{ result?.averageRating !== undefined ? result.averageRating: 0.0 }}</div>-->
               <div class="see-availability-wrapper26" id="frameContainer19">
                 <b class="register1" (click)="navigateToAccommodationDetails(result?.id ?? 0, result?.totalPrice ?? 0)">See availability</b>
               </div>
