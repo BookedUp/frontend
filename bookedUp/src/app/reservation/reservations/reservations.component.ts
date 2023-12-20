@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../infrastructure/auth/auth.service";
 import {ReservationStatus} from "../model/reservationStatus.enum";
 import Swal from "sweetalert2";
+import {PhotoService} from "../../shared/photo/photo.service";
 
 @Component({
   selector: 'app-reservations',
@@ -17,7 +18,9 @@ export class ReservationsComponent implements OnInit {
   reservations: Observable<Reservation[]> = new Observable<Reservation[]>();
   selectedClass: string = 'all-reservation';
   filter: string = 'all';
-  constructor(private reservationService: ReservationService, private router: Router, private route: ActivatedRoute, private authService: AuthService) { }
+  photoDict: { accId: number, url: string }[] = [];
+  res: Reservation[] = [];
+  constructor(private reservationService: ReservationService, private router: Router, private route: ActivatedRoute, private authService: AuthService, private photoService: PhotoService) { }
 
   protected readonly ReservationStatus = ReservationStatus;
 
@@ -31,6 +34,10 @@ export class ReservationsComponent implements OnInit {
   private loadReservations(): void {
     if (this.filter === 'all') {
       this.reservations = this.reservationService.getReservationsByGuestId(this.authService.getUserID());
+      this.reservationService.getReservationsByGuestId(this.authService.getUserID()).subscribe((results) => {
+        this.res = results;
+        this.loadPhotos();
+      });
     }
   }
 
@@ -48,14 +55,14 @@ export class ReservationsComponent implements OnInit {
     return stars;
   }
 
-  roundHalf(value: number): number {
-    return Math.round(value * 2) / 2;
-  }
-
   getGuestsReservations() {
     this.selectedClass = 'all-reservation';
     this.router.navigate(['my-reservations'], { queryParams: { filter: 'all' } });
     this.reservations = this.reservationService.getReservationsByGuestId(this.authService.getUserID());
+    this.reservationService.getReservationsByGuestId(this.authService.getUserID()).subscribe((results) => {
+      this.res = results;
+      this.loadPhotos();
+    });
   }
 
 
@@ -74,6 +81,51 @@ export class ReservationsComponent implements OnInit {
     }
 
     this.reservations = this.reservationService.getReservationsByStatusAndGuestId(this.authService.getUserID(), status);
+    this.reservationService.getReservationsByStatusAndGuestId(this.authService.getUserID(), status).subscribe((results) => {
+      this.res = results;
+      this.loadPhotos();
+    });
+  }
+  loadPhotos() {
+    this.res.forEach((ress) => {
+      this.photoService.loadPhoto(ress.accommodation.photos[0]).subscribe(
+          (data) => {
+            this.createImageFromBlob(data).then((url: string) => {
+              if (ress.accommodation.id) {
+                this.photoDict.push({accId: ress.accommodation.id, url: url});
+              }
+            }).catch(error => {
+              console.error("Greška prilikom konverzije slike ${imageName}:", error);
+            });
+          },
+          (error) => {
+            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
+          }
+      );
+    });
+  }
+  createImageFromBlob(imageBlob: Blob): Promise<string> {
+    const reader = new FileReader();
+
+    return new Promise<string>((resolve, reject) => {
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(imageBlob);
+    });
   }
 
+  getPhotoUrl(accId: number | undefined): string | undefined {
+    const photo = this.photoDict.find((item) => item.accId === accId);
+    return photo ? photo.url : '';
+  }
+
+  roundHalf(value: number | undefined): number | undefined {
+    if (value) {
+      return Math.round(value * 2) / 2;
+    }
+    return 0;
+  }
 }
+

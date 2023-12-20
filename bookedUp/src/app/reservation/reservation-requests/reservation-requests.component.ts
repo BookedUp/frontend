@@ -143,6 +143,10 @@ export class ReservationRequestsComponent implements OnInit {
     this.selectedClass = 'all-reservation';
     this.router.navigate(['my-reservations'], { queryParams: { filter: 'all' } });
     this.reservations = this.reservationService.getReservationsByHostId(this.authService.getUserID());
+    this.reservationService.getReservationsByHostId(this.authService.getUserID()).subscribe((results) => {
+      this.res = results;
+      this.loadPhotos();
+    });
   }
 
 
@@ -161,6 +165,10 @@ export class ReservationRequestsComponent implements OnInit {
     }
 
     this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), status);
+    this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), status).subscribe((results) => {
+      this.res = results;
+      this.loadPhotos();
+    });
   }
 
   loadPhotos() {
