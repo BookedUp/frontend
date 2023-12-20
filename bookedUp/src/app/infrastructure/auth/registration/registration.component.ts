@@ -62,11 +62,14 @@ export class RegistrationComponent {
       this.authService.register(user).subscribe({
         next: (registeredUser: User) => {
           Swal.fire('Success', 'Successfully registered user!', 'success');
-          this.router.navigate(['/'])
+          const emailValue = this.registrationForm.get('email')?.value;
+          this.router.navigate(['/check-inbox', { email: emailValue }]);
+          
         },
         error: (error) => {
           Swal.fire('Info', 'Your request has been successfully created,but you must activate account.', 'success');
-          this.router.navigate(['/'])
+          const emailValue = this.registrationForm.get('email')?.value;
+          this.router.navigate(['/check-inbox', { email: emailValue }]);
 
         }
       });
