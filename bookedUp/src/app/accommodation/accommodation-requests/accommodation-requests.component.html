@@ -23,7 +23,7 @@
               <img
                 class="accommodation-image"
                 alt=""
-                [src]="accommodation.photos[0].url"
+                [src]="getPhotoUrl(accommodation?.id)"
               />
 
               <div class="left-data">
@@ -36,7 +36,7 @@
 <!--                        {{ star }}-->
 <!--                      </span>-->
                     </div>
-<!--                      <div class="reviews55">{{ accommodation?.averageRating !== undefined ? roundHalf(accommodation.averageRating / 2) : 'N/A' }}</div>-->
+                      <div class="reviews-average" *ngIf="accommodation">{{ roundHalf(accommodation.averageRating ? accommodation.averageRating / 2 : 0) }}</div>
                   </div>
 
                   <div class="location-frame">
