@@ -16,7 +16,7 @@ export class CalendarComponent implements OnChanges {
   @Input() defaultPrice: number = 0;
   private isFirstChange = true;
   @Input() customPricesInput: PriceChange[] | null = [];
-  @Input() customPrices: { [date: string]: number } = { };
+  customPrices: { [date: string]: number } = { };
   @Input() alreadyPickedInput: DateRange[] | null = [];
   alreadyPicked: { [date: string]: string } = { };
   @Input() startDate: string | null = null;
@@ -39,12 +39,11 @@ export class CalendarComponent implements OnChanges {
 
   ngOnInit(){
     this.userRole = this.authService.getRole();
-    if(this.startDate != null && this.endDate != null){
-
+    
+    if(this.startDate !== null && this.endDate !== null){
       const parsedDateStart = new Date(this.startDate);
       const parsedDateEnd = new Date(this.endDate);
 
-      // Extract year, month, and day
       const yearStart = parsedDateStart.getFullYear();
       const monthStart = parsedDateStart.getMonth() + 1; // Months are zero-indexed, so add 1
       const dayStart = parsedDateStart.getDate();
@@ -63,13 +62,52 @@ export class CalendarComponent implements OnChanges {
       this.selectedRange.endMonth = monthEnd;
       this.selectedRange.endYear = yearEnd;
     }
-    if(this.customPricesInput != null){
-      this.customPrices = this.getCustom(this.customPricesInput);
-    }
     if(this.alreadyPickedInput != null){
       this.alreadyPicked = this.getAlreadyPicked(this.alreadyPickedInput);
     }
+    if(this.customPricesInput != null){
+      this.customPrices = this.getCustomDefaulted(this.customPricesInput);
+    }
+
     this.generateCalendar();
+  }
+
+  getCustomDefaulted(priceList: PriceChange[]): { [date: string]: number } {
+    var customPrices: { [date: string]: number } = {};
+  
+    for (var i = 0; i < priceList.length; i++) {
+      var priceChange = priceList[i];
+      var dateString: string = priceChange.changeDate.toString().split('T')[0];
+      var nextDateString: string | undefined;
+  
+      if (i < priceList.length - 1) {
+        nextDateString = priceList[i + 1].changeDate.toString().split('T')[0];
+      }
+  
+      customPrices[dateString] = priceChange.newPrice;
+  
+      // Fill in intermediate dates within the range
+      if (nextDateString) {
+        var currentDate = new Date(dateString);
+        var nextDate = new Date(nextDateString);
+  
+        while (currentDate < nextDate) {
+          currentDate.setDate(currentDate.getDate() + 1);
+          customPrices[currentDate.toISOString().split('T')[0]] = priceChange.newPrice;
+        }
+      }
+  
+      // If it's the last date, extend for an additional 30 days with the last known price
+      if (i === priceList.length - 1) {
+        var lastDate = new Date(dateString);
+        for (var j = 0; j < 30; j++) {
+          lastDate.setDate(lastDate.getDate() + 1);
+          customPrices[lastDate.toISOString().split('T')[0]] = priceChange.newPrice;
+        }
+      }
+    }
+  
+    return customPrices;
   }
 
   getCustom(priceList: PriceChange[]): { [date: string]: number } {
@@ -119,8 +157,6 @@ export class CalendarComponent implements OnChanges {
     return alreadyPicked;
   }
 
-
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['defaultPrice'] && !changes['defaultPrice'].firstChange) {
       if (this.isFirstChange) {
@@ -138,6 +174,18 @@ export class CalendarComponent implements OnChanges {
   }
 
   handleDateClick(day: number): void {
+    const currentDate = new Date();
+    const today = {
+      day: currentDate.getDate(),
+      month: currentDate.getMonth() + 1,
+      year: currentDate.getFullYear(),
+    };
+  
+    if (this.isDateInPast(day, today)) {
+      // Don't allow selection of past dates
+      return;
+    }
+  
     if (this.selectedRange.start === null) {
       // Selecting the start of the range
       this.selectedRange.start = day;
@@ -160,9 +208,18 @@ export class CalendarComponent implements OnChanges {
       this.selectedRange.start = null;
       this.selectedRange.end = null;
     }
-
+  
     this.updateSelectedStyles();
   }
+  
+  isDateInPast(day: number, today: { day: number, month: number, year: number }): boolean {
+    return (
+      this.displayedYear < today.year ||
+      (this.displayedYear === today.year && this.displayedMonth < today.month) ||
+      (this.displayedYear === today.year && this.displayedMonth === today.month && day < today.day)
+    );
+  }
+  
   // Generate the calendar for the selected month and year
   generateCalendar(): void {
     const firstDay = new Date(this.displayedYear, this.displayedMonth - 1, 1).getDay(); // 0-indexed
