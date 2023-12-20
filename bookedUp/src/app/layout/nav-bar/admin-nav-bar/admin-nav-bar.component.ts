@@ -5,6 +5,7 @@ import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
 import {User} from "../../../user/model/user.model";
 import {Observable} from "rxjs";
+import {PhotoService} from "../../../shared/photo/photo.service";
 
 @Component({
   selector: 'app-admin-nav-bar',
@@ -16,8 +17,9 @@ export class AdminNavBarComponent implements OnInit{
 
   role: string = '' ;
   loggedUser!: User;
+  displayedImageUrl: string | null = null;
 
-  constructor(private router: Router, private authService: AuthService, private userService: UserService) {}
+  constructor(private router: Router, private photoService:PhotoService, private authService: AuthService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.authService.userState.subscribe((result) => {
@@ -27,7 +29,7 @@ export class AdminNavBarComponent implements OnInit{
     this.userService.getUser(this.authService.getUserID()).subscribe(
         (user: User) => {
           this.loggedUser = user;
-          this.loadPhoto();
+          this.loadPhotos();
         },
         (error) => {
           console.error('Error loading user:', error);
@@ -56,8 +58,21 @@ export class AdminNavBarComponent implements OnInit{
     })
   }
 
-  private loadPhoto() {
-
+  loadPhotos() {
+    if(this.loggedUser.profilePicture){
+      this.photoService.loadPhoto(this.loggedUser.profilePicture).subscribe(
+        (data) => {
+          this.createImageFromBlob(data).then((url: string) => {
+            this.displayedImageUrl=url;
+          }).catch(error => {
+            console.error("Greška prilikom konverzije slike ${imageName}: ", error);
+          });
+        },
+        (error) => {
+          console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
+        }
+      );
+    }
   }
 
   createImageFromBlob(imageBlob: Blob): Promise<string> {

@@ -11,7 +11,7 @@
       <img
         class="manage-account-admin-item"
         alt=""
-        [src]="loggedUser.profilePicture?.url"
+        [src]="displayedImageUrl || loggedUser.profilePicture?.url"
         id="profile-picture-host"
         (click)="onProfilePictureClick()"
       />
