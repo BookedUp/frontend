@@ -12,6 +12,7 @@ import { ReservationService } from '../reservation.service';
 import { Reservation } from '../model/reservation.model';
 import { ReservationStatus } from '../model/reservationStatus.enum';
 import { Guest } from 'src/app/user/model/guest.model';
+import { GuestService } from 'src/app/user/guest/guest.service';
 
 @Component({
   selector: 'app-create-reservation',
@@ -22,14 +23,16 @@ export class CreateReservationComponent implements OnInit {
 
   reservationForm: FormGroup;
   accommodationId: number = 1;
-  startDate: string | null = null;
+  startDate!: string ;
   formattedStartDate: string | null = null;
-  endDate: string | null = null;
+  endDate!: string;
   formattedEndDate: string | null = null;
   totalPrice: number = 1;
   numberGuests: number = 0;
   status!: ReservationStatus;
-  stringStatus : string = "CREATED";
+  reservation! : Observable<Reservation>;
+  createdStatus : string = "CREATED";
+  acceptedStatus : string = "ACCEPTED";
   guest!: Guest;
   //accommodation: Observable<Accommodation> = new Observable<Accommodation>();
   acc!: Accommodation;
@@ -38,7 +41,7 @@ export class CreateReservationComponent implements OnInit {
 
   loggedUser!: User;
 
-  constructor(private fb: FormBuilder,private userService: UserService, private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService, private reservationService: ReservationService)
+  constructor(private fb: FormBuilder,private userService: UserService, private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService, private reservationService: ReservationService, private guestService: GuestService)
   {
     this.reservationForm = this.fb.group({
       firstName: [{value: '', disabled: true}],
@@ -80,6 +83,15 @@ export class CreateReservationComponent implements OnInit {
           }
       );
 
+      this.guestService.getGuestById(this.authService.getUserID()).subscribe(
+        (guest: Guest) => {
+          this.guest = guest;
+        },
+        (error) => {
+          console.error('Error loading guest:', error);
+        }
+      );
+
 
 
       this.route.queryParams.subscribe(queryParams => {
@@ -102,22 +114,33 @@ export class CreateReservationComponent implements OnInit {
   }
 
   reserve() {
-    
-    // this.newReservation.startDate = new Date();
-    // this.newReservation.endDate = new Date();
-    this.newReservation.totalPrice = this.totalPrice;
-    this.newReservation.guestsNumber = this.numberGuests;
-    this.newReservation.accommodation = this.acc;
-    this.newReservation.status = this.stringStatus as ReservationStatus;
-    
+    let start = new Date(this.startDate);
+    start.setHours(13,0,0,);
+    let end = new Date(this.endDate);
+    end.setHours(13,0,0,0);
 
-    console.log(this.newReservation.startDate);
-    console.log(this.newReservation.endDate);
-    console.log(this.newReservation.totalPrice);
-    console.log(this.newReservation.guestsNumber);
-    console.log(this.newReservation.accommodation);
-    console.log(this.newReservation.status);
-    // this.reservationService.createReservation(this.newReservation);
+    this.newReservation = {
+      startDate: start,
+      endDate : end,
+      totalPrice : this.totalPrice,
+      guestsNumber : this.numberGuests,
+      accommodation : this.acc,
+      guest : this.guest,
+      status : this.acc.automaticReservationAcceptance ? this.acceptedStatus as ReservationStatus : this.createdStatus as ReservationStatus
+    };
+
+    
+    this.reservationService.createReservation(this.newReservation).subscribe(
+      (createdReservation: Reservation) => {
+        console.log('Created Reservation:', createdReservation);
+        alert("Successfully created a reservation!")
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        console.error('Error creating reservation:', error);
+      }
+    );
+    
   }
 
   generateStars(rating: number): string[] {
