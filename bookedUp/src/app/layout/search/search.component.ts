@@ -122,6 +122,7 @@ export class SearchComponent implements OnInit {
         this.location = "";
         this.fromDate = new Date();
         this.outDate = new Date();
+        this.setDateHours();
         this.budgetCheckboxIds = [];
         this.popularCheckboxIds = [];
         this.selectedType = "all";
@@ -194,12 +195,8 @@ export class SearchComponent implements OnInit {
 
   searchAndFilterAccommodations() {
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    this.fromDate.setHours(0, 0, 0, 0);
-    this.outDate.setHours(0, 0, 0, 0);
-    console.log(today);
-    console.log(this.fromDate);
-    console.log(this.outDate);
+    today.setHours(13, 0, 0, 0);
+    
     if (
       (this.fromDate.getTime() === today.getTime() && this.outDate.getTime() !== today.getTime()) ||
       (this.fromDate.getTime() !== today.getTime() && this.outDate.getTime() === today.getTime())
@@ -213,9 +210,7 @@ export class SearchComponent implements OnInit {
     }
     const selectedTypeEnum: AccommodationType | null = this.parseAccommodationType(this.selectedType);
     const popular = this.parseAmenities(this.popularCheckboxIds);
-    console.log(popular);
-    this.fromDate.setHours(12, 0, 0, 0);
-    this.outDate.setHours(12, 0, 0, 0);
+    this.setDateHours();
     let minPrice: number = 0.0;
     let maxPrice: number = 0.0;
     if (this.budgetCheckboxIds.length > 0) {
@@ -303,12 +298,16 @@ export class SearchComponent implements OnInit {
     return 0;
   }
 
+  setDateHours(){
+    this.fromDate.setHours(13,0,0,0);
+    this.outDate.setHours(13,0,0,0);
+  }
+
   navigateToAccommodationDetails(id:number, totalPrice:number): void {
+    this.setDateHours();
     const startDateString = this.fromDate.toISOString().split('T')[0];
     const endDateString = this.outDate.toISOString().split('T')[0];
     const days = this.calculateDayDifference();
-    console.log(days);
-
     this.router.navigate(['/accommodation-details', id], {
 
       queryParams: { startDate: startDateString, endDate: endDateString, totalPrice: totalPrice, numberGuests: this.guests, days: days},

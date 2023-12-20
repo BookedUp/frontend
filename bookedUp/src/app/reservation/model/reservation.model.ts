@@ -5,7 +5,7 @@ import { Accommodation } from '../../accommodation/model/accommodation.model';
 import { Guest } from '../../user/model/guest.model';
 
 export interface Reservation {
-  id: number;
+  id?: number;
   startDate: Date;
   endDate: Date;
   totalPrice: number;
