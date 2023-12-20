@@ -9,6 +9,7 @@ import {tap} from "rxjs";
 import {Role} from "../model/role.enum";
 import {GuestService} from "../guest/guest.service";
 import {HostService} from "../host/host.service";
+import {PhotoService} from "../../shared/photo/photo.service";
 
 @Component({
   selector: 'app-manage-profile',
@@ -29,7 +30,7 @@ export class ManageProfileComponent implements OnInit {
   updateForm: FormGroup | undefined;
 
 
-  constructor(private userService: UserService, private guestService: GuestService,private hostService: HostService, private router: Router, private authService: AuthService, private formBuilder: FormBuilder,
+  constructor(private userService: UserService,private photoService:PhotoService, private guestService: GuestService,private hostService: HostService, private router: Router, private authService: AuthService, private formBuilder: FormBuilder,
   ) {
     this.updateForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -48,6 +49,8 @@ export class ManageProfileComponent implements OnInit {
     this.userService.getUser(this.authService.getUserID()).subscribe(
         (user: User) => {
           this.loggedUser = user;
+
+          this.loadPhotos();
 
           this.updateForm!.setValue({
             firstName: user.firstName,
@@ -254,5 +257,33 @@ export class ManageProfileComponent implements OnInit {
         this.router.navigate(['/']);
       }
     })
+  }
+
+  loadPhotos() {
+    if(this.loggedUser.profilePicture){
+      this.photoService.loadPhoto(this.loggedUser.profilePicture).subscribe(
+        (data) => {
+          this.createImageFromBlob(data).then((url: string) => {
+            this.displayedImageUrl=url;
+          }).catch(error => {
+            console.error("Greška prilikom konverzije slike ${imageName}: ", error);
+          });
+        },
+        (error) => {
+          console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
+        }
+      );
+    }
+  }
+  createImageFromBlob(imageBlob: Blob): Promise<string> {
+    const reader = new FileReader();
+
+    return new Promise<string>((resolve, reject) => {
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(imageBlob);
+    });
   }
 }

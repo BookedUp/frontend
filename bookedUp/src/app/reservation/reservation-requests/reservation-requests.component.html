@@ -34,7 +34,8 @@
               <img
                 class="accommodation-image"
                 alt=""
-                [src]="reservation.accommodation.photos[0].url"
+                [src]="getPhotoUrl(reservation?.accommodation?.id)"
+
               />
 
               <div class="left-data">
@@ -46,7 +47,7 @@
 <!--                        {{ star }}-->
 <!--                      </span>-->
                     </div>
-                      <div class="reviews55">{{reservation.accommodation?.averageRating !== undefined ? reservation.accommodation.averageRating  : 0.0 }}</div>
+                      <div class="reviews55" *ngIf="reservation.accommodation">{{ roundHalf(reservation.accommodation.averageRating ? reservation.accommodation.averageRating / 2 : 0) }}</div>
                   </div>
 
                   <b class="status-text" [class.created-status-text]="reservation.status === 'CREATED'"

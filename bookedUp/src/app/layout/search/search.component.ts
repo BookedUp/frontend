@@ -4,6 +4,7 @@ import { Accommodation } from '../../accommodation/model/accommodation.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AccommodationType } from 'src/app/accommodation/model/enum/accommodationType.enum';
 import { Amenity } from 'src/app/accommodation/model/enum/amenity.enum';
+import {PhotoService} from "../../shared/photo/photo.service";
 
 @Component({
   selector: 'app-search',
@@ -23,7 +24,7 @@ export class SearchComponent implements OnInit {
   popularCheckboxIds: string[] = [];
   updateTimeout: any;
   budgetSliderDisabled: boolean = false;
-  radioButtonsState: { [key: string]: boolean } = {};
+  photoDict: {accId: number, url: string}[] =[];
   name: string = "";
   minFromDate: string;
   nofilterChecked: boolean = false;
@@ -77,7 +78,7 @@ export class SearchComponent implements OnInit {
   }
 
 
-  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private el: ElementRef) {
+  constructor(private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private el: ElementRef, private photoService: PhotoService) {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.minFromDate = this.formatDate(tomorrow);
@@ -97,6 +98,8 @@ export class SearchComponent implements OnInit {
     this.outDate = this.route.snapshot.queryParams['selectedToDate'] || new Date();
     this.guests = this.route.snapshot.queryParams['guestNumber'] || 0;
     this.searchResults = JSON.parse(this.route.snapshot.queryParams['searchResults']);
+
+    this.loadPhotos();
 
     const parsedFromDate = new Date(this.fromDate);
     const parsedToDate = new Date(this.outDate);
@@ -225,6 +228,7 @@ export class SearchComponent implements OnInit {
         (filterResults: Accommodation[]) => {
           console.log('Accommodations:', filterResults);
           this.searchResults = filterResults;
+          this.loadPhotos();
         },
         (error) => {
           console.error('Error:', error);
@@ -270,22 +274,28 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  generateStars(rating: number): string[] {
+  generateStars(rating: number | undefined): string[] {
     const stars: string[] = [];
-    for (let i = 1; i <= 5; i++) {
-      if (i <= rating) {
-        stars.push('★');
-      } else if (i - 0.5 === rating) {
-        stars.push('✯');
-      } else {
-        stars.push('☆');
+    if (typeof rating === 'number') {
+      for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+          stars.push('★');
+        } else if (i - 0.5 === rating) {
+          stars.push('✯');
+        } else {
+          stars.push('☆');
+        }
       }
     }
     return stars;
   }
 
-  roundHalf(value: number): number {
-    return Math.round(value * 2) / 2;
+
+  roundHalf(value: number| undefined): number| undefined {
+    if(value){
+      return Math.round(value * 2) / 2;
+    }
+    return 0;
   }
 
   setDateHours(){
@@ -304,6 +314,42 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  loadPhotos() {
+    this.searchResults.forEach((acc) => {
+      this.photoService.loadPhoto(acc.photos[0]).subscribe(
+          (data) => {
+            this.createImageFromBlob(data).then((url: string) => {
+              if(acc.id){
+                this.photoDict.push({accId: acc.id, url: url});
+              }
+            }).catch(error => {
+              console.error("Greška prilikom konverzije slike ${imageName}:" , error);
+            });
+          },
+          (error) => {
+            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
+          }
+      );
+    });
+  }
+
+
+  createImageFromBlob(imageBlob: Blob): Promise<string> {
+    const reader = new FileReader();
+
+    return new Promise<string>((resolve, reject) => {
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(imageBlob);
+    });
+  }
+
+  getPhotoUrl(accId: number | undefined): string | undefined {
+    const photo = this.photoDict.find((item) => item.accId === accId);
+    return photo ? photo.url : '';
+  }
 }
 
 

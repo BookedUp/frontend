@@ -5,12 +5,14 @@ import { Accommodation } from '../model/accommodation.model';
 import { Observable } from 'rxjs';
 import {AuthService} from "../../infrastructure/auth/auth.service";
 import {AccommodationStatus} from "../model/enum/accommodationStatus.enum";
+import {PhotoService} from "../../shared/photo/photo.service";
 @Component({
     selector: 'app-accommodations',
     templateUrl: './accommodations.component.html',
     styleUrls: ['./accommodations.component.css', '../../../styles.css']
 })
 export class AccommodationsComponent implements OnInit {
+    protected readonly AccommodationStatus = AccommodationStatus;
 
     accommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
     selectedClass: string = 'active-accommodations';
@@ -18,7 +20,12 @@ export class AccommodationsComponent implements OnInit {
 
     priceTypeGuest: string = 'per guest';
     priceTypeNight: string = 'per night';
-    constructor(private accommodationService: AccommodationService, private router: Router, private route: ActivatedRoute, private authService: AuthService) { }
+
+    photoDict: {accId: number, url: string}[] =[];
+    acc: Accommodation[]=[];
+
+
+    constructor(private accommodationService: AccommodationService, private router: Router, private route: ActivatedRoute, private authService: AuthService, private photoService: PhotoService) { }
 
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
@@ -32,11 +39,22 @@ export class AccommodationsComponent implements OnInit {
     private loadAccommodations(): void {
         if (this.filter === 'active') {
             this.accommodations = this.accommodationService.getAllActiveAccommodationsByHostId(this.authService.getUserID());
+            this.accommodationService.getAllActiveAccommodationsByHostId(this.authService.getUserID()).subscribe((results) => {
+                this.acc = results;
+                this.loadPhotos();
+            });
         } else if (this.filter === 'requests') {
             this.accommodations = this.accommodationService.getAllRequestsByHostId(this.authService.getUserID());
+            this.accommodationService.getAllRequestsByHostId(this.authService.getUserID()).subscribe((results) => {
+                this.acc = results;
+                this.loadPhotos();
+            });
         } else {
             this.accommodations = this.accommodationService.getAllRejectedByHostId(this.authService.getUserID());
-
+            this.accommodationService.getAllRejectedByHostId(this.authService.getUserID()).subscribe((results) => {
+                this.acc = results;
+                this.loadPhotos();
+            });
         }
     }
 
@@ -66,22 +84,49 @@ export class AccommodationsComponent implements OnInit {
         return stars;
     }
 
-    roundHalf(value: number): number {
-        return Math.round(value * 2) / 2;
+    loadPhotos() {
+        this.acc.forEach((acc) => {
+            this.photoService.loadPhoto(acc.photos[0]).subscribe(
+                (data) => {
+                    this.createImageFromBlob(data).then((url: string) => {
+                        if(acc.id){
+                            this.photoDict.push({accId: acc.id, url: url});
+                        }
+                    }).catch(error => {
+                        console.error("Greška prilikom konverzije slike ${imageName}:" , error);
+                    });
+                },
+                (error) => {
+                    console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
+                }
+            );
+        });
     }
 
-    getRequestsAccommodations() {
-        this.accommodations = this.accommodationService.getAllRequestsByHostId(this.authService.getUserID());
+
+    createImageFromBlob(imageBlob: Blob): Promise<string> {
+        const reader = new FileReader();
+
+        return new Promise<string>((resolve, reject) => {
+            reader.onloadend = () => {
+                resolve(reader.result as string);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(imageBlob);
+        });
     }
 
-    getActiveAccommodations() {
-        this.accommodations = this.accommodationService.getAllActiveAccommodationsByHostId(this.authService.getUserID());
+    getPhotoUrl(accId: number | undefined): string | undefined {
+        const photo = this.photoDict.find((item) => item.accId === accId);
+        return photo ? photo.url : '';
     }
 
-    getRejectedAccommodations() {
-        this.accommodations = this.accommodationService.getAllRejectedByHostId(this.authService.getUserID());
 
+
+    roundHalf(value: number| undefined): number| undefined {
+        if(value){
+            return Math.round(value * 2) / 2;
+        }
+        return 0;
     }
-
-    protected readonly AccommodationStatus = AccommodationStatus;
 }

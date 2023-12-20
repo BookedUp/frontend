@@ -13,6 +13,8 @@ import Swal from "sweetalert2";
 import { ChangeDetectorRef } from '@angular/core';
 import {DateRange} from "../model/dateRange.model";
 import {PriceChange} from "../model/priceChange.model";
+import { Observable } from 'rxjs';
+import {Photo} from "../../shared/model/photo.model";
 
 
 @Component({
@@ -39,6 +41,10 @@ export class CreateAccommodationComponent implements OnInit {
   acceptReservations: boolean = false;
   isInputReadOnly: boolean = false;
 
+  pictureUrls: string[] = [];
+  currentIndex: number = 0;
+
+  customPricesInput: { [date: string]: number } = { };
   customPrice: number = 0;
 
   priceType: PriceType = PriceType.PerNight;
@@ -50,7 +56,7 @@ export class CreateAccommodationComponent implements OnInit {
 
   addedDates: { start: string, end: string }[] = [];
   availability: DateRange[] = [];
-
+  photos: Photo[] = [];
 
   constructor(private router: Router, private hostService: HostService, private authService: AuthService, private accommodationService: AccommodationService, private cdr: ChangeDetectorRef) { }
 
@@ -119,25 +125,25 @@ export class CreateAccommodationComponent implements OnInit {
             this.isInputReadOnly = true;
             const selectedRange = this.calendarComponent?.getSelectedRange();
             if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
-              
+
               const startDate = new Date(selectedRange.start);
               const endDate = new Date(selectedRange.end);
-      
+
               const newPriceChangeStart: PriceChange = {
                 changeDate: startDate,
                 newPrice: this.customPrice,
               };
-      
+
               this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
-      
-      
+
+
               var lastDate = new Date(selectedRange.end);
               lastDate.setDate(lastDate.getDate() + 1);
               const newPriceChange: PriceChange = {
                 changeDate: lastDate,
                 newPrice: this.defaultPrice,
               };
-        
+
               this.accPriceChange = [...this.accPriceChange, newPriceChange];
           }
           }else{
@@ -153,25 +159,25 @@ export class CreateAccommodationComponent implements OnInit {
         this.isInputReadOnly = true;
         const selectedRange = this.calendarComponent?.getSelectedRange();
         if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
-          
+
           const startDate = new Date(selectedRange.start);
           const endDate = new Date(selectedRange.end);
-  
+
           const newPriceChangeStart: PriceChange = {
             changeDate: startDate,
             newPrice: this.customPrice,
           };
-  
+
           this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
-  
-  
+
+
           var lastDate = new Date(selectedRange.end);
           lastDate.setDate(lastDate.getDate() + 1);
           const newPriceChange: PriceChange = {
             changeDate: lastDate,
             newPrice: this.defaultPrice,
           };
-    
+
           this.accPriceChange = [...this.accPriceChange, newPriceChange];
       }
       }else{
@@ -179,9 +185,9 @@ export class CreateAccommodationComponent implements OnInit {
         return;
       }
     }
-    
 
-    
+
+
   }
 
 
@@ -201,7 +207,12 @@ export class CreateAccommodationComponent implements OnInit {
           longitude: 0 //??
         },
         amenities: this.accAmenities,
-        photos: [], //??
+        // photos:  this.photos = this.pictureUrls.map(url => ({
+        //   url: url,
+        //   caption:'',
+        //   active: true
+        // })),//??
+        photos: [],
         minGuests: this.minimumPrice || 0,
         maxGuests: this.maximumPrice || 0,
         type: this.accType,
@@ -243,7 +254,8 @@ export class CreateAccommodationComponent implements OnInit {
         (this.minimumPrice !== undefined && (this.minimumPrice <= 0 ||
         (this.maximumPrice !== undefined && this.minimumPrice > this.maximumPrice))) ||
         (this.maximumPrice !== undefined && this.maximumPrice <= 0) ||
-        (this.availability.length == 0 ) ||
+        (this.pictureUrls.length == 0 ) ||
+        (this.addedDates.length == 0 ) ||
         Object.values(this.accTypeChecked).every(value => value === false)) {
       Swal.fire({
       icon: 'error',
@@ -315,15 +327,15 @@ export class CreateAccommodationComponent implements OnInit {
 
   deleteDateRange(): void {
     const selectedDates = this.calendarComponent?.getSelectedRange();
-  
+
     if (selectedDates?.start && selectedDates?.end) {
       const startSelectedDate = new Date(selectedDates.start);
       const endSelectedDate = new Date(selectedDates.end);
-  
+
       this.addedDates.forEach((dateRange, index) => {
         const startDate = new Date(dateRange.start);
         const endDate = new Date(dateRange.end);
-  
+
         if (endSelectedDate < startDate || startSelectedDate > endDate) {
           // No overlap, do nothing
         } else if (startSelectedDate <= startDate && endSelectedDate >= endDate) {
@@ -339,7 +351,7 @@ export class CreateAccommodationComponent implements OnInit {
           // Selected range is in the middle, split the current range
           const newEndDate = endSelectedDate.toISOString().split('T')[0];
           dateRange.end = startSelectedDate.toISOString().split('T')[0];
-  
+
           // Insert a new range for the right side
           this.addedDates.splice(index + 1, 0, {
             start: newEndDate,
@@ -347,11 +359,52 @@ export class CreateAccommodationComponent implements OnInit {
           });
         }
       });
-  
+
       this.addedDates = this.mergeOverlappingDateRanges(this.addedDates);
     }
   }
-  
+
+  nextImage() {
+    if (this.currentIndex < this.pictureUrls.length - 1) {
+      this.currentIndex++;
+    } else {
+      this.currentIndex = 0;
+    }
+  }
+
+  uploadNewImage(): void {
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    fileInput.click();
+  }
+
+  handleFileInputChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+
+    if (inputElement.files && inputElement.files.length > 0) {
+      const file = inputElement.files[0];
+
+      const imageUrl = URL.createObjectURL(file);
+
+      this.pictureUrls.push(imageUrl);
+
+      // Update currentIndex to point to the newly added image
+      this.currentIndex = this.pictureUrls.length - 1;
+
+      inputElement.value = '';
+    }
+  }
+
+
+  deleteImage():void{
+    if (this.currentIndex >= 0 && this.currentIndex < this.pictureUrls.length) {
+      this.pictureUrls.splice(this.currentIndex, 1);
+      if (this.currentIndex >= this.pictureUrls.length) {
+        this.currentIndex = this.pictureUrls.length - 1;
+      }
+    } else {
+      console.error('Invalid currentIndex value');
+    }
+  }
 
   private subtractDays(date: Date, days: number): Date {
     const result = new Date(date);

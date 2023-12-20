@@ -6,6 +6,8 @@ import { ReservationStatus } from 'src/app/reservation/model/reservationStatus.e
 import { ReservationService } from 'src/app/reservation/reservation.service';
 import {AuthService} from "../../infrastructure/auth/auth.service";
 import Swal from "sweetalert2";
+import {Accommodation} from "../../accommodation/model/accommodation.model";
+import {PhotoService} from "../../shared/photo/photo.service";
 
 @Component({
   selector: 'app-reservation-requests',
@@ -17,7 +19,10 @@ export class ReservationRequestsComponent implements OnInit {
   reservations: Observable<Reservation[]> = new Observable<Reservation[]>();
   selectedClass: string = 'all-reservation';
   filter: string = 'all';
-  constructor(private reservationService: ReservationService, private router: Router, private route: ActivatedRoute, private authService: AuthService) { }
+
+  photoDict: { accId: number, url: string }[] = [];
+  res: Reservation[] = [];
+  constructor(private reservationService: ReservationService, private router: Router, private route: ActivatedRoute, private authService: AuthService, private photoService: PhotoService) { }
 
   protected readonly ReservationStatus = ReservationStatus;
 
@@ -32,19 +37,41 @@ export class ReservationRequestsComponent implements OnInit {
   private loadReservations(): void {
     if (this.filter === 'waiting') {
       this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created);
+      this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created).subscribe((results) => {
+        this.res = results;
+        this.loadPhotos();
+      });
     } else if (this.filter === 'accepted') {
-      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created);
+      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Accept);
+      this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Accept).subscribe((results) => {
+        this.res = results;
+        this.loadPhotos();
+      });
     } else if (this.filter === 'rejected') {
-      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created);
+      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Reject);
+      this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Reject).subscribe((results) => {
+        this.res = results;
+        this.loadPhotos();
+      });
     } else if (this.filter === 'finished') {
-      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created);
+      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Completed);
+      this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Completed).subscribe((results) => {
+        this.res = results;
+        this.loadPhotos();
+      });
     } else if (this.filter === 'cancelled') {
-      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created);
+      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Cancelled);
+      this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Cancelled).subscribe((results) => {
+        this.res = results;
+        this.loadPhotos();
+      });
     }
-
     else {
-      //this.reservations = this.reservationService.getReservationsByHostId(2);
-      this.reservations = this.reservationService.getReservationsByHostId(this.authService.getUserID());
+      this.reservations = this.reservationService.getReservationsByHostId(this.authService.getUserID())
+      this.reservationService.getReservationsByHostId(this.authService.getUserID()).subscribe((results) => {
+        this.res = results;
+        this.loadPhotos();
+      });
     }
   }
 
@@ -65,10 +92,6 @@ export class ReservationRequestsComponent implements OnInit {
     }
     return stars;
 
-  }
-
-  roundHalf(value: number): number {
-    return Math.round(value * 2) / 2;
   }
 
 
@@ -129,6 +152,10 @@ export class ReservationRequestsComponent implements OnInit {
     this.selectedClass = 'all-reservation';
     this.router.navigate(['my-reservations'], { queryParams: { filter: 'all' } });
     this.reservations = this.reservationService.getReservationsByHostId(this.authService.getUserID());
+    this.reservationService.getReservationsByHostId(this.authService.getUserID()).subscribe((results) => {
+      this.res = results;
+      this.loadPhotos();
+    });
   }
 
 
@@ -147,5 +174,52 @@ export class ReservationRequestsComponent implements OnInit {
     }
 
     this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), status);
+    this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), status).subscribe((results) => {
+      this.res = results;
+      this.loadPhotos();
+    });
+  }
+
+  loadPhotos() {
+    this.res.forEach((ress) => {
+      this.photoService.loadPhoto(ress.accommodation.photos[0]).subscribe(
+          (data) => {
+            this.createImageFromBlob(data).then((url: string) => {
+              if (ress.accommodation.id) {
+                this.photoDict.push({accId: ress.accommodation.id, url: url});
+              }
+            }).catch(error => {
+              console.error("Greška prilikom konverzije slike ${imageName}:", error);
+            });
+          },
+          (error) => {
+            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
+          }
+      );
+    });
+  }
+  createImageFromBlob(imageBlob: Blob): Promise<string> {
+    const reader = new FileReader();
+
+    return new Promise<string>((resolve, reject) => {
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(imageBlob);
+    });
+  }
+
+  getPhotoUrl(accId: number | undefined): string | undefined {
+    const photo = this.photoDict.find((item) => item.accId === accId);
+    return photo ? photo.url : '';
+  }
+
+  roundHalf(value: number | undefined): number | undefined {
+    if (value) {
+      return Math.round(value * 2) / 2;
+    }
+    return 0;
   }
 }
+
