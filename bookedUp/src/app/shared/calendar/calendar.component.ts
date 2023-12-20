@@ -62,10 +62,10 @@ export class CalendarComponent implements OnChanges {
       this.selectedRange.endMonth = monthEnd;
       this.selectedRange.endYear = yearEnd;
     }
-    if(this.alreadyPickedInput != null){
+    if(this.alreadyPickedInput !== null){
       this.alreadyPicked = this.getAlreadyPicked(this.alreadyPickedInput);
     }
-    if(this.customPricesInput != null){
+    if(this.customPricesInput !== null){
       this.customPrices = this.getCustomDefaulted(this.customPricesInput);
     }
 
