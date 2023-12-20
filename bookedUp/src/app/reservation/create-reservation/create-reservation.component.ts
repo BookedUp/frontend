@@ -15,6 +15,7 @@ import { Guest } from 'src/app/user/model/guest.model';
 import {PhotoService} from "../../shared/photo/photo.service";
 
 import { GuestService } from 'src/app/user/guest/guest.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-reservation',
@@ -138,11 +139,15 @@ export class CreateReservationComponent implements OnInit {
     this.reservationService.createReservation(this.newReservation).subscribe(
       (createdReservation: Reservation) => {
         console.log('Created Reservation:', createdReservation);
-        alert("Successfully created a reservation!")
+        Swal.fire({icon: 'success', title: 'Reservation created successfully!', text: 'You will be redirected to the home page.',});
         this.router.navigate(['/']);
       },
       (error) => {
-        console.error('Error creating reservation:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Sorry, an error occurred while creating the reservation. Please try again later.',
+        });
       }
     );
     
