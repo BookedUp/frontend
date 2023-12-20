@@ -8,6 +8,7 @@ import { SearchComponent } from './layout/search/search.component';
 import { AccommodationDetailsComponent } from './accommodation/accommodation-details/accommodation-details.component';
 import { AccommodationRequestsComponent } from './accommodation/accommodation-requests/accommodation-requests.component';
 import { CreateAccommodationComponent } from './accommodation/create-accommodation/create-accommodation.component';
+import { UpdateAccommodationComponent } from './accommodation/update-accommodation/update-accommodation.component';
 import { AccommodationsComponent } from './accommodation/accommodations/accommodations.component';
 
 import { ReservationRequestsComponent } from './reservation/reservation-requests/reservation-requests.component';
@@ -30,7 +31,7 @@ const routes: Routes = [
   { path: 'accommodation-details/:id', component: AccommodationDetailsComponent },
   { path: 'accommodation-requests', component: AccommodationRequestsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN'] }},
   { path: 'create-accommodation', component: CreateAccommodationComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
-  { path: 'update-accommodation/:id', component: CreateAccommodationComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
+  { path: 'update-accommodation/:id', component: UpdateAccommodationComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
   { path: 'my-accommodations', component: AccommodationsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
 
   { path: 'reservation-requests', component: ReservationRequestsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
