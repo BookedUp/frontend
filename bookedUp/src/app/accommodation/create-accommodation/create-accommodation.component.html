@@ -16,7 +16,7 @@
               <img class="room-image" src="../../assets/public/rectangle-281@2x.png" alt="" />
             </ng-template>
           </div>
-          
+
           <div class="in-line-box" style="margin-top: 3%;">
               <input type="file" id="fileInput" style="display: none" (change)="handleFileInputChange($event)" />
               <button class="button-container" (click)="uploadNewImage()"  style="background-color: var(--color-seagreen-100); width: 30%; margin-right: 10%; margin-left: 15%;">
@@ -98,6 +98,14 @@
                 <b class="title-text" style="margin-right: 10%;">Maximum Guests</b>
                 <div class="normal-text" style="width: 60%;">
                   <input [(ngModel)]="maximumPrice" type="number" placeholder='Enter maximum number of guests here..' pattern="\d*" />
+                </div>
+              </div>
+
+              <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
+              <div class="in-line-box">
+                <b class="title-text" style="margin-right: 10%;">Cancellation: </b>
+                <div class="normal-text" style="width: 60%;">
+                  <input [(ngModel)]="cancellation" type="number" placeholder='Enter cancellation dead line..' pattern="\d*" />
                 </div>
               </div>
 

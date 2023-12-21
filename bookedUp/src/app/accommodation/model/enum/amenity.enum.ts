@@ -1,7 +1,7 @@
 // amenity.model.ts
 
 export enum Amenity {
-  FreeWiFi = 'FREE_WIFI',
+  FreeWifi = 'FREE_WIFI',
   NonSmokingRooms = 'NON_SMOKING_ROOMS',
   Parking = 'PARKING',
   Restaurant = 'RESTAURANT',
