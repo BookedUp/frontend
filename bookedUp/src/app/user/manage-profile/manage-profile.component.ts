@@ -23,6 +23,7 @@ export class ManageProfileComponent implements OnInit {
   updatedUser!: User;
 
 
+  updateProfilePicture: string  = '';
   displayedImageUrl: string | null = null;
 
   @ViewChild('fileInput') fileInput!: ElementRef;
@@ -94,13 +95,38 @@ export class ManageProfileComponent implements OnInit {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
+  convertBlobToFile(blobUrl: string): Promise<File> {
+    return fetch(blobUrl)
+      .then(response => response.blob())
+      .then(blob => new File([blob], `image${Date.now()}.png`, { type: blob.type }));
+  }
+  
 
   updateUser() {
-    if (this.validate()) {
-      const updatedUserProfileImage = this.displayedImageUrl
-          ? this.displayedImageUrl
-          : this.loggedUser.profilePicture?.url || '';
 
+    this.convertBlobToFile(this.displayedImageUrl??'')
+    .then(file => {
+      console.log('Converted file:', file);
+
+      // Now you can upload the file or use it as needed.
+      this.photoService.uploadImage(file).subscribe(
+        response => {
+          console.log('Image uploaded successfully:', response);
+          this.updateProfilePicture = 'images/'+file.name;
+          console.log("ovo je naziv koji se prosledjuje ", this.updateProfilePicture);
+          // Handle success as needed
+        },
+        error => {
+          console.error('Error uploading image:', error);
+          // Handle error as needed
+        }
+      );
+    })
+    .catch(error => {
+      console.error('Error converting blob to file:', error);
+    });
+
+    if (this.validate()) {
 
       this.updatedUser = {
         id: this.authService.getUserID(),
@@ -110,7 +136,7 @@ export class ManageProfileComponent implements OnInit {
         phone: this.updateForm!.get('phone')!.value,
         email: this.loggedUser.email,
         role: this.loggedUser.role,
-        profilePicture: {url: updatedUserProfileImage, caption: 'profilePicture'}, // Dodajte ovo
+        profilePicture: {url: this.updateProfilePicture, caption: 'profilePicture'}, // Dodajte ovo
 
         address: {
           streetAndNumber: this.updateForm!.get('streetAndNumber')!.value,
@@ -266,7 +292,7 @@ export class ManageProfileComponent implements OnInit {
           this.createImageFromBlob(data).then((url: string) => {
             this.displayedImageUrl=url;
           }).catch(error => {
-            console.error("Greška prilikom konverzije slike ${imageName}: ", error);
+            console.error("Greška prilikom konverzije slike ${imageName}: ",this.displayedImageUrl, error);
           });
         },
         (error) => {

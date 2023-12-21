@@ -15,6 +15,7 @@ import {DateRange} from "../model/dateRange.model";
 import {PriceChange} from "../model/priceChange.model";
 import { Observable } from 'rxjs';
 import {Photo} from "../../shared/model/photo.model";
+import { PhotoService } from 'src/app/shared/photo/photo.service';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class CreateAccommodationComponent implements OnInit {
   isInputReadOnly: boolean = false;
 
   pictureUrls: string[] = [];
+  convertedUrls: string[] = [];
   currentIndex: number = 0;
 
   customPricesInput: { [date: string]: number } = { };
@@ -58,7 +60,7 @@ export class CreateAccommodationComponent implements OnInit {
   availability: DateRange[] = [];
   photos: Photo[] = [];
 
-  constructor(private router: Router, private hostService: HostService, private authService: AuthService, private accommodationService: AccommodationService, private cdr: ChangeDetectorRef) { }
+  constructor(private router: Router, private hostService: HostService, private authService: AuthService, private accommodationService: AccommodationService, private cdr: ChangeDetectorRef, private photoService: PhotoService) { }
 
   ngOnInit() {
     const amenityValues = Object.values(Amenity) as string[];
@@ -79,6 +81,9 @@ export class CreateAccommodationComponent implements OnInit {
         }
     );
   }
+
+ 
+  
 
   handlePerNightChange() {
     if (this.perNightChecked) {
@@ -108,7 +113,6 @@ export class CreateAccommodationComponent implements OnInit {
     const formattedString = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
     return formattedString;
   }
-
 
   applyCustomPrice(): void {
     if(this.isInputReadOnly == false){
@@ -190,10 +194,43 @@ export class CreateAccommodationComponent implements OnInit {
 
   }
 
+  convertBlobToFiles(blobUrls: string[]): Promise<File[]> {
+    const files: File[] = [];
+  
+    // Map each blob URL to a Promise that resolves to a File
+    const promises = blobUrls.map(blobUrl =>
+      fetch(blobUrl)
+        .then(response => response.blob())
+        .then(blob => new File([blob], `image_${Date.now()}.png`, { type: blob.type }))
+    );
+  
+    // Use Promise.all to wait for all promises to resolve
+    return Promise.all(promises);
+  }
 
   saveAccommodation(): void {
 
-    console.log(this.acceptReservations);
+    //console.log(this.acceptReservations);
+    this.convertBlobToFiles(this.pictureUrls)
+    .then(files => {
+      for (const file of files) {
+        this.photoService.uploadImage(file).subscribe(
+          response => {
+            console.log('Image uploaded successfully:', response);
+            // Handle success as needed
+          },
+          error => {
+            console.error('Error uploading image:', error);
+            // Handle error as needed
+          }
+        );
+        this.convertedUrls.push('images/'+file.name);
+      }
+    })
+    .catch(error => {
+      console.error('Error converting blob to files:', error);
+    });
+
     if(this.validation()){
       const accommodation: Accommodation = {
         name: this.name || '',
@@ -207,12 +244,11 @@ export class CreateAccommodationComponent implements OnInit {
           longitude: 0 //??
         },
         amenities: this.accAmenities,
-        // photos:  this.photos = this.pictureUrls.map(url => ({
-        //   url: url,
-        //   caption:'',
-        //   active: true
-        // })),//??
-        photos: [],
+        photos:  this.photos = this.convertedUrls.map(url => ({
+          url: url,
+          caption:'',
+          active: true
+        })),//??
         minGuests: this.minimumPrice || 0,
         maxGuests: this.maximumPrice || 0,
         type: this.accType,
@@ -323,7 +359,6 @@ export class CreateAccommodationComponent implements OnInit {
 
     return mergedRanges;
   }
-
 
   deleteDateRange(): void {
     const selectedDates = this.calendarComponent?.getSelectedRange();
