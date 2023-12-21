@@ -42,6 +42,7 @@ export class UpdateAccommodationComponent implements OnInit {
   isInputReadOnly: boolean = false;
   pictureUrls: string[] = [];
   orgPictureUrls: string[] = [];
+  convertedUrls: string[] = [];
   currentIndex: number = 0;
 
 
@@ -154,6 +155,26 @@ export class UpdateAccommodationComponent implements OnInit {
     });
   }
 
+  //ovo je za dodavanje images u folder
+  // this.convertBlobToFiles(this.pictureUrls)
+  //   .then(files => {
+  //     for (const file of files) {
+  //       this.photoService.uploadImage(file).subscribe(
+  //         response => {
+  //           console.log('Image uploaded successfully:', response);
+  //           // Handle success as needed
+  //         },
+  //         error => {
+  //           console.error('Error uploading image:', error);
+  //           // Handle error as needed
+  //         }
+  //       );
+  //       this.convertedUrls.push('images/'+file.name);
+  //     }
+  //   })
+  //   .catch(error => {
+  //     console.error('Error converting blob to files:', error);
+  //   });
 
 
 handlePerNightChange() {
@@ -427,6 +448,20 @@ deleteImage():void{
       reader.onerror = reject;
       reader.readAsDataURL(imageBlob);
     });
+  }
+
+  convertBlobToFiles(blobUrls: string[]): Promise<File[]> {
+    const files: File[] = [];
+  
+    // Map each blob URL to a Promise that resolves to a File
+    const promises = blobUrls.map(blobUrl =>
+      fetch(blobUrl)
+        .then(response => response.blob())
+        .then(blob => new File([blob], `image_${Date.now()}.png`, { type: blob.type }))
+    );
+  
+    // Use Promise.all to wait for all promises to resolve
+    return Promise.all(promises);
   }
 }
 

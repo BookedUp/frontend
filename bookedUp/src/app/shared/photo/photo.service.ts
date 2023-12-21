@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Photo} from "../model/photo.model";
 
@@ -19,11 +19,11 @@ export class PhotoService {
     return this.http.get<Photo>(`${this.baseUrl}/${id}`);
   }
 
-
   uploadImage(file: File): Observable<any> {
-    const formData: FormData = new FormData();
+    const formData = new FormData();
     formData.append('image', file);
 
+    const headers = new HttpHeaders();
     return this.http.post(`${this.baseUrl}/upload`, formData);
   }
 
