@@ -1,4 +1,4 @@
-import {Component, Host, OnInit, ViewChild} from '@angular/core';
+import {Component, Host, NgZone, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {Amenity} from '../model/enum/amenity.enum';
 import {AccommodationType} from '../model/enum/accommodationType.enum';
@@ -32,6 +32,7 @@ export class CreateAccommodationComponent implements OnInit {
   defaultPrice: number = 0;
   minimumPrice: number | undefined;
   maximumPrice: number | undefined;
+  cancellation: number | undefined;
   description: string | undefined;
   name: string | undefined;
   addressStreet: string | undefined;
@@ -51,6 +52,7 @@ export class CreateAccommodationComponent implements OnInit {
   accType: AccommodationType = AccommodationType.Apartment;
   accAmenities: Amenity[] = [];
   accPriceChange: PriceChange[] = [];
+  copyPriceChange: PriceChange[] = [];
 
   loggedUser!: Host;
 
@@ -58,7 +60,7 @@ export class CreateAccommodationComponent implements OnInit {
   availability: DateRange[] = [];
   photos: Photo[] = [];
 
-  constructor(private router: Router, private hostService: HostService, private authService: AuthService, private accommodationService: AccommodationService, private cdr: ChangeDetectorRef) { }
+  constructor(private router: Router, private hostService: HostService, private authService: AuthService, private accommodationService: AccommodationService, private cdr: ChangeDetectorRef, private  zone: NgZone) { }
 
   ngOnInit() {
     const amenityValues = Object.values(Amenity) as string[];
@@ -135,6 +137,8 @@ export class CreateAccommodationComponent implements OnInit {
               };
 
               this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
+              this.updateCopyPriceChange();
+
 
 
               var lastDate = new Date(selectedRange.end);
@@ -145,7 +149,9 @@ export class CreateAccommodationComponent implements OnInit {
               };
 
               this.accPriceChange = [...this.accPriceChange, newPriceChange];
-          }
+              this.updateCopyPriceChange();
+
+            }
           }else{
             alert("You didn't input default price. Please provide a default price before entering a custom one.");
             return;
@@ -169,6 +175,8 @@ export class CreateAccommodationComponent implements OnInit {
           };
 
           this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
+          this.updateCopyPriceChange();
+
 
 
           var lastDate = new Date(selectedRange.end);
@@ -179,7 +187,9 @@ export class CreateAccommodationComponent implements OnInit {
           };
 
           this.accPriceChange = [...this.accPriceChange, newPriceChange];
-      }
+          this.updateCopyPriceChange();
+
+        }
       }else{
         alert("You didn't input default price. Please provide a default price before entering a custom one.");
         return;
@@ -221,16 +231,19 @@ export class CreateAccommodationComponent implements OnInit {
           endDate: new Date(addedDate.end),
         })),
         priceType: this.priceType,
-        priceChanges: this.accPriceChange,//
+        priceChanges: this.copyPriceChange,//
         automaticReservationAcceptance: this.acceptReservations,
         status: AccommodationStatus.Created,
         host: this.loggedUser,
         price: this.defaultPrice,
-        cancellationDeadline: 10, //videcemo
+        cancellationDeadline: this.cancellation || 0,
       };
 
+      this.copyPriceChange.sort((a, b) => new Date(a.changeDate).getTime() - new Date(b.changeDate).getTime());
+
+      // console.log('Posle sortiranja:', this.copyPriceChange);
       // Swal.fire({icon: 'success', title: 'Accommodation created successfully!', text: 'You will be redirected to the home page.',}).then(() => {
-      //            this.router.navigate(['/']);
+      //            //this.router.navigate(['/']);
       //          });
 
       this.accommodationService.createAccommodation(accommodation).subscribe(
@@ -254,7 +267,8 @@ export class CreateAccommodationComponent implements OnInit {
         (this.minimumPrice !== undefined && (this.minimumPrice <= 0 ||
         (this.maximumPrice !== undefined && this.minimumPrice > this.maximumPrice))) ||
         (this.maximumPrice !== undefined && this.maximumPrice <= 0) ||
-        (this.pictureUrls.length == 0 ) ||
+        (this.cancellation !== undefined && this.cancellation <= 0) ||
+        // (this.pictureUrls.length == 0 ) ||
         (this.addedDates.length == 0 ) ||
         Object.values(this.accTypeChecked).every(value => value === false)) {
       Swal.fire({
@@ -268,13 +282,16 @@ export class CreateAccommodationComponent implements OnInit {
   }
 
   toggleAmenity(amenity: string): void {
-    const amenityEnum = Amenity[amenity as keyof typeof Amenity];
+    const newAmenity: string = amenity.replace(/\s+/g, '');
+    const amenityEnum = Amenity[newAmenity as keyof typeof Amenity];
+
     if (this.accAmenities.includes(amenityEnum)) {
       this.accAmenities = this.accAmenities.filter(a => a !== amenityEnum);
     } else {
       this.accAmenities.push(amenityEnum);
     }
   }
+
 
   addDateRange() {
     const selectedDates = this.calendarComponent?.getSelectedRange();
@@ -406,16 +423,49 @@ export class CreateAccommodationComponent implements OnInit {
     }
   }
 
-  private subtractDays(date: Date, days: number): Date {
-    const result = new Date(date);
-    result.setDate(result.getDate() - days);
-    return result;
-  }
+  private updateCopyPriceChange(): void {
+    if (this.accPriceChange.length % 2==0) {
+      const lastTwoChanges = this.accPriceChange.slice(-2); // Poslednja dva elementa
 
-  private addDays(date: Date, days: number): Date {
-    const result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
+      if (this.copyPriceChange.length === 0) {
+        // Ako je copyPriceChange prazan, kopiraj poslednja dva elementa iz accPriceChange
+        this.copyPriceChange = [...lastTwoChanges];
+      } else {
+        // Ako nije prazan, ažuriraj ga na osnovu poslednja dva elementa iz accPriceChange
+        const lastTwoCopyChanges = this.copyPriceChange.slice(-2);
+
+        const startDate =lastTwoChanges[0].changeDate;
+        const endDate = lastTwoChanges[1].changeDate;
+
+        // Iteriraj kroz copyPriceChange i ažuriraj ga
+        this.copyPriceChange.forEach((copyChange, index) => {
+          const copyDate = copyChange.changeDate;
+
+          if (copyDate >= startDate && copyDate <= endDate) {
+            // Datum u copyPriceChange je između startDate i endDate, izbaci ga
+            this.copyPriceChange.splice(index, 1);
+          }
+        });
+
+        const uniqueDates = this.copyPriceChange.filter((change, index, self) => {
+          const currentChangeDate = new Date(change.changeDate).toISOString();
+          const isUnique = index === self.findIndex(c => currentChangeDate === new Date(c.changeDate).toISOString());
+
+          const isSameAsStartDate = currentChangeDate === new Date(startDate).toISOString();
+
+          return isUnique && !isSameAsStartDate;
+        });
+
+        this.copyPriceChange = [
+          ...uniqueDates,
+          { changeDate: startDate, newPrice: lastTwoChanges[0].newPrice },
+          { changeDate: endDate, newPrice: lastTwoChanges[1].newPrice }
+        ];
+
+
+
+      }
+    }
   }
 
 }
