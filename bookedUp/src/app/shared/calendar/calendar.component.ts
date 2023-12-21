@@ -115,11 +115,11 @@ export class CalendarComponent implements OnChanges {
 
     for (var i = 0; i < priceList.length; i++) {
       var priceChange = priceList[i];
-      var dateString: string = priceChange.changeDate.toISOString().split('T')[0];
+      var dateString: string = priceChange.changeDate.toString().split('T')[0];
       var nextDateString: string | undefined;
 
       if (i < priceList.length - 1) {
-        nextDateString = priceList[i + 1].changeDate.toISOString().split('T')[0];
+        nextDateString = priceList[i + 1].changeDate.toString().split('T')[0];
       }
 
       customPrices[dateString] = priceChange.newPrice;
@@ -131,13 +131,13 @@ export class CalendarComponent implements OnChanges {
 
         while (currentDate < nextDate) {
           currentDate.setDate(currentDate.getDate() + 1);
-          customPrices[currentDate.toISOString().split('T')[0]] = priceChange.newPrice;
+          customPrices[currentDate.toString().split('T')[0]] = priceChange.newPrice;
         }
       }
 
       if (i === priceList.length - 1) {
         var lastDate = new Date(dateString);
-        customPrices[lastDate.toISOString().split('T')[0]] = priceChange.newPrice;
+        customPrices[lastDate.toString().split('T')[0]] = priceChange.newPrice;
       }
     }
 

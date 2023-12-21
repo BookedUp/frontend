@@ -16,6 +16,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { Observable, map } from 'rxjs';
 import { Photo } from 'src/app/shared/model/photo.model';
 import {PhotoService} from "../../shared/photo/photo.service";
+import { Address } from 'src/app/shared/model/address.model';
 
 @Component({
   selector: 'app-update-accommodation',
@@ -27,6 +28,8 @@ export class UpdateAccommodationComponent implements OnInit {
   amenitiesList : string[] = [];
   accTypeList : string[] = [];
   accTypeChecked: { [key: string]: boolean } = {};
+  selectedAccType: string = '';
+  accAmenities: { [key: string]: boolean } = {};
   perNightChecked: boolean = true;
   perGuestChecked: boolean = false;
   defaultPrice: number = 0;
@@ -43,6 +46,8 @@ export class UpdateAccommodationComponent implements OnInit {
   pictureUrls: string[] = [];
   orgPictureUrls: string[] = [];
   currentIndex: number = 0;
+  editedAcc!: Accommodation;
+  address!: Address;
 
 
   customPricesInput: { [date: string]: number } = { };
@@ -50,7 +55,6 @@ export class UpdateAccommodationComponent implements OnInit {
 
   priceType: PriceType = PriceType.PerNight;
   accType: AccommodationType = AccommodationType.Apartment;
-  accAmenities: Amenity[] = [];
   accPriceChange: PriceChange[] = [];
 
   loggedUser!: Host;
@@ -83,6 +87,7 @@ export class UpdateAccommodationComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     const amenityValues = Object.values(Amenity) as string[];
     for (const amenity of amenityValues) {
       this.amenitiesList.push(this.transformEnumToDisplayFormat(amenity));
@@ -112,9 +117,17 @@ export class UpdateAccommodationComponent implements OnInit {
             this.availability = acc.availability;
             this.accPriceChange = acc.priceChanges;
             this.defaultPrice = acc.price;
-            console.log("sta je default unutar servisa ", this.defaultPrice);
-            console.log("sta je accPriceChange unutar servisa ", this.accPriceChange);
-            console.log("sta je availability unutar servisa ", this.availability );
+            
+            this.amenitiesList.forEach((amenity: string) => {
+              const amenityEnumValue: Amenity = Amenity[amenity as keyof typeof Amenity];
+              this.accAmenities[amenity] = acc.amenities.includes(amenityEnumValue);
+            });
+            
+            this.accTypeList.forEach((accType: string) => {
+              const accTypeEnumValue: AccommodationType = AccommodationType[accType as keyof typeof AccommodationType];
+
+              this.accTypeChecked[accType] = this.selectedAccommodation?.type === accTypeEnumValue;
+            });
 
             this.updateForm!.setValue({
               name: acc.name,
@@ -130,10 +143,17 @@ export class UpdateAccommodationComponent implements OnInit {
               maximumGuest: acc.maxGuests,
               acceptReservations: acc.automaticReservationAcceptance,
             });
+
+            this.addedDates = this.availability.map((dateRange: DateRange) => {
+              return {
+                start: dateRange.startDate.toString().split('T')[0].trim(),
+                end: dateRange.endDate.toString().split('T')[0].trim()
+              };
+            });
+
           },
           (error) => {console.error('Error loading user:', error);
           });
-      
 
       this.hostService.getHost(this.authService.getUserID()).subscribe(
           (host: Host) => {
@@ -143,32 +163,102 @@ export class UpdateAccommodationComponent implements OnInit {
             console.error('Error loading user:', error);
           }
       );
+      console.log("sndfjsnfjdsfjdsjdjfnd");
     });
-
     
-    console.log("sta je selected date ", this.selectedAccommodation);
+    console.log("sta je selected date ", this.defaultPrice);
     //console.log("sta je default ", this.selectedAccommodation.price);
 
     this.getUrls().subscribe((urls) => {
       this.orgPictureUrls = urls;
     });
+    
+    this.updateForm?.get('defaultPrice')!.valueChanges.subscribe((value) => {
+      this.defaultPrice = value;
+    });
   }
 
 
+updateAccAmenities(amenity: string, isChecked: boolean): void {
+  this.accAmenities[amenity] = isChecked;
+  console.log(this.accAmenities);
+}  
 
 handlePerNightChange() {
-  if (this.perNightChecked) {
-    this.perGuestChecked = false;
-    this.priceType = PriceType.PerNight;
+  console.log("PER night changed to true" );
+  if (this.updateForm?.get('perNightChecked')?.value) {
+    this.updateForm.get('perGuestChecked')?.setValue(false);
+    this.selectedAccommodation.priceType = PriceType.PerNight;
   }
 }
 
 handlePerGuestChange() {
-  if (this.perGuestChecked) {
-    this.perNightChecked = false;
-    this.priceType = PriceType.PerGuest;
+  console.log("PER guest changed to true");
+  if (this.updateForm?.get('perGuestChecked')?.value) {
+    this.updateForm.get('perNightChecked')?.setValue(false);
+    this.selectedAccommodation.priceType = PriceType.PerGuest;
   }
 }
+
+edit(){
+  var amenities: Amenity[] = Object.keys(this.accAmenities)
+  .filter((key) => this.accAmenities[key])
+  .map((key) => key as Amenity);
+
+  var selectedAccommodationType: AccommodationType = Object.keys(this.accTypeChecked)
+  .find((key) => this.accTypeChecked[key]) as AccommodationType;
+
+  let pr : PriceType;
+  if (this.perGuestChecked){
+     pr = PriceType.PerGuest;
+  } else {
+    pr = PriceType.PerNight;
+  }
+
+
+  this.editedAcc =  {
+    name : this.name || "",
+    description : this.description || "",
+    address: {
+      country : this.country || "",
+      city: this.city || "",
+      postalCode : this.postalCode || "",
+      streetAndNumber: this.addressStreet || "",
+      latitude: this.selectedAccommodation.address.latitude,
+      longitude: this.selectedAccommodation.address.longitude
+    },
+    amenities: amenities,
+    photos: this.selectedAccommodation.photos,
+    minGuests : this.selectedAccommodation.minGuests,
+    maxGuests: this.selectedAccommodation.maxGuests,
+    type: selectedAccommodationType,
+    availability: this.selectedAccommodation.availability,
+    priceType: pr,
+    priceChanges : this.selectedAccommodation.priceChanges,
+    automaticReservationAcceptance : true,
+    status: this.selectedAccommodation.status,
+    host : this.selectedAccommodation.host,
+    price : this.defaultPrice,
+    cancellationDeadline: this.selectedAccommodation.cancellationDeadline
+  }
+
+  this.accommodationService.updateAccommodation(this.selectedAccommodation.id || 0, this.editedAcc).subscribe(
+    (editedAcc: Accommodation) => {
+      console.log('Changed acc:', editedAcc);
+      Swal.fire({icon: 'success', title: 'Accommodaiton edited successfully!', text: 'You will be redirected to the home page.',});
+      this.router.navigate(['/']);
+    },
+    (error) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Sorry, an error occurred while creating the reservation. Please try again later.',
+      });
+    }
+  );
+
+}
+
 
 handleAccTypeChange(selectedAccType: string): void {
   this.accType = AccommodationType[selectedAccType as keyof typeof AccommodationType];
@@ -177,6 +267,7 @@ handleAccTypeChange(selectedAccType: string): void {
       this.accTypeChecked[accType] = false;
     }
   });
+  console.log(this.accTypeChecked);
 }
 
 transformEnumToDisplayFormat(enumValue: string): string {

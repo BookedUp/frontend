@@ -58,11 +58,32 @@
                             <input formControlName="defaultPrice" type="number" placeholder='Enter price here..' pattern="\d*" />
                         </div>
                         <div class="in-line-box" style="width: 70% !important; justify-content: right;">
-                            <input type="checkbox" id="perNight" name="amenities" class="icon" formControlName="perNightChecked" (change)="handlePerNightChange()" />
+                            <input
+                              type="radio"
+                              id="perNight"
+                              name="priceType"
+                              class="icon"
+                              (change)="handlePerNightChange()"
+                              [checked]="perNightChecked"
+                            />
                             <div class="normal-text" style="margin-right: 10%;">Per Night</div>
-                            <input type="checkbox" id="perGuest" name="amenities" class="icon" formControlName="perGuestChecked" (change)="handlePerGuestChange()" />
+                            <input
+                              type="radio"
+                              id="perGuest"
+                              name="priceType"
+                              class="icon"
+                              (change)="handlePerGuestChange()"
+                              [checked]="perGuestChecked"
+                            />
                             <div class="normal-text">Per Guest</div>
-                        </div>
+                          </div>
+                          
+                          
+                          
+                          
+                          
+                          
+                          
                     </div>
 
                     <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
@@ -76,16 +97,31 @@
                     <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
                     <b class="title-text">Facilities</b>
                     <div id="facilities" class="in-line-box" style="margin-top: 10px;" *ngFor="let amenity of amenitiesList;">
-                        <input type="checkbox" name="facilities" class="icon"/>
-                        <div class="normal-text">{{amenity}}</div>
-                    </div>
+                        <input
+                          type="checkbox"
+                          name="facilities"
+                          class="icon"
+                          [ngModel]="accAmenities[amenity]"
+                          (ngModelChange)="updateAccAmenities(amenity, $event)"
+                          [ngModelOptions]="{ standalone: true }"
+                        />
+                        <div class="normal-text">{{ amenity }}</div>
+                      </div>
 
                     <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
                     <b class="title-text">Accommodaton Type</b>
-                    <div id="accommodationType" class="in-line-box" style="margin-top: 10px;"  *ngFor="let accType of accTypeList;">
-                        <input type="checkbox" name="accommodationType" class="icon" [(ngModel)]="accTypeChecked[accType]" (change)="handleAccTypeChange(accType)" />
-                        <div class="normal-text">{{accType}}</div>
-                    </div>
+                    <div id="accommodationType" class="in-line-box" style="margin-top: 10px;" *ngFor="let accType of accTypeList;">
+                        <input
+                          type="checkbox"
+                          name="accommodationType"
+                          class="icon"
+                          [(ngModel)]="accTypeChecked[accType]"
+                          (click)="handleAccTypeChange(accType)"
+                          [ngModelOptions]="{ standalone: true }"
+                        />
+                        <div class="normal-text">{{ accType }}</div>
+                      </div>
+                      
 
                     <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
                     <div class="in-line-box">
@@ -117,11 +153,16 @@
             </div>
         </div>
         <div id="left-data" class="left-container">
-           <app-calendar #calendarRef
-                [defaultPrice]="defaultPrice"
-                [customPricesInput]="accPriceChange"
-                [alreadyPickedInput]="availability"
-           ></app-calendar>
+            <app-calendar #calendarRef
+            [defaultPrice]="defaultPrice"
+            [customPricesInput]="accPriceChange"
+            [alreadyPickedInput]="availability"
+            ></app-calendar>
+
+          
+
+
+          
             <button class="button-container" (click)="addDateRange()"  style="background-color: var(--gray-2);">
                 <b>Add</b>
             </button>
@@ -151,8 +192,8 @@
             <button class="button-container" (click)="applyCustomPrice()" style="background-color: var(--gray-2);">
                 <b>Apply Custom Price</b>
             </button>
-            <button class="button-container">
-                <b>Add new accommodation</b>
+            <button class="button-container"  (click)="edit()" >
+                <b>Edit</b>
             </button>
         </div>
     </div>
