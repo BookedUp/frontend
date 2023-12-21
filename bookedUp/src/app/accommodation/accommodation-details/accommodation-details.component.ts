@@ -190,22 +190,6 @@ export class AccommodationDetailsComponent implements OnInit {
     }
   }
 
-  // loadImages() {
-  //   this.accommodation..forEach((imageName) => {
-  //     this.accommodationService.getImage(imageName).subscribe(
-  //       (data) => {
-  //         this.createImageFromBlob(data).then((url: string) => {
-  //           this.slike.push({ ime: imageName.path, url: url });
-  //         }).catch(error => {
-  //           console.error(Greška prilikom konverzije slike ${imageName}: , error);
-  //         });
-  //       },
-  //       (error) => {
-  //         console.log(Doslo je do greske pri ucitavanju slike ${imageName}: , error);
-  //       }
-  //     );
-  //   });
-  // }
 
 
   loadPhotos() {
