@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from "../model/user.model";
 import {UserService} from "../user.service";
@@ -31,7 +31,8 @@ export class ManageProfileComponent implements OnInit {
   updateForm: FormGroup | undefined;
 
 
-  constructor(private userService: UserService,private photoService:PhotoService, private guestService: GuestService,private hostService: HostService, private router: Router, private authService: AuthService, private formBuilder: FormBuilder,
+  constructor(private userService: UserService,private photoService:PhotoService, private guestService: GuestService,private hostService: HostService, private router: Router, 
+    private authService: AuthService, private formBuilder: FormBuilder,private zone: NgZone
   ) {
     this.updateForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -85,25 +86,7 @@ export class ManageProfileComponent implements OnInit {
   }
 
   handleFileButtonClick() {
-
-    console.log('File button clicked');
     this.fileInput.nativeElement.click();
-    console.log('After triggering click');
-  }
-
-  togglePasswordVisibility() {
-    this.isPasswordVisible = !this.isPasswordVisible;
-  }
-
-  convertBlobToFile(blobUrl: string): Promise<File> {
-    return fetch(blobUrl)
-      .then(response => response.blob())
-      .then(blob => new File([blob], `image${Date.now()}.png`, { type: blob.type }));
-  }
-  
-
-  updateUser() {
-
     this.convertBlobToFile(this.displayedImageUrl??'')
     .then(file => {
       console.log('Converted file:', file);
@@ -125,6 +108,22 @@ export class ManageProfileComponent implements OnInit {
     .catch(error => {
       console.error('Error converting blob to file:', error);
     });
+  }
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  convertBlobToFile(blobUrl: string): Promise<File> {
+    return fetch(blobUrl)
+      .then(response => response.blob())
+      .then(blob => new File([blob], `acc${Date.now()}.png`, { type: blob.type }));
+  }
+  
+
+  updateUser() {
+
+    
 
     if (this.validate()) {
 
@@ -232,13 +231,13 @@ export class ManageProfileComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.loggedUser?.id != null) {
+          this.logout();
           this.guestService.deleteGuest(this.loggedUser?.id).subscribe(
               () => {
                 Swal.fire('Deleted!', 'Your account has been deleted.', 'success');
-                this.logout();
               },
               (error) => {
-                Swal.fire('Error', 'You cannot delete your account because you have active reservations in the future.', 'error');
+                Swal.fire('Error', 'You cannot delete your account because you have active reservations in the future. You will be unlogged now!', 'error');
               }
           );
         }
@@ -247,6 +246,8 @@ export class ManageProfileComponent implements OnInit {
       }
     });
   }
+
+  
 
   private deleteHost() {
     Swal.fire({
@@ -259,13 +260,13 @@ export class ManageProfileComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.loggedUser?.id != null) {
+          this.logout();
           this.hostService.deleteHost(this.loggedUser?.id).subscribe(
               () => {
                 Swal.fire('Deleted!', 'Your account has been deleted.', 'success');
-                this.logout();
               },
               (error) => {
-                Swal.fire('Error', 'You cannot delete your account because you have active reservations in the future.', 'error');
+                Swal.fire('Error', 'You cannot delete your account because you have active reservations in the future. You will be unlogged now!', 'error');
               }
           );
         }
@@ -275,15 +276,25 @@ export class ManageProfileComponent implements OnInit {
     });
   }
 
-  private logout(){
-    this.authService.logout().subscribe({
-      next: (_) => {
+  private logout() {
+    this.authService.logout().subscribe(
+      () => {
         localStorage.removeItem('user');
         this.authService.setUser();
-        this.router.navigate(['/']);
+        // Use Angular Zone to trigger change detection
+        this.zone.run(() => {
+          this.router.navigate(['/']).then(() => {
+            // Reload the current route to reflect changes (optional)
+            this.router.navigate([this.router.url]);
+          });
+        });
+      },
+      (error) => {
+        console.error('Logout error:', error);
       }
-    })
+    );
   }
+  
 
   loadPhotos() {
     if(this.loggedUser.profilePicture){

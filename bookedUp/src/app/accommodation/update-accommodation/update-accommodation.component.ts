@@ -56,6 +56,7 @@ export class UpdateAccommodationComponent implements OnInit {
 
   priceType: PriceType = PriceType.PerNight;
   accType: AccommodationType = AccommodationType.Apartment;
+  copyPriceChange: PriceChange[] = [];
   accPriceChange: PriceChange[] = [];
 
   loggedUser!: Host;
@@ -117,6 +118,7 @@ export class UpdateAccommodationComponent implements OnInit {
 
             this.availability = acc.availability;
             this.accPriceChange = acc.priceChanges;
+            this.copyPriceChange = acc.priceChanges;
             this.defaultPrice = acc.price;
             
             this.amenitiesList.forEach((amenity: string) => {
@@ -299,84 +301,92 @@ transformEnumToDisplayFormat(enumValue: string): string {
 
 
 applyCustomPrice(): void {
-  if(this.isInputReadOnly == false){
-    Swal.fire({
-      title: 'Default Price Changed!',
-      text: 'You can no longer change it in this window.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        if(this.defaultPrice != 0){
-          this.isInputReadOnly = true;
-          const selectedRange = this.calendarComponent?.getSelectedRange();
-          if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
-            
-            const startDate = new Date(selectedRange.start);
-            const endDate = new Date(selectedRange.end);
-    
-            const newPriceChangeStart: PriceChange = {
-              changeDate: startDate,
-              newPrice: this.customPrice,
-            };
-    
-            this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
-    
-    
-            var lastDate = new Date(selectedRange.end);
-            lastDate.setDate(lastDate.getDate() + 1);
-            const newPriceChange: PriceChange = {
-              changeDate: lastDate,
-              newPrice: this.defaultPrice,
-            };
-      
-            this.accPriceChange = [...this.accPriceChange, newPriceChange];
-        }
-        }else{
-          alert("You didn't input default price. Please provide a default price before entering a custom one.");
+    if(this.isInputReadOnly == false){
+      Swal.fire({
+        title: 'Default Price Changed!',
+        text: 'You can no longer change it in this window.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if(this.defaultPrice != 0){
+            this.isInputReadOnly = true;
+            const selectedRange = this.calendarComponent?.getSelectedRange();
+            if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
+
+              const startDate = new Date(selectedRange.start);
+              const endDate = new Date(selectedRange.end);
+
+              const newPriceChangeStart: PriceChange = {
+                changeDate: startDate,
+                newPrice: this.customPrice,
+              };
+
+              this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
+              this.updateCopyPriceChange();
+
+
+
+              var lastDate = new Date(selectedRange.end);
+              lastDate.setDate(lastDate.getDate() + 1);
+              const newPriceChange: PriceChange = {
+                changeDate: lastDate,
+                newPrice: this.defaultPrice,
+              };
+
+              this.accPriceChange = [...this.accPriceChange, newPriceChange];
+              this.updateCopyPriceChange();
+
+            }
+          }else{
+            alert("You didn't input default price. Please provide a default price before entering a custom one.");
+            return;
+          }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
           return;
         }
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
+      });
+    }else{
+      if(this.defaultPrice != 0){
+        this.isInputReadOnly = true;
+        const selectedRange = this.calendarComponent?.getSelectedRange();
+        if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
+
+          const startDate = new Date(selectedRange.start);
+          const endDate = new Date(selectedRange.end);
+
+          const newPriceChangeStart: PriceChange = {
+            changeDate: startDate,
+            newPrice: this.customPrice,
+          };
+
+          this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
+          this.updateCopyPriceChange();
+
+
+
+          var lastDate = new Date(selectedRange.end);
+          lastDate.setDate(lastDate.getDate() + 1);
+          const newPriceChange: PriceChange = {
+            changeDate: lastDate,
+            newPrice: this.defaultPrice,
+          };
+
+          this.accPriceChange = [...this.accPriceChange, newPriceChange];
+          this.updateCopyPriceChange();
+
+        }
+      }else{
+        alert("You didn't input default price. Please provide a default price before entering a custom one.");
         return;
       }
-    });
-  }else{
-    if(this.defaultPrice != 0){
-      this.isInputReadOnly = true;
-      const selectedRange = this.calendarComponent?.getSelectedRange();
-      if (selectedRange != null && selectedRange.start != null && selectedRange.start !== undefined && selectedRange.end != null && selectedRange.end !== undefined) {
-        
-        const startDate = new Date(selectedRange.start);
-        const endDate = new Date(selectedRange.end);
-
-        const newPriceChangeStart: PriceChange = {
-          changeDate: startDate,
-          newPrice: this.customPrice,
-        };
-
-        this.accPriceChange = [...this.accPriceChange, newPriceChangeStart];
-
-
-        var lastDate = new Date(selectedRange.end);
-        lastDate.setDate(lastDate.getDate() + 1);
-        const newPriceChange: PriceChange = {
-          changeDate: lastDate,
-          newPrice: this.defaultPrice,
-        };
-  
-        this.accPriceChange = [...this.accPriceChange, newPriceChange];
     }
-    }else{
-      alert("You didn't input default price. Please provide a default price before entering a custom one.");
-      return;
-    }
+
+
+
   }
-  
-
-  
-}
 
 addDateRange() {
   const selectedDates = this.calendarComponent?.getSelectedRange();
@@ -464,7 +474,6 @@ deleteDateRange(): void {
     this.addedDates = this.mergeOverlappingDateRanges(this.addedDates);
   }
 }
-
 nextImage() {
   if (this.currentIndex < this.pictureUrls.length - 1) {
     this.currentIndex++;
@@ -554,5 +563,51 @@ deleteImage():void{
     // Use Promise.all to wait for all promises to resolve
     return Promise.all(promises);
   }
+
+  private updateCopyPriceChange(): void {
+    if (this.accPriceChange.length % 2==0) {
+      const lastTwoChanges = this.accPriceChange.slice(-2); // Poslednja dva elementa
+
+      if (this.copyPriceChange.length === 0) {
+        // Ako je copyPriceChange prazan, kopiraj poslednja dva elementa iz accPriceChange
+        this.copyPriceChange = [...lastTwoChanges];
+      } else {
+        // Ako nije prazan, ažuriraj ga na osnovu poslednja dva elementa iz accPriceChange
+        const lastTwoCopyChanges = this.copyPriceChange.slice(-2);
+
+        const startDate =lastTwoChanges[0].changeDate;
+        const endDate = lastTwoChanges[1].changeDate;
+
+        // Iteriraj kroz copyPriceChange i ažuriraj ga
+        this.copyPriceChange.forEach((copyChange, index) => {
+          const copyDate = copyChange.changeDate;
+
+          if (copyDate >= startDate && copyDate <= endDate) {
+            // Datum u copyPriceChange je između startDate i endDate, izbaci ga
+            this.copyPriceChange.splice(index, 1);
+          }
+        });
+
+        const uniqueDates = this.copyPriceChange.filter((change, index, self) => {
+          const currentChangeDate = new Date(change.changeDate).toISOString();
+          const isUnique = index === self.findIndex(c => currentChangeDate === new Date(c.changeDate).toISOString());
+
+          const isSameAsStartDate = currentChangeDate === new Date(startDate).toISOString();
+
+          return isUnique && !isSameAsStartDate;
+        });
+
+        this.copyPriceChange = [
+          ...uniqueDates,
+          { changeDate: startDate, newPrice: lastTwoChanges[0].newPrice },
+          { changeDate: endDate, newPrice: lastTwoChanges[1].newPrice }
+        ];
+
+
+
+      }
+    }
+  }
+
 }
 
