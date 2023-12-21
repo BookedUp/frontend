@@ -238,47 +238,74 @@ edit(){
     pr = PriceType.PerNight;
   }
 
-
-  this.editedAcc =  {
-    name : this.name || "",
-    description : this.description || "",
+  this.editedAcc = {
+    name: this.updateForm?.get(['name'])?.value || '',
+    description: this.updateForm?.get(['description'])?.value || '',
     address: {
-      country : this.country || "",
-      city: this.city || "",
-      postalCode : this.postalCode || "",
-      streetAndNumber: this.addressStreet || "",
+      country: this.updateForm?.get(['country'])?.value || '',
+      city: this.updateForm?.get(['city'])?.value|| '',
+      postalCode: this.updateForm?.get(['postalCode'])?.value|| '',
+      streetAndNumber: this.updateForm?.get(['streetAndNumber'])?.value|| '',
       latitude: this.selectedAccommodation.address.latitude,
       longitude: this.selectedAccommodation.address.longitude
     },
     amenities: amenities,
+    // photos:  this.photos = this.pictureUrls.map(url => ({
+    //   url: url,
+    //   caption:'',
+    //   active: true
+    // })),//??
     photos: this.selectedAccommodation.photos,
-    minGuests : this.selectedAccommodation.minGuests,
-    maxGuests: this.selectedAccommodation.maxGuests,
+    minGuests: this.selectedAccommodation.minGuests|| 0,
+    maxGuests:this.selectedAccommodation.maxGuests|| 0,
     type: selectedAccommodationType,
     availability: this.selectedAccommodation.availability,
     priceType: pr,
-    priceChanges : this.selectedAccommodation.priceChanges,
-    automaticReservationAcceptance : true,
-    status: this.selectedAccommodation.status,
-    host : this.selectedAccommodation.host,
-    price : this.defaultPrice,
-    cancellationDeadline: this.selectedAccommodation.cancellationDeadline
-  }
+    priceChanges: this.selectedAccommodation.priceChanges,//
+    automaticReservationAcceptance: this.updateForm?.get(['acceptReservations'])?.value,
+    status: AccommodationStatus.Changed,
+    host: this.selectedAccommodation.host,
+    price: this.updateForm?.get(['defaultPrice'])?.value,
+    cancellationDeadline: this.selectedAccommodation.cancellationDeadline || 0,
+  };
 
-  this.accommodationService.updateAccommodation(this.selectedAccommodation.id || 0, this.editedAcc).subscribe(
-    (editedAcc: Accommodation) => {
-      console.log('Changed acc:', editedAcc);
-      Swal.fire({icon: 'success', title: 'Accommodaiton edited successfully!', text: 'You will be redirected to the home page.',});
+
+  
+  console.log('Changed acc:', this.editedAcc);
+
+  this.accommodationService.updateAccommodation(this.selectedAccommodation.id ?? 0, this.editedAcc)
+    .subscribe(updatedAccommodation => {
+      console.log('Update successful:', updatedAccommodation); // Log the updated data
+      // Swal.fire({ icon: 'success', title: 'Accommodation edited successfully!', text: 'You will be redirected to the home page.' });
       this.router.navigate(['/']);
-    },
-    (error) => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Sorry, an error occurred while creating the reservation. Please try again later.',
-      });
-    }
-  );
+    }, error => {
+      console.error('Error updating accommodation:', error);
+      // Swal.fire({
+      //   icon: 'error',
+      //   title: 'Error',
+      //   text: 'Sorry, an error occurred while updating the accommodation. Please check the console for details and try again later.',
+      // });
+    });
+
+    Swal.fire({ icon: 'success', title: 'Accommodation edited successfully!', text: 'You will be redirected to the home page.' });
+
+  
+  // this.accommodationService.updateAccommodation(this.selectedAccommodation.id || 0, this.editedAcc).subscribe(
+  //   (accommodation: Accommodation) => {
+  //     console.log('Update successful:', accommodation);
+  //     Swal.fire({ icon: 'success', title: 'Accommodation edited successfully!', text: 'You will be redirected to the home page.' });
+  //     this.router.navigate(['/']);
+  //   },
+  //   (error) => {
+  //     console.error('Error updating accommodation:', error);
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Error',
+  //       text: 'Sorry, an error occurred while updating the accommodation. Please check the console for details and try again later.',
+  //     });
+  //   }
+  // );
+  
 
 }
 
