@@ -1,0 +1,58 @@
+header {
+    position: relative;
+    padding: var(--padding-base);
+    }
+
+    .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+
+    .logo {
+    max-width: 126px;
+    height: auto;
+    object-fit: cover;
+    }
+
+    .home-nav {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: var(--gap-29xl);
+    font-size: var(--font-size-base);
+    color: var(--gray-1);
+    }
+
+    .home-item {
+        cursor:pointer;
+    letter-spacing: 0.02em;
+    }
+
+    .action-buttons {
+    display: flex;
+    gap: var(--gap-sm);
+    }
+
+    .register-button,
+    .sign-in-button {
+    border-radius: var(--br-7xs);
+    padding: var(--padding-3xs) var(--padding-lg);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-mini);
+    }
+
+    .register-button {
+    background-color: var(--color-white);
+    border: 1px solid var(--blue-1);
+    color: var(--blue-1);
+    }
+
+    .sign-in-button {
+    background-color: var(--blue-1);
+    color: var(--color-white);
+    }

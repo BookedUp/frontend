@@ -1,5 +1,9 @@
-body {
+@import '~leaflet/dist/leaflet.css';
+
+
+html,body {
     margin: 0;
+    height: 100%;
     line-height: normal;
   }
   
@@ -140,5 +144,8 @@ body {
     --element-hover: 0px 2px 25px rgba(0, 0, 0, 0.07);
   }
   
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
