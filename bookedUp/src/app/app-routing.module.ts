@@ -16,6 +16,7 @@ import { CreateReservationComponent } from './reservation/create-reservation/cre
 import {ReservationsComponent} from "./reservation/reservations/reservations.component";
 
 import { ManageProfileComponent } from './user/manage-profile/manage-profile.component';
+import {UsersComponent} from "./user/users/users/users.component";
 
 import { CheckInboxComponent } from './layout/check-inbox/check-inbox.component';
 import { ForgotPasswordComponent } from './layout/forgot-password/forgot-password.component';
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'my-reservations', component: ReservationsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] }},
 
   { path: 'manage-profile', component: ManageProfileComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST'] }},
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN'] }},
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
