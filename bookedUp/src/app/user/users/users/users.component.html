@@ -1,1 +1,68 @@
-<p>users works!</p>
+<html>
+<body>
+<div class="amenities-admin">
+
+  <div class="amenities-admin-child"></div>
+  <app-nav-bar></app-nav-bar>
+
+  <div id="sort-bar" class="sort-bar">
+    <div class="all-reservation" [ngClass]="{ 'clicked': selectedClass === 'all-reservation' }" (click)="getUsers()">
+      All Users
+    </div>
+    <div class="waiting-reservation" [ngClass]="{ 'clicked': selectedClass === 'waiting-reservation' }" (click)="getGuestsReservationsByStatus('waiting-reservation', ReservationStatus.Created)">
+      Blocked Users
+    </div>
+    <div class="accepted-reservation" [ngClass]="{ 'clicked': selectedClass === 'accepted-reservation' }" (click)="getGuestsReservationsByStatus('accepted-reservation', ReservationStatus.Accept)">
+      Reported Users
+    </div>
+
+  </div>
+
+  <div class="main-content" id="main-content">
+    <div *ngFor="let user of users | async" class="acc-frame" >
+      <img
+        class="accommodation-image"
+        alt=""
+        [src]="user.profilePicture?.url"
+      />
+
+      <div class="left-data">
+        <div class="top-data-box">
+          <b class="title">{{ user.firstName }} {{ user.lastName }} </b>
+          <div class="reviews-frame">
+<!--            <div class="stars-container">-->
+<!--                        <span *ngIf="reservation.accommodation?.averageRating !== undefined">-->
+<!--&lt;!&ndash;                            <span class="star" *ngFor="let star of generateStars(roundHalf(reservation.accommodation.averageRating/2))"></span>&ndash;&gt;-->
+<!--                        </span>-->
+
+
+
+<!--            </div>-->
+            <div class="reviews-average" >{{user.address?.streetAndNumber}}, {{user.address?.city}}, {{user.address?.country}}</div>
+
+          </div>
+
+        </div>
+
+        <div class="bottom-data-box">
+          <b class="per-night">{{ user.email }}</b>
+          <div class="includes-taxes">{{ user.phone}}</div>
+        </div>
+      </div>
+
+      <div class="right-buttons">
+        <div class="view-details-button" id="view-details-button" >
+          <b class="button-text">View Details</b>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+
+  <app-shorter-footer></app-shorter-footer>
+
+</div>
+</body>
+</html>
