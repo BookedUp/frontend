@@ -189,5 +189,16 @@ export class ReservationsComponent implements OnInit {
     );
   }
 
+  isWithinCancellationDeadline(reservation: Reservation): boolean {
+    const deadlineInDays = reservation.accommodation.cancellationDeadline;
+    const reservationStartDate = new Date(reservation.startDate);
+    const today = new Date();
+
+    reservationStartDate.setDate(reservationStartDate.getDate() - deadlineInDays);
+
+    return today <= reservationStartDate;
+  }
+
+
 }
 

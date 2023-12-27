@@ -78,9 +78,10 @@
             </div>
 
             <div class="right-buttons">
-                <div *ngIf="reservation.status === 'CREATED'" class="reject-button" id="reject-button" (click)="cancelReservation(reservation?.id)">
+                <div *ngIf="(reservation.status === 'CREATED' || (reservation.status === 'ACCEPTED' && isWithinCancellationDeadline(reservation)))" class="reject-button" id="reject-button" (click)="cancelReservation(reservation?.id)">
                     <b class="button-text">Cancel</b>
                 </div>
+
 
                 <div class="view-details-button" id="view-details-button" routerLink="/accommodation-details/{{reservation.accommodation.id}}">
                     <b class="button-text">View Details</b>
