@@ -147,5 +147,47 @@ export class ReservationsComponent implements OnInit {
             reservation.accommodation.name.toLowerCase().includes(searchText.toLowerCase())
         );
     }
+
+  cancelReservation(id: number | undefined): void {
+    if (id === undefined) {
+      console.error('Reservation ID is not defined.');
+      return;
+    }
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This action is irreversible!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, I am sure!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.confirmCancellation(id);
+      }
+    });
+  }
+
+  private confirmCancellation(id: number): void {
+    const queryParams = { ...(this.route.snapshot.queryParams as any) };
+
+    this.reservationService.cancelReservation(id).subscribe(
+        (cancelledReservation) => {
+          // Here, you can set logic for handling successful reservation cancellation
+          Swal.fire('Successfully Canceled!', 'Your reservation has been canceled.', 'success').then(() => {
+            this.loadReservations();
+          });
+        },
+        (error) => {
+          // Here, you can set logic for handling errors during reservation cancellation
+          console.error('Error cancelling reservation:', error);
+
+          Swal.fire('Error!', 'An error occurred while canceling the reservation.', 'error');
+        }
+    );
+  }
+
 }
 

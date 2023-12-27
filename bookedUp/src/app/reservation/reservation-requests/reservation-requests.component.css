@@ -28,6 +28,7 @@
   font-size: var(--font-size-base);
   color: var(--gray-1);
 }
+.search-bar,
 .all-reservation,
 .waiting-reservation,
 .accepted-reservation,
@@ -39,6 +40,11 @@
   top: 16px;
   left: 122px;
   letter-spacing: 0.02em;
+}
+
+.search-bar{
+  left:1180px;
+
 }
 .waiting-reservation {
   left: 270px;
@@ -273,10 +279,10 @@
   line-height: 140%;
 }
 
-.search-bar {
-  position: absolute;
-  top: 60px; /* Prilagodite ovu vrednost da biste postavili visinu pretrage */
-  left: 25%; /* Postavljanje horizontalne pozicije */
-  width: 50%; /* Postavljanje širine pretrage */
-  z-index: 2; /* Postavljanje z-index kako bi pretraga bila iznad ostalih elemenata */
-}
+/*.search-bar {*/
+/*  position: absolute;*/
+/*  top: 60px; !* Prilagodite ovu vrednost da biste postavili visinu pretrage *!*/
+/*  left: 25%; !* Postavljanje horizontalne pozicije *!*/
+/*  width: 50%; !* Postavljanje širine pretrage *!*/
+/*  z-index: 2; !* Postavljanje z-index kako bi pretraga bila iznad ostalih elemenata *!*/
+/*}*/
