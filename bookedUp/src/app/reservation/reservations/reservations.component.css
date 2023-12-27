@@ -28,6 +28,8 @@
     font-size: var(--font-size-base);
     color: var(--gray-1);
 }
+
+
 .all-reservation,
 .waiting-reservation,
 .accepted-reservation,
@@ -271,4 +273,12 @@
     position: relative;
     height: 18px;
     line-height: 140%;
+}
+
+.search-bar {
+    position: absolute;
+    top: 60px; /* Prilagodite ovu vrednost da biste postavili visinu pretrage */
+    left: 25%; /* Postavljanje horizontalne pozicije */
+    width: 50%; /* Postavljanje širine pretrage */
+    z-index: 2; /* Postavljanje z-index kako bi pretraga bila iznad ostalih elemenata */
 }

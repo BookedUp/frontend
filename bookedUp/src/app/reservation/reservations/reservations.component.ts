@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {Reservation} from "../model/reservation.model";
 import {ReservationService} from "../reservation.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -20,7 +20,10 @@ export class ReservationsComponent implements OnInit {
   filter: string = 'all';
   photoDict: { accId: number, url: string }[] = [];
   res: Reservation[] = [];
-  constructor(private reservationService: ReservationService, private router: Router, private route: ActivatedRoute, private authService: AuthService, private photoService: PhotoService) { }
+
+  searchText: string = '';
+
+    constructor(private reservationService: ReservationService, private router: Router, private route: ActivatedRoute, private authService: AuthService, private photoService: PhotoService) { }
 
   protected readonly ReservationStatus = ReservationStatus;
 
@@ -127,5 +130,22 @@ export class ReservationsComponent implements OnInit {
     }
     return 0;
   }
+
+    searchReservations() {
+        if (this.searchText.trim() === '') {
+            this.loadReservations();
+        } else {
+            const filteredReservations = this.res.filter((ress) =>
+                this.containsSearchText(ress, this.searchText)
+            );
+            this.reservations = of(filteredReservations);
+        }
+    }
+
+    private containsSearchText(reservation: Reservation, searchText: string): boolean {
+        return (
+            reservation.accommodation.name.toLowerCase().includes(searchText.toLowerCase())
+        );
+    }
 }
 
