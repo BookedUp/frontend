@@ -7,7 +7,7 @@
 
   <div id="sort-bar" class="sort-bar">
     <div class="active-accommodations" [ngClass]="{ 'clicked': selectedClass === 'active-accommodations' }" (click)="changeStyle('active-accommodations')">
-      My Favourites accommodations
+      My Favourites Accommodations
     </div>
 
   </div>
@@ -62,9 +62,6 @@
 
         <div class="view-details-button" id="view-details-button" routerLink="/accommodation-details/{{accommodation.id}}">
           <b class="button-text">View Details</b>
-        </div>
-        <div class="view-details-button" routerLink="/update-accommodation/{{accommodation.id}}"  *ngIf="accommodation.status===AccommodationStatus.Active">
-          <b class="button-text">Edit Details</b>
         </div>
       </div>
     </div>

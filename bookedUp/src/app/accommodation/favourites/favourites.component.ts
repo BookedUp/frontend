@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
+import {forkJoin, Observable, of} from "rxjs";
 import {Accommodation} from "../model/accommodation.model";
 import {AccommodationService} from "../accommodation.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../infrastructure/auth/auth.service";
 import {PhotoService} from "../../shared/photo/photo.service";
 import { AccommodationStatus } from '../model/enum/accommodationStatus.enum';
+import {GuestService} from "../../user/guest/guest.service";
+import {Guest} from "../../user/model/guest.model";
 
 @Component({
   selector: 'app-favourites',
@@ -26,7 +28,7 @@ export class FavouritesComponent implements OnInit {
   acc: Accommodation[]=[];
 
 
-  constructor(private accommodationService: AccommodationService, private router: Router, private route: ActivatedRoute, private authService: AuthService, private photoService: PhotoService) { }
+  constructor(private accommodationService: AccommodationService,private router: Router, private route: ActivatedRoute, private authService: AuthService, private photoService: PhotoService, private guestService: GuestService) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -39,16 +41,27 @@ export class FavouritesComponent implements OnInit {
 
   private loadAccommodations(): void {
     if (this.filter === 'active') {
-      this.accommodations = this.accommodationService.getAllActiveAccommodationsByHostId(this.authService.getUserID());
-      this.accommodationService.getAllActiveAccommodationsByHostId(this.authService.getUserID()).subscribe((results) => {
-        this.acc = results;
-        this.loadPhotos();
+      this.guestService.getGuestById(this.authService.getUserID()).subscribe((guest: Guest) => {
+        if (guest) {
+          // Assume that 'favourites' is an array property in the Guest model
+          const guestFavourites = guest.favourites || [];
+          this.accommodations = of(guestFavourites);
+          this.loadPhotos();
+        }
       });
     } else if (this.filter === 'requests') {
-      this.accommodations = this.accommodationService.getAllRequestsByHostId(this.authService.getUserID());
-      this.accommodationService.getAllRequestsByHostId(this.authService.getUserID()).subscribe((results) => {
-        this.acc = results;
-        this.loadPhotos();
+      forkJoin([
+        this.guestService.getGuestById(this.authService.getUserID()),
+        this.accommodationService.getAllActiveAccommodationsByHostId(this.authService.getUserID())
+      ]).subscribe(([guest, accommodations]) => {
+        if (guest) {
+          this.acc = guest.favourites || [];
+        }
+        if (accommodations) {
+
+          this.acc = this.acc.concat(accommodations);
+          this.loadPhotos();
+        }
       });
     } else {
       this.accommodations = this.accommodationService.getAllRejectedByHostId(this.authService.getUserID());
