@@ -10,6 +10,7 @@ import { AccommodationRequestsComponent } from './accommodation/accommodation-re
 import { CreateAccommodationComponent } from './accommodation/create-accommodation/create-accommodation.component';
 import { UpdateAccommodationComponent } from './accommodation/update-accommodation/update-accommodation.component';
 import { AccommodationsComponent } from './accommodation/accommodations/accommodations.component';
+import { FavouritesComponent} from "./accommodation/favourites/favourites.component";
 
 import { ReservationRequestsComponent } from './reservation/reservation-requests/reservation-requests.component';
 import { CreateReservationComponent } from './reservation/create-reservation/create-reservation.component';
@@ -33,6 +34,8 @@ const routes: Routes = [
   { path: 'create-accommodation', component: CreateAccommodationComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
   { path: 'update-accommodation/:id', component: UpdateAccommodationComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
   { path: 'my-accommodations', component: AccommodationsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
+  { path: 'favourites', component: FavouritesComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] }},
+
 
   { path: 'reservation-requests', component: ReservationRequestsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
   { path: 'create-reservation/:id', component: CreateReservationComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] }},
