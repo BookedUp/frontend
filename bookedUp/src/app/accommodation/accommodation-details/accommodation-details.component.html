@@ -52,7 +52,7 @@
               <b class="singlePrice">${{accommodation.price}}/{{accommodation.priceType}}</b><br>
               <div *ngIf="numberGuests !== 0" class="normal-text" style="margin-top: 10px;">
                 {{ numberGuests }} adult, {{days}} nights
-              </div>          
+              </div>
             </div>
           </div>
 
@@ -88,6 +88,11 @@
           <div class="save-account-wrapper" *ngIf="role === 'ROLE_GUEST'" id="save-button" style="margin-top: 5%;" (click)="onButtonClick()">
             <b class="save-account">Reserve Accommodation</b>
           </div>
+
+          <div class="save-account-wrapper" *ngIf="role === 'ROLE_GUEST'" style="margin-top: 5%;" (click)="toggleFavourite()">
+            <b class="save-account">{{ isFavourite ? 'Remove from Favourites' : 'Add to Favourites' }}</b>
+          </div>
+
         </div>
       </div>
 
