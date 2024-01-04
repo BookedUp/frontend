@@ -9,12 +9,14 @@ import { LayoutModule } from '../layout/layout.module';
 
 import { ManageProfileComponent } from './manage-profile/manage-profile.component';
 import { UserReportsComponent } from './user-reports/user-reports.component';
+import { BlockUsersComponent } from './block-users/block-users.component';
 
 
 @NgModule({
   declarations: [
     ManageProfileComponent,
     UserReportsComponent,
+    BlockUsersComponent,
   ],
   imports: [
     CommonModule,

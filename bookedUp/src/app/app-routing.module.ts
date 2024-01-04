@@ -17,6 +17,7 @@ import { ReservationsComponent } from "./reservation/reservations/reservations.c
 
 import { ManageProfileComponent } from './user/manage-profile/manage-profile.component';
 import { UserReportsComponent } from './user/user-reports/user-reports.component';
+import { BlockUsersComponent } from './user/block-users/block-users.component';
 
 import { CheckInboxComponent } from './layout/check-inbox/check-inbox.component';
 import { ForgotPasswordComponent } from './layout/forgot-password/forgot-password.component';
@@ -47,6 +48,7 @@ const routes: Routes = [
 
   { path: 'manage-profile', component: ManageProfileComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST'] }},
   { path: 'user-reports', component: UserReportsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN'] } },
+  { path: 'block-users', component: BlockUsersComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] } },
 
   { path: 'accommodation-reviews/:id', component: AccommodationReviewsComponent},
   { path: 'add-review', component: AddReviewComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] } },
