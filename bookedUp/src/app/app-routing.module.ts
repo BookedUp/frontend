@@ -13,15 +13,22 @@ import { AccommodationsComponent } from './accommodation/accommodations/accommod
 
 import { ReservationRequestsComponent } from './reservation/reservation-requests/reservation-requests.component';
 import { CreateReservationComponent } from './reservation/create-reservation/create-reservation.component';
-import {ReservationsComponent} from "./reservation/reservations/reservations.component";
+import { ReservationsComponent } from "./reservation/reservations/reservations.component";
 
 import { ManageProfileComponent } from './user/manage-profile/manage-profile.component';
+import { UserReportsComponent } from './user/user-reports/user-reports.component';
 
 import { CheckInboxComponent } from './layout/check-inbox/check-inbox.component';
 import { ForgotPasswordComponent } from './layout/forgot-password/forgot-password.component';
 
+import { AccommodationReviewsComponent } from './review/accommodation-reviews/accommodation-reviews.component';
+import { AddReviewComponent } from './review/add-review/add-review.component';
+import { GuestReviewsComponent } from './review/guest-reviews/guest-reviews.component';
+import { HostReviewsComponent } from './review/host-reviews/host-reviews.component';
+import { ReviewReportsComponent } from './review/review-reports/review-reports.component';
+
 import { LoginComponent } from './infrastructure/auth/login/login.component';
-import {RegistrationComponent} from "./infrastructure/auth/registration/registration.component";
+import { RegistrationComponent } from "./infrastructure/auth/registration/registration.component";
 
 
 const routes: Routes = [
@@ -39,6 +46,13 @@ const routes: Routes = [
   { path: 'my-reservations', component: ReservationsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] }},
 
   { path: 'manage-profile', component: ManageProfileComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST'] }},
+  { path: 'user-reports', component: UserReportsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN'] } },
+
+  { path: 'accommodation-reviews/:id', component: AccommodationReviewsComponent},
+  { path: 'add-review', component: AddReviewComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] } },
+  { path: 'guest-reviews', component: GuestReviewsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] } },
+  { path: 'host-reviews', component: HostReviewsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] } },
+  { path: 'review-reports', component: ReviewReportsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN'] } },
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
