@@ -8,11 +8,13 @@ import { SharedModule } from '../shared/shared.module';
 import { LayoutModule } from '../layout/layout.module';
 
 import { ManageProfileComponent } from './manage-profile/manage-profile.component';
+import { UserReportsComponent } from './user-reports/user-reports.component';
 
 
 @NgModule({
   declarations: [
     ManageProfileComponent,
+    UserReportsComponent,
   ],
   imports: [
     CommonModule,
