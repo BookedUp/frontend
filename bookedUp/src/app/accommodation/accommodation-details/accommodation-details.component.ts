@@ -190,7 +190,9 @@ export class AccommodationDetailsComponent implements OnInit {
     }
   }
 
-
+  navigateTo(route: string): void {
+    this.router.navigate([route, this.accommodationId], { queryParams: { startDate: this.startDate, endDate: this.endDate, totalPrice: this.totalPrice, numberGuests: this.numberGuests, days: this.days} });
+  }
 
   loadPhotos() {
     this.acc.photos.forEach((imageName) => {
