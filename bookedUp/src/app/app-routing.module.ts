@@ -30,6 +30,7 @@ import { ReviewReportsComponent } from './review/review-reports/review-reports.c
 
 import { LoginComponent } from './infrastructure/auth/login/login.component';
 import { RegistrationComponent } from "./infrastructure/auth/registration/registration.component";
+import {HostReportsComponent} from "./user/host-reports/host-reports.component";
 
 
 const routes: Routes = [
@@ -48,6 +49,7 @@ const routes: Routes = [
 
   { path: 'manage-profile', component: ManageProfileComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST'] }},
   { path: 'user-reports', component: UserReportsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN'] } },
+  { path: 'host-reports', component: HostReportsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] } },
   { path: 'block-users', component: BlockUsersComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] } },
 
   { path: 'accommodation-reviews/:id', component: AccommodationReviewsComponent},

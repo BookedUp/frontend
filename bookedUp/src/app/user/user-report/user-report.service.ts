@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {UserReport} from "../model/user-report";
+import {User} from "../model/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -33,4 +34,10 @@ export class UserReportService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<void>(url);
   }
+
+  getAllReportedUsers(): Observable<User[]> {
+    const url = `${this.apiUrl}/reported-users`;
+    return this.http.get<User[]>(url);
+  }
+
 }

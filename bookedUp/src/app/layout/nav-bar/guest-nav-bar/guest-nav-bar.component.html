@@ -23,26 +23,31 @@
            <img class="user-square-2-icon" alt="" src="../../../assets/public/usersquare-2.svg" />
            <div class="my-reservations">Manage account</div>
         </div>
-     
+
         <div class="frame-parent6" (click)="navigateTo('/my-reservations')">
            <img class="frame-icon" alt="" src="../../../assets/public/hotel-21.svg" />
            <div class="my-reservations">My reservations</div>
         </div>
-     
+
+        <div class="frame-parent6" (click)="navigateTo('/host-reports')">
+          <img class="frame-icon" alt="" src="../../../assets/public/frame1.svg" />
+          <div class="my-reservations">Users</div>
+        </div>
+
         <div class="frame-parent6" (click)="navigateTo('/')">
            <img class="frame-icon" alt="" src="../../../assets/public/bookmarkheart-1.svg" />
            <div class="my-reservations">Favourites</div>
         </div>
-     
+
         <div class="frame-parent6" (click)="navigateTo('/guest-reviews')">
            <img class="frame-icon" alt="" src="../../../assets/public/frame2.svg" />
            <div class="my-reservations">Reviews</div>
         </div>
-     
+
         <div class="logout-1-parent" id="signOut" *ngIf="role != null" (click)="logOut()">
            <img class="user-square-2-icon" alt="" src="../../../assets/public/logout-1.svg" />
            <div class="my-reservations">Sign out</div>
         </div>
-     </div>     
+     </div>
     </div>
   </header>

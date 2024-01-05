@@ -5,6 +5,7 @@ import { PhotoService } from 'src/app/shared/photo/photo.service';
 import Swal from 'sweetalert2';
 import { User } from '../model/user.model';
 import { UserService } from '../user.service';
+import {UserReportService} from "../user-report/user-report.service";
 
 @Component({
   selector: 'app-user-reports',
@@ -19,7 +20,7 @@ export class UserReportsComponent implements OnInit {
   photoDict: { accId: number, url: string }[] = [];
   user: User[] = [];
 
-  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService) {
+  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private userReportService: UserReportService) {
   }
 
 
@@ -55,12 +56,14 @@ export class UserReportsComponent implements OnInit {
         this.loadPhotos();
       });
     } else {
-      this.users = this.userService.getReportedUsers();
-      this.userService.getBlockedUsers().subscribe((results) => {
+      this.users = this.userReportService.getAllReportedUsers();
+      this.userReportService.getAllReportedUsers().subscribe((results) => {
         this.user = results;
         this.loadPhotos();
+
       });
     }
+
   }
 
   generateStars(rating: number): string[] {

@@ -65,10 +65,10 @@ export class BlockUsersComponent implements OnInit {
       preConfirm: async (reason) => {
         try {
           const reportedUser = await this.userService.getUser(id).toPromise();
-
           const createdUserReport = await this.userReportService.createUserReport({
             reportedUser: reportedUser,
-            reason: reason
+            reason: reason,
+            status: true
           }).toPromise();
 
           return createdUserReport;  // Vratite kreirani izveštaj
