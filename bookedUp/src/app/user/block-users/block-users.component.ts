@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, concatMap, map, of } from 'rxjs';
+import {Observable, concatMap, map, of, catchError} from 'rxjs';
 import { PhotoService } from 'src/app/shared/photo/photo.service';
 import Swal from 'sweetalert2';
 import { User } from '../model/user.model';
@@ -8,6 +8,7 @@ import { UserService } from '../user.service';
 import {Guest} from "../model/guest.model";
 import {AuthService} from "../../infrastructure/auth/auth.service";
 import {HostService} from "../host/host.service";
+import {UserReportService} from "../user-report/user-report.service";
 
 @Component({
   selector: 'app-block-users',
@@ -24,7 +25,7 @@ export class BlockUsersComponent implements OnInit {
 
   guests: Observable<Guest[]> = new Observable();
   guest: Guest[] = [];
-  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private authService: AuthService, private hostService: HostService) {
+  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private authService: AuthService, private hostService: HostService, private userReportService: UserReportService) {
   }
 
 
@@ -61,9 +62,20 @@ export class BlockUsersComponent implements OnInit {
       confirmButtonText: 'Report',
       cancelButtonText: 'Cancel',
       showLoaderOnConfirm: true,
-      preConfirm: (reason) => {
-        // Ovde pozovite funkciju za prijavu korisnika sa razlogom
-        // this.userService.reportUser(id, reason).subscribe(...);
+      preConfirm: async (reason) => {
+        try {
+          const reportedUser = await this.userService.getUser(id).toPromise();
+
+          const createdUserReport = await this.userReportService.createUserReport({
+            reportedUser: reportedUser,
+            reason: reason
+          }).toPromise();
+
+          return createdUserReport;  // Vratite kreirani izveštaj
+        } catch (error) {
+          Swal.showValidationMessage(`Request failed: ${error}`);
+          return null;  // Ako dođe do greške, vratite null ili odgovarajuću vrednost
+        }
       },
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result) => {
@@ -78,6 +90,7 @@ export class BlockUsersComponent implements OnInit {
       }
     });
   }
+
 
 
 
