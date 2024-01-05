@@ -5,6 +5,9 @@ import { PhotoService } from 'src/app/shared/photo/photo.service';
 import Swal from 'sweetalert2';
 import { User } from '../model/user.model';
 import { UserService } from '../user.service';
+import {Guest} from "../model/guest.model";
+import {AuthService} from "../../infrastructure/auth/auth.service";
+import {HostService} from "../host/host.service";
 
 @Component({
   selector: 'app-block-users',
@@ -18,14 +21,27 @@ export class BlockUsersComponent implements OnInit {
   photoDict: { accId: number, url: string }[] = [];
   user: User[] = [];
 
-  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService) {
+
+  guests: Observable<Guest[]> = new Observable();
+  guest: Guest[] = [];
+  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private authService: AuthService, private hostService: HostService) {
   }
 
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.loadUsers();
+      //this.loadGuests();
     });
+  }
+
+  private loadGuests() {
+    this.guests = this.hostService.getHostGuests(this.authService.getUserID());
+    this.hostService.getHostGuests(this.authService.getUserID()).subscribe((results) => {
+      this.guest = results;
+      this.loadPhotos();
+    });
+
   }
 
   private loadUsers(): void {
@@ -36,27 +52,34 @@ export class BlockUsersComponent implements OnInit {
     });
   }
 
-  blockUser(id: number): void {
-    // this.accommodationService.rejectAccommodation(id)
-    //     .subscribe(
-    //         (rejectedReservation) => {
-    //           Swal.fire({
-    //             icon: 'success',
-    //             title: 'Accommodation Rejected!',
-    //             text: 'The accommodation has been successfully rejected.',
-    //           }).then(() => {
-    //             this.loadAccommodations();
-    //           });
-    //         },
-    //         (error) => {
-    //           Swal.fire({
-    //             icon: 'error',
-    //             title: 'Error Rejecting Accommodation',
-    //             text: `An error occurred: ${error.message}`,
-    //           });
-    //         }
-    //     );
+  reportUser(id: number): void {
+    Swal.fire({
+      title: 'Report User',
+      input: 'text',
+      inputLabel: 'Reason for Reporting:',
+      showCancelButton: true,
+      confirmButtonText: 'Report',
+      cancelButtonText: 'Cancel',
+      showLoaderOnConfirm: true,
+      preConfirm: (reason) => {
+        // Ovde pozovite funkciju za prijavu korisnika sa razlogom
+        // this.userService.reportUser(id, reason).subscribe(...);
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: 'User Reported!',
+          text: 'The user has been successfully reported.',
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Cancelled', 'User reporting was cancelled', 'info');
+      }
+    });
   }
+
+
 
   loadPhotos() {
     this.user.forEach((acc) => {
@@ -95,4 +118,6 @@ export class BlockUsersComponent implements OnInit {
     const photo = this.photoDict.find((item) => item.accId === accId);
     return photo ? photo.url : '';
   }
+
+
 }
