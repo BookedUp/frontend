@@ -1,4 +1,4 @@
-import { Host } from "@angular/core";
+import { Host } from "src/app/user/model/host.model";
 import { ReviewType } from "./enum/reviewType.enum";
 import { Accommodation } from "src/app/accommodation/model/accommodation.model";
 
@@ -7,7 +7,7 @@ export interface Review {
     review: number;
     comment: string;
     date: Date;
-    host: Host;
-    accommodation: Accommodation;
+    hostDTO: Host;
+    accommodationDTO: Accommodation;
     type: ReviewType;
   }
