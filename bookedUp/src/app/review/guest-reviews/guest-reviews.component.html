@@ -1,1 +1,133 @@
-<p>guest-reviews works!</p>
+<html>
+<body>
+    <div class="amenities-admin">
+
+        <div class="amenities-admin-child"></div>
+        <app-nav-bar></app-nav-bar>
+
+        <div id="sort-bar" class="sort-bar">
+            <div class="all-accommodations" [ngClass]="{ 'clicked': selectedClass === 'all-accommodations' }" (click)="changeStyle('all-accommodations')">
+              All Reviews
+            </div>
+            <div class="new-accommodations" [ngClass]="{ 'clicked': selectedClass === 'new-accommodations' }" (click)="changeStyle('new-accommodations')">
+              Posted Reviews
+            </div>
+            <div class="changed-accommodations" [ngClass]="{ 'clicked': selectedClass === 'changed-accommodations' }" (click)="changeStyle('changed-accommodations')">
+              Waiting For Review
+            </div>
+        </div>
+
+        <div class="main-content" id="main-content">
+            <ng-container *ngFor="let review of reviews | async">
+                <div class="acc-frame" *ngIf="review.type === 'ACCOMMODATION'">
+                    <img
+                      class="accommodation-image"
+                      alt=""
+                      [src]="getPhotoUrl(review.accommodationDTO.id)"
+                    />
+      
+                    <div class="left-data">
+                      <div class="top-data-box">
+                        <b class="title">{{ review.accommodationDTO.name }}</b>
+      
+                        <div class="reviews-frame">
+                          <div class="stars-container">
+                           <span class="star" *ngFor="let star of generateStars(roundHalf(review.accommodationDTO.averageRating ? review.accommodationDTO.averageRating / 2 : 0))">
+                             {{ star }}
+                           </span>
+                          </div>
+                            <div class="reviews-average" *ngIf="review.accommodationDTO">{{ roundHalf(review.accommodationDTO.averageRating ? review.accommodationDTO.averageRating / 2 : 0) }}</div>
+                        </div>
+      
+                      </div>
+      
+                      <div class="bottom-data-box">
+                          <b class="location-text">Your Review</b>
+                          <div class="reviews-frame">
+                              <div class="stars-container">
+                               <span class="star" *ngFor="let star of generateStars(roundHalf(review.review ? review.review / 2 : 0))">
+                                 {{ star }}
+                               </span>
+                              </div>
+                                <div class="reviews-average">{{ roundHalf(review.review ? review.review / 2 : 0) }}</div>
+                          </div>
+      
+                          
+                          <b class="location-text">Comment</b>
+                          <div class="location-text"> {{ review.comment }} </div>
+                      </div>
+                    </div>
+      
+                    <div class="right-buttons">
+                        <div class="accept-button" id="accept-button">
+                        <b class="button-text">Review Posted</b>
+                      </div>
+                      <div class="reject-button" id="reject-button">
+                        <b class="button-text">Delete</b>
+                      </div>
+                      <div class="view-details-button" id="view-details-button" >
+                        <b class="button-text">Waiting For Review</b>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="acc-frame" *ngIf="review.type === 'HOST'">
+                    <img
+                      class="accommodation-image"
+                      alt=""
+                      [src]="review.hostDTO.profilePicture?.url"
+                    />
+      
+                    <div class="left-data">
+                      <div class="top-data-box">
+                        <b class="title">{{ review.hostDTO.firstName }} {{ review.hostDTO.lastName }}</b>
+      
+                        <div class="reviews-frame">
+                          <div class="stars-container">
+                           <span class="star" *ngFor="let star of generateStars(roundHalf(review.hostDTO.averageRating ? review.hostDTO.averageRating / 2 : 0))">
+                             {{ star }}
+                           </span>
+                          </div>
+                            <div class="reviews-average" *ngIf="review.hostDTO">{{ roundHalf(review.hostDTO.averageRating ? review.hostDTO.averageRating / 2 : 0) }}</div>
+                        </div>
+      
+                      </div>
+      
+                      <div class="bottom-data-box">
+                          <b class="location-text">Your Review</b>
+                          <div class="reviews-frame">
+                              <div class="stars-container">
+                               <span class="star" *ngFor="let star of generateStars(roundHalf(review.review ? review.review / 2 : 0))">
+                                 {{ star }}
+                               </span>
+                              </div>
+                                <div class="reviews-average">{{ roundHalf(review.review ? review.review / 2 : 0) }}</div>
+                          </div>
+      
+                          
+                          <b class="location-text">Comment</b>
+                          <div class="location-text"> {{ review.comment }} </div>
+                      </div>
+                    </div>
+      
+                    <div class="right-buttons">
+                        <div class="accept-button" id="accept-button">
+                        <b class="button-text">Review Posted</b>
+                      </div>
+                      <div class="reject-button" id="reject-button">
+                        <b class="button-text">Delete</b>
+                      </div>
+                      <div class="view-details-button" id="view-details-button" >
+                        <b class="button-text">Waiting For Review</b>
+                      </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+
+      <app-footer></app-footer>
+
+    </div>
+  </body>
+</html>
