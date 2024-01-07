@@ -40,4 +40,9 @@ export class UserReportService {
     return this.http.get<User[]>(url);
   }
 
+  getReportReasonsForUser(reportUserId: number): Observable<string[]> {
+    const url = `${this.apiUrl}/reasons/${reportUserId}`;
+    return this.http.get<string[]>(url);
+  }
+
 }

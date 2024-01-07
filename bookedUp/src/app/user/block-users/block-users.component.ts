@@ -41,6 +41,9 @@ export class BlockUsersComponent implements OnInit {
     this.hostService.getHostGuests(this.authService.getUserID()).subscribe((results) => {
       this.guest = results;
       this.loadPhotos();
+
+      console.log('Hosts:', this.guest);
+
     });
 
   }

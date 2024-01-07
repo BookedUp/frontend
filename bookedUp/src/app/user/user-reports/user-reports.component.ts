@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, concatMap, map, of } from 'rxjs';
 import { PhotoService } from 'src/app/shared/photo/photo.service';
@@ -19,6 +19,8 @@ export class UserReportsComponent implements OnInit {
 
   photoDict: { accId: number, url: string }[] = [];
   user: User[] = [];
+  reportedReasons: string[] = [];
+
 
   constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private userReportService: UserReportService) {
   }
@@ -53,6 +55,8 @@ export class UserReportsComponent implements OnInit {
       this.users = this.userService.getBlockedUsers();
       this.userService.getBlockedUsers().subscribe((results) => {
         this.user = results;
+        console.log('Blocked Users:', this.user); // Dodajte ovu liniju
+
         this.loadPhotos();
       });
     } else {
@@ -66,65 +70,110 @@ export class UserReportsComponent implements OnInit {
 
   }
 
-  generateStars(rating: number): string[] {
-    const stars: string[] = [];
-    for (let i = 1; i <= 5; i++) {
-      if (i <= rating) {
-        stars.push('★');
-      } else if (i - 0.5 === rating) {
-        stars.push('✯');
-      } else {
-        stars.push('☆');
+
+  showReportReasons(id: number): void {
+    this.userReportService.getReportReasonsForUser(id)
+      .subscribe((reasons: string[]) => {
+        this.reportedReasons = reasons;
+
+        // Dodajte ID korisnika kao dodatni parametar kada pozivate askForBlockConfirmation
+        this.showSwalWithReportedReasons(id);
+      });
+  }
+
+  showSwalWithReportedReasons(userId: number): void {
+    Swal.fire({
+      title: 'Reported Reasons',
+      html: this.generateReportedReasonsHtml(),
+      confirmButtonText: 'OK',
+      showCancelButton: true,
+      cancelButtonText: 'Block User',
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.cancel) {
+        this.askForBlockConfirmation(userId);
       }
-    }
-    return stars;
+    });
+  }
+
+  askForBlockConfirmation(userId: number): void {
+    Swal.fire({
+      title: 'Block User Confirmation',
+      text: 'Are you sure you want to block this user?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, block user!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.blockUser(userId);
+      }
+    });
+  }
+
+  blockUser(userId: number): void {
+    this.userService.blockUser(userId).subscribe(
+      (blockedUser: User) => {console.log('User blocked:', blockedUser);this.loadUsers();}, (error) => {console.error('Error blocking user:', error);}
+    );
+  }
+
+  generateReportedReasonsHtml(): string {
+    // Generisanje HTML-a sa izlistanim razlozima prijave
+    return this.reportedReasons.map((reason, index) => `
+    <div style="margin-bottom: 8px;">
+      <div style="border: 1px solid #ccc; padding: 8px; border-radius: 8px;">
+        ${index + 1}. ${reason}
+      </div>
+    </div>`).join('');
+  }
+
+  showBlockedReasons(id: number): void {
+    this.userReportService.getReportReasonsForUser(id)
+      .subscribe((reasons: string[]) => {
+        // Prikazivanje Swal-a sa razlozima blokiranja i dugmetom za deblokiranje
+        this.showSwalWithBlockedReasons(id, reasons);
+      });
+  }
+
+  showSwalWithBlockedReasons(userId: number, reasons: string[]): void {
+    Swal.fire({
+      title: 'Blocked Reasons',
+      html: this.generateBlockedReasonsHtml(reasons),
+      confirmButtonText: 'Unblock User',
+      showCancelButton: true,
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      // Ako korisnik pritisne "Unblock User"
+      if (result.isConfirmed) {
+        console.log('User ID for unblocking:', this.userService.getUser(userId));
+        this.unblockUser(userId);
+      }
+    });
+  }
+  unblockUser(userId: number): void {
+    this.userService.unblockUser(userId).subscribe(
+      (unblockedUser: User) => {
+        // Logika nakon uspešnog deblokiranja korisnika
+        console.log('User unblocked:', unblockedUser);
+        this.loadUsers();      },
+      (error) => {
+        // Obrada greške
+        console.error('Error unblocking user:', error);
+      }
+    );
   }
 
 
-  approveAccommodation(id: number): void {
-    // this.userService.approveAccommodation(id)
-    //     .subscribe(
-    //         (approvedReservation) => {
-    //           Swal.fire({
-    //             icon: 'success',
-    //             title: 'Accommodation Approved!',
-    //             text: 'The accommodation has been successfully approved.',
-    //           }).then(() => {
-    //             this.loadAccommodations();
-    //           });
-    //         },
-    //         (error) => {
-    //           // Handle error
-    //           Swal.fire({
-    //             icon: 'error',
-    //             title: 'Error Approving Accommodation',
-    //             text: `An error occurred: ${error.message}`,
-    //           });
-    //         }
-    //     );
+  generateBlockedReasonsHtml(reasons: string[]): string {
+    // Generisanje HTML-a sa izlistanim razlozima blokiranja
+    return reasons.map((reason, index) => `
+    <div style="margin-bottom: 8px;">
+      <div style="border: 1px solid #ccc; padding: 8px; border-radius: 8px;">
+        ${index + 1}. ${reason}
+      </div>
+    </div>`).join('');
   }
 
-  rejectAccommodation(id: number): void {
-    // this.accommodationService.rejectAccommodation(id)
-    //     .subscribe(
-    //         (rejectedReservation) => {
-    //           Swal.fire({
-    //             icon: 'success',
-    //             title: 'Accommodation Rejected!',
-    //             text: 'The accommodation has been successfully rejected.',
-    //           }).then(() => {
-    //             this.loadAccommodations();
-    //           });
-    //         },
-    //         (error) => {
-    //           Swal.fire({
-    //             icon: 'error',
-    //             title: 'Error Rejecting Accommodation',
-    //             text: `An error occurred: ${error.message}`,
-    //           });
-    //         }
-    //     );
-  }
+
 
 
   loadPhotos() {
@@ -166,11 +215,4 @@ export class UserReportsComponent implements OnInit {
     return photo ? photo.url : '';
   }
 
-
-  roundHalf(value: number | undefined): number | undefined {
-    if (value) {
-      return Math.round(value * 2) / 2;
-    }
-    return 0;
-  }
 }
