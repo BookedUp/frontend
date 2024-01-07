@@ -32,7 +32,7 @@ export class BlockUsersComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.loadUsers();
-      //this.loadGuests();
+      this.loadGuests();
     });
   }
 

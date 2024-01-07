@@ -1,4 +1,4 @@
-import {Component, Host, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, concatMap, map, of } from 'rxjs';
 import { PhotoService } from 'src/app/shared/photo/photo.service';
@@ -6,9 +6,12 @@ import Swal from 'sweetalert2';
 import { User } from '../model/user.model';
 import { UserService } from '../user.service';
 import {AuthService} from "../../infrastructure/auth/auth.service";
+
+
 import {HostService} from "../host/host.service";
 import {UserReportService} from "../user-report/user-report.service";
 import {GuestService} from "../guest/guest.service";
+import {Host} from "../model/host.model";
 
 @Component({
   selector: 'app-host-reports',
@@ -57,6 +60,8 @@ export class HostReportsComponent implements OnInit {
   }
 
   reportUser(id: number): void {
+    console.log('id:', id);
+
     Swal.fire({
       title: 'Report User',
       input: 'text',
@@ -68,6 +73,7 @@ export class HostReportsComponent implements OnInit {
       preConfirm: async (reason) => {
         try {
           const reportedUser = await this.userService.getUser(id).toPromise();
+          console.log('reportedUser:', reportedUser);
           const createdUserReport = await this.userReportService.createUserReport({
             reportedUser: reportedUser,
             reason: reason,
