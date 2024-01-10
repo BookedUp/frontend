@@ -5,13 +5,15 @@ import { CommonModule } from '@angular/common';
 import { MapComponent } from './map/map.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ImageFrameComponent } from './image-frame/image-frame.component';
+import { StarRatingComponent } from './star-rating/star-rating.component';
 
 
 @NgModule({
   declarations: [
     MapComponent,
     CalendarComponent,
-    ImageFrameComponent
+    ImageFrameComponent,
+    StarRatingComponent
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { ImageFrameComponent } from './image-frame/image-frame.component';
     MapComponent,
     CalendarComponent,
     ImageFrameComponent,
+    StarRatingComponent
   ]
 })
 export class SharedModule { }
