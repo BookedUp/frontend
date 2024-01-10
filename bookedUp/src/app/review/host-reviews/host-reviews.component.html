@@ -28,10 +28,10 @@
 
               <div class="left-data">
                 <ng-container *ngIf="review.type === 'ACCOMMODATION'">
-                    <b class="title">{{ review.accommodation.name }}</b>
+                    <b class="title">{{ review.accommodation?.name }}</b>
                 </ng-container>
                 <ng-container *ngIf="review.type === 'HOST'">
-                    <b class="title">{{ review.host.firstName }} {{ review.host.lastName }}</b>
+                    <b class="title">{{ review.host?.firstName }} {{ review.host?.lastName }}</b>
                 </ng-container>
 
                   <div class="location-frame">
@@ -49,7 +49,7 @@
 
 
                   <div class="location-frame">
-                    <div class="location-text">{{ calculateDaysAgo(review.date) }} days ago </div>
+<!--                    <div class="location-text">{{ calculateDaysAgo(review.date? ) }} days ago </div>-->
                   </div>
 
                   <div class="location-frame">

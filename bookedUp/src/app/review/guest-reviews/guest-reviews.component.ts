@@ -49,7 +49,7 @@ export class GuestReviewsComponent implements OnInit {
       this.reviewService.getReviews().subscribe((results) => {
         this.review = results;
         console.log("Reviews: ", results);
-        this.loadPhotos();
+        //this.loadPhotos();
       });
     } else if (this.filter === 'posted') {
 
@@ -126,24 +126,24 @@ export class GuestReviewsComponent implements OnInit {
   }
 
 
-  loadPhotos() {
-    this.review.forEach((acc) => {
-      this.photoService.loadPhoto(acc.accommodation.photos[0]).subscribe(
-          (data) => {
-            this.createImageFromBlob(data).then((url: string) => {
-              if (acc.id) {
-                this.photoDict.push({accId: acc.id, url: url});
-              }
-            }).catch(error => {
-              console.error("Greška prilikom konverzije slike ${imageName}:", error);
-            });
-          },
-          (error) => {
-            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
-          }
-      );
-    });
-  }
+  // loadPhotos() {
+  //   this.review.forEach((acc) => {
+  //     this.photoService.loadPhoto(acc?.accommodation.photos[0]).subscribe(
+  //         (data) => {
+  //           this.createImageFromBlob(data).then((url: string) => {
+  //             if (acc.id) {
+  //               this.photoDict.push({accId: acc.id, url: url});
+  //             }
+  //           }).catch(error => {
+  //             console.error("Greška prilikom konverzije slike ${imageName}:", error);
+  //           });
+  //         },
+  //         (error) => {
+  //           console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
+  //         }
+  //     );
+  //   });
+  // }
 
 
   createImageFromBlob(imageBlob: Blob): Promise<string> {
