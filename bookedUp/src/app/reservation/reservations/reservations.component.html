@@ -70,6 +70,10 @@
                 <div class="view-details-button" id="view-details-button" routerLink="/accommodation-details/{{reservation.accommodation.id}}">
                     <b class="button-text">View Details</b>
                 </div>
+
+              <div class="view-details-button" routerLink="/add-review/{{reservation.id}}" *ngIf="shouldShowAddReviewButton(reservation)">
+                <b class="button-text">Add Review</b>
+              </div>
             </div>
 
 

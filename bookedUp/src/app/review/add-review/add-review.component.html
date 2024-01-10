@@ -21,16 +21,16 @@
               <b class="title-text">{{accommodation.host.firstName}} {{accommodation.host.lastName}}</b>
               <app-star-rating (ratingClicked)="onRatingClickedHost($event)"></app-star-rating>
               <div class="in-line-box">
-                <input class="normal-text" id="accommodationComment" type="text" placeholder='Enter comment for host here..' style="top:0%;"/>
+                <input class="normal-text" type="text" placeholder='Enter comment for host here..' style="top:0%;"/>
 
                 <button class="button-container" (click)="saveReview()">
                   <b>Submit Review</b>
                 </button>
               </div>
-              
+
             </div>
           </div>
-          
+
       </div>
 
       <app-shorter-footer></app-shorter-footer>

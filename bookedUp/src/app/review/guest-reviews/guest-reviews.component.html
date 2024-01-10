@@ -23,24 +23,24 @@
                     <img
                       class="accommodation-image"
                       alt=""
-                      [src]="getPhotoUrl(review.accommodationDTO.id)"
+                      [src]="getPhotoUrl(review.accommodation.id)"
                     />
-      
+
                     <div class="left-data">
                       <div class="top-data-box">
-                        <b class="title">{{ review.accommodationDTO.name }}</b>
-      
+                        <b class="title">{{ review.accommodation.name }}</b>
+
                         <div class="reviews-frame">
                           <div class="stars-container">
-                           <span class="star" *ngFor="let star of generateStars(roundHalf(review.accommodationDTO.averageRating ? review.accommodationDTO.averageRating / 2 : 0))">
+                           <span class="star" *ngFor="let star of generateStars(roundHalf(review.accommodation.averageRating ? review.accommodation.averageRating / 2 : 0))">
                              {{ star }}
                            </span>
                           </div>
-                            <div class="reviews-average" *ngIf="review.accommodationDTO">{{ roundHalf(review.accommodationDTO.averageRating ? review.accommodationDTO.averageRating / 2 : 0) }}</div>
+                            <div class="reviews-average" *ngIf="review.accommodation">{{ roundHalf(review.accommodation.averageRating ? review.accommodation.averageRating / 2 : 0) }}</div>
                         </div>
-      
+
                       </div>
-      
+
                       <div class="bottom-data-box">
                           <b class="location-text">Your Review</b>
                           <div class="reviews-frame">
@@ -51,21 +51,21 @@
                               </div>
                                 <div class="reviews-average">{{ roundHalf(review.review ? review.review / 2 : 0) }}</div>
                           </div>
-      
-                          
+
+
                           <b class="location-text">Comment</b>
                           <div class="location-text"> {{ review.comment }} </div>
                       </div>
                     </div>
-      
+
                     <div class="right-buttons">
                         <div class="accept-button" id="accept-button">
                         <b class="button-text">Review Posted</b>
                       </div>
-                      <div class="reject-button" id="reject-button">
+                      <div class="reject-button" >
                         <b class="button-text">Delete</b>
                       </div>
-                      <div class="view-details-button" id="view-details-button" >
+                      <div class="view-details-button"  >
                         <b class="button-text">Waiting For Review</b>
                       </div>
                     </div>
@@ -75,24 +75,24 @@
                     <img
                       class="accommodation-image"
                       alt=""
-                      [src]="review.hostDTO.profilePicture?.url"
+                      [src]="review.host.profilePicture?.url"
                     />
-      
+
                     <div class="left-data">
                       <div class="top-data-box">
-                        <b class="title">{{ review.hostDTO.firstName }} {{ review.hostDTO.lastName }}</b>
-      
+                        <b class="title">{{ review.host.firstName }} {{ review.host.lastName }}</b>
+
                         <div class="reviews-frame">
                           <div class="stars-container">
-                           <span class="star" *ngFor="let star of generateStars(roundHalf(review.hostDTO.averageRating ? review.hostDTO.averageRating / 2 : 0))">
+                           <span class="star" *ngFor="let star of generateStars(roundHalf(review.host.averageRating ? review.host.averageRating / 2 : 0))">
                              {{ star }}
                            </span>
                           </div>
-                            <div class="reviews-average" *ngIf="review.hostDTO">{{ roundHalf(review.hostDTO.averageRating ? review.hostDTO.averageRating / 2 : 0) }}</div>
+                            <div class="reviews-average" *ngIf="review.host">{{ roundHalf(review.host.averageRating ? review.host.averageRating / 2 : 0) }}</div>
                         </div>
-      
+
                       </div>
-      
+
                       <div class="bottom-data-box">
                           <b class="location-text">Your Review</b>
                           <div class="reviews-frame">
@@ -103,15 +103,15 @@
                               </div>
                                 <div class="reviews-average">{{ roundHalf(review.review ? review.review / 2 : 0) }}</div>
                           </div>
-      
-                          
+
+
                           <b class="location-text">Comment</b>
                           <div class="location-text"> {{ review.comment }} </div>
                       </div>
                     </div>
-      
+
                     <div class="right-buttons">
-                        <div class="accept-button" id="accept-button">
+                        <div class="accept-button" >
                         <b class="button-text">Review Posted</b>
                       </div>
                       <div class="reject-button" id="reject-button">

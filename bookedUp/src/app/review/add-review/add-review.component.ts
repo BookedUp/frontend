@@ -10,6 +10,8 @@ import { Photo } from 'src/app/shared/model/photo.model';
 import { UserService } from 'src/app/user/user.service';
 import { Review } from '../model/review.model';
 import Swal from 'sweetalert2';
+import {Reservation} from "../../reservation/model/reservation.model";
+import {ReservationService} from "../../reservation/reservation.service";
 
 @Component({
   selector: 'app-add-review',
@@ -17,7 +19,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./add-review.component.css']
 })
 export class AddReviewComponent {
-  
+
   acc!:Accommodation;
   accommodation: Observable<Accommodation> = new Observable<Accommodation>();
   rw!: Review;
@@ -26,50 +28,52 @@ export class AddReviewComponent {
   pictureUrl: string = '';
   reviewId: number = 1;
 
-  constructor( private router: Router, private route: ActivatedRoute, private reviewService: ReviewService, private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService) {}
+  reservationId: number=1;
+  res!: Reservation;
+  reservation: Observable<Reservation> = new Observable<Reservation>();
 
-  ngOnInit(): void {
+  constructor( private router: Router, private route: ActivatedRoute, private reviewService: ReviewService, private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private reservationService: ReservationService) {}
 
-    this.route.params.subscribe((params) => {
-      if ('id' in params) {
-        this.reviewId = params['id'];
-      }
+    ngOnInit(): void {
+        this.route.params.subscribe((params) => {
+            if ('id' in params) {
+                this.reservationId = params['id'];
 
-      this.review =  this.reviewService.getReview(this.reviewId);
-      this.reviewService.getReview(this.reviewId).subscribe((result) =>{
-        this.rw = result;
-      })
+                this.reservation =  this.reservationService.getReservationById(this.reservationId);
+                this.reservationService.getReservationById(this.reservationId).subscribe((result) =>{
+                    this.res = result;
 
-      this.accommodation = this.accommodationService.getAccommodationById(1);
-      this.accommodationService.getAccommodationById(1).subscribe((result) =>{
-        this.acc = result;
-        this.loadPhotos();
-      })
+                    // Provjerite da li postoji rezervacija i pridružite accommodation samo ako postoji
+                    if (this.res && this.res.accommodation && this.res.accommodation.id) {
+                        this.accommodation = this.accommodationService.getAccommodationById(this.res.accommodation.id);
+                        this.accommodation.subscribe((accommodationResult) =>{
+                            this.acc = accommodationResult;
+                            this.loadPhotos();
+                        });
+                    } else {
+                        console.error('Reservation data or accommodation information is missing.');
+                    }
+                });
+            }
+        });
+    }
 
-      // this.accommodation = this.accommodationService.getAccommodationById(this.rw.accommodationDTO?.id || 0);
-      // this.accommodationService.getAccommodationById(this.rw.accommodationDTO?.id || 0).subscribe((result) =>{
-      //   this.acc = result;
-      //   this.loadPhotos();
-      // })
-
-    });
-  }
 
   onRatingClickedAccommodation(stars: number): void {
     console.log('Selected Stars Accommodation:', stars);
     // You can store the rating or perform any other actions here
-  } 
-  
+  }
+
   onRatingClickedHost(stars: number): void {
     console.log('Selected Stars Host:', stars);
     // You can store the rating or perform any other actions here
-  }  
+  }
 
 
   saveReview(): void {
     Swal.fire({icon: 'success', title: 'Review submitted successfully!', text: 'You will be redirected to the review page.',}).then(() => {
       this.router.navigate(['/guest-reviews']);
-    });   
+    });
   }
 
   createImageFromBlob(imageBlob: Blob): Promise<string> {

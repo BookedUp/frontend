@@ -52,9 +52,9 @@ export class GuestReviewsComponent implements OnInit {
         this.loadPhotos();
       });
     } else if (this.filter === 'posted') {
-      
+
     } else {
-      
+
     }
   }
 
@@ -128,7 +128,7 @@ export class GuestReviewsComponent implements OnInit {
 
   loadPhotos() {
     this.review.forEach((acc) => {
-      this.photoService.loadPhoto(acc.accommodationDTO.photos[0]).subscribe(
+      this.photoService.loadPhoto(acc.accommodation.photos[0]).subscribe(
           (data) => {
             this.createImageFromBlob(data).then((url: string) => {
               if (acc.id) {
