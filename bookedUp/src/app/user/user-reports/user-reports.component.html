@@ -58,7 +58,7 @@
 <!--                <div class="accept-button" id="accept-button" (click)="approveAccommodation(accommodation?.id ?? 0)">-->
 <!--                  <b class="button-text">Active</b>-->
 <!--                </div>-->
-                <div class="reject-button" id="reject-button" (click)="showBlockedReasons(user?.id ?? 0)">
+                <div class="reject-button" id="reject-button" (click)="showBlockedReasons(user?.id ?? 0)" *ngIf="user.blocked==true">
                   <b class="button-text">Blocked</b>
                 </div>
                 <div class="view-details-button" id="view-details-button" (click)="showReportReasons(user?.id ?? 0)">
