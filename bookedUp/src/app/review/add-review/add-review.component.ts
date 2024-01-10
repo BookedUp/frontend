@@ -23,9 +23,7 @@ export class AddReviewComponent {
   rw!: Review;
   review: Observable<Review> = new Observable<Review>();
 
-  currentIndex: number = 0;
-  pictureUrls: string[] = [];
-  orgPictureUrls: string[] = [];
+  pictureUrl: string = '';
   reviewId: number = 1;
 
   constructor( private router: Router, private route: ActivatedRoute, private reviewService: ReviewService, private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService) {}
@@ -45,6 +43,7 @@ export class AddReviewComponent {
       this.accommodation = this.accommodationService.getAccommodationById(1);
       this.accommodationService.getAccommodationById(1).subscribe((result) =>{
         this.acc = result;
+        this.loadPhotos();
       })
 
       // this.accommodation = this.accommodationService.getAccommodationById(this.rw.accommodationDTO?.id || 0);
@@ -72,8 +71,33 @@ export class AddReviewComponent {
       this.router.navigate(['/guest-reviews']);
     });   
   }
-  
 
+  createImageFromBlob(imageBlob: Blob): Promise<string> {
+    const reader = new FileReader();
 
+    return new Promise<string>((resolve, reject) => {
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(imageBlob);
+    });
+  }
+
+  loadPhotos() {
+    const imageName = this.acc.photos[0];
+    this.photoService.loadPhoto(imageName).subscribe(
+      (data) => {
+        this.createImageFromBlob(data).then((url: string) => {
+          this.pictureUrl = url;
+        }).catch(error => {
+          console.error("Greška prilikom konverzije slike ${imageName}:" , error);
+        });
+      },
+      (error) => {
+        console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
+      }
+    );
+  }
 
 }
