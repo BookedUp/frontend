@@ -51,7 +51,7 @@ const routes: Routes = [
   { path: 'block-users', component: BlockUsersComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] } },
 
   { path: 'accommodation-reviews/:id', component: AccommodationReviewsComponent},
-  { path: 'add-review', component: AddReviewComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] } },
+  { path: 'add-review/:id', component: AddReviewComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] } },
   { path: 'guest-reviews', component: GuestReviewsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] } },
   { path: 'host-reviews', component: HostReviewsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] } },
   { path: 'review-reports', component: ReviewReportsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN'] } },
