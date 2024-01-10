@@ -76,6 +76,10 @@ export class GuestReviewsComponent implements OnInit {
   }
 
 
+  navigateTo(route: string, id: number): void {
+    this.router.navigate([route, id]);
+  }
+
   approveAccommodation(id: number): void {
     // this.accommodationService.approveAccommodation(id)
     //     .subscribe(

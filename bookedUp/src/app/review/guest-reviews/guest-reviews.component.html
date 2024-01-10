@@ -117,7 +117,7 @@
                       <div class="reject-button" id="reject-button">
                         <b class="button-text">Delete</b>
                       </div>
-                      <div class="view-details-button" id="view-details-button" >
+                      <div class="view-details-button" id="view-details-button" (click)="navigateTo('add-review', review.id)">
                         <b class="button-text">Waiting For Review</b>
                       </div>
                     </div>
