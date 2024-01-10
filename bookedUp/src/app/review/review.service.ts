@@ -19,8 +19,20 @@ export class ReviewService {
     return this.http.get<Review>(`${this.apiUrl}/${id}`);
   }
 
-  getAccommodationReviews(id: number): Observable<Review[]>{
-    return this.http.get<Review[]>(`${this.apiUrl}/${id}`);
+  getAccommodationReviews(id: number): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/accommodation/${id}`);
+  }
+
+  getGuestReviews(guestId: number): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/guest/${guestId}`);
+  }
+
+  getGuestAccommodationReviews(guestId: number): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/guest/${guestId}/accommodation`);
+  }
+
+  getGuestHostReviews(guestId: number): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/guest/${guestId}/host`);
   }
 
   createReview(review: Review): Observable<Review> {
@@ -34,5 +46,4 @@ export class ReviewService {
   deleteReview(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-
 }

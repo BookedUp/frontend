@@ -7,6 +7,7 @@ import { Review } from '../model/review.model';
 import { Observable } from 'rxjs';
 import Swal from "sweetalert2";
 import {PhotoService} from "../../shared/photo/photo.service";
+import {AuthService} from "../../infrastructure/auth/auth.service";
 
 @Component({
   selector: 'app-guest-reviews',
@@ -21,7 +22,7 @@ export class GuestReviewsComponent implements OnInit {
   photoDict: { accId: number, url: string }[] = [];
   review: Review[] = [];
 
-  constructor(private reviewService: ReviewService, private accommodationService: AccommodationService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService) {
+  constructor(private reviewService: ReviewService, private accommodationService: AccommodationService, private authService: AuthService,private router: Router, private route: ActivatedRoute, private photoService: PhotoService) {
   }
 
 
@@ -45,15 +46,21 @@ export class GuestReviewsComponent implements OnInit {
 
   private loadReviews(): void {
     if (this.filter === 'all') {
-      this.reviews = this.reviewService.getReviews();
-      this.reviewService.getReviews().subscribe((results) => {
+      this.reviews = this.reviewService.getGuestReviews(this.authService.getUserID());
+      this.reviewService.getGuestReviews(this.authService.getUserID()).subscribe((results) => {
         this.review = results;
-        console.log("Reviews: ", results);
-        //this.loadPhotos();
       });
     } else if (this.filter === 'posted') {
-
+      this.reviews = this.reviewService.getGuestAccommodationReviews(this.authService.getUserID());
+      this.reviewService.getGuestAccommodationReviews(this.authService.getUserID()).subscribe((results) => {
+        this.review = results;
+      });
     } else {
+
+      this.reviews = this.reviewService.getGuestHostReviews(this.authService.getUserID());
+      this.reviewService.getGuestHostReviews(this.authService.getUserID()).subscribe((results) => {
+        this.review = results;
+      });
 
     }
   }
