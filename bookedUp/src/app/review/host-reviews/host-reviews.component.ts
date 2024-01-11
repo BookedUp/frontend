@@ -5,6 +5,7 @@ import { PhotoService } from 'src/app/shared/photo/photo.service';
 import Swal from 'sweetalert2';
 import { Review } from '../model/review.model';
 import { ReviewService } from '../review.service';
+import {AuthService} from "../../infrastructure/auth/auth.service";
 
 @Component({
   selector: 'app-host-reviews',
@@ -19,7 +20,7 @@ export class HostReviewsComponent implements OnInit {
   photoDict: { accId: number, url: string }[] = [];
   review: Review[] = [];
 
-  constructor(private reviewService: ReviewService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService) {
+  constructor(private reviewService: ReviewService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private authService: AuthService) {
   }
 
 
@@ -33,30 +34,30 @@ export class HostReviewsComponent implements OnInit {
   changeStyle(className: string): void {
     this.selectedClass = className;
     if (className === 'changed-accommodations') {
-      this.router.navigate(['/user-reports'], {queryParams: {filter: 'hosts'}});
+      this.router.navigate(['/host-reviews'], {queryParams: {filter: 'hosts'}});
     }else if (className === 'new-accommodations') {
-      this.router.navigate(['/user-reports'], {queryParams: {filter: 'accommodations'}});
+      this.router.navigate(['/host-reviews'], {queryParams: {filter: 'accommodations'}});
     } else {
-      this.router.navigate(['/user-reports'], {queryParams: {filter: 'all'}});
+      this.router.navigate(['/host-reviews'], {queryParams: {filter: 'all'}});
     }
   }
 
   private loadUsers(): void {
     if (this.filter === 'all') {
-      this.reviews = this.reviewService.getReviews();
-      this.reviewService.getReviews().subscribe((results) => {
+      this.reviews = this.reviewService.getReviewsByHostId(this.authService.getUserID());
+      this.reviewService.getReviewsByHostId(this.authService.getUserID()).subscribe((results) => {
         this.review = results;
         this.loadPhotos();
       });
     } else if (this.filter === 'accommodations') {
-      this.reviews = this.reviewService.getReviews();
-      this.reviewService.getReviews().subscribe((results) => {
+      this.reviews = this.reviewService.getAccommodationReviewsByHostId(this.authService.getUserID());
+      this.reviewService.getAccommodationReviewsByHostId(this.authService.getUserID()).subscribe((results) => {
         this.review = results;
         this.loadPhotos();
       });
     } else {
-      this.reviews = this.reviewService.getReviews();
-      this.reviewService.getReviews().subscribe((results) => {
+      this.reviews = this.reviewService.getHostReviewsByHostId(this.authService.getUserID());
+      this.reviewService.getHostReviewsByHostId(this.authService.getUserID()).subscribe((results) => {
         this.review = results;
         this.loadPhotos();
       });

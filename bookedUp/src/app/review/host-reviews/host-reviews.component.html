@@ -10,7 +10,7 @@
               All Comments
             </div>
             <div class="new-accommodations" [ngClass]="{ 'clicked': selectedClass === 'new-accommodations' }" (click)="changeStyle('new-accommodations')">
-              Accommodaton Comments
+              Accommodation Comments
             </div>
             <div class="changed-accommodations" [ngClass]="{ 'clicked': selectedClass === 'changed-accommodations' }" (click)="changeStyle('changed-accommodations')">
               Host Comments
@@ -35,7 +35,7 @@
                 </ng-container>
 
                   <div class="location-frame">
-                    <!-- <div class="location-text">{{ review.guets.firstName }} {{ review.guets.lastName}}</div> -->
+                     <div class="location-text">{{ review.guest?.firstName }} {{ review.guest?.lastName}}</div>
 
                     <div class="reviews-frame">
                         <div class="stars-container">

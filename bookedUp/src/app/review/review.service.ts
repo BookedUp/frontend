@@ -46,4 +46,16 @@ export class ReviewService {
   deleteReview(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  getAccommodationReviewsByHostId(hostId: number): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/host/${hostId}/accommodation`);
+  }
+
+  getHostReviewsByHostId(hostId: number): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/host/${hostId}/host`);
+  }
+
+  getReviewsByHostId(hostId: number): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/host/${hostId}`);
+  }
 }
