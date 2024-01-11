@@ -13,6 +13,7 @@ import { AccommodationsComponent } from './accommodation/accommodations/accommod
 
 import { ReservationRequestsComponent } from './reservation/reservation-requests/reservation-requests.component';
 import { CreateReservationComponent } from './reservation/create-reservation/create-reservation.component';
+import { ReservationDetailsComponent } from './reservation/reservation-details/reservation-details.component';
 import { ReservationsComponent } from "./reservation/reservations/reservations.component";
 
 import { ManageProfileComponent } from './user/manage-profile/manage-profile.component';
@@ -44,6 +45,7 @@ const routes: Routes = [
 
   { path: 'reservation-requests', component: ReservationRequestsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
   { path: 'create-reservation/:id', component: CreateReservationComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] }},
+  { path: 'reservation-details/:id', component: ReservationDetailsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] }},
   { path: 'my-reservations', component: ReservationsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] }},
 
   { path: 'manage-profile', component: ManageProfileComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST'] }},
