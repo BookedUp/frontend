@@ -26,6 +26,7 @@
     "date-fns": "^3.0.0",
     "install": "^0.13.0",
     "leaflet": "^1.9.4",
+    "ng2-charts": "^5.0.4",
     "ngx-bootstrap": "^11.0.2",
     "ngx-leaflet": "^0.0.16",
     "npm": "^10.2.5",
