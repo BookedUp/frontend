@@ -29,6 +29,8 @@ import { GuestReviewsComponent } from './review/guest-reviews/guest-reviews.comp
 import { HostReviewsComponent } from './review/host-reviews/host-reviews.component';
 import { ReviewReportsComponent } from './review/review-reports/review-reports.component';
 
+import { AnalyticsComponent } from './analytics/analytics/analytics.component';
+
 import { LoginComponent } from './infrastructure/auth/login/login.component';
 import { RegistrationComponent } from "./infrastructure/auth/registration/registration.component";
 
@@ -57,6 +59,8 @@ const routes: Routes = [
   { path: 'guest-reviews', component: GuestReviewsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] } },
   { path: 'host-reviews', component: HostReviewsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] } },
   { path: 'review-reports', component: ReviewReportsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN'] } },
+
+  { path: 'analytics', component: AnalyticsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
