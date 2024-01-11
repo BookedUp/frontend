@@ -11,6 +11,7 @@ import { UserModule } from './user/user.module';
 import { ReservationModule } from './reservation/reservation.module';
 import { AccommodationModule } from './accommodation/accommodation.module';
 import { ReviewModule } from './review/review.module';
+import { AnalyticsModule } from './analytics/analytics.module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { ReviewModule } from './review/review.module';
     ReservationModule,
     AccommodationModule,
     ReviewModule,
+    AnalyticsModule,
     HttpClientModule,
   ],
   providers: [
