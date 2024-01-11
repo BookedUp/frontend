@@ -10,12 +10,14 @@ import { LayoutModule } from '../layout/layout.module';
 import { ReservationRequestsComponent } from './reservation-requests/reservation-requests.component';
 import { CreateReservationComponent } from './create-reservation/create-reservation.component';
 import { ReservationsComponent } from './reservations/reservations.component';
+import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
 
 @NgModule({
   declarations: [
     ReservationRequestsComponent,
     CreateReservationComponent,
     ReservationsComponent,
+    ReservationDetailsComponent,
   ],
   imports: [
     CommonModule,
