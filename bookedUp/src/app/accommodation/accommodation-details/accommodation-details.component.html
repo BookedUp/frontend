@@ -32,12 +32,12 @@
 
               <div class="reviews-frame">
                 <div class="stars-container">
-<!--                  <span class="star" *ngFor="let star of generateStars(roundHalf(accommodation.averageRating/2))">-->
-<!--                    {{ star }}-->
-<!--                  </span>-->
+                    <span class="star" *ngFor="let star of generateStars(roundHalf((accommodation?.averageRating ?? 0)/2))">
+                        {{ star }}
+                    </span>
                 </div>
-<!--                <div class="reviews55">{{ accommodation?.averageRating !== undefined ? accommodation.averageRating / 2 : 0.0 }}</div>-->
-              </div>
+                <div class="normal-text">{{ (accommodation?.averageRating ?? 0)/2 }}</div>
+            </div>
 
               <div id="address" class="address">
                 <img class="icon" alt="" src="../../assets/public/location-1.svg" />
