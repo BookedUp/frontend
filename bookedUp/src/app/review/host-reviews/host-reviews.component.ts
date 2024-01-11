@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Review } from '../model/review.model';
 import { ReviewService } from '../review.service';
 import {AuthService} from "../../infrastructure/auth/auth.service";
+import {ReviewReportService} from "../review-report/review-report.service";
 
 @Component({
   selector: 'app-host-reviews',
@@ -20,7 +21,7 @@ export class HostReviewsComponent implements OnInit {
   photoDict: { accId: number, url: string }[] = [];
   review: Review[] = [];
 
-  constructor(private reviewService: ReviewService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private authService: AuthService) {
+  constructor(private reviewService: ReviewService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private authService: AuthService, private reviewReportService: ReviewReportService) {
   }
 
 
@@ -88,7 +89,7 @@ export class HostReviewsComponent implements OnInit {
     return daysDifference;
   }
 
-  reportReview(): void {
+  reportReview(review: Review): void {
     Swal.fire({
       title: 'Report Review',
       input: 'textarea',
@@ -100,8 +101,18 @@ export class HostReviewsComponent implements OnInit {
       preConfirm: (reportReason) => {
         // Handle the submitted report reason (e.g., send it to the server)
         console.log('Report Reason:', reportReason);
-        // You can make an API call or handle the report submission logic here
-        // ...
+
+        // Pozovi funkciju create iz ReviewReportService i prosledi odgovarajuće podatke
+        this.reviewReportService.createReviewReport({
+          reason: reportReason,
+          reportedReview: review,
+          status: true,  // Postavite status prema vašim zahtevima
+        }).subscribe(response => {
+          console.log('Report submitted successfully!', response);
+        }, error => {
+          console.error('Error submitting report:', error);
+          // Dodajte logiku za prikazivanje greške korisniku ako je potrebno
+        });
 
         // For demonstration purposes, returning a Promise that resolves after 2 seconds
         return new Promise(resolve => setTimeout(resolve, 2000));
@@ -116,6 +127,7 @@ export class HostReviewsComponent implements OnInit {
       }
     });
   }
+
 
 
   loadPhotos() {
