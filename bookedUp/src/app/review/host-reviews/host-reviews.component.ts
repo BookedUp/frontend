@@ -88,49 +88,33 @@ export class HostReviewsComponent implements OnInit {
     return daysDifference;
   }
 
-  approveAccommodation(id: number): void {
-    // this.userService.approveAccommodation(id)
-    //     .subscribe(
-    //         (approvedReservation) => {
-    //           Swal.fire({
-    //             icon: 'success',
-    //             title: 'Accommodation Approved!',
-    //             text: 'The accommodation has been successfully approved.',
-    //           }).then(() => {
-    //             this.loadAccommodations();
-    //           });
-    //         },
-    //         (error) => {
-    //           // Handle error
-    //           Swal.fire({
-    //             icon: 'error',
-    //             title: 'Error Approving Accommodation',
-    //             text: `An error occurred: ${error.message}`,
-    //           });
-    //         }
-    //     );
-  }
+  reportReview(): void {
+    Swal.fire({
+      title: 'Report Review',
+      input: 'textarea',
+      inputPlaceholder: 'Enter your report reason here...',
+      showCancelButton: true,
+      confirmButtonText: 'Submit Report',
+      cancelButtonText: 'Cancel',
+      showLoaderOnConfirm: true,
+      preConfirm: (reportReason) => {
+        // Handle the submitted report reason (e.g., send it to the server)
+        console.log('Report Reason:', reportReason);
+        // You can make an API call or handle the report submission logic here
+        // ...
 
-  rejectAccommodation(id: number): void {
-    // this.accommodationService.rejectAccommodation(id)
-    //     .subscribe(
-    //         (rejectedReservation) => {
-    //           Swal.fire({
-    //             icon: 'success',
-    //             title: 'Accommodation Rejected!',
-    //             text: 'The accommodation has been successfully rejected.',
-    //           }).then(() => {
-    //             this.loadAccommodations();
-    //           });
-    //         },
-    //         (error) => {
-    //           Swal.fire({
-    //             icon: 'error',
-    //             title: 'Error Rejecting Accommodation',
-    //             text: `An error occurred: ${error.message}`,
-    //           });
-    //         }
-    //     );
+        // For demonstration purposes, returning a Promise that resolves after 2 seconds
+        return new Promise(resolve => setTimeout(resolve, 2000));
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Report submitted successfully!',
+        });
+      }
+    });
   }
 
 
