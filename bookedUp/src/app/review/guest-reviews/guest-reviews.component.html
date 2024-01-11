@@ -32,9 +32,9 @@
 
                         <div class="reviews-frame">
                           <div class="stars-container">
-<!--                           <span class="star" *ngFor="let star of generateStars(roundHalf(review.accommodation?.averageRating ? review.accommodation.averageRating / 2 : 0))">-->
-<!--                             {{ star }}-->
-<!--                           </span>-->
+                      <span *ngIf="review && review.accommodation && review.accommodation.averageRating"><span class="star" *ngFor="let star of generateStars(roundHalf(review.accommodation.averageRating / 2))">{{ star }}</span></span>
+
+
                           </div>
                             <div class="reviews-average" *ngIf="review.accommodation">{{ roundHalf(review.accommodation.averageRating ? review.accommodation.averageRating / 2 : 0) }}</div>
                         </div>
@@ -42,12 +42,14 @@
                       </div>
 
                       <div class="bottom-data-box">
-                          <b class="location-text">Your Review</b>
+                          <b class="location-text">Your Review</b><br>
+                          <b class="location-text">Date: </b>
+                          <span class="location-text">{{ review.date| date: 'EEEE, MMMM d, y' }}</span>
                           <div class="reviews-frame">
                               <div class="stars-container">
-<!--                               <span class="star" *ngFor="let star of generateStars(roundHalf(review.review ? review.review / 2 : 0))">-->
-<!--                                 {{ star }}-->
-<!--                               </span>-->
+                               <span class="star" *ngFor="let star of generateStars(roundHalf(review.review ? review.review / 2 : 0))">
+                                 {{ star }}
+                               </span>
                               </div>
                                 <div class="reviews-average">{{ roundHalf(review.review ? review.review / 2 : 0) }}</div>
                           </div>
@@ -59,16 +61,11 @@
                     </div>
 
                     <div class="right-buttons">
-                        <div class="accept-button" id="accept-button">
-                        <b class="button-text">Review Posted</b>
-                      </div>
-                      <div class="reject-button" >
-                        <b class="button-text">Delete</b>
-                      </div>
-                      <div class="view-details-button"  >
-                        <b class="button-text">Waiting For Review</b>
-                      </div>
+                        <div class="reject-button" *ngIf="review" (click)="deleteReview(review?.id)">
+                            <b class="button-text">Delete</b>
+                        </div>
                     </div>
+
                 </div>
 
                 <div class="acc-frame" *ngIf="review.type === 'HOST'">
@@ -84,9 +81,8 @@
 
                         <div class="reviews-frame">
                           <div class="stars-container">
-<!--                           <span class="star" *ngFor="let star of generateStars(roundHalf(review.host?.averageRating ? review.host.averageRating / 2 : 0))">-->
-<!--                             {{ star }}-->
-<!--                           </span>-->
+                         <span *ngIf="review && review.host && review.host.averageRating"><span class="star" *ngFor="let star of generateStars(roundHalf(review.host.averageRating / 2))">{{ star }}</span></span>
+
                           </div>
                             <div class="reviews-average" *ngIf="review.host">{{ roundHalf(review.host.averageRating ? review.host.averageRating / 2 : 0) }}</div>
                         </div>
@@ -95,11 +91,13 @@
 
                       <div class="bottom-data-box">
                           <b class="location-text">Your Review</b>
+                          <b class="location-text">Date: {{ review.date| date: 'EEEE, MMMM d, y' }}</b>
+
                           <div class="reviews-frame">
                               <div class="stars-container">
-<!--                               <span class="star" *ngFor="let star of generateStars(roundHalf(review.review ? review.review / 2 : 0))">-->
-<!--                                 {{ star }}-->
-<!--                               </span>-->
+                               <span class="star" *ngFor="let star of generateStars(roundHalf(review.review ? review.review / 2 : 0))">
+                                 {{ star }}
+                               </span>
                               </div>
                                 <div class="reviews-average">{{ roundHalf(review.review ? review.review / 2 : 0) }}</div>
                           </div>
@@ -111,16 +109,11 @@
                     </div>
 
                     <div class="right-buttons">
-                        <div class="accept-button" >
-                        <b class="button-text">Review Posted</b>
-                      </div>
-                      <div class="reject-button" id="reject-button">
-                        <b class="button-text">Delete</b>
-                      </div>
-                      <div class="view-details-button" id="view-details-button" (click)="navigateTo('add-review', review.id ?? 0)">
-                        <b class="button-text">Waiting For Review</b>
-                      </div>
+                        <div class="reject-button" id="reject-button" *ngIf="review" (click)="deleteReview(review?.id)">
+                            <b class="button-text">Delete</b>
+                        </div>
                     </div>
+
                 </div>
             </ng-container>
         </div>
