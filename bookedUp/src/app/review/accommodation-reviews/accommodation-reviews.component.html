@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="acc-details" *ngIf="accommodation | async as accommodation">
+
+      <app-nav-bar></app-nav-bar>
+
+      <div id="apartment-images" class="images-container">
+        <div id="slider" class="slider-box">
+          <div class="image-box">
+            <div *ngFor="let url of pictureUrls; let i = index" [class.active]="i === currentIndex">
+              <img class="room-image" alt="" [src]="url" (click)="nextImage()" />
+            </div>
+          </div>
+        </div>
+        <div id="more-images" class="more-images">
+          <img class="more" alt="" [src]="pictureUrls[1]" style="padding-bottom: 4%;"/>
+          <img class="more" alt="" [src]="pictureUrls[2]" />
+        </div>
+      </div>
+
+      <div id="nav-bar" class="nav-bar">
+        <div class="bar-text" (click)="navigateTo('/accommodation-details')">Overview</div>
+        <div class="bar-text-review" style="color: var(--blue-1); font-weight: bold;">Guest Review</div>
+      </div>
+
+      <div id="main-data" class="main-data-box">
+        <div class="title">{{accommodation.name}}</div>
+        <div class="review-text">
+            <b>{{accommodation.averageRating}}</b>
+        </div>
+
+        <div class="reviews-list">
+            <!-- *ngFor="let review of reviews | async; let last = last"  [ngClass]="{'no-margin-right': last}" 
+                
+                u review-list idu 3 review-a
+                u review-box idu detalji o review
+            
+            -->
+            <div class="review-box">
+              <div class="left-side">
+                <img alt="" src="../../../assets/public/logogoogle4@2x.png" style="width: auto; height: 20%;">
+              </div>
+              <div class="right-side">
+                <div class="top-line">
+                  <div class="guest-text">Elen Breis</div>
+                  <div class="stars"></div>
+                </div>
+                <div class="time-text">3 days ago</div>
+                <div class="comment-text">Knowledgeable and easy to work with. They make Instagram easy for those of us who aren’t that savvy. Growth has been great and the followers have been quality. Couldn’t be happier.</div>
+              </div>
+            </div>
+            <div class="review-box">
+                <div class="left-side">
+                  <img alt="" src="../../../assets/public/logogoogle4@2x.png" style="width: auto; height: 20%;">
+                </div>
+                <div class="right-side">
+                  <div class="top-line">
+                    <div class="guest-text">Elen Breis</div>
+                    <div class="stars"></div>
+                  </div>
+                  <div class="time-text">3 days ago</div>
+                  <div class="comment-text">Knowledgeable and easy to work with. They make Instagram easy for those of us who aren’t that savvy. Growth has been great and the followers have been quality. Couldn’t be happier.</div>
+                </div>
+              </div>
+              <div class="review-box">
+                <div class="left-side">
+                  <img alt="" src="../../../assets/public/logogoogle4@2x.png" style="width: auto; height: 20%;">
+                </div>
+                <div class="right-side">
+                  <div class="top-line">
+                    <div class="guest-text">Elen Breis</div>
+                    <div class="stars"></div>
+                  </div>
+                  <div class="time-text">3 days ago</div>
+                  <div class="comment-text">Knowledgeable and easy to work with. They make Instagram easy for those of us who aren’t that savvy. Growth has been great and the followers have been quality. Couldn’t be happier.</div>
+                </div>
+              </div>
+        </div>
+          
+
+      </div>
+
+      <app-shorter-footer></app-shorter-footer>
+
+    </div>
+  </body>
+</html>

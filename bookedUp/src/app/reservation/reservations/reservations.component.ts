@@ -7,6 +7,7 @@ import {AuthService} from "../../infrastructure/auth/auth.service";
 import {ReservationStatus} from "../model/reservationStatus.enum";
 import Swal from "sweetalert2";
 import {PhotoService} from "../../shared/photo/photo.service";
+import {AccommodationStatus} from "../../accommodation/model/enum/accommodationStatus.enum";
 
 @Component({
   selector: 'app-reservations',
@@ -124,7 +125,7 @@ export class ReservationsComponent implements OnInit {
     return photo ? photo.url : '';
   }
 
-  roundHalf(value: number | undefined): number | undefined {
+  roundHalf(value: number | undefined): number {
     if (value) {
       return Math.round(value * 2) / 2;
     }
@@ -200,5 +201,33 @@ export class ReservationsComponent implements OnInit {
   }
 
 
+    shouldShowAddReviewButton(reservation: Reservation): boolean {
+        if (reservation.status === ReservationStatus.Completed) {
+            const endDate = new Date(reservation.endDate);
+            const today = new Date();
+            const sevenDaysAfterEndDate = new Date(endDate);
+            sevenDaysAfterEndDate.setDate(endDate.getDate() + 7);
+
+            return today >= endDate && today <= sevenDaysAfterEndDate;
+        }
+
+        return false;
+    }
+  getStatusColor(status: string): string {
+    switch (status) {
+      case 'CREATED':
+        return 'var(--color-orange)';
+      case 'REJECTED':
+        return 'var(--color-firebrick)';
+      case 'ACCEPTED':
+        return 'var(--color-seagreen-100)';
+      case 'CANCELLED':
+        return 'var(--color-firebrick)';
+      case 'COMPLETED':
+        return 'var(--blue-1)';
+      default:
+        return 'inherit'; // default color or 'inherit' if no match
+    }
+  }
 }
 
