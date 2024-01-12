@@ -61,9 +61,10 @@
                 <div class="reject-button" id="reject-button" (click)="showBlockedReasons(user?.id ?? 0)" *ngIf="user.blocked==true">
                   <b class="button-text">Blocked</b>
                 </div>
-                <div class="view-details-button" id="view-details-button" (click)="showReportReasons(user?.id ?? 0)">
-                  <b class="button-text">Reported</b>
-                </div>
+                  <div class="view-details-button" id="view-details-button" (click)="showReportReasons(user?.id ?? 0)" *ngIf="user.blocked === false && filter === 'changed'">
+                      <b class="button-text">Reported</b>
+                  </div>
+
 
               </div>
             </div>
