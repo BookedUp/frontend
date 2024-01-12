@@ -24,7 +24,18 @@
             <div class="finished-reservation" [ngClass]="{ 'clicked': selectedClass === 'finished-reservation' }" (click)="getHostsReservationsByStatus('finished-reservation', ReservationStatus.Completed)">
                 Completed
             </div>
+
+            <div class="search-bar">
+                <input
+                        type="text"
+                        [(ngModel)]="searchText"
+                        placeholder="Search reservations..."
+                        (input)="searchReservations()"
+                />
+            </div>
         </div>
+
+
 
         <div class="main-content" id="main-content">
           <div *ngFor="let reservation of reservations | async" class="acc-frame" [class.created-status]="reservation.status === 'CREATED'"

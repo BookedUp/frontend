@@ -24,9 +24,21 @@
         <div class="finished-reservation" [ngClass]="{ 'clicked': selectedClass === 'finished-reservation' }" (click)="getGuestsReservationsByStatus('finished-reservation', ReservationStatus.Completed)">
             Completed
         </div>
+
+        <div class="search-bar">
+            <input
+                    type="text"
+                    [(ngModel)]="searchText"
+                    placeholder="Search reservations..."
+                    (input)="searchReservations()"
+            />
+        </div>
     </div>
 
+
+
     <div class="main-content" id="main-content">
+        <b class="no-text" *ngIf="(reservations | async)?.length == 0">NO RESULTS</b>
         <div *ngFor="let reservation of reservations | async" class="acc-frame" [class.created-status]="reservation.status === 'CREATED'"
              [class.cancelled-status]="reservation.status === 'CANCELLED'"
              [class.rejected-status]="reservation.status === 'REJECTED'"
@@ -34,7 +46,7 @@
             <img
                     class="accommodation-image"
                     alt=""
-                    [src]="getPhotoUrl(reservation.accommodation?.id)"
+                    [src]="getPhotoUrl(reservation?.accommodation?.id)"
             />
 
             <div class="left-data">
@@ -42,21 +54,14 @@
                     <b class="title">{{ reservation.accommodation.name }}</b>
                     <div class="reviews-frame">
                         <div class="stars-container">
-                        <span *ngIf="reservation.accommodation?.averageRating !== undefined">
-<!--                            <span class="star" *ngFor="let star of generateStars(roundHalf(reservation.accommodation.averageRating/2))"></span>-->
-                        </span>
-
-
-
+                            <span class="star" *ngFor="let star of generateStars(roundHalf((reservation?.accommodation?.averageRating ?? 0) / 2))">
+                                {{ star }}
+                            </span>                              
                         </div>
-                        <div class="reviews-average" *ngIf="reservation.accommodation">{{ roundHalf(reservation.accommodation.averageRating ? reservation.accommodation.averageRating / 2 : 0) }}</div>
-
+                        <div class="normal-text" style="margin-left: 10px;">{{ (reservation?.accommodation?.averageRating ?? 0)/2 }}</div>
                     </div>
 
-                    <b class="status-text" [class.created-status-text]="reservation.status === 'CREATED'"
-                       [class.accepted-status-text]="reservation.status === 'ACCEPTED'"
-                       [class.cancelled-status-text]="reservation.status === 'CANCELLED'"
-                       [class.rejected-status-text]="reservation.status === 'REJECTED'">{{ reservation.status }}</b>
+                    <b [ngStyle]="{ 'color': getStatusColor(reservation.status) }" class="status-text">{{ reservation.status }}</b>   
                 </div>
 
                 <div class="bottom-data-box">
@@ -67,9 +72,17 @@
             </div>
 
             <div class="right-buttons">
-                <div class="view-details-button" id="view-details-button" routerLink="/accommodation-details/{{reservation.accommodation.id}}">
+                <div *ngIf="(reservation.status === 'CREATED' || (reservation.status === 'ACCEPTED' && isWithinCancellationDeadline(reservation)))" class="reject-button" id="reject-button" (click)="cancelReservation(reservation?.id)">
+                    <b class="button-text">Cancel</b>
+                </div>
+        
+                <div class="view-details-button" id="view-details-button" routerLink="/reservation-details/{{reservation.id}}">
                     <b class="button-text">View Details</b>
                 </div>
+
+              <div class="view-details-button" routerLink="/add-review/{{reservation.id}}" *ngIf="shouldShowAddReviewButton(reservation)">
+                <b class="button-text">Add Review</b>
+              </div>
             </div>
 
 

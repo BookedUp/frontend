@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {Reservation} from "../model/reservation.model";
 import {ReservationService} from "../reservation.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -7,6 +7,7 @@ import {AuthService} from "../../infrastructure/auth/auth.service";
 import {ReservationStatus} from "../model/reservationStatus.enum";
 import Swal from "sweetalert2";
 import {PhotoService} from "../../shared/photo/photo.service";
+import {AccommodationStatus} from "../../accommodation/model/enum/accommodationStatus.enum";
 
 @Component({
   selector: 'app-reservations',
@@ -20,7 +21,10 @@ export class ReservationsComponent implements OnInit {
   filter: string = 'all';
   photoDict: { accId: number, url: string }[] = [];
   res: Reservation[] = [];
-  constructor(private reservationService: ReservationService, private router: Router, private route: ActivatedRoute, private authService: AuthService, private photoService: PhotoService) { }
+
+  searchText: string = '';
+
+    constructor(private reservationService: ReservationService, private router: Router, private route: ActivatedRoute, private authService: AuthService, private photoService: PhotoService) { }
 
   protected readonly ReservationStatus = ReservationStatus;
 
@@ -121,11 +125,109 @@ export class ReservationsComponent implements OnInit {
     return photo ? photo.url : '';
   }
 
-  roundHalf(value: number | undefined): number | undefined {
+  roundHalf(value: number | undefined): number {
     if (value) {
       return Math.round(value * 2) / 2;
     }
     return 0;
+  }
+
+    searchReservations() {
+        if (this.searchText.trim() === '') {
+            this.loadReservations();
+        } else {
+            const filteredReservations = this.res.filter((ress) =>
+                this.containsSearchText(ress, this.searchText)
+            );
+            this.reservations = of(filteredReservations);
+        }
+    }
+
+    private containsSearchText(reservation: Reservation, searchText: string): boolean {
+        return (
+            reservation.accommodation.name.toLowerCase().includes(searchText.toLowerCase())
+        );
+    }
+
+  cancelReservation(id: number | undefined): void {
+    if (id === undefined) {
+      console.error('Reservation ID is not defined.');
+      return;
+    }
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This action is irreversible!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, I am sure!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.confirmCancellation(id);
+      }
+    });
+  }
+
+  private confirmCancellation(id: number): void {
+    const queryParams = { ...(this.route.snapshot.queryParams as any) };
+
+    this.reservationService.cancelReservation(id).subscribe(
+        (cancelledReservation) => {
+          // Here, you can set logic for handling successful reservation cancellation
+          Swal.fire('Successfully Canceled!', 'Your reservation has been canceled.', 'success').then(() => {
+            this.loadReservations();
+          });
+        },
+        (error) => {
+          // Here, you can set logic for handling errors during reservation cancellation
+          console.error('Error cancelling reservation:', error);
+
+          Swal.fire('Error!', 'An error occurred while canceling the reservation.', 'error');
+        }
+    );
+  }
+
+  isWithinCancellationDeadline(reservation: Reservation): boolean {
+    const deadlineInDays = reservation.accommodation.cancellationDeadline;
+    const reservationStartDate = new Date(reservation.startDate);
+    const today = new Date();
+
+    reservationStartDate.setDate(reservationStartDate.getDate() - deadlineInDays);
+
+    return today <= reservationStartDate;
+  }
+
+
+    shouldShowAddReviewButton(reservation: Reservation): boolean {
+        if (reservation.status === ReservationStatus.Completed) {
+            const endDate = new Date(reservation.endDate);
+            const today = new Date();
+            const sevenDaysAfterEndDate = new Date(endDate);
+            sevenDaysAfterEndDate.setDate(endDate.getDate() + 7);
+
+            return today >= endDate && today <= sevenDaysAfterEndDate;
+        }
+
+        return false;
+    }
+  getStatusColor(status: string): string {
+    switch (status) {
+      case 'CREATED':
+        return 'var(--color-orange)';
+      case 'REJECTED':
+        return 'var(--color-firebrick)';
+      case 'ACCEPTED':
+        return 'var(--color-seagreen-100)';
+      case 'CANCELLED':
+        return 'var(--color-firebrick)';
+      case 'COMPLETED':
+        return 'var(--blue-1)';
+      default:
+        return 'inherit'; // default color or 'inherit' if no match
+    }
   }
 }
 
