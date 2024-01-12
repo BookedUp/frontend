@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { NgChartsModule } from 'ng2-charts';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -28,6 +29,7 @@ import { YearlyAnalyticsComponent } from './yearly-analytics/yearly-analytics.co
     HttpClientModule,
     SharedModule,
     LayoutModule,
+    NgChartsModule,
   ],
   exports:[
     AnalyticsComponent,
