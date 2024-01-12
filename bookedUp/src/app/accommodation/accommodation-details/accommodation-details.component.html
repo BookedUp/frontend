@@ -20,8 +20,8 @@
       </div>
 
       <div id="nav-bar" class="nav-bar">
-        <div class="bar-text" [ngClass]="{ 'clicked': selectedClass === 'bar-text' }" (click)="changeStyle('bar-text')">Overview</div>
-        <div class="bar-text-review" [ngClass]="{ 'clicked': selectedClass === 'bar-text-review' }" (click)="changeStyle('bar-text-review')">Guest Review</div>
+        <div class="bar-text" style="color: var(--blue-1); font-weight: bold;">Overview</div>
+        <div class="bar-text-review" (click)="navigateTo('/accommodation-reviews')">Guest Review</div>
       </div>
 
       <div id="main-data" class="main-data-box">
@@ -32,12 +32,12 @@
 
               <div class="reviews-frame">
                 <div class="stars-container">
-<!--                  <span class="star" *ngFor="let star of generateStars(roundHalf(accommodation.averageRating/2))">-->
-<!--                    {{ star }}-->
-<!--                  </span>-->
+                    <span class="star" *ngFor="let star of generateStars(roundHalf((accommodation?.averageRating ?? 0)/2))">
+                        {{ star }}
+                    </span>
                 </div>
-<!--                <div class="reviews55">{{ accommodation?.averageRating !== undefined ? accommodation.averageRating / 2 : 0.0 }}</div>-->
-              </div>
+                <div class="normal-text">{{ (accommodation?.averageRating ?? 0)/2 }}</div>
+            </div>
 
               <div id="address" class="address">
                 <img class="icon" alt="" src="../../assets/public/location-1.svg" />

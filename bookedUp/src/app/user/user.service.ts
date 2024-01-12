@@ -19,6 +19,18 @@ export class UserService {
     return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 
+  getActiveUsers():Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/active-users`);
+  }
+
+  getBlockedUsers():Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/blocked-users`);
+  }
+
+  getReportedUsers():Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/reported-users`);
+  }
+
   createUser(User: User): Observable<User> {
     return this.http.post<User>(this.apiUrl, User);
   }
@@ -41,5 +53,13 @@ export class UserService {
 
   registerHost(User: User): Observable<string> {
     return this.http.post<string>(`${this.apiUrl}/register-host`, User);
+  }
+
+  blockUser(id: number): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${id}/block`, {});
+  }
+
+  unblockUser(id: number): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${id}/unblock`, {});
   }
 }

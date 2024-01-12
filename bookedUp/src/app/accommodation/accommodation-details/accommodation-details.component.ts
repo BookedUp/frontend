@@ -216,6 +216,11 @@ export class AccommodationDetailsComponent implements OnInit {
         (error) => console.error('Došlo je do greške pri dodavanju smeštaja u omiljene smeštaje.', error)
       );
     }
+}
+
+  navigateTo(route: string): void {
+    this.router.navigate([route, this.accommodationId], { queryParams: { startDate: this.startDate, endDate: this.endDate, totalPrice: this.totalPrice, numberGuests: this.numberGuests, days: this.days} });
+
   }
 
   loadPhotos() {

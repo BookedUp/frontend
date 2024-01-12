@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Host, Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Guest} from "../model/guest.model";
@@ -49,5 +49,8 @@ export class GuestService {
   }
 
 
-  // Dodajte ostale metode prema potrebi
+  getHostsByGuestId(guestId: number): Observable<Host[]> {
+    const url = `${this.apiUrl}/${guestId}/hosts`;
+    return this.http.get<Host[]>(url);
+  }
 }
