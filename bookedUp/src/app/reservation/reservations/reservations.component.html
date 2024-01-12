@@ -24,7 +24,18 @@
         <div class="finished-reservation" [ngClass]="{ 'clicked': selectedClass === 'finished-reservation' }" (click)="getGuestsReservationsByStatus('finished-reservation', ReservationStatus.Completed)">
             Completed
         </div>
+
+        <div class="search-bar">
+            <input
+                    type="text"
+                    [(ngModel)]="searchText"
+                    placeholder="Search reservations..."
+                    (input)="searchReservations()"
+            />
+        </div>
     </div>
+
+
 
     <div class="main-content" id="main-content">
         <b class="no-text" *ngIf="(reservations | async)?.length == 0">NO RESULTS</b>
@@ -61,6 +72,10 @@
             </div>
 
             <div class="right-buttons">
+                <div *ngIf="(reservation.status === 'CREATED' || (reservation.status === 'ACCEPTED' && isWithinCancellationDeadline(reservation)))" class="reject-button" id="reject-button" (click)="cancelReservation(reservation?.id)">
+                    <b class="button-text">Cancel</b>
+                </div>
+        
                 <div class="view-details-button" id="view-details-button" routerLink="/reservation-details/{{reservation.id}}">
                     <b class="button-text">View Details</b>
                 </div>
