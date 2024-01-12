@@ -1,6 +1,7 @@
 import {Host, Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {Guest} from "../model/guest.model";
  // Zamijenite sa stvarnom putanjom ka modelu
 
 @Injectable({
@@ -32,6 +33,10 @@ export class HostService {
   deleteHost(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<void>(url);
+  }
+  getHostGuests(hostId: number): Observable<Guest[]> {
+    const url = `${this.apiUrl}/${hostId}/guests`;
+    return this.http.get<Guest[]>(url);
   }
 
   // Dodajte ostale metode prema potrebama

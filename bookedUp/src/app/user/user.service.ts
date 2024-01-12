@@ -54,4 +54,12 @@ export class UserService {
   registerHost(User: User): Observable<string> {
     return this.http.post<string>(`${this.apiUrl}/register-host`, User);
   }
+
+  blockUser(id: number): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${id}/block`, {});
+  }
+
+  unblockUser(id: number): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${id}/unblock`, {});
+  }
 }

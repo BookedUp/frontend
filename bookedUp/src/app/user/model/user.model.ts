@@ -10,7 +10,7 @@ export interface User{
   phone?: number;
   email?: string;
   password?: string;
-  isBlocked?: boolean;
+  blocked?: boolean;
   verified?: boolean;
   active?: boolean;
   profilePicture?: Photo;
