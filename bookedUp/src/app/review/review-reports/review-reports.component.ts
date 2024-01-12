@@ -5,6 +5,7 @@ import { PhotoService } from 'src/app/shared/photo/photo.service';
 import Swal from 'sweetalert2';
 import { Review } from '../model/review.model';
 import { ReviewService } from '../review.service';
+import {ReviewReportService} from "../review-report/review-report.service";
 
 @Component({
   selector: 'app-review-reports',
@@ -18,15 +19,16 @@ export class ReviewReportsComponent implements OnInit {
 
   photoDict: { accId: number, url: string }[] = [];
   review: Review[] = [];
+  reportedReasons: string[] = [];
 
-  constructor(private reviewService: ReviewService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService) {
+  constructor(private reviewService: ReviewService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private reviewReportService: ReviewReportService) {
   }
 
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.filter = params['filter'] || 'all';
-      this.loadUsers();
+      this.loadReviews();
     });
   }
 
@@ -39,7 +41,7 @@ export class ReviewReportsComponent implements OnInit {
     }
   }
 
-  private loadUsers(): void {
+  private loadReviews(): void {
     if (this.filter === 'all') {
       this.reviews = this.reviewService.getReviews();
       this.reviewService.getReviews().subscribe((results) => {
@@ -47,9 +49,10 @@ export class ReviewReportsComponent implements OnInit {
         this.loadPhotos();
       });
     } else if (this.filter === 'reported') {
-      this.reviews = this.reviewService.getReviews();
-      this.reviewService.getReviews().subscribe((results) => {
+      this.reviews = this.reviewReportService.getReportedReviews();
+      this.reviewReportService.getReportedReviews().subscribe((results) => {
         this.review = results;
+        console.log(results);
         this.loadPhotos();
       });
     }
@@ -173,4 +176,81 @@ export class ReviewReportsComponent implements OnInit {
     }
     return 0;
   }
+
+  showReportReasons(id: number): void {
+    this.reviewReportService.getReportReasonsForReview(id)
+        .subscribe((reasons: string[]) => {
+          this.reportedReasons = reasons;
+          this.showSwalWithReportedReasons(id);
+        });
+  }
+
+  showSwalWithReportedReasons(reviewId: number): void {
+    Swal.fire({
+      title: 'Reported Reasons',
+      html: this.generateReportedReasonsHtml(),
+      confirmButtonText: 'OK',
+      showCancelButton: true,
+      cancelButtonText: 'Delete Review',
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.cancel) {
+        this.askForDeleteConfirmation(reviewId);
+      }
+    });
+  }
+
+  askForDeleteConfirmation(reviewId: number): void {
+    this.reviewService.getReview(reviewId).subscribe(
+        (review: Review) => {
+          const reviewData = {
+            comment: review.comment,
+            date: review.date,
+            guest: review.guest,
+          };
+
+          Swal.fire({
+            title: 'Delete Review Confirmation',
+            html: `
+          <p>Review:</p>
+          <p>Comment: ${reviewData.comment}</p>
+          <p>Guest: ${reviewData.guest?.firstName} ${reviewData.guest?.lastName}</p>
+        `,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete review!',
+            cancelButtonText: 'Cancel',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.deleteReview(reviewId);
+            }
+          });
+        },
+        (error) => {
+          console.error('Error getting review:', error);
+        }
+    );
+  }
+
+  deleteReview(reviewId: number): void {
+    this.reviewService.deleteReview(reviewId).subscribe(
+        () => {
+          this.loadReviews();
+        },
+        (error) => {
+          console.error('Error deleting review:', error);
+        }
+    );
+  }
+
+
+  generateReportedReasonsHtml(): string {
+    return this.reportedReasons.map((reason, index) => `
+    <div style="margin-bottom: 8px;">
+      <div style="border: 1px solid #ccc; padding: 8px; border-radius: 8px;">
+        ${index + 1}. ${reason}
+      </div>
+    </div>`).join('');
+  }
+
+
 }
