@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReviewService } from '../review.service';
 import { PhotoService } from 'src/app/shared/photo/photo.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -22,8 +22,8 @@ import {Guest} from "../../user/model/guest.model";
   templateUrl: './add-review.component.html',
   styleUrls: ['./add-review.component.css']
 })
-export class AddReviewComponent {
-
+export class AddReviewComponent implements OnInit{
+  
   acc!:Accommodation;
   accommodation: Observable<Accommodation> = new Observable<Accommodation>();
 

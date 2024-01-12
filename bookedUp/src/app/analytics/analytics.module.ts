@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { NgChartsModule } from 'ng2-charts';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -7,18 +9,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { LayoutModule } from '../layout/layout.module';
 
-import { ManageProfileComponent } from './manage-profile/manage-profile.component';
-import { UserReportsComponent } from './user-reports/user-reports.component';
-import { BlockUsersComponent } from './block-users/block-users.component';
-import { HostReportsComponent } from './host-reports/host-reports.component';
+import { AnalyticsComponent } from './analytics/analytics.component';
+import { SingleAccommodationAnalyticsComponent } from './single-accommodation-analytics/single-accommodation-analytics.component';
+import { YearlyAnalyticsComponent } from './yearly-analytics/yearly-analytics.component';
+
 
 
 @NgModule({
   declarations: [
-    ManageProfileComponent,
-    UserReportsComponent,
-    BlockUsersComponent,
-    HostReportsComponent,
+    AnalyticsComponent,
+    SingleAccommodationAnalyticsComponent,
+    YearlyAnalyticsComponent
   ],
   imports: [
     CommonModule,
@@ -28,9 +29,10 @@ import { HostReportsComponent } from './host-reports/host-reports.component';
     HttpClientModule,
     SharedModule,
     LayoutModule,
+    NgChartsModule,
   ],
   exports:[
-    //if needed add here components
+    AnalyticsComponent,
   ]
 })
-export class UserModule { }
+export class AnalyticsModule { }

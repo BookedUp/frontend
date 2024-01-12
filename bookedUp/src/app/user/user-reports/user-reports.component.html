@@ -44,6 +44,8 @@
                     <div class="location-text">{{ user.phone }}</div>
                   </div>
 
+
+
                   <!-- <b class="status-text" [class.created-status-text]="accommodation.status === 'CREATED'"
                      [class.changed-status-text]="accommodation.status === 'CHANGED'">{{ accommodation.status }}</b> -->
 
@@ -53,15 +55,16 @@
                 <div class="accept-button" id="accept-button">
                     <b class="button-text">Active</b>
                 </div>
-                <!-- <div class="accept-button" id="accept-button" (click)="approveAccommodation(accommodation?.id ?? 0)">
-                  <b class="button-text">Active</b>
-                </div>
-                <div class="reject-button" id="reject-button" (click)="rejectAccommodation(accommodation?.id ?? 0)">
+<!--                <div class="accept-button" id="accept-button" (click)="approveAccommodation(accommodation?.id ?? 0)">-->
+<!--                  <b class="button-text">Active</b>-->
+<!--                </div>-->
+                <div class="reject-button" id="reject-button" (click)="showBlockedReasons(user?.id ?? 0)" *ngIf="user.blocked==true">
                   <b class="button-text">Blocked</b>
                 </div>
-                <div class="view-details-button" id="view-details-button" routerLink="/accommodation-details/{{accommodation.id}}">
+                <div class="view-details-button" id="view-details-button" (click)="showReportReasons(user?.id ?? 0)">
                   <b class="button-text">Reported</b>
-                </div> -->
+                </div>
+
               </div>
             </div>
           </div>

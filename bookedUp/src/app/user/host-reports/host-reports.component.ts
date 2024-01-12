@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {Observable, concatMap, map, of, catchError} from 'rxjs';
+import { Observable, concatMap, map, of } from 'rxjs';
 import { PhotoService } from 'src/app/shared/photo/photo.service';
 import Swal from 'sweetalert2';
 import { User } from '../model/user.model';
 import { UserService } from '../user.service';
-import {Guest} from "../model/guest.model";
 import {AuthService} from "../../infrastructure/auth/auth.service";
+
+
 import {HostService} from "../host/host.service";
 import {UserReportService} from "../user-report/user-report.service";
+import {GuestService} from "../guest/guest.service";
+import {Host} from "../model/host.model";
 
 @Component({
-  selector: 'app-block-users',
-  templateUrl: './block-users.component.html',
-  styleUrls: ['./block-users.component.css']
+  selector: 'app-host-reports',
+  templateUrl: './host-reports.component.html',
+  styleUrls: ['./host-reports.component.css']
 })
-export class BlockUsersComponent implements OnInit {
+export class HostReportsComponent implements OnInit {
   users: Observable<User[]> = new Observable();
   filter: string = 'all';
 
@@ -23,26 +26,26 @@ export class BlockUsersComponent implements OnInit {
   user: User[] = [];
 
 
-  guests: Observable<Guest[]> = new Observable();
-  guest: Guest[] = [];
-  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private authService: AuthService, private hostService: HostService, private userReportService: UserReportService) {
+  hosts: Observable<Host[]> = new Observable();
+  host: Host[] = [];
+  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private authService: AuthService, private guestservice: GuestService, private userReportService: UserReportService) {
   }
 
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.loadUsers();
-      this.loadGuests();
+      this.loadHosts();
     });
   }
 
-  private loadGuests() {
-    this.guests = this.hostService.getHostGuests(this.authService.getUserID());
-    this.hostService.getHostGuests(this.authService.getUserID()).subscribe((results) => {
-      this.guest = results;
+  private loadHosts() {
+    this.hosts = this.guestservice.getHostsByGuestId(this.authService.getUserID());
+    this.guestservice.getHostsByGuestId(this.authService.getUserID()).subscribe((results) => {
+      this.host = results;
       this.loadPhotos();
 
-      console.log('Hosts:', this.guest);
+      console.log('Hosts:', this.host);
 
     });
 
@@ -50,13 +53,15 @@ export class BlockUsersComponent implements OnInit {
 
   private loadUsers(): void {
     this.users = this.userService.getUsers();
-      this.userService.getUsers().subscribe((results) => {
-        this.user = results;
-        this.loadPhotos();
+    this.userService.getUsers().subscribe((results) => {
+      this.user = results;
+      this.loadPhotos();
     });
   }
 
   reportUser(id: number): void {
+    console.log('id:', id);
+
     Swal.fire({
       title: 'Report User',
       input: 'text',
@@ -68,6 +73,7 @@ export class BlockUsersComponent implements OnInit {
       preConfirm: async (reason) => {
         try {
           const reportedUser = await this.userService.getUser(id).toPromise();
+          console.log('reportedUser:', reportedUser);
           const createdUserReport = await this.userReportService.createUserReport({
             reportedUser: reportedUser,
             reason: reason,
@@ -101,18 +107,18 @@ export class BlockUsersComponent implements OnInit {
     this.user.forEach((acc) => {
       if (acc.profilePicture) {
         this.photoService.loadPhoto(acc.profilePicture).subscribe(
-            (data) => {
-              this.createImageFromBlob(data).then((url: string) => {
-                if (acc.id) {
-                  this.photoDict.push({accId: acc.id, url: url});
-                }
-              }).catch(error => {
-                console.error("Greška prilikom konverzije slike ${imageName}:", error);
-              });
-            },
-            (error) => {
-              console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
-            }
+          (data) => {
+            this.createImageFromBlob(data).then((url: string) => {
+              if (acc.id) {
+                this.photoDict.push({accId: acc.id, url: url});
+              }
+            }).catch(error => {
+              console.error("Greška prilikom konverzije slike ${imageName}:", error);
+            });
+          },
+          (error) => {
+            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
+          }
         );
       }
     });
