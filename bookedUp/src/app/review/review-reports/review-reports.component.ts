@@ -43,8 +43,8 @@ export class ReviewReportsComponent implements OnInit {
 
   private loadReviews(): void {
     if (this.filter === 'all') {
-      this.reviews = this.reviewService.getReviews();
-      this.reviewService.getReviews().subscribe((results) => {
+      this.reviews = this.reviewService.getUnapprovedReviews();
+      this.reviewService.getUnapprovedReviews().subscribe((results) => {
         this.review = results;
         this.loadPhotos();
       });
