@@ -10,6 +10,7 @@ import { UserService } from 'src/app/user/user.service';
 import { differenceInDays } from 'date-fns';
 import Swal from 'sweetalert2';
 import {PhotoService} from "../../shared/photo/photo.service";
+import {GuestService} from "../../user/guest/guest.service";
 
 @Component({
   selector: 'app-accommodation-details',
@@ -35,16 +36,19 @@ export class AccommodationDetailsComponent implements OnInit {
   accommodations: Accommodation[] = [];
   foundAccommodation!: Accommodation;
 
+  isFavourite: boolean = false;
+
   acc!:Accommodation;
-  constructor( private router: Router, private route: ActivatedRoute,private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService) {}
+  constructor( private router: Router, private route: ActivatedRoute,private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService, private guestService: GuestService) {}
 
   ngOnInit(): void {
     this.role = this.authService.getRole();
-    
+    this.checkFavouriteStatus();
+
     this.route.params.subscribe((params) => {
       if ('id' in params) {
         this.accommodationId = params['id'];
-    
+
         // Now, check for query parameters
         this.route.queryParams.subscribe(queryParams => {
           if ('startDate' in queryParams) {
@@ -71,7 +75,7 @@ export class AccommodationDetailsComponent implements OnInit {
       })
 
     });
-    
+
 
     this.authService.userState.subscribe((result) => {
       this.role = result;
@@ -190,8 +194,33 @@ export class AccommodationDetailsComponent implements OnInit {
     }
   }
 
+  toggleFavourite(): void {
+    const guestId = this.authService.getUserID();
+
+    if (this.isFavourite) {
+      this.guestService.removeFavouriteAccommodation(guestId, this.accommodationId).subscribe(
+        () => {
+          console.log('Smeštaj je uklonjen iz omiljenih smeštaja.');
+          // Ažurirajte fleg kada se smeštaj ukloni iz omiljenih
+          this.isFavourite = false;
+        },
+        (error) => console.error('Došlo je do greške pri uklanjanju smeštaja iz omiljenih smeštaja.', error)
+      );
+    } else {
+      this.guestService.addFavouriteAccommodation(guestId, this.accommodationId).subscribe(
+        () => {
+          console.log('Smeštaj je dodat u omiljene smeštaje.');
+          // Ažurirajte fleg kada se smeštaj doda u omiljene
+          this.isFavourite = true;
+        },
+        (error) => console.error('Došlo je do greške pri dodavanju smeštaja u omiljene smeštaje.', error)
+      );
+    }
+}
+
   navigateTo(route: string): void {
     this.router.navigate([route, this.accommodationId], { queryParams: { startDate: this.startDate, endDate: this.endDate, totalPrice: this.totalPrice, numberGuests: this.numberGuests, days: this.days} });
+
   }
 
   loadPhotos() {
@@ -223,4 +252,23 @@ export class AccommodationDetailsComponent implements OnInit {
       reader.readAsDataURL(imageBlob);
     });
   }
+
+  checkFavouriteStatus(): void {
+    const guestId = this.authService.getUserID();
+
+    console.log('Checking favourite status for guestId:', guestId, 'accommodationId:', this.accommodationId);
+
+    this.guestService.isFavouriteAccommodation(guestId, this.accommodationId).subscribe(
+      (isFavourite: boolean) => {
+        console.log('Favourite status:', isFavourite);
+        this.isFavourite = isFavourite;
+      },
+      (error) => {
+        console.error('Error checking favourite status:', error);
+        console.error('Defaulting to isFavourite = false.');
+        this.isFavourite = false;
+      }
+    );
+  }
+
 }
