@@ -7,6 +7,7 @@ import { Review } from '../model/review.model';
 import { Observable } from 'rxjs';
 import Swal from "sweetalert2";
 import {PhotoService} from "../../shared/photo/photo.service";
+import {AuthService} from "../../infrastructure/auth/auth.service";
 
 @Component({
   selector: 'app-guest-reviews',
@@ -21,7 +22,7 @@ export class GuestReviewsComponent implements OnInit {
   photoDict: { accId: number, url: string }[] = [];
   review: Review[] = [];
 
-  constructor(private reviewService: ReviewService, private accommodationService: AccommodationService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService) {
+  constructor(private reviewService: ReviewService, private accommodationService: AccommodationService, private authService: AuthService,private router: Router, private route: ActivatedRoute, private photoService: PhotoService) {
   }
 
 
@@ -45,16 +46,28 @@ export class GuestReviewsComponent implements OnInit {
 
   private loadReviews(): void {
     if (this.filter === 'all') {
-      this.reviews = this.reviewService.getReviews();
-      this.reviewService.getReviews().subscribe((results) => {
+      this.reviews = this.reviewService.getGuestReviews(this.authService.getUserID());
+      this.reviewService.getGuestReviews(this.authService.getUserID()).subscribe((results) => {
         this.review = results;
-        console.log("Reviews: ", results);
         this.loadPhotos();
+        this.loadPhotosUsers();
+
       });
     } else if (this.filter === 'posted') {
-      
+      this.reviews = this.reviewService.getGuestAccommodationReviews(this.authService.getUserID());
+      this.reviewService.getGuestAccommodationReviews(this.authService.getUserID()).subscribe((results) => {
+        this.review = results;
+        this.loadPhotos();
+      });
     } else {
-      
+
+      this.reviews = this.reviewService.getGuestHostReviews(this.authService.getUserID());
+      this.reviewService.getGuestHostReviews(this.authService.getUserID()).subscribe((results) => {
+        this.review = results;
+        this.loadPhotosUsers();
+
+      });
+
     }
   }
 
@@ -76,74 +89,85 @@ export class GuestReviewsComponent implements OnInit {
   }
 
 
-  navigateTo(route: string, id: number): void {
-    this.router.navigate([route, id]);
+  deleteReview(id: number | undefined): void {
+    if (id !== undefined) {
+      this.reviewService.deleteReview(id).subscribe(
+          () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Review deleted successfully!',
+              showConfirmButton: false,
+              timer: 1500
+            });
+
+            this.loadReviews();
+          },
+          (error) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error deleting review',
+              text: 'An error occurred while deleting the review.',
+            });
+
+            console.error('Error deleting review:', error);
+          }
+      );
+    } else {
+      console.error('Invalid review id:', id);
+    }
   }
 
-  approveAccommodation(id: number): void {
-    // this.accommodationService.approveAccommodation(id)
-    //     .subscribe(
-    //         (approvedReservation) => {
-    //           Swal.fire({
-    //             icon: 'success',
-    //             title: 'Accommodation Approved!',
-    //             text: 'The accommodation has been successfully approved.',
-    //           }).then(() => {
-    //             this.loadAccommodations();
-    //           });
-    //         },
-    //         (error) => {
-    //           // Handle error
-    //           Swal.fire({
-    //             icon: 'error',
-    //             title: 'Error Approving Accommodation',
-    //             text: `An error occurred: ${error.message}`,
-    //           });
-    //         }
-    //     );
-  }
 
-  rejectAccommodation(id: number): void {
-    // this.accommodationService.rejectAccommodation(id)
-    //     .subscribe(
-    //         (rejectedReservation) => {
-    //           Swal.fire({
-    //             icon: 'success',
-    //             title: 'Accommodation Rejected!',
-    //             text: 'The accommodation has been successfully rejected.',
-    //           }).then(() => {
-    //             this.loadAccommodations();
-    //           });
-    //         },
-    //         (error) => {
-    //           Swal.fire({
-    //             icon: 'error',
-    //             title: 'Error Rejecting Accommodation',
-    //             text: `An error occurred: ${error.message}`,
-    //           });
-    //         }
-    //     );
-  }
+
 
 
   loadPhotos() {
     this.review.forEach((acc) => {
-      this.photoService.loadPhoto(acc.accommodationDTO.photos[0]).subscribe(
-          (data) => {
-            this.createImageFromBlob(data).then((url: string) => {
-              if (acc.id) {
-                this.photoDict.push({accId: acc.id, url: url});
-              }
-            }).catch(error => {
-              console.error("Greška prilikom konverzije slike ${imageName}:", error);
-            });
-          },
-          (error) => {
-            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
-          }
-      );
+      // Provera postojanja acc i njegovog accommodation svojstva
+      if (acc && acc.accommodation && acc.accommodation.photos && acc.accommodation.photos.length > 0) {
+        this.photoService.loadPhoto(acc.accommodation.photos[0]).subscribe(
+            (data) => {
+              this.createImageFromBlob(data).then((url: string) => {
+                if (acc.id) {
+                  this.photoDict.push({ accId: acc.id, url: url });
+                }
+              }).catch(error => {
+                console.error("Greška prilikom konverzije slike ${imageName}:", error);
+              });
+            },
+            (error) => {
+              console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
+            }
+        );
+      }
+
     });
   }
+
+  loadPhotosUsers() {
+    this.review.forEach((acc) => {
+      // Provera postojanja host objekta i profilePicture svojstva
+      if (acc && acc.host && acc.host.profilePicture) {
+        this.photoService.loadPhoto(acc.host.profilePicture).subscribe(
+            (data) => {
+              this.createImageFromBlob(data).then((url: string) => {
+                if (acc.id) {
+                  this.photoDict.push({ accId: acc.id, url: url });
+                }
+              }).catch(error => {
+                console.error("Greška prilikom konverzije slike ${imageName}:", error);
+              });
+            },
+            (error) => {
+              console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
+            }
+        );
+      }
+    });
+  }
+
+
+
 
 
   createImageFromBlob(imageBlob: Blob): Promise<string> {

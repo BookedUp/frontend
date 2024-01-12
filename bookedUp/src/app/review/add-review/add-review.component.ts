@@ -10,6 +10,12 @@ import { Photo } from 'src/app/shared/model/photo.model';
 import { UserService } from 'src/app/user/user.service';
 import { Review } from '../model/review.model';
 import Swal from 'sweetalert2';
+import {Reservation} from "../../reservation/model/reservation.model";
+import {ReservationService} from "../../reservation/reservation.service";
+import {ReviewType} from "../model/enum/reviewType.enum";
+import {GuestService} from "../../user/guest/guest.service";
+import {User} from "../../user/model/user.model";
+import {Guest} from "../../user/model/guest.model";
 
 @Component({
   selector: 'app-add-review',
@@ -20,56 +26,140 @@ export class AddReviewComponent implements OnInit{
   
   acc!:Accommodation;
   accommodation: Observable<Accommodation> = new Observable<Accommodation>();
-  rw!: Review;
-  review: Observable<Review> = new Observable<Review>();
 
   pictureUrl: string = '';
-  reviewId: number = 1;
 
-  constructor( private router: Router, private route: ActivatedRoute, private reviewService: ReviewService, private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService) {}
+  reservationId: number=1;
+  res!: Reservation;
+  reservation: Observable<Reservation> = new Observable<Reservation>();
 
-  ngOnInit(): void {
+  selectedAccommodationStars: number = 0;
+  accommodationComment: string = '';
+  selectedHostStars: number = 0;
+  hostComment: string = '';
 
-    this.route.params.subscribe((params) => {
-      if ('id' in params) {
-        this.reviewId = params['id'];
-      }
+  loggedUser!: Guest;
 
-      this.review =  this.reviewService.getReview(this.reviewId);
-      this.reviewService.getReview(this.reviewId).subscribe((result) =>{
-        this.rw = result;
-      })
+  constructor( private router: Router, private route: ActivatedRoute, private reviewService: ReviewService, private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private reservationService: ReservationService, private guestService: GuestService) {}
 
-      this.accommodation = this.accommodationService.getAccommodationById(1);
-      this.accommodationService.getAccommodationById(1).subscribe((result) =>{
-        this.acc = result;
-        this.loadPhotos();
-      })
+    ngOnInit(): void {
+        this.route.params.subscribe((params) => {
+            if ('id' in params) {
+                this.reservationId = params['id'];
 
-      // this.accommodation = this.accommodationService.getAccommodationById(this.rw.accommodationDTO?.id || 0);
-      // this.accommodationService.getAccommodationById(this.rw.accommodationDTO?.id || 0).subscribe((result) =>{
-      //   this.acc = result;
-      //   this.loadPhotos();
-      // })
+                this.reservation =  this.reservationService.getReservationById(this.reservationId);
+                this.reservationService.getReservationById(this.reservationId).subscribe((result) =>{
+                    this.res = result;
 
-    });
-  }
+                    // Provjerite da li postoji rezervacija i pridružite accommodation samo ako postoji
+                    if (this.res && this.res.accommodation && this.res.accommodation.id) {
+                        this.accommodation = this.accommodationService.getAccommodationById(this.res.accommodation.id);
+                        this.accommodation.subscribe((accommodationResult) =>{
+                            this.acc = accommodationResult;
+                            this.loadPhotos();
+                        });
+                    } else {
+                        console.error('Reservation data or accommodation information is missing.');
+                    }
+                });
+            }
+
+            this.guestService.getGuestById(this.authService.getUserID()).subscribe(
+                (guest: Guest) => {
+                    this.loggedUser = guest;
+                },
+                (error) => {
+                    console.error('Error loading user:', error);
+                }
+            );
+        });
+    }
+
 
   onRatingClickedAccommodation(stars: number): void {
-    console.log('Selected Stars Accommodation:', stars);
-    // You can store the rating or perform any other actions here
-  } 
-  
+    this.selectedAccommodationStars = stars;
+  }
+
   onRatingClickedHost(stars: number): void {
-    console.log('Selected Stars Host:', stars);
-    // You can store the rating or perform any other actions here
-  }  
+    this.selectedHostStars = stars;
+  }
 
 
   saveReview(): void {
-    Swal.fire({icon: 'success', title: 'Review submitted successfully!', text: 'You will be redirected to the review page.',}).then(() => {
-      this.router.navigate(['/guest-reviews']);
-    });   
+      if (this.accommodationComment.trim() !== '' && this.selectedAccommodationStars !== 0) {
+          const reviewData: Review = {
+              accommodation: this.acc,
+              type: ReviewType.Accommodation,
+              comment: this.accommodationComment,
+              review: this.selectedAccommodationStars,
+              date: new Date(),
+              guest: this.loggedUser,
+              host: undefined
+          };
+
+          this.reviewService.createReview(reviewData).subscribe(
+              (createdReview) => {
+
+                console.log(createdReview);
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Review submitted successfully!',
+                      text: 'You will be redirected to the review page.'
+                  }).then(() => {
+                      this.router.navigate(['/guest-reviews']);
+                  });
+              },
+              (error) => {
+                  // Greška pri kreiranju review-a
+                  console.error('Error creating review:', error);
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: 'An error occurred while submitting the review.'
+                  });
+              }
+          );
+      }
+
+      if (this.hostComment.trim() !== '' && this.selectedHostStars !== 0) {
+          const reviewDataHost: Review = {
+              host: this.acc.host,
+              type: ReviewType.Host,
+              comment: this.hostComment,
+              review: this.selectedHostStars,
+              date: new Date(),
+              guest: this.loggedUser,
+              accommodation: undefined
+
+          };
+
+          console.log(reviewDataHost);
+
+          // Poziv servisa za kreiranje review-a
+          this.reviewService.createReview(reviewDataHost).subscribe(
+              (createdReview) => {
+                  console.log(createdReview);
+
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Review submitted successfully!',
+                      text: 'You will be redirected to the review page.'
+                  }).then(() => {
+                      this.router.navigate(['/guest-reviews']);
+                  });
+              },
+              (error) => {
+                  // Greška pri kreiranju review-a
+                  console.error('Error creating review:', error);
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: 'An error occurred while submitting the review.'
+                  });
+              }
+          );
+      }
+
   }
 
   createImageFromBlob(imageBlob: Blob): Promise<string> {

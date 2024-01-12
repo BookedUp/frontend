@@ -7,6 +7,7 @@ import {AuthService} from "../../infrastructure/auth/auth.service";
 import {ReservationStatus} from "../model/reservationStatus.enum";
 import Swal from "sweetalert2";
 import {PhotoService} from "../../shared/photo/photo.service";
+import {AccommodationStatus} from "../../accommodation/model/enum/accommodationStatus.enum";
 
 @Component({
   selector: 'app-reservations',
@@ -128,6 +129,18 @@ export class ReservationsComponent implements OnInit {
     return 0;
   }
 
+    shouldShowAddReviewButton(reservation: Reservation): boolean {
+        if (reservation.status === ReservationStatus.Completed) {
+            const endDate = new Date(reservation.endDate);
+            const today = new Date();
+            const sevenDaysAfterEndDate = new Date(endDate);
+            sevenDaysAfterEndDate.setDate(endDate.getDate() + 7);
+
+            return today >= endDate && today <= sevenDaysAfterEndDate;
+        }
+
+        return false;
+    }
   getStatusColor(status: string): string {
     switch (status) {
       case 'CREATED':
