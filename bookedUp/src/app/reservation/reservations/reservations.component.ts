@@ -8,6 +8,7 @@ import {ReservationStatus} from "../model/reservationStatus.enum";
 import Swal from "sweetalert2";
 import {PhotoService} from "../../shared/photo/photo.service";
 import {AccommodationStatus} from "../../accommodation/model/enum/accommodationStatus.enum";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-reservations',
@@ -144,10 +145,18 @@ export class ReservationsComponent implements OnInit {
     }
 
     private containsSearchText(reservation: Reservation, searchText: string): boolean {
-        return (
-            reservation.accommodation.name.toLowerCase().includes(searchText.toLowerCase())
-        );
-    }
+      const datePipe = new DatePipe('en-US');
+      const searchLower = searchText.toLowerCase();
+  
+      const nameIncludes = reservation.accommodation.name.toLowerCase().includes(searchLower);
+      const startDateFormatted = datePipe.transform(reservation.startDate, 'EEEE, MMMM d, y');
+      const endDateFormatted = datePipe.transform(reservation.endDate, 'EEEE, MMMM d, y');
+  
+      const startDateIncludes = startDateFormatted!.toLowerCase().includes(searchLower);
+      const endDateIncludes = endDateFormatted!.toLowerCase().includes(searchLower);
+  
+      return nameIncludes || startDateIncludes || endDateIncludes;
+  }
 
   cancelReservation(id: number | undefined): void {
     if (id === undefined) {
