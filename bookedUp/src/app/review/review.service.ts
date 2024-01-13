@@ -63,4 +63,9 @@ export class ReviewService {
     return this.http.get<Review[]>(`${this.apiUrl}/unapproved`);
   }
 
+  approveReview(id: number): Observable<Review> {
+    return this.http.put<Review>(`${this.apiUrl}/${id}/confirmation`, null);
+  }
+
+
 }

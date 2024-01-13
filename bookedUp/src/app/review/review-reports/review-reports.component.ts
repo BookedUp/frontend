@@ -177,6 +177,23 @@ export class ReviewReportsComponent implements OnInit {
     return 0;
   }
 
+  onApproveClick(reviewId: number): void {
+    this.reviewService.approveReview(reviewId).subscribe(
+      (approvedReview) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Review Approved!',
+          text: 'The review has been successfully approved.',
+          confirmButtonText: 'OK'
+        });
+        this.loadReviews();
+      },
+      (error) => {
+        console.error('Error approving review:', error);
+      }
+    );
+  }
+
   showReportReasons(id: number): void {
     this.reviewReportService.getReportReasonsForReview(id)
         .subscribe((reasons: string[]) => {
@@ -184,6 +201,7 @@ export class ReviewReportsComponent implements OnInit {
           this.showSwalWithReportedReasons(id);
         });
   }
+
 
   showSwalWithReportedReasons(reviewId: number): void {
     Swal.fire({
