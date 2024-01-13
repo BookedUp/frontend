@@ -3,6 +3,8 @@ import { AnalyticsService } from '../analytics.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-single-accommodation-analytics',
@@ -78,26 +80,29 @@ export class SingleAccommodationAnalyticsComponent implements OnInit {
     });
   }
   
-  
+  exportToPDF(): void {
+    const container = document.querySelector('.main-canvas') as HTMLElement;
 
+    if (container instanceof HTMLElement) {
+      html2canvas(container).then((canvas) => {
+        const pdf = new jsPDF('l', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
 
-  generateChartImages(): { leftChart: string } | undefined {
-    if (!this.leftChart || !this.leftChart.chart) {
-      return {leftChart:"UNDEFINED"};
+        const title = 'Single Accommodation Chart';
+        pdf.setFontSize(14);
+        const titleWidth = pdf.getStringUnitWidth(title) * 14 / pdf.internal.scaleFactor;
+        const titleX = (pdfWidth - titleWidth) / 2;
+        const titleY = 10;
+
+        pdf.text(title, titleX, titleY);
+
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 30, pdfWidth - 20, pdfHeight - 40);
+
+        pdf.save('single-analytics.pdf');
+      });
     }
-  
-    const leftChartCanvas = document.createElement('canvas');
-
-    leftChartCanvas.width = 400;
-    leftChartCanvas.height = 200;
-
-    const leftChartContext = leftChartCanvas.getContext('2d');
-
-    this.leftChart.chart.draw();
-
-    return {
-      leftChart: leftChartCanvas.toDataURL('image/png')
-    };
   }
+  
 }
 
