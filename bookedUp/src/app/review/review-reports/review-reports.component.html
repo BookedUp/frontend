@@ -20,7 +20,7 @@
               <img
                 class="accommodation-image"
                 alt=""
-                [src]="getPhotoUrl(review?.id)"
+                [src]="getPhotoUrl(review?.accommodation?.id)"
               />
 
               <div class="left-data">
@@ -31,27 +31,32 @@
                     <b class="title">{{ review.host?.firstName }} {{ review.host?.lastName }}</b>
                 </ng-container>
 
-                  <div class="location-frame">
-                    <!-- <div class="location-text">{{ review.guets.firstName }} {{ review.guets.lastName}}</div> -->
+                <div class="location-frame">
+                  <div class="location-text"><b>Date:</b> {{ review.date| date: 'EEEE, MMMM d, y' }}</div>
+                </div>
 
-                    <div class="reviews-frame">
-                        <div class="stars-container">
-                         <span class="star" *ngFor="let star of generateStars(roundHalf(review.review ? review.review / 2 : 0))">
-                           {{ star }}
-                         </span>
-                        </div>
-                          <div class="reviews-average" *ngIf="review.review">{{ roundHalf(review.review ? review.review / 2 : 0) }}</div>
+                <div class="location-frame">
+                  <div class="location-text"><b>Comment:</b> {{ review.comment }}</div>
+                </div>
+
+                <div class="location-frame">
+                  <!-- <div class="location-text">{{ review.guets.firstName }} {{ review.guets.lastName}}</div> -->
+
+
+                  <div class="reviews-frame">
+                      <div class="stars-container">
+                        <span class="star" *ngFor="let star of generateStars(roundHalf(review.review ? review.review : 0))">
+                          {{ star }}
+                        </span>
                       </div>
-                  </div>
+                        <div class="reviews-average" *ngIf="review.review">{{ roundHalf(review.review ? review.review : 0) }}</div>
+                    </div>
+                </div>
 
 
 <!--                  <div class="location-frame">-->
 <!--                    <div class="location-text">{{ calculateDaysAgo(review.date) }} days ago </div>-->
 <!--                  </div>-->
-
-                  <div class="location-frame">
-                    <div class="location-text">{{ review.comment }}</div>
-                  </div>
 
               </div>
 
