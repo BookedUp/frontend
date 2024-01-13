@@ -25,6 +25,7 @@ export class YearlyAnalyticsComponent implements OnInit {
   chartOptions: any = {
     responsive: true,
   };
+  
   chartLegend = true;
 
   constructor(
