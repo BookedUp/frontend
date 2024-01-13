@@ -18,6 +18,7 @@
         </div>
 
         <div class="main-content" id="main-content">
+          <b class="no-text" *ngIf="(users | async)?.length == 0">NO RESULTS</b>
           <div *ngFor="let user of users | async" class="acc-frame" [class.created-status]="user">
                <!-- [class.changed-status]="user === 'CHANGED'" -->
               <img
