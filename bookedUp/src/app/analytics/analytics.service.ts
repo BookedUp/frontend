@@ -9,6 +9,13 @@ interface AnalyticsData {
   totalEarnings: number;
   totalReservations: number;
 }
+
+interface SingleAnalyticsData {
+  month: string;
+  totalEarnings: number;
+  totalReservations: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -47,6 +54,41 @@ export class AnalyticsService {
     );
   }
   
+  getSingleAnalytics(startDate: string, endDate: string, hostId: number, accId: number): Observable<SingleAnalyticsData[]> {
+    return this.reservationService.getReservationsByStatusAndHostId(hostId, ReservationStatus.Completed).pipe(
+      map((completedReservations) => {
+        const analyticsData: SingleAnalyticsData[] = [];
+  
+        // Iterate over each month in the year from startDate to endDate
+        const currentDate = new Date(startDate);
+        const end = new Date(endDate);
+        while (currentDate < end) {
+          const monthStartDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+          const monthEndDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+          const matchingReservations = completedReservations.filter(reservation =>
+            reservation.accommodation.id === accId &&
+            this.isDateInRange(this.formatDate(new Date(reservation.startDate)), monthStartDate.toISOString(), monthEndDate.toISOString())
+          );
+
+          const totalEarnings = matchingReservations.reduce((sum, reservation) => sum + reservation.totalPrice, 0);
+          const totalReservations = matchingReservations.length;
+
+          analyticsData.push({
+            month: currentDate.toLocaleString('en-US', { month: 'long', year: 'numeric' }),
+            totalEarnings,
+            totalReservations
+          });
+
+          currentDate.setMonth(currentDate.getMonth() + 1);
+        }
+        
+        return analyticsData;
+      })
+    );
+  }
+  
+
   private isDateInRange(date: string, startDate: string, endDate: string): boolean {
     return date >= startDate && date <= endDate;
   }
