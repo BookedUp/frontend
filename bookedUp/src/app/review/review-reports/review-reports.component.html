@@ -56,18 +56,12 @@
               </div>
 
               <div class="right-buttons">
-                <div class="reject-button" id="reject-button">
-                    <b class="button-text">Report</b>
+                <div class="accept-button" id="accept-button" *ngIf="filter === 'all'" (click)="onApproveClick(review?.id ?? 0)">
+                  <b class="button-text">Approve</b>
                 </div>
-                <!-- <div class="accept-button" id="accept-button" (click)="approveAccommodation(accommodation?.id ?? 0)">
-                  <b class="button-text">Active</b>
-                </div>
-                <div class="reject-button" id="reject-button" (click)="rejectAccommodation(accommodation?.id ?? 0)">
-                  <b class="button-text">Blocked</b>
-                </div>
-                <div class="view-details-button" id="view-details-button" routerLink="/accommodation-details/{{accommodation.id}}">
-                  <b class="button-text">Reported</b>
-                </div> -->
+                <div class="view-details-button" id="view-details-button" (click)="showReportReasons(review?.id ?? 0)" *ngIf=" filter === 'reported'">
+                      <b class="button-text">Reported</b>
+                  </div>
               </div>
             </div>
           </div>

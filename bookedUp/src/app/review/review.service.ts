@@ -58,4 +58,14 @@ export class ReviewService {
   getReviewsByHostId(hostId: number): Observable<Review[]> {
     return this.http.get<Review[]>(`${this.apiUrl}/host/${hostId}`);
   }
+
+  getUnapprovedReviews(): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/unapproved`);
+  }
+
+  approveReview(id: number): Observable<Review> {
+    return this.http.put<Review>(`${this.apiUrl}/${id}/confirmation`, null);
+  }
+
+
 }

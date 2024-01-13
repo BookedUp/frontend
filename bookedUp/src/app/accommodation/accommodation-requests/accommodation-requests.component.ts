@@ -66,19 +66,23 @@ export class AccommodationRequestsComponent implements OnInit {
     }
   }
 
-  generateStars(rating: number): string[] {
+  generateStars(rating: number | undefined): string[] {
     const stars: string[] = [];
-    for (let i = 1; i <= 5; i++) {
-      if (i <= rating) {
-        stars.push('★');
-      } else if (i - 0.5 === rating) {
-        stars.push('✯');
-      } else {
-        stars.push('☆');
+    if(rating != undefined){
+      for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+          stars.push('★');
+        } else if (i - 0.5 === rating) {
+          stars.push('✯');
+        } else {
+          stars.push('☆');
+        }
       }
+      return stars;
     }
     return stars;
   }
+
 
 
   approveAccommodation(id: number): void {
@@ -163,7 +167,6 @@ export class AccommodationRequestsComponent implements OnInit {
     const photo = this.photoDict.find((item) => item.accId === accId);
     return photo ? photo.url : '';
   }
-
 
   roundHalf(value: number | undefined): number | undefined {
     if (value) {
