@@ -46,7 +46,7 @@
     cursor: pointer;
     position: absolute;
     top: 16px;
-    left: 455px;
+    left: 465px;
     letter-spacing: 0.02em;
   }
   .clicked {
@@ -61,6 +61,13 @@
     width: 100%;
     height: auto;
     font-size: var(--font-size-base);
+  }
+  .top-data-box{
+    height: 25%;
+    margin-bottom: 5%;
+  }
+  .bottom-data-box{
+    height: 70%;
   }
   .acc-frame {
     position: relative;
@@ -119,6 +126,24 @@
   .location-text {
     font-size: var(--font-size-sm);
   }
+  .reviews-frame {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 2%;
+}
+
+.stars-container,
+.reviews-average {
+    font-size: var(--font-size-xl);
+}
+.stars-container {
+    color: var(--blue-1);
+}
+.star {
+    display: inline-block;
+    margin-right: 2px;
+}
   .reviews-average,
   .location-text {
     margin-left: 2px;
