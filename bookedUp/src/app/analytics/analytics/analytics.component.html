@@ -15,7 +15,7 @@
                 </div>
                 <div *ngIf="isDropdownVisible" class="dropdown-content">
                     <a *ngFor="let accommodation of accommodations" (click)="selectAccommodation(accommodation)">
-                    <b>{{ accommodation }}</b>
+                    <b>{{ accommodation.name }}</b>
                     </a>
                     <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
                 </div>
@@ -45,25 +45,39 @@
             </div>
             <div class="inputs-data">
 
-                <div class="chart-line">
-                    <div class="button-container" *ngIf="!isDropdownTypeVisible" style="width: 20%; margin-left: 80%; background-color: transparent;">
-                        <div class="in-line-box">
-                            <b style="margin-right: 5%;"> {{ selectedType }}</b>
-                            <img class="icon" alt="" src="../../../assets/public/vector-674.svg" (click)="toggleTypeDropdown()">
+                
+                    <div class="chart-line">
+                        <div class="in-line-box" style="width: 70%; justify-content: left; margin-left: 3%;">
+                            <div class="button-container" style="background-color: transparent; width: 20%;" (click)="reloadChart()">
+                                <img class="icon" alt="" src="../../assets/public/relaod.png" style="margin-right: 5%;"><br>
+                                <b>Reload Chart</b>
+                            </div>
+                        </div>
+                            
+                        <div class="button-container" *ngIf="!isDropdownTypeVisible" style="width: 25%; background-color: transparent;" (click)="toggleTypeDropdown()">
+                            <div class="in-line-box">
+                                <b style="margin-right: 5%;"> {{ selectedType }}</b>
+                                <img class="icon" alt="" src="../../../assets/public/vector-674.svg">
+                            </div>
+                        </div>
+                        <div *ngIf="isDropdownTypeVisible" class="dropdown-content" style="background-color: transparent;">
+                            <a *ngFor="let type of types" (click)="selectType(type)">
+                            <b>{{ type }}</b>
+                            </a>
+                            <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
                         </div>
                     </div>
-                    <div *ngIf="isDropdownTypeVisible" class="dropdown-content" style="background-color: transparent; margin-left: 80%;">
-                        <a *ngFor="let type of types" (click)="selectType(type)">
-                        <b>{{ type }}</b>
-                        </a>
-                        <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
+                    
+    
+                    <div class="inputs-box">
+                        <ng-container *ngIf="selectedType === 'Single Accommodation'">
+                            <app-single-accommodation-analytics id="signleCharts" [startDate]="startDate" [endDate]="endDate" [accommodationId]="selectedAccommodationId" #singleAnalytics></app-single-accommodation-analytics>
+                        </ng-container>
+                        <ng-container *ngIf="selectedType === 'All Accommodations'">
+                            <app-yearly-analytics id="charts" [startDate]="startDate" [endDate]="endDate" #yearlyAnalytics></app-yearly-analytics>
+                        </ng-container>
                     </div>
-                </div>
-
-                <div class="inputs-box"> 
-                    <app-yearly-analytics id="charts" [startDate]="startDate" [endDate]="endDate" #yearlyAnalytics></app-yearly-analytics>
-                </div>
-
+                    
             </div>
         </div>
 

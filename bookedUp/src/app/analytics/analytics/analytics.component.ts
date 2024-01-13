@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { YearlyAnalyticsComponent } from '../yearly-analytics/yearly-analytics.component';
 import jsPDF from 'jspdf';
 import { UserService } from 'src/app/user/user.service';
+import { SingleAccommodationAnalyticsComponent } from '../single-accommodation-analytics/single-accommodation-analytics.component';
 
 @Component({
   selector: 'app-analytics',
@@ -12,9 +13,11 @@ import { UserService } from 'src/app/user/user.service';
 })
 export class AnalyticsComponent implements OnInit{
   @ViewChild(YearlyAnalyticsComponent) yearlyAnalyticsComponent: YearlyAnalyticsComponent | undefined;
+  @ViewChild(SingleAccommodationAnalyticsComponent) singleAccommodationAnalyticsComponent: SingleAccommodationAnalyticsComponent | undefined;
 
-  accommodations: string[] = [];
+  accommodations: any[] = [];
   selectedAccommodation: string = '';
+  selectedAccommodationId: number = 0;
   isDropdownVisible = false;
 
   types: string[] = ['All Accommodations', 'Single Accommodation'];
@@ -34,7 +37,7 @@ export class AnalyticsComponent implements OnInit{
     
     this.accommodationService.getAllActiveAccommodationsByHostId(this.authService.getUserID()).subscribe(
       (result) => {
-        this.accommodations = result.map(acc => acc.name);
+        this.accommodations = result.map(acc => ({ 'name': acc.name, 'id': acc.id }));
       },
       (error) => {
         console.error('Error fetching accommodations:', error);
@@ -58,6 +61,34 @@ export class AnalyticsComponent implements OnInit{
     this.startDate = this.formatDate(oneYearAgo);
   }
 
+  reloadChart(){
+    if (this.selectedType === 'All Accommodations') {
+      if (this.startDateInput != null && this.endDateInput != null && this.startDateInput < this.endDateInput && this.yearlyAnalyticsComponent) {
+        if (this.yearlyAnalyticsComponent) {
+          this.yearlyAnalyticsComponent.startDate = this.startDate;
+          this.yearlyAnalyticsComponent.endDate = this.endDate;
+          this.yearlyAnalyticsComponent.getAnalytics();
+        }
+      }
+    } else {
+      if (this.selectedAccommodationId != 0 && this.singleAccommodationAnalyticsComponent) {
+        if (this.singleAccommodationAnalyticsComponent) {
+          if(this.startDateInput != null){
+            const year = this.startDate.split('-')[0];
+            this.singleAccommodationAnalyticsComponent.startDate = `${year}-01-01`;
+            this.singleAccommodationAnalyticsComponent.endDate = `${year}-12-31`;
+          }else if(this.endDateInput != null){
+            const year = this.endDate.split('-')[0];
+            this.singleAccommodationAnalyticsComponent.startDate = `${year}-01-01`;
+            this.singleAccommodationAnalyticsComponent.endDate = `${year}-12-31`;
+          }
+          this.singleAccommodationAnalyticsComponent.accommodationId = this.selectedAccommodationId;
+          this.singleAccommodationAnalyticsComponent.getAnalytics();
+        }
+      }
+    }
+  }
+
   startDateChanged() {
     if(this.startDateInput != null){
       const fromDateInput = document.getElementById("startDate") as HTMLInputElement;
@@ -65,14 +96,6 @@ export class AnalyticsComponent implements OnInit{
       const selectedFromDate = selectedFromDateInputValue ? new Date(selectedFromDateInputValue) : new Date();
 
       this.startDate = this.formatDate(selectedFromDate);
-
-      if (this.endDateInput != null && this.startDateInput < this.endDateInput && this.yearlyAnalyticsComponent) {
-  
-        if (this.yearlyAnalyticsComponent) {
-          this.yearlyAnalyticsComponent.startDate = this.startDate;
-          this.yearlyAnalyticsComponent.endDate = this.endDate;
-        }
-      }
     }    
   }
 
@@ -83,12 +106,6 @@ export class AnalyticsComponent implements OnInit{
       const selectedToDate = selectedToDateInputValue ? new Date(selectedToDateInputValue) : new Date();
 
       this.endDate = this.formatDate(selectedToDate);
-
-      if (this.startDateInput != null && this.startDateInput < this.endDateInput && this.yearlyAnalyticsComponent) {
-        this.yearlyAnalyticsComponent.startDate = this.startDate;
-        this.yearlyAnalyticsComponent.endDate = this.endDate;
-        this.yearlyAnalyticsComponent.getAnalytics();
-      }
     }
   }
   
@@ -97,14 +114,15 @@ export class AnalyticsComponent implements OnInit{
     this.isDropdownVisible = true;
   }
 
-  selectAccommodation(name: string) {
+  selectAccommodation(selectedAccommodation: { 'name': string, 'id': number }) {
     this.isDropdownVisible = false;
-    this.selectedAccommodation = name;
+    this.selectedAccommodation = selectedAccommodation.name;
+    this.selectedAccommodationId = selectedAccommodation.id;
   }
-
+  
   toggleTypeDropdown() {
-    this.isDropdownTypeVisible = true;
-  }
+    this.isDropdownTypeVisible = !this.isDropdownTypeVisible; // Toggle the visibility
+  }  
 
   selectType(name: string) {
     this.isDropdownTypeVisible = false;
@@ -120,64 +138,14 @@ export class AnalyticsComponent implements OnInit{
 
   printingPDF() {
     if (!this.selectedType) {
-        console.error('Selected type is required.');
-        return;
+      console.error('Selected type is required.');
+      return;
+    }else if(this.selectedType === 'All Accommodations'){
+      this.yearlyAnalyticsComponent?.exportToPDF();
+    }else{
+      this.singleAccommodationAnalyticsComponent?.exportToPDF();
     }
-
-    // Title section
-    const title = `Report - ${this.selectedType}${this.selectedType === 'Single Accommodation' ? ` - ${this.selectedAccommodation}` : ''}`;
-
-    // Dates section
-    const formattedStartDate = this.formatDatePDF(this.startDate);
-    const formattedEndDate = this.formatDatePDF(this.endDate);
-    const dateSection = `Dates: ${formattedStartDate} - ${formattedEndDate}`;
-
-    // Host name section
-    const hostNameSection = `Host Name: ${this.hostName}`;
-
-    // Content for the PDF
-    const content: Array<string> = [
-        title,
-        dateSection,
-        hostNameSection,
-        'Charts:',
-    ];
-
-    // Get the chart image or canvas from the app-yearly-analytics component
-    if (this.yearlyAnalyticsComponent !== undefined) {
-      const chartImages = this.yearlyAnalyticsComponent.generateChartImages();
-    
-      if (chartImages !== undefined) {
-        content.push(`Profit Chart: ${chartImages.leftChart}`);
-        content.push(`Reservations Chart: ${chartImages.rightChart}`);
-      }
-    }
-    
-    
-    // Create PDF document
-    const pdf = new jsPDF();
-
-    // Set initial y-coordinate
-    let yCoordinate = 10;
-
-    // Add content to the PDF
-    content.forEach(item => {
-        pdf.setFontSize(12); // Set the font size as needed
-
-        // If the item is a string, add it as text; otherwise, it's assumed to be an image
-        if (typeof item === 'string') {
-            pdf.text(item, 10, yCoordinate);
-            yCoordinate += 10;
-        } else {
-            // Assuming item is an image
-            pdf.addImage(item, 'PNG', 10, yCoordinate, 100, 50); // Adjust width and height as needed
-            yCoordinate += 60; // Adjust the y-coordinate based on the height of the image
-        }
-    });
-
-    // Save or download the PDF
-    pdf.save('report.pdf');
-}
+  }
 
 
   private formatDatePDF(dateString: string): string {

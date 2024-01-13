@@ -268,3 +268,12 @@
     letter-spacing: 0.02em;
     line-height: 20px;
 }
+input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    background: none;
+    font-family: var(--font-adamina);
+    font-size: var(--font-size-mini);
+  }

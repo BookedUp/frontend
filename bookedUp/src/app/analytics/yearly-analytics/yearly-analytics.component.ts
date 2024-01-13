@@ -3,6 +3,8 @@ import { AnalyticsService } from '../analytics.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 @Component({
   selector: 'app-yearly-analytics',
@@ -25,6 +27,7 @@ export class YearlyAnalyticsComponent implements OnInit {
   chartOptions: any = {
     responsive: true,
   };
+  
   chartLegend = true;
 
   constructor(
@@ -64,31 +67,41 @@ export class YearlyAnalyticsComponent implements OnInit {
     });
   }
 
-
-  generateChartImages(): { leftChart: string, rightChart: string } | undefined {
-    if (!this.leftChart || !this.rightChart || !this.leftChart.chart || !this.rightChart.chart) {
-      return {leftChart:"UNDEFINED", rightChart:"UNDEFINED"};
-    }
+  exportToPDF(): void {
+    const container = document.querySelector('.main') as HTMLElement;
   
-    const leftChartCanvas = document.createElement('canvas');
-    const rightChartCanvas = document.createElement('canvas');
-
-    leftChartCanvas.width = 400;
-    leftChartCanvas.height = 200;
-
-    rightChartCanvas.width = 400;
-    rightChartCanvas.height = 200;
-
-    const leftChartContext = leftChartCanvas.getContext('2d');
-    const rightChartContext = rightChartCanvas.getContext('2d');
-
-    this.leftChart.chart.draw();
-    this.rightChart.chart.draw();
-
-    return {
-      leftChart: leftChartCanvas.toDataURL('image/png'),
-      rightChart: rightChartCanvas.toDataURL('image/png')
-    };
+    if (container instanceof HTMLElement) {
+      html2canvas(container).then((canvas) => {
+        const pdf = new jsPDF('l', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+  
+        const title = 'All Accommodations Analytics';
+        pdf.setFontSize(14);
+        const titleWidth = pdf.getStringUnitWidth(title) * 14 / pdf.internal.scaleFactor;
+        const titleX = (pdfWidth - titleWidth) / 2;
+        const titleY = 10;
+  
+        pdf.text(title, titleX, titleY);
+  
+        const chartContainers = document.querySelectorAll('.main-canvas') as NodeListOf<HTMLElement>;
+  
+        let yOffset = 30;
+  
+        chartContainers.forEach((chartContainer, index) => {
+          if (chartContainer instanceof HTMLElement) {
+            pdf.setFontSize(12);
+  
+            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, yOffset + 10, pdfWidth - 20, pdfHeight - 40);
+  
+            yOffset += pdfHeight - 30;
+          }
+        });
+  
+        pdf.save('all-accommodations-analytics.pdf');
+      });
+    }
   }
+  
 }
 

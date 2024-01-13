@@ -1,4 +1,5 @@
 
+
 .amenities-admin {
   position: relative;
   background-color: var(--color-whitesmoke-100);
@@ -10,6 +11,7 @@
   color: var(--gray-2);
   font-family: var(--font-sansation);
   flex-direction: column;
+  display: flex;
 }
 .amenities-admin-child {
   position: absolute;
@@ -20,7 +22,8 @@
   height: 100px;
 }
 .sort-bar {
-  position: absolute;
+  position: relative;
+  justify-content: center;
   left: 0;
   width: 100%;
   background-color: var(--color-white);
@@ -28,6 +31,7 @@
   font-size: var(--font-size-base);
   color: var(--gray-1);
 }
+
 .all-accommodations {
   cursor: pointer;
   position: absolute;
@@ -38,8 +42,11 @@
   font-weight: bold;
 }
 .main-content{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  margin-top: 105px;
+  margin-top: 5%;
   padding-bottom: 50px;
   left: 0;
   width: 100%;
@@ -168,33 +175,13 @@
   letter-spacing: 0.02em;
   line-height: 20px;
 }
-.footer-acc {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
+.no-text{
+  margin-top: 10%;
+  margin-left: 44%;
+  letter-spacing: 0.01em;
+  color: var(--color-gray-100);
+  font-size: var(--font-size-9xl);
+  justify-content: center;
   align-items: center;
   align-content: center;
-  justify-content: center;
-  background-color: var(--color-whitesmoke-400);
-  gap: var(--gap-7xs);
-  height: 41px;
-  z-index: 1;
 }
-.copyright-1-icon {
-  position: relative;
-  width: 16px;
-  height: 18px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.bookedup-2023 {
-  font-size: var(--font-size-sm);
-  margin-left: 5px;
-  position: relative;
-  height: 18px;
-  line-height: 140%;
-}
-

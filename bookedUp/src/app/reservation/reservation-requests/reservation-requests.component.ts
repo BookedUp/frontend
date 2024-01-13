@@ -8,6 +8,7 @@ import {AuthService} from "../../infrastructure/auth/auth.service";
 import Swal from "sweetalert2";
 import {Accommodation} from "../../accommodation/model/accommodation.model";
 import {PhotoService} from "../../shared/photo/photo.service";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-reservation-requests',
@@ -236,10 +237,19 @@ export class ReservationRequestsComponent implements OnInit {
   }
 
   private containsSearchText(reservation: Reservation, searchText: string): boolean {
-    return (
-        reservation.accommodation.name.toLowerCase().includes(searchText.toLowerCase())
-    );
-  }
+    const datePipe = new DatePipe('en-US');
+    const searchLower = searchText.toLowerCase();
+
+    const nameIncludes = reservation.accommodation.name.toLowerCase().includes(searchLower);
+    const startDateFormatted = datePipe.transform(reservation.startDate, 'EEEE, MMMM d, y');
+    const endDateFormatted = datePipe.transform(reservation.endDate, 'EEEE, MMMM d, y');
+
+    const startDateIncludes = startDateFormatted!.toLowerCase().includes(searchLower);
+    const endDateIncludes = endDateFormatted!.toLowerCase().includes(searchLower);
+
+    return nameIncludes || startDateIncludes || endDateIncludes;
+}
+
 }
 
 

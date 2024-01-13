@@ -129,26 +129,26 @@ export class ReviewReportsComponent implements OnInit {
 
 
   loadPhotos() {
-    //ovde treba neka logika da se pronadje guest koji je ostavio review, poenta je da se prikaze profila slika tog gosta, vrv neka funkcija na beku
+    this.review.forEach((acc) => {
+      // Provera postojanja acc i njegovog accommodation svojstva
+      if (acc && acc.accommodation && acc.accommodation.photos && acc.accommodation.photos.length > 0) {
+        this.photoService.loadPhoto(acc.accommodation.photos[0]).subscribe(
+            (data) => {
+              this.createImageFromBlob(data).then((url: string) => {
+                if (acc.id) {
+                  this.photoDict.push({ accId: acc.id, url: url });
+                }
+              }).catch(error => {
+                console.error("Greška prilikom konverzije slike ${imageName}:", error);
+              });
+            },
+            (error) => {
+              console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
+            }
+        );
+      }
 
-    // this.review.forEach((acc) => {
-    //   if () {
-    //     this.photoService.loadPhoto(acc.profilePicture).subscribe(
-    //         (data) => {
-    //           this.createImageFromBlob(data).then((url: string) => {
-    //             if (acc.id) {
-    //               this.photoDict.push({accId: acc.id, url: url});
-    //             }
-    //           }).catch(error => {
-    //             console.error("Greška prilikom konverzije slike ${imageName}:", error);
-    //           });
-    //         },
-    //         (error) => {
-    //           console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
-    //         }
-    //     );
-    //   }
-    // });
+    });
   }
 
 

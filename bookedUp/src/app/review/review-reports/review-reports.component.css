@@ -53,6 +53,22 @@
     color: var(--blue-1);
     font-weight: bold;
   }
+  .reviews-frame {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .stars-container,
+  .reviews-average {
+    font-size: var(--font-size-xl);
+  }
+  .stars-container {
+    color: #FBBC04;
+  }
+  .star {
+    display: inline-block;
+    margin-right: 2px;
+  }
   .main-content{
     position: relative;
     margin-top: 105px;
@@ -86,19 +102,20 @@
     left: 5%;
     transform: translateY(-50%);
     border-radius: var(--br-8xs);
-    width: 10%;
+    width: 25%;
     height: auto;
     object-fit: cover;
   }
   .left-data{
     position: absolute;
-    left: 20%;
+    left: 35%;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
+    justify-content: center;
     border-radius: var(--br-8xs);
-    width: 75%;
+    width: 50%;
     height: 80%;
   }
   .group-icon,

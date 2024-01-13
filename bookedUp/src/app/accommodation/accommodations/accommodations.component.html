@@ -18,6 +18,7 @@
   </div>
 
   <div class="main-content" id="main-content">
+    <b class="no-text" *ngIf="(accommodations | async)?.length == 0">NO RESULTS</b>
     <div *ngFor="let accommodation of accommodations | async" class="acc-frame" [class.created-status]="accommodation.status === 'CREATED'"
          [class.changed-status]="accommodation.status === 'CHANGED'"
          [class.rejected-status]="accommodation.status === 'REJECTED'"
