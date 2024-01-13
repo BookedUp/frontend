@@ -1,24 +1,23 @@
 <div class="main-canvas">
-      <div class="left-chart">
-        <canvas baseChart
-                [datasets]="chartEarningsData"
-                [labels]="chartLabels"
-                [options]="chartOptions"
-                [legend]="chartLegend"
-                [type]="chartType"
-                #leftChart>
-        </canvas>
-      </div>
-    
-      <div class="right-chart">
-        <canvas baseChart
-                [datasets]="chartReservationsData"
-                [labels]="chartLabels"
-                [options]="chartOptions"
-                [legend]="chartLegend"
-                [type]="chartType"
-                #rightChart>
-        </canvas>
-      </div>
-    </div>
-    
+  <div class="left-chart">
+    <canvas baseChart
+      [datasets]="chartEarningsData"
+      [labels]="chartLabels"
+      [options]="chartOptions"
+      [legend]="chartLegend"
+      [type]="chartType"
+      #leftChart>
+    </canvas>
+  </div>
+
+  <div class="right-chart">
+    <canvas baseChart
+      [datasets]="chartReservationsData"
+      [labels]="chartLabels"
+      [options]="chartOptions"
+      [legend]="chartLegend"
+      [type]="chartType"
+      #rightChart>
+    </canvas>
+  </div>
+</div>
