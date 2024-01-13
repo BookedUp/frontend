@@ -138,64 +138,14 @@ export class AnalyticsComponent implements OnInit{
 
   printingPDF() {
     if (!this.selectedType) {
-        console.error('Selected type is required.');
-        return;
+      console.error('Selected type is required.');
+      return;
+    }else if(this.selectedType === 'All Accommodations'){
+      this.yearlyAnalyticsComponent?.exportToPDF();
+    }else{
+      this.singleAccommodationAnalyticsComponent?.exportToPDF();
     }
-
-    // Title section
-    const title = `Report - ${this.selectedType}${this.selectedType === 'Single Accommodation' ? ` - ${this.selectedAccommodation}` : ''}`;
-
-    // Dates section
-    const formattedStartDate = this.formatDatePDF(this.startDate);
-    const formattedEndDate = this.formatDatePDF(this.endDate);
-    const dateSection = `Dates: ${formattedStartDate} - ${formattedEndDate}`;
-
-    // Host name section
-    const hostNameSection = `Host Name: ${this.hostName}`;
-
-    // Content for the PDF
-    const content: Array<string> = [
-        title,
-        dateSection,
-        hostNameSection,
-        'Charts:',
-    ];
-
-    // Get the chart image or canvas from the app-yearly-analytics component
-    if (this.yearlyAnalyticsComponent !== undefined) {
-      const chartImages = this.yearlyAnalyticsComponent.generateChartImages();
-    
-      if (chartImages !== undefined) {
-        content.push(`Profit Chart: ${chartImages.leftChart}`);
-        content.push(`Reservations Chart: ${chartImages.rightChart}`);
-      }
-    }
-    
-    
-    // Create PDF document
-    const pdf = new jsPDF();
-
-    // Set initial y-coordinate
-    let yCoordinate = 10;
-
-    // Add content to the PDF
-    content.forEach(item => {
-        pdf.setFontSize(12); // Set the font size as needed
-
-        // If the item is a string, add it as text; otherwise, it's assumed to be an image
-        if (typeof item === 'string') {
-            pdf.text(item, 10, yCoordinate);
-            yCoordinate += 10;
-        } else {
-            // Assuming item is an image
-            pdf.addImage(item, 'PNG', 10, yCoordinate, 100, 50); // Adjust width and height as needed
-            yCoordinate += 60; // Adjust the y-coordinate based on the height of the image
-        }
-    });
-
-    // Save or download the PDF
-    pdf.save('report.pdf');
-}
+  }
 
 
   private formatDatePDF(dateString: string): string {
