@@ -44,19 +44,17 @@
                       <div class="bottom-data-box">
                           <b class="location-text">Your Review</b><br>
                           <b class="location-text">Date: </b>
-                          <span class="location-text">{{ review.date| date: 'EEEE, MMMM d, y' }}</span>
-                          <div class="reviews-frame">
-                              <div class="stars-container">
-                               <span class="star" *ngFor="let star of generateStars(roundHalf(review.review ? review.review / 2 : 0))">
-                                 {{ star }}
-                               </span>
-                              </div>
-                                <div class="reviews-average">{{ roundHalf(review.review ? review.review / 2 : 0) }}</div>
-                          </div>
-
-
+                          <span class="location-text">{{ review.date| date: 'EEEE, MMMM d, y' }}</span><br>
                           <b class="location-text">Comment</b>
                           <div class="location-text"> {{ review.comment }} </div>
+                          <div class="reviews-frame" style="margin-bottom: 0%;">
+                              <div style="margin-right: 2%;">
+                                  <span *ngFor="let star of generateStars(roundHalf(review.review ? review.review : 0))">
+                                      {{ star }}
+                                  </span>
+                              </div>
+                              <div>{{ roundHalf(review.review ? review.review : 0) }}</div>
+                          </div>
                       </div>
                     </div>
 
@@ -90,22 +88,20 @@
                       </div>
 
                       <div class="bottom-data-box">
-                          <b class="location-text">Your Review</b>
-                          <b class="location-text">Date: {{ review.date| date: 'EEEE, MMMM d, y' }}</b>
-
-                          <div class="reviews-frame">
-                              <div class="stars-container">
-                               <span class="star" *ngFor="let star of generateStars(roundHalf(review.review ? review.review / 2 : 0))">
-                                 {{ star }}
-                               </span>
-                              </div>
-                                <div class="reviews-average">{{ roundHalf(review.review ? review.review / 2 : 0) }}</div>
-                          </div>
-
-
-                          <b class="location-text">Comment</b>
-                          <div class="location-text"> {{ review.comment }} </div>
-                      </div>
+                        <b class="location-text">Your Review</b><br>
+                        <b class="location-text">Date: </b>
+                        <span class="location-text">{{ review.date| date: 'EEEE, MMMM d, y' }}</span><br>
+                        <b class="location-text">Comment</b>
+                        <div class="location-text"> {{ review.comment }} </div>
+                        <div class="reviews-frame" style="margin-bottom: 0%;">
+                            <div style="margin-right: 2%;">
+                                <span *ngFor="let star of generateStars(roundHalf(review.review ? review.review : 0))">
+                                    {{ star }}
+                                </span>
+                            </div>
+                            <div>{{ roundHalf(review.review ? review.review : 0) }}</div>
+                        </div>
+                    </div>
                     </div>
 
                     <div class="right-buttons">

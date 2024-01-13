@@ -20,6 +20,7 @@ export class GuestReviewsComponent implements OnInit {
   filter: string = 'all';
 
   photoDict: { accId: number, url: string }[] = [];
+  photoDictUsers: { hostId: number, url:string}[] = [];
   review: Review[] = [];
 
   constructor(private reviewService: ReviewService, private accommodationService: AccommodationService, private authService: AuthService,private router: Router, private route: ActivatedRoute, private photoService: PhotoService) {
@@ -152,7 +153,7 @@ export class GuestReviewsComponent implements OnInit {
             (data) => {
               this.createImageFromBlob(data).then((url: string) => {
                 if (acc.id) {
-                  this.photoDict.push({ accId: acc.id, url: url });
+                  this.photoDictUsers.push({ hostId: acc.id, url: url });
                 }
               }).catch(error => {
                 console.error("Greška prilikom konverzije slike ${imageName}:", error);
@@ -184,6 +185,11 @@ export class GuestReviewsComponent implements OnInit {
 
   getPhotoUrl(accId: number | undefined): string | undefined {
     const photo = this.photoDict.find((item) => item.accId === accId);
+    return photo ? photo.url : '';
+  }
+
+  getPhotoUrlUser(hostId: number | undefined): string | undefined {
+    const photo = this.photoDictUsers.find((item) => item.hostId === hostId);
     return photo ? photo.url : '';
   }
 
