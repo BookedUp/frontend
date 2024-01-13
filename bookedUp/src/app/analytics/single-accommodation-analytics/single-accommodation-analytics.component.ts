@@ -62,13 +62,13 @@ export class SingleAccommodationAnalyticsComponent implements OnInit {
         uniqueMonths.forEach(month => {
           const dataForMonth = chartData.find(data => data.month === month);
   
-          profitData.push(dataForMonth?.profit || 0);
+          profitData.push(dataForMonth?.profit/100 || 0);
           reservationsData.push(dataForMonth?.reservations || 0);
         });
   
         this.chartLabels = uniqueMonths;
         this.chartData = [
-          { data: profitData, label: 'Profit', backgroundColor: '#037940' },
+          { data: profitData, label: 'Profit (divided by 100)', backgroundColor: '#037940' },
           { data: reservationsData, label: 'Reservations', backgroundColor: '#bc1823' }
         ];
       },
