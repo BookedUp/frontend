@@ -43,7 +43,6 @@ export class AccommodationDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.role = this.authService.getRole();
-    this.checkFavouriteStatus();
 
     this.route.params.subscribe((params) => {
       if ('id' in params) {
@@ -68,6 +67,8 @@ export class AccommodationDetailsComponent implements OnInit {
           }
         });
       }
+      this.checkFavouriteStatus();
+
 
       this.accommodationService.getAccommodationById(this.accommodationId).subscribe((result) =>{
         this.acc=result;
@@ -200,23 +201,53 @@ export class AccommodationDetailsComponent implements OnInit {
     if (this.isFavourite) {
       this.guestService.removeFavouriteAccommodation(guestId, this.accommodationId).subscribe(
         () => {
-          console.log('Smeštaj je uklonjen iz omiljenih smeštaja.');
-          // Ažurirajte fleg kada se smeštaj ukloni iz omiljenih
+          console.log('Accommodation removed from favorites.');
+          // Update the flag when the accommodation is removed from favorites
           this.isFavourite = false;
+
+          // Show SweetAlert notification
+          Swal.fire({
+            icon: 'success',
+            title: 'Removed!',
+            text: 'Accommodation has been removed from favorites.',
+          });
         },
-        (error) => console.error('Došlo je do greške pri uklanjanju smeštaja iz omiljenih smeštaja.', error)
+        (error) => {
+          console.error('Error removing accommodation from favorites.', error);
+          // Show SweetAlert notification in case of an error
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'An error occurred while removing accommodation from favorites.',
+          });
+        }
       );
     } else {
       this.guestService.addFavouriteAccommodation(guestId, this.accommodationId).subscribe(
         () => {
-          console.log('Smeštaj je dodat u omiljene smeštaje.');
-          // Ažurirajte fleg kada se smeštaj doda u omiljene
+          console.log('Accommodation added to favorites.');
+          // Update the flag when the accommodation is added to favorites
           this.isFavourite = true;
+
+          // Show SweetAlert notification
+          Swal.fire({
+            icon: 'success',
+            title: 'Added!',
+            text: 'Accommodation has been added to favorites.',
+          });
         },
-        (error) => console.error('Došlo je do greške pri dodavanju smeštaja u omiljene smeštaje.', error)
+        (error) => {
+          console.error('Error adding accommodation to favorites.', error);
+          // Show SweetAlert notification in case of an error
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'An error occurred while adding accommodation to favorites.',
+          });
+        }
       );
     }
-}
+  }
 
   navigateTo(route: string): void {
     this.router.navigate([route, this.accommodationId], { queryParams: { startDate: this.startDate, endDate: this.endDate, totalPrice: this.totalPrice, numberGuests: this.numberGuests, days: this.days} });
