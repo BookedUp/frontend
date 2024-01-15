@@ -116,6 +116,12 @@
   position: relative;
   justify-content: space-between;
 }
+.row{
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  justify-content: space-between;
+}
 .review-box{
   background: white;
   margin-right: 2%;
