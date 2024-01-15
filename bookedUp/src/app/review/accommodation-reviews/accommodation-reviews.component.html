@@ -34,19 +34,21 @@
           <div class="row" *ngFor="let chunk of reviewsChunks">
             <div class="review-box" *ngFor="let review of chunk">
               <div class="left-side">
-                <img alt="" src="../../../assets/public/logogoogle4@2x.png" style="width: auto; height: 20%;">
+                <img alt="" src="../../../assets/public/logogoogle4@2x.png" class="image-profile">
               </div>
               <div class="right-side">
                 <div class="top-line">
                   <div class="guest-text">{{ review.guest?.firstName }} {{ review.guest?.lastName }}</div>
+                  <div class="time-text">{{ calculateTimeAgo(review.date) }}</div>
+                </div>
+                <div class="bottom-line">
                   <div class="stars">
                     <span *ngFor="let star of generateStars(roundHalf(review.review ? review.review / 2 : 0))">
-                                        {{ star }}
-                                    </span>
+                        {{ star }}
+                    </span>
                   </div> <!-- Dodajte odgovarajući kod za prikaz zvezda na osnovu ocene recenzije -->
+                  <div class="comment-text">{{ review.comment }}</div>
                 </div>
-                <div class="time-text">{{ calculateTimeAgo(review.date) }}</div>
-                <div class="comment-text">{{ review.comment }}</div>
               </div>
             </div>
           </div>
