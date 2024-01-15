@@ -2,7 +2,7 @@ import { Component, OnInit  } from '@angular/core';
 import { AccommodationService } from 'src/app/accommodation/accommodation.service';
 import { Router, ActivatedRoute} from '@angular/router';
 import { Accommodation } from 'src/app/accommodation/model/accommodation.model';
-import { Observable, map } from 'rxjs';
+import {Observable, map, last} from 'rxjs';
 import { Photo } from 'src/app/shared/model/photo.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { UserService } from 'src/app/user/user.service';
@@ -30,7 +30,10 @@ export class AccommodationReviewsComponent implements OnInit {
   accommodations: Accommodation[] = [];
   foundAccommodation!: Accommodation;
   acc!:Accommodation;
+
   reviews: Observable<Review[]> = new Observable<Review[]>;
+  review: Review[] = [];
+
 
   constructor( private router: Router, private route: ActivatedRoute, private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService, private reviewService: ReviewService) {}
 
@@ -38,7 +41,7 @@ export class AccommodationReviewsComponent implements OnInit {
     this.route.params.subscribe((params) => {
       if ('id' in params) {
         this.accommodationId = params['id'];
-    
+
         this.route.queryParams.subscribe(queryParams => {
           if ('startDate' in queryParams) {
             this.startDate = queryParams['startDate'];
@@ -57,16 +60,15 @@ export class AccommodationReviewsComponent implements OnInit {
           }
         });
       }
+
       this.accommodationService.getAccommodationById(this.accommodationId).subscribe((result) =>{
         this.acc=result;
         this.loadPhotos();
       })
-
+      this.loadReviews();
     });
-    
-    this.reviews = this.reviewService.getAccommodationReviews(this.accommodationId);
-    console.log("This is reviews: ", this.reviews);
-    
+
+
     this.accommodation = this.accommodationService.getAccommodationById(this.accommodationId);
 
     this.getUrls().subscribe((urls) => {
@@ -132,4 +134,82 @@ export class AccommodationReviewsComponent implements OnInit {
     });
   }
 
+  private loadReviews() {
+    this.reviews = this.reviewService.getAccommodationReviews(this.accommodationId);
+    this.reviewService.getAccommodationReviews(this.accommodationId).subscribe((results) => {
+      this.review = results;
+      // this.loadPhotos();
+      console.log(results);
+    });
+  }
+
+  calculateTimeAgo(date: Date | string | undefined): string {
+    console.log(date);
+
+    try {
+      if (!date) {
+        throw new Error('Date is undefined or null');
+      }
+
+      let parsedDate: Date;
+
+      if (date instanceof Date) {
+        parsedDate = date;
+      } else {
+        parsedDate = new Date(date);
+        if (isNaN(parsedDate.getTime())) {
+          throw new Error('Invalid date string');
+        }
+      }
+
+      const currentDate = new Date();
+      const daysAgo = Math.floor((currentDate.getTime() - parsedDate.getTime()) / (1000 * 60 * 60 * 24));
+
+      if (daysAgo === 0) {
+        return 'Today';
+      } else if (daysAgo === 1) {
+        return 'Yesterday';
+      } else {
+        return `${daysAgo} days ago`;
+      }
+    } catch (error) {
+      console.error('Error calculating time ago:', error);
+      return 'N/A';
+    }
+  }
+
+
+  get reviewsChunks(): any[] {
+    const chunkSize = 3;
+    const chunks = [];
+
+    for (let i = 0; i < this.review.length; i += chunkSize) {
+      chunks.push(this.review.slice(i, i + chunkSize));
+    }
+    return chunks;
+  }
+  roundHalf(value: number | undefined): number | undefined {
+    if (value) {
+      return Math.round(value * 2) / 2;
+    }
+    return 0;
+  }
+  generateStars(rating: number | undefined): string[] {
+    const stars: string[] = [];
+    if(rating != undefined){
+      for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+          stars.push('★');
+        } else if (i - 0.5 === rating) {
+          stars.push('✯');
+        } else {
+          stars.push('☆');
+        }
+      }
+      return stars;
+    }
+    return stars;
+  }
+
+  protected readonly last = last;
 }

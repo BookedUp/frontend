@@ -7,7 +7,7 @@
   text-align: left;
   font-size: var(--font-size-2xs);
   color: var(--gray-2);
-  font-family: var(--font-sansation); 
+  font-family: var(--font-sansation);
   display: flex;
   flex-direction: column;
 }
@@ -68,7 +68,7 @@
   max-height: 48%;
   display: block;
 }
-.nav-bar{  
+.nav-bar{
   position: relative;
   left: 0;
   width: 100%;
@@ -138,13 +138,13 @@
   margin-left: 5%;
   width: 90%;
 }
-.top-line{  
+.top-line{
   display: flex;
   position: relative;
   flex-direction: row;
   margin-bottom: 3%;
 }
-.guest-text{    
+.guest-text{
   font-size: var(--font-size-mini);
   color: var(--color-gray-700);
   font-family: var(--font-roboto);

@@ -31,57 +31,30 @@
         </div>
 
         <div class="reviews-list">
-            <!-- *ngFor="let review of reviews | async; let last = last"  [ngClass]="{'no-margin-right': last}" 
-                
-                u review-list idu 3 review-a
-                u review-box idu detalji o review
-            
-            -->
-            <div class="review-box">
+          <div class="row" *ngFor="let chunk of reviewsChunks">
+            <div class="review-box" *ngFor="let review of chunk">
               <div class="left-side">
                 <img alt="" src="../../../assets/public/logogoogle4@2x.png" style="width: auto; height: 20%;">
               </div>
               <div class="right-side">
                 <div class="top-line">
-                  <div class="guest-text">Elen Breis</div>
-                  <div class="stars"></div>
+                  <div class="guest-text">{{ review.guest?.firstName }} {{ review.guest?.lastName }}</div>
+                  <div class="stars">
+                    <span *ngFor="let star of generateStars(roundHalf(review.review ? review.review / 2 : 0))">
+                                        {{ star }}
+                                    </span>
+                  </div> <!-- Dodajte odgovarajući kod za prikaz zvezda na osnovu ocene recenzije -->
                 </div>
-                <div class="time-text">3 days ago</div>
-                <div class="comment-text">Knowledgeable and easy to work with. They make Instagram easy for those of us who aren’t that savvy. Growth has been great and the followers have been quality. Couldn’t be happier.</div>
+                <div class="time-text">{{ calculateTimeAgo(review.date) }}</div>
+                <div class="comment-text">{{ review.comment }}</div>
               </div>
             </div>
-            <div class="review-box">
-                <div class="left-side">
-                  <img alt="" src="../../../assets/public/logogoogle4@2x.png" style="width: auto; height: 20%;">
-                </div>
-                <div class="right-side">
-                  <div class="top-line">
-                    <div class="guest-text">Elen Breis</div>
-                    <div class="stars"></div>
-                  </div>
-                  <div class="time-text">3 days ago</div>
-                  <div class="comment-text">Knowledgeable and easy to work with. They make Instagram easy for those of us who aren’t that savvy. Growth has been great and the followers have been quality. Couldn’t be happier.</div>
-                </div>
-              </div>
-              <div class="review-box">
-                <div class="left-side">
-                  <img alt="" src="../../../assets/public/logogoogle4@2x.png" style="width: auto; height: 20%;">
-                </div>
-                <div class="right-side">
-                  <div class="top-line">
-                    <div class="guest-text">Elen Breis</div>
-                    <div class="stars"></div>
-                  </div>
-                  <div class="time-text">3 days ago</div>
-                  <div class="comment-text">Knowledgeable and easy to work with. They make Instagram easy for those of us who aren’t that savvy. Growth has been great and the followers have been quality. Couldn’t be happier.</div>
-                </div>
-              </div>
+          </div>
         </div>
-          
+
 
       </div>
-
-      <app-shorter-footer></app-shorter-footer>
+        <app-shorter-footer></app-shorter-footer>
 
     </div>
   </body>
