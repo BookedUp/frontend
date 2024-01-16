@@ -11,6 +11,7 @@ import {PhotoService} from "../../../shared/photo/photo.service";
 })
 export class GuestNavBarComponent implements OnInit{
   isPopupVisible = false;
+  isNotificationVisible = false;
 
   role: string = '' ;
   loggedUser!: User;
@@ -36,6 +37,16 @@ export class GuestNavBarComponent implements OnInit{
         }
     );
 
+  }
+
+  onNotificationIconClick(): void {
+    this.isNotificationVisible = !this.isNotificationVisible;
+  }
+
+  onNotificationPopupClick(event: Event): void {
+    if (this.isNotificationVisible && event.target instanceof HTMLElement && !event.target.closest('.notification-dropdown')) {
+       this.isNotificationVisible = false;
+    }
   }
 
   onProfilePictureClick(): void {
