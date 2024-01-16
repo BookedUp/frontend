@@ -1,30 +1,30 @@
 <header>
-    <div class="header-container">
-      <img class="logo" alt="" src="../../../assets/public/cream-black-minimalist-illustrated-luxury-real-estate-circle-logo-7-3@2x.png" />
+   <div class="header-container">
+   <img class="logo" alt="" src="../../../assets/public/cream-black-minimalist-illustrated-luxury-real-estate-circle-logo-7-3@2x.png" />
 
-      <div class="home-nav">
-        <div class="home-item" routerLink="/">Home</div>
-      </div>
+   <div class="home-nav">
+      <div class="home-item" routerLink="/">Home</div>
+   </div>
 
-      <div class="right-icons">
-         <img
-         class="notification-icon"
+   <div class="right-icons">
+      <img
+      class="notification-icon"
+      alt=""
+      src="../../../../assets/public/notification-11.svg"
+      id="notification-icon"
+      (click)="onNotificationIconClick()"
+      />
+      <img
+         class="icon"
          alt=""
-         src="../../../../assets/public/notification-11.svg"
-         id="notification-icon"
-         (click)="onNotificationIconClick()"
-         />
-         <img
-            class="icon"
-            alt=""
-            [src]="displayedImageUrl || loggedUser.profilePicture?.url"
-            id="profile-picture-host"
-            (click)="onProfilePictureClick()"
-         />
-      </div>
-    </div>
+         [src]="displayedImageUrl || loggedUser.profilePicture?.url"
+         id="profile-picture-host"
+         (click)="onProfilePictureClick()"
+      />
+   </div>
+   </div>
 
-    <div id="hostDropdownContainer" class="popup-overlay" *ngIf="isPopupVisible" (click)="onPopupClick($event)">
+   <div id="hostDropdownContainer" class="popup-overlay" *ngIf="isPopupVisible" (click)="onPopupClick($event)">
       <div class="admin-dropdown">
         <div class="nav-box" (click)="navigateTo('/manage-profile')">
            <img class="nav-icon" alt="" src="../../../assets/public/usersquare-2.svg" />
