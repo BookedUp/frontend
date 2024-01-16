@@ -21,8 +21,8 @@ export class NotificationsComponent implements OnInit{
   private notificationsSubject: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>([]);
   notifications$: Observable<Notification[]> = this.notificationsSubject.asObservable();
 
-  // private serverUrl = 'http://localhost:8080' + '/socket';  
-  // private stompClient: Stomp.Client | undefined;
+  serverUrl:string = 'http://localhost:8080/socket';  
+  private stompClient: Stomp.Client | undefined;
 
 
   constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute, private notificationService: NotificationsService) {
@@ -30,6 +30,8 @@ export class NotificationsComponent implements OnInit{
 
 
   ngOnInit(): void {
+    
+    console.log('Component initialized');
     this.route.queryParams.subscribe(params => {
       this.filter = params['notificationFilter'] || 'all-text';
       this.loadNotifications();
@@ -49,38 +51,41 @@ export class NotificationsComponent implements OnInit{
       );
     }else{
       console.log("This is Web Socket");
-      //this.initializeWebSocketConnection();
+      this.initializeWebSocketConnection();
     }
   }
 
-  // initializeWebSocketConnection() {
-  //   // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
-  //   let ws = new SockJS(this.serverUrl);
+  initializeWebSocketConnection():void {
+    console.log("this is url",this.serverUrl);
+  //  let ws = new SockJS(this.serverUrl);
+  
   //   this.stompClient = Stomp.over(ws);
-  //   let that = this;
-
-  //   this.stompClient.connect({}, function () {
+  //    let that = this;
+  //   this.stompClient.connect({}, function (frame) {
+  //     console.log('Connected: ' + frame);
   //     that.openGlobalSocket()
-  //   });
+  //  }, function (error) {
+  //     console.log('Error: ' + error);
+  //  });
 
-  // }
+  }
 
-  // openGlobalSocket() {
-  //   if(this.stompClient){
-  //     this.stompClient.subscribe("/socket-publisher", (notification: { body: string; }) => {
-  //       this.handleResult(notification);
-  //     });
-  //   }
-  // }
+  openGlobalSocket() {
+    if(this.stompClient){
+      this.stompClient.subscribe("/socket-publisher", (notification: { body: string; }) => {
+        this.handleResult(notification);
+      });
+    }
+  }
 
-  // handleResult(notification: { body: string }) {
-  //   if (notification.body) {
-  //     let notificationResult: Notification = JSON.parse(notification.body);
-  //     const currentNotifications = this.notificationsSubject.value || [];
-  //     const updatedNotifications = [...currentNotifications, notificationResult];
-  //     this.notificationsSubject.next(updatedNotifications);
-  //   }
-  // }
+  handleResult(notification: { body: string }) {
+    if (notification.body) {
+      let notificationResult: Notification = JSON.parse(notification.body);
+      const currentNotifications = this.notificationsSubject.value || [];
+      const updatedNotifications = [...currentNotifications, notificationResult];
+      this.notificationsSubject.next(updatedNotifications);
+    }
+  }
 
 
   changeStyle(className: string): void {
