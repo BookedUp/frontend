@@ -14,14 +14,14 @@ import * as SockJS from 'sockjs-client';
   styleUrls: ['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit{
-  
+
   filter: string = 'all-text';
   selectedClass: string = 'all-text';
 
   private notificationsSubject: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>([]);
   notifications$: Observable<Notification[]> = this.notificationsSubject.asObservable();
 
-  serverUrl:string = 'http://localhost:8080/socket';  
+  serverUrl:string = 'http://localhost:8080/socket';
   private stompClient: Stomp.Client | undefined;
 
 
@@ -30,7 +30,7 @@ export class NotificationsComponent implements OnInit{
 
 
   ngOnInit(): void {
-    
+
     console.log('Component initialized');
     this.route.queryParams.subscribe(params => {
       this.filter = params['notificationFilter'] || 'all-text';
@@ -57,16 +57,16 @@ export class NotificationsComponent implements OnInit{
 
   initializeWebSocketConnection():void {
     console.log("this is url",this.serverUrl);
-  //  let ws = new SockJS(this.serverUrl);
-  
-  //   this.stompClient = Stomp.over(ws);
-  //    let that = this;
-  //   this.stompClient.connect({}, function (frame) {
-  //     console.log('Connected: ' + frame);
-  //     that.openGlobalSocket()
-  //  }, function (error) {
-  //     console.log('Error: ' + error);
-  //  });
+   let ws = new SockJS(this.serverUrl);
+
+    this.stompClient = Stomp.over(ws);
+     let that = this;
+    this.stompClient.connect({}, function (frame) {
+      console.log('Connected: ' + frame);
+      that.openGlobalSocket()
+   }, function (error) {
+      console.log('Error: ' + error);
+   });
 
   }
 
@@ -103,20 +103,20 @@ export class NotificationsComponent implements OnInit{
       console.error('Date is undefined or null');
       return 'N/A';
     }
-  
+
     const parsedDate = date instanceof Date ? date : new Date(date);
-  
+
     if (isNaN(parsedDate.getTime())) {
       console.error('Invalid date string');
       return 'N/A';
     }
-  
+
     const currentDate = new Date();
     const timeDifference = currentDate.getTime() - parsedDate.getTime();
     const secondsAgo = Math.floor(timeDifference / 1000);
     const minutesAgo = Math.floor(secondsAgo / 60);
     const hoursAgo = Math.floor(minutesAgo / 60);
-  
+
     if (hoursAgo >= 24) {
       return this.calculateDaysAgo(currentDate, parsedDate);
     } else if (hoursAgo > 0) {
@@ -127,14 +127,14 @@ export class NotificationsComponent implements OnInit{
       return 'Just now';
     }
   }
-  
+
   private calculateDaysAgo(currentDate: Date, parsedDate: Date): string {
     const daysAgo = Math.floor((currentDate.getTime() - parsedDate.getTime()) / (1000 * 60 * 60 * 24));
-  
+
     if (daysAgo === 1) {
       return 'Yesterday';
     } else {
       return `${daysAgo} days ago`;
     }
-  }  
+  }
 }
