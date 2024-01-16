@@ -6,6 +6,7 @@ import { MapComponent } from './map/map.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ImageFrameComponent } from './image-frame/image-frame.component';
 import { StarRatingComponent } from './star-rating/star-rating.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
     MapComponent,
     CalendarComponent,
     ImageFrameComponent,
-    StarRatingComponent
+    StarRatingComponent,
+    NotificationsComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
     MapComponent,
     CalendarComponent,
     ImageFrameComponent,
-    StarRatingComponent
+    StarRatingComponent,
+    NotificationsComponent
   ]
 })
 export class SharedModule { }
