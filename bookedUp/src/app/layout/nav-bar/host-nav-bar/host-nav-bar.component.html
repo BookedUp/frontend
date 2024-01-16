@@ -4,56 +4,67 @@
 
       <div class="home-nav">
         <div class="home-item" routerLink="/">Home</div>
-        <div class="home-item">About</div>
-        <div class="home-item">Contact</div>
       </div>
 
-      <img
-        class="manage-account-admin-item"
-        alt=""
-        [src]="displayedImageUrl || loggedUser.profilePicture?.url"
-        id="profile-picture-host"
-        (click)="onProfilePictureClick()"
-      />
+      <div class="right-icons">
+         <img
+         class="notification-icon"
+         alt=""
+         src="../../../../assets/public/notification-11.svg"
+         id="notification-icon"
+         (click)="onNotificationIconClick()"
+         />
+         <img
+            class="icon"
+            alt=""
+            [src]="displayedImageUrl || loggedUser.profilePicture?.url"
+            id="profile-picture-host"
+            (click)="onProfilePictureClick()"
+         />
+      </div>
     </div>
 
     <div id="hostDropdownContainer" class="popup-overlay" *ngIf="isPopupVisible" (click)="onPopupClick($event)">
       <div class="admin-dropdown">
-        <div class="user-square-2-parent" (click)="navigateTo('/manage-profile')">
-           <img class="user-square-2-icon" alt="" src="../../../assets/public/usersquare-2.svg" />
-           <div class="my-reservations">Manage account</div>
+        <div class="nav-box" (click)="navigateTo('/manage-profile')">
+           <img class="nav-icon" alt="" src="../../../assets/public/usersquare-2.svg" />
+           <div class="nav-text">Manage account</div>
         </div>
      
-        <div class="frame-parent6" (click)="navigateTo('/my-accommodations')">
-           <img class="frame-icon" alt="" src="../../../assets/public/frame.svg" />
-           <div class="my-reservations">My accommodations</div>
+        <div class="nav-box" (click)="navigateTo('/my-accommodations')">
+           <img class="nav-icon" alt="" src="../../../assets/public/frame.svg" />
+           <div class="nav-text">My accommodations</div>
         </div>
      
-        <div class="frame-parent6" (click)="navigateTo('/reservation-requests')">
-           <img class="frame-icon" alt="" src="../../../assets/public/hotel-2.svg" />
-           <div class="my-reservations">Reservations</div>
+        <div class="nav-box" (click)="navigateTo('/reservation-requests')">
+           <img class="nav-icon" alt="" src="../../../assets/public/hotel-2.svg" />
+           <div class="nav-text">Reservations</div>
         </div>
 
-        <div class="frame-parent6" (click)="navigateTo('/block-users')">
-            <img class="frame-icon" alt="" src="../../../assets/public/frame1.svg" />
-            <div class="my-reservations">Users</div>
+        <div class="nav-box" (click)="navigateTo('/block-users')">
+            <img class="nav-icon" alt="" src="../../../assets/public/frame1.svg" />
+            <div class="nav-text">Users</div>
          </div>
      
-        <div class="frame-parent6" (click)="navigateTo('/host-reviews')">
-           <img class="frame-icon" alt="" src="../../../assets/public/frame2.svg" />
-           <div class="my-reservations">Comments</div>
+        <div class="nav-box" (click)="navigateTo('/host-reviews')">
+           <img class="nav-icon" alt="" src="../../../assets/public/frame2.svg" />
+           <div class="nav-text">Comments</div>
         </div>
 
-        <div class="frame-parent6" (click)="navigateTo('/analytics')">
-           <img class="frame-icon" alt="" src="../../../assets/public/reportsolid24-1-1@2x.png" />
-           <div class="my-reservations">Analytics</div>
+        <div class="nav-box" (click)="navigateTo('/analytics')">
+           <img class="nav-icon" alt="" src="../../../assets/public/reportsolid24-1-1@2x.png" />
+           <div class="nav-text">Analytics</div>
         </div>
      
-        <div class="logout-1-parent" id="signOut" *ngIf="role != null" (click)="logOut()">
-           <img class="user-square-2-icon" alt="" src="../../../assets/public/logout-1.svg" />
-           <div class="my-reservations">Sign out</div>
+        <div class="nav-box" id="signOut" *ngIf="role != null" (click)="logOut()">
+           <img class="nav-icon" alt="" src="../../../assets/public/logout-1.svg" />
+           <div class="nav-text">Sign out</div>
         </div>
      </div>
-     
-    </div>
-  </header>
+   </div>
+
+   <div class="popup-overlay" *ngIf="isNotificationVisible" (click)="onNotificationPopupClick($event)">
+      <app-notifications class="notification-dropdown"></app-notifications>
+   </div>
+   
+</header>
