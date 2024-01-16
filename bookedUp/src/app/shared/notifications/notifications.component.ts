@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { NotificationsService } from './service/notifications.service';
 import { Notification } from './model/notification.model';
+
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 
 @Component({
   selector: 'app-notifications',
@@ -14,7 +17,13 @@ export class NotificationsComponent implements OnInit{
   
   filter: string = 'all-text';
   selectedClass: string = 'all-text';
-  notifications: Observable<Notification[]> = new Observable<Notification[]>;
+
+  private notificationsSubject: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>([]);
+  notifications$: Observable<Notification[]> = this.notificationsSubject.asObservable();
+
+  private serverUrl = 'http://localhost:8080' + '/api/socket';  
+  private stompClient: Stomp.Client | undefined;
+
 
   constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute, private notificationService: NotificationsService) {
   }
@@ -30,7 +39,7 @@ export class NotificationsComponent implements OnInit{
   private loadNotifications() : void {
     if (this.filter === 'all-text') {
       console.log("This is history");
-      this.notifications = this.notificationService.getNotificationsByUserId(this.authService.getUserID())
+      this.notifications$ = this.notificationService.getNotificationsByUserId(this.authService.getUserID())
       .pipe(
         map(notifications => notifications.sort((a, b) => {
           const timestampA = new Date(a.timestamp).getTime();
@@ -40,9 +49,39 @@ export class NotificationsComponent implements OnInit{
       );
     }else{
       console.log("This is Web Socket");
-      this.notifications = this.notificationService.getNotificationsByUserId(this.authService.getUserID());
+      this.initializeWebSocketConnection();
     }
   }
+
+  initializeWebSocketConnection() {
+    // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
+    let ws = new SockJS(this.serverUrl);
+    this.stompClient = Stomp.over(ws);
+    let that = this;
+
+    this.stompClient.connect({}, function () {
+      that.openGlobalSocket()
+    });
+
+  }
+
+  openGlobalSocket() {
+    if(this.stompClient){
+      this.stompClient.subscribe("/socket-publisher", (notification: { body: string; }) => {
+        this.handleResult(notification);
+      });
+    }
+  }
+
+  handleResult(notification: { body: string }) {
+    if (notification.body) {
+      let notificationResult: Notification = JSON.parse(notification.body);
+      const currentNotifications = this.notificationsSubject.value || [];
+      const updatedNotifications = [...currentNotifications, notificationResult];
+      this.notificationsSubject.next(updatedNotifications);
+    }
+  }
+
 
   changeStyle(className: string): void {
     this.selectedClass = className;
