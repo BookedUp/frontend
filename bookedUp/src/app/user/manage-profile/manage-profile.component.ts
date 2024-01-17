@@ -31,7 +31,7 @@ export class ManageProfileComponent implements OnInit {
   updateForm: FormGroup | undefined;
 
 
-  constructor(private userService: UserService,private photoService:PhotoService, private guestService: GuestService,private hostService: HostService, private router: Router, 
+  constructor(private userService: UserService,private photoService:PhotoService, private guestService: GuestService,private hostService: HostService, private router: Router,
     private authService: AuthService, private formBuilder: FormBuilder,private zone: NgZone
   ) {
     this.updateForm = this.formBuilder.group({
@@ -117,13 +117,13 @@ export class ManageProfileComponent implements OnInit {
   convertBlobToFile(blobUrl: string): Promise<File> {
     return fetch(blobUrl)
       .then(response => response.blob())
-      .then(blob => new File([blob], `acc${Date.now()}.png`, { type: blob.type }));
+      .then(blob => new File([blob], `us${Date.now()}.png`, { type: blob.type }));
   }
-  
+
 
   updateUser() {
 
-    
+
 
     if (this.validate()) {
 
@@ -247,7 +247,7 @@ export class ManageProfileComponent implements OnInit {
     });
   }
 
-  
+
 
   private deleteHost() {
     Swal.fire({
@@ -294,7 +294,7 @@ export class ManageProfileComponent implements OnInit {
       }
     );
   }
-  
+
 
   loadPhotos() {
     if(this.loggedUser.profilePicture){
