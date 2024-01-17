@@ -13,6 +13,7 @@ import { Notification } from 'src/app/shared/notifications/model/notification.mo
 import { NotificationsService } from 'src/app/shared/notifications/service/notifications.service';
 import { WebSocketService } from 'src/app/shared/notifications/service/web-socket.service';
 import { NotificationType } from 'src/app/shared/notifications/model/enum/notificationType.enum';
+import { Role } from 'src/app/user/model/role.enum';
 
 @Component({
   selector: 'app-reservation-details',
@@ -95,19 +96,22 @@ export class ReservationDetailsComponent implements OnInit{
   }
 
   canCancel(): void{
-    if( this.reser.status == ReservationStatus.Accept ){
-      const reservationStartDate = this.reser.startDate;
-
-      const currentDate = new Date();
-      const timeDifference = currentDate.getTime() - reservationStartDate.getTime();
-      const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      
-      if(this.reser.accommodation.cancellationDeadline > daysDifference){
-        // console.log("Ovo je dozvoljen opseg: ", this.reser.accommodation.cancellationDeadline);
-        // console.log("Ovo je razlika u danima: ", daysDifference);
+    console.log("This is role", this.authService.getRole());
+    if(this.authService.getRole() != "ROLE_HOST"){
+      if( this.reser.status == ReservationStatus.Accept){
+        const reservationStartDate = this.reser.startDate;
+  
+        const currentDate = new Date();
+        const timeDifference = currentDate.getTime() - reservationStartDate.getTime();
+        const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        
+        if(this.reser.accommodation.cancellationDeadline > daysDifference){
+          this.cancellation = false;
+        }
+      }else if( this.reser.status == ReservationStatus.Reject || this.reser.status == ReservationStatus.Cancelled || this.reser.status == ReservationStatus.Completed){
         this.cancellation = false;
       }
-    }else if( this.reser.status == ReservationStatus.Reject || this.reser.status == ReservationStatus.Cancelled || this.reser.status == ReservationStatus.Completed){
+    }else{
       this.cancellation = false;
     }
   }
