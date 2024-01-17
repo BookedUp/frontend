@@ -9,6 +9,10 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { UserService } from 'src/app/user/user.service';
 import Swal from 'sweetalert2';
 import { ReservationStatus } from '../model/reservationStatus.enum';
+import { Notification } from 'src/app/shared/notifications/model/notification.model';
+import { NotificationsService } from 'src/app/shared/notifications/service/notifications.service';
+import { WebSocketService } from 'src/app/shared/notifications/service/web-socket.service';
+import { NotificationType } from 'src/app/shared/notifications/model/enum/notificationType.enum';
 
 @Component({
   selector: 'app-reservation-details',
@@ -25,7 +29,16 @@ export class ReservationDetailsComponent implements OnInit{
 
   cancellation: boolean = true;
 
-  constructor( private router: Router, private route: ActivatedRoute, private reservationService: ReservationService, private photoService: PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService) {}
+  constructor( private router: Router, 
+    private route: ActivatedRoute, 
+    private reservationService: ReservationService, 
+    private photoService: PhotoService, 
+    private accommodationService: AccommodationService, 
+    private authService: AuthService, 
+    private userService: UserService,
+    private notificationService: NotificationsService,
+    private webSocketService: WebSocketService
+    ) {}
 
   ngOnInit(): void {
 
@@ -45,9 +58,40 @@ export class ReservationDetailsComponent implements OnInit{
   }
 
   cancelReservation(): void {
-    Swal.fire({icon: 'success', title: 'Reservation cancelled successfully!', text: 'You will be redirected to the reservation page.',}).then(() => {
-      this.router.navigate(['/my-reservations']);
-    });   
+    
+
+    if(this.reser.id != undefined){
+      this.reservationService.cancelReservation(this.reser.id).subscribe(
+        (cancelledReservation) => {
+          Swal.fire({icon: 'success', title: 'Reservation cancelled successfully!', text: 'You will be redirected to the reservation page.',}).then(() => {
+            this.router.navigate(['/my-reservations']);
+          });
+
+          const notification: Notification = {
+            fromUserDTO: this.reser.guest,
+            toUserDTO: this.reser.accommodation.host,
+            title: 'Reservation Update: Cancelled!',
+            message: 'Unfortunately, a reservation for your accommodation has been cancelled. Feel free to review the details and reach out to our support if you need any assistance',
+            timestamp: new Date(),
+            type: NotificationType.reservationCanceled,
+            active: true
+          };
+      
+          this.notificationService.createNotification(notification).subscribe(
+            (createdNotification) => {
+              console.log(createdNotification);
+            },
+            (error) => {
+              console.error('Error creating review:', error);
+            }
+          );
+          this.webSocketService.sendMessageUsingSocket(notification);
+        },
+        (error) => {  
+          Swal.fire('Error!', 'An error occurred while canceling the reservation.', 'error');
+        }
+      );
+    }
   }
 
   canCancel(): void{
