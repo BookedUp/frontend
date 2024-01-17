@@ -16,6 +16,10 @@ import {PhotoService} from "../../shared/photo/photo.service";
 
 import { GuestService } from 'src/app/user/guest/guest.service';
 import Swal from 'sweetalert2';
+import { Notification } from 'src/app/shared/notifications/model/notification.model';
+import { NotificationsService } from 'src/app/shared/notifications/service/notifications.service';
+import { WebSocketService } from 'src/app/shared/notifications/service/web-socket.service';
+import { NotificationType } from 'src/app/shared/notifications/model/enum/notificationType.enum';
 
 @Component({
   selector: 'app-create-reservation',
@@ -44,7 +48,18 @@ export class CreateReservationComponent implements OnInit {
 
   loggedUser!: User;
 
-  constructor(private fb: FormBuilder,private userService: UserService, private router: Router, private route: ActivatedRoute, private accommodationService: AccommodationService, private authService: AuthService, private reservationService: ReservationService, private photoService: PhotoService, private guestService: GuestService)
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService, 
+    private router: Router, 
+    private route: ActivatedRoute, 
+    private accommodationService: AccommodationService, 
+    private authService: AuthService, 
+    private reservationService: ReservationService, 
+    private photoService: PhotoService, 
+    private guestService: GuestService,
+    private notificationService: NotificationsService,
+    private webSocketService: WebSocketService)
 
   {
     this.reservationForm = this.fb.group({
@@ -138,6 +153,25 @@ export class CreateReservationComponent implements OnInit {
     
     this.reservationService.createReservation(this.newReservation).subscribe(
       (createdReservation: Reservation) => {
+        const notification: Notification = {
+          fromUserDTO: this.guest,
+          toUserDTO: createdReservation.accommodation.host,
+          title: 'New Reservation!',
+          message: 'Exciting news,' + createdReservation.accommodation.host.firstName + '! A new reservation has just been made for your ' + createdReservation.accommodation.name + ' accommodation. Get ready to welcome your next guest! ',
+          timestamp: new Date(),
+          type: NotificationType.reservationCreated,
+          active: true
+        };
+
+        this.notificationService.createNotification(notification).subscribe(
+          (createdNotification) => {
+            console.log(createdNotification);
+          },
+          (error) => {
+            console.error('Error creating review:', error);
+          }
+        );
+        this.webSocketService.sendMessageUsingSocket(notification);
         console.log('Created Reservation:', createdReservation);
         Swal.fire({icon: 'success', title: 'Reservation created successfully!', text: 'You will be redirected to the home page.',});
         this.router.navigate(['/']);
