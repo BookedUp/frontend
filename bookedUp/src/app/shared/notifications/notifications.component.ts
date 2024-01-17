@@ -88,7 +88,6 @@ export class NotificationsComponent implements OnInit{
     }, function (error) {
         console.log('Error: ' + error);
     });
-
   }
 
   openGlobalSocket() {
