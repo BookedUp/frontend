@@ -89,19 +89,12 @@ export class ManageProfileComponent implements OnInit {
     this.fileInput.nativeElement.click();
     this.convertBlobToFile(this.displayedImageUrl??'')
     .then(file => {
-      console.log('Converted file:', file);
-
-      // Now you can upload the file or use it as needed.
       this.photoService.uploadImage(file).subscribe(
         response => {
-          console.log('Image uploaded successfully:', response);
           this.updateProfilePicture = 'images/'+file.name;
-          console.log("ovo je naziv koji se prosledjuje ", this.updateProfilePicture);
-          // Handle success as needed
         },
         error => {
           console.error('Error uploading image:', error);
-          // Handle error as needed
         }
       );
     })
