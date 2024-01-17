@@ -153,6 +153,10 @@ export class CreateReservationComponent implements OnInit {
     
     this.reservationService.createReservation(this.newReservation).subscribe(
       (createdReservation: Reservation) => {
+        console.log('Created Reservation:', createdReservation);
+        Swal.fire({icon: 'success', title: 'Reservation created successfully!', text: 'You will be redirected to the home page.',});
+        this.router.navigate(['/']);
+
         const notification: Notification = {
           fromUserDTO: this.guest,
           toUserDTO: createdReservation.accommodation.host,
@@ -172,9 +176,29 @@ export class CreateReservationComponent implements OnInit {
           }
         );
         this.webSocketService.sendMessageUsingSocket(notification);
-        console.log('Created Reservation:', createdReservation);
-        Swal.fire({icon: 'success', title: 'Reservation created successfully!', text: 'You will be redirected to the home page.',});
-        this.router.navigate(['/']);
+        
+        if(this.acc.automaticReservationAcceptance == true){
+          const notification: Notification = {
+            fromUserDTO: createdReservation.accommodation.host,
+            toUserDTO: this.guest,
+            title: 'Reservation Confirmed Instantly!',
+            message: 'Hey '+ this.guest.firstName + '! Good news - your reservation has been automatically accepted. Your stay is confirmed and ready to go!',
+            timestamp: new Date(),
+            type: NotificationType.reservationRequestResponse,
+            active: true
+          };
+  
+          this.notificationService.createNotification(notification).subscribe(
+            (createdNotification) => {
+              console.log(createdNotification);
+            },
+            (error) => {
+              console.error('Error creating review:', error);
+            }
+          );
+          this.webSocketService.sendMessageUsingSocket(notification); 
+        }
+        
       },
       (error) => {
         Swal.fire({
