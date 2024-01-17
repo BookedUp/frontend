@@ -71,6 +71,7 @@
     width: 18px;
     height: 18px;
     width: 10%;
+    cursor: pointer;
 }
 .icon{
     margin-left: 10%;

@@ -1,11 +1,11 @@
 
-<div class="notification">
+<div class="notification" *ngIf="isNotificationVisible">
     <div class="header">
         <div class="text-box">
             <div class="all-text" [ngClass]="{ 'clicked': selectedClass === 'all-text' }" (click)="changeStyle('all-text')">All</div>
-            <div class="new-text" [ngClass]="{ 'clicked': selectedClass === 'new-text' }" (click)="changeStyle('new-text')">New</div>
+            <div class="new-text" [ngClass]="{ 'clicked': selectedClass === 'new-text' }" (click)="changeStyle('new-text')">Unread</div>
         </div>
-        <img class="icon-settings" alt="" src="../../../assets/public/icon2.svg">
+        <img class="icon-settings" alt="" src="../../../assets/public/icon2.svg" (click)="navigateTo('manage-profile')">
     </div>
 
     <div class="notification-list">
