@@ -10,6 +10,7 @@ import { Guest } from 'src/app/user/model/guest.model';
 import { Role } from 'src/app/user/model/role.enum';
 import { GuestService } from 'src/app/user/guest/guest.service';
 import { HostService } from 'src/app/user/host/host.service';
+import { WebSocketService } from './service/web-socket.service';
 
 @Component({
   selector: 'app-notifications',
@@ -31,7 +32,8 @@ export class NotificationsComponent implements OnInit{
     private guestService: GuestService, 
     private hostService: HostService,
     private route: ActivatedRoute, 
-    private notificationService: NotificationsService) {
+    private notificationService: NotificationsService,
+    private webSocketService: WebSocketService) {
   }
 
 
@@ -71,6 +73,10 @@ export class NotificationsComponent implements OnInit{
 
   changeViewToNotification(): void {
     this.isSettingsVisible = false;
+  }
+
+  markAllAsRead():void{
+    this.webSocketService.messages = this.webSocketService.messages.filter(num => num !== this.authService.getUserID());
   }
 
   calculateTimeAgo(date: Date | string | undefined): string {

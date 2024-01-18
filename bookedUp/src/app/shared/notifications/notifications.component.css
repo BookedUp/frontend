@@ -26,7 +26,7 @@
     height: 10%;
 }
 .all-text,
-.new-text,
+.mark-text,
 .titile-text,
 .time-text,
 .message-text{
@@ -42,16 +42,22 @@
     margin-bottom: 2%;
 }
 .text-box{
-    width: 85%;
+    width: 60%;
     display: flex;
     flex-direction: row;
 }
-.all-text{
-    width: 10%;
+.all-text,
+.mark-text{
+    width: 47%;
     cursor: pointer; 
-    margin-left: 3%; 
+    margin-left: 8%; 
     color: var(--blue-1);
     font-weight: bold;
+}
+.mark-text{
+  width: 25%;
+  font-size: var(--font-size-xs);
+  justify-content: right;
 }
 .time-text{
     margin-top: 1%;
