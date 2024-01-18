@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {User} from "../../../user/model/user.model";
 import { UserService } from 'src/app/user/user.service';
 import {PhotoService} from "../../../shared/photo/photo.service";
+import { WebSocketService } from 'src/app/shared/notifications/service/web-socket.service';
 @Component({
   selector: 'app-guest-nav-bar',
   templateUrl: './guest-nav-bar.component.html',
@@ -12,15 +13,26 @@ import {PhotoService} from "../../../shared/photo/photo.service";
 export class GuestNavBarComponent implements OnInit{
   isPopupVisible = false;
   isNotificationVisible = false;
+  
+  hasWebSocketNotification: boolean = false;
 
   role: string = '' ;
   loggedUser!: User;
   displayedImageUrl: string | null = null;
 
 
-  constructor(private router: Router, private authService: AuthService,private userService: UserService, private photoService:PhotoService,) {}
+  constructor(
+    private router: Router, 
+    private authService: AuthService,
+    private userService: UserService, 
+    private photoService:PhotoService,
+    private  webSocketService: WebSocketService, ) {}
 
   ngOnInit(): void {
+    this.webSocketService.hasWebSocketNotification.subscribe((isVisible: boolean) => {
+      this.isNotificationVisible = isVisible;
+    });
+
     this.authService.userState.subscribe((result) => {
       this.role = result;
     })

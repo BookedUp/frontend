@@ -7,6 +7,16 @@
 
     <div class="right-icons">
         <img
+        *ngIf="!hasWebSocketNotification"
+        class="notification-icon"
+        alt=""
+        src="../../../../assets/public/bell.png"
+        id="notification-icon"
+        (click)="onNotificationIconClick()"
+        style="height: 20%;"
+        />
+        <img
+        *ngIf="hasWebSocketNotification"
         class="notification-icon"
         alt=""
         src="../../../../assets/public/notification-11.svg"
