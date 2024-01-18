@@ -55,9 +55,9 @@
                    <b class="title">{{ reservation.accommodation.name }}</b>
                   <div class="reviews-frame">
                     <div class="stars-container">
-<!--                      <span class="star" *ngFor="let star of generateStars(roundHalf(reservation.accommodation.averageRating/2))">-->
-<!--                        {{ star }}-->
-<!--                      </span>-->
+                            <span class="star" *ngFor="let star of generateStars(roundHalf((reservation?.accommodation?.averageRating ?? 0) / 2))">
+                                {{ star }}
+                            </span>
                     </div>
                       <div class="reviews55" *ngIf="reservation.accommodation">{{ roundHalf(reservation.accommodation.averageRating ? reservation.accommodation.averageRating / 2 : 0) }}</div>
                   </div>
