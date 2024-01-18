@@ -30,9 +30,7 @@ export class HostNavBarComponent implements OnInit{
     ) {}
 
   ngOnInit(): void {
-    this.webSocketService.hasWebSocketNotification.subscribe((isVisible: boolean) => {
-      this.hasWebSocketNotification = isVisible;
-    });
+    this.hasWebSocketNotification = this.webSocketService.hasNotificationOnSocket(this.authService.getUserID());
 
     this.authService.userState.subscribe((result) => {
       this.role = result;
@@ -76,7 +74,7 @@ export class HostNavBarComponent implements OnInit{
   }
 
   logOut(): void {
-    this.webSocketService.disconnectFromWebSocket();
+    //this.webSocketService.disconnectFromWebSocket();
     this.authService.logout().subscribe({
       next: (_) => {
         localStorage.removeItem('user');

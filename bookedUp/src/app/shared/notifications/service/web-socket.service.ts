@@ -6,6 +6,12 @@ import * as SockJS from 'sockjs-client';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { NotificationType } from '../model/enum/notificationType.enum';
+import { HostService } from 'src/app/user/host/host.service';
+import { GuestService } from 'src/app/user/guest/guest.service';
+import { Guest } from 'src/app/user/model/guest.model';
+import { Host } from 'src/app/user/model/host.model';
+import { Role } from 'src/app/user/model/role.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +19,12 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 export class WebSocketService {
   
   private stompClient: Stomp.Client | undefined;
-  hasWebSocketNotification: Observable<boolean> = of(false);
+  messages: Number[] = [];
 
   constructor(private http: HttpClient,
-  private authService: AuthService) {
+    private authService: AuthService,
+    private hostService: HostService,
+    private guestService: GuestService) {
   }
 
   connectToWebSocket(): void {
@@ -37,9 +45,16 @@ export class WebSocketService {
 
   private handleWebSocketMessage(message: Stomp.Message): void {
     console.log('Received message: ' + message.body);
-    if (Number(message.body) === this.authService.getUserID()) {
-      this.hasWebSocketNotification = of(true);
+
+    const result = message.body.split(' ');
+
+    if(result != undefined){
+      this.messages.push(Number(result[0]));
     }
+  }
+
+  hasNotificationOnSocket(id: number): boolean {
+    return this.messages.includes(id);
   }
 
   sendMessageUsingSocket(notification: Notification) {
@@ -47,10 +62,75 @@ export class WebSocketService {
     this.stompClient = Stomp.over(socket);
   
     this.stompClient.connect({}, (frame) => {
-      const userId = 2;
-      if(userId != undefined && this.stompClient !== undefined){
-        this.stompClient.send('/app/send/message', {}, userId.toString());
+
+      console.log("This is id:", notification.toUserDTO.id);
+      console.log("This is type:", notification.type);
+
+      var isEnabled = false;
+
+      if(notification.toUserDTO.role === Role.Guest){
+        if(notification.toUserDTO.id !== undefined){
+          this.guestService.getGuestById(notification.toUserDTO.id).subscribe(
+            (guest: Guest) => {
+              if(guest.notificationEnable){
+                isEnabled = true;
+              }
+            },
+            (error) => {
+              console.error('Error loading user:', error);
+            }
+          );
+        }
+      }else if(notification.toUserDTO.role === Role.Host){
+        if(notification.toUserDTO.id !== undefined){
+          this.hostService.getHost(notification.toUserDTO.id).subscribe(
+            (host: Host) => {
+              
+              console.log("Usao sam id je acc", host.accommodationRatingNotificationEnabled);
+              console.log("Usao sam id je host", host.hostRatingNotificationEnabled);
+              console.log("Usao sam id je cancel", host.cancellationNotificationEnabled);
+              console.log("Usao sam id je create", host.reservationCreatedNotificationEnabled);
+              
+              console.log("not type", notification.type);
+              if((host.accommodationRatingNotificationEnabled) && (notification.type === NotificationType.accommodationRated)){
+                const message = notification.toUserDTO.id + ' ' + notification.type;
+                  if((this.stompClient !== undefined) && (message !== undefined)){
+                    this.stompClient.send('/app/send/message', {}, message.toString());
+                  }
+              }
+              if((host.hostRatingNotificationEnabled) && (notification.type === NotificationType.hostRated)){
+                const message = notification.toUserDTO.id + ' ' + notification.type;
+                  if((this.stompClient !== undefined) && (message !== undefined)){
+                    this.stompClient.send('/app/send/message', {}, message.toString());
+                  }
+              }
+              if((host.cancellationNotificationEnabled) && (notification.type === NotificationType.reservationCanceled)){
+                console.log("tu sam");
+                const message = notification.toUserDTO.id + ' ' + notification.type;
+                  if((this.stompClient !== undefined) && (message !== undefined)){
+                    this.stompClient.send('/app/send/message', {}, message.toString());
+                  }
+              }
+              if((host.reservationCreatedNotificationEnabled) && (notification.type === NotificationType.reservationCreated)){
+                const message = notification.toUserDTO.id + ' ' + notification.type;
+                  if((this.stompClient !== undefined) && (message !== undefined)){
+                    this.stompClient.send('/app/send/message', {}, message.toString());
+                  }
+              }
+            },
+            (error) => {
+              console.error('Error loading user:', error);
+            }
+          );
+        }
       }
+
+      // if(isEnabled){
+      //   const message = notification.toUserDTO.id + ' ' + notification.type;
+      //   if((this.stompClient !== undefined) && (message !== undefined)){
+      //     this.stompClient.send('/app/send/message', {}, message.toString());
+      //   }
+      // }
     }, (error) => {
       console.log('Error: ' + error);
     });

@@ -54,7 +54,6 @@ export class LoginComponent {
 
     this.authService.login(login).subscribe({
       next: (response: AuthResponse) => {
-        this.webSocketService.connectToWebSocket();
         localStorage.setItem('user', response.token);
         this.authService.setUser()
         this.router.navigate(['/'])

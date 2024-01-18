@@ -29,9 +29,7 @@ export class GuestNavBarComponent implements OnInit{
     private  webSocketService: WebSocketService, ) {}
 
   ngOnInit(): void {
-    this.webSocketService.hasWebSocketNotification.subscribe((isVisible: boolean) => {
-      this.hasWebSocketNotification = isVisible;
-    });
+    this.hasWebSocketNotification = this.webSocketService.hasNotificationOnSocket(this.authService.getUserID());
 
     this.authService.userState.subscribe((result) => {
       this.role = result;
