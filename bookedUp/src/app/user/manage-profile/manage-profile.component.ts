@@ -44,6 +44,7 @@ export class ManageProfileComponent implements OnInit {
       city: ['', Validators.required],
       postalCode: ['', Validators.required],
       country: ['', Validators.required],
+
     });
   }
 
@@ -87,27 +88,39 @@ export class ManageProfileComponent implements OnInit {
 
   handleFileButtonClick() {
     this.fileInput.nativeElement.click();
-    this.convertBlobToFile(this.displayedImageUrl??'')
-    .then(file => {
-      console.log('Converted file:', file);
 
-      // Now you can upload the file or use it as needed.
-      this.photoService.uploadImage(file).subscribe(
-        response => {
-          console.log('Image uploaded successfully:', response);
-          this.updateProfilePicture = 'images/'+file.name;
-          console.log("ovo je naziv koji se prosledjuje ", this.updateProfilePicture);
-          // Handle success as needed
-        },
-        error => {
-          console.error('Error uploading image:', error);
-          // Handle error as needed
-        }
-      );
-    })
-    .catch(error => {
-      console.error('Error converting blob to file:', error);
+    this.fileInput.nativeElement.addEventListener('change', (event: any) => {
+
+      const file = event.target.files[0];
+      console.log('Nova slika dodata', event.target.files[0]);
+
+      if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        this.displayedImageUrl = imageUrl;
+        this.convertBlobToFile(this.displayedImageUrl??'')
+          .then(file => {
+            console.log('Converted file:', file);
+
+            // Now you can upload the file or use it as needed.
+            this.photoService.uploadImage(file).subscribe(
+              response => {
+                console.log('Image uploaded successfully:', response);
+                this.updateProfilePicture = 'images/'+file.name;
+                console.log("ovo je naziv koji se prosledjuje ", this.updateProfilePicture);
+                // Handle success as needed
+              },
+              error => {
+                console.error('Error uploading image:', error);
+                // Handle error as needed
+              }
+            );
+          })
+          .catch(error => {
+            console.error('Error converting blob to file:', error);
+          });
+      }
     });
+
   }
 
   togglePasswordVisibility() {
@@ -125,7 +138,7 @@ export class ManageProfileComponent implements OnInit {
 
 
 
-    if (this.validate()) {
+    if (this.validate() || this.updateProfilePicture!='') {
 
       this.updatedUser = {
         id: this.authService.getUserID(),
