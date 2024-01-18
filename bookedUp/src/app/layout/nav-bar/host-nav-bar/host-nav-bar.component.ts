@@ -31,7 +31,7 @@ export class HostNavBarComponent implements OnInit{
 
   ngOnInit(): void {
     this.webSocketService.hasWebSocketNotification.subscribe((isVisible: boolean) => {
-      this.isNotificationVisible = isVisible;
+      this.hasWebSocketNotification = isVisible;
     });
 
     this.authService.userState.subscribe((result) => {
