@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 import { Notification } from '../model/notification.model';
 
 @Injectable({
@@ -9,6 +9,13 @@ import { Notification } from '../model/notification.model';
 export class NotificationsService {
 
   private apiUrl = 'http://localhost:8080/api/notifications';
+  
+  private notifySource = new Subject<void>();
+  notify$ = this.notifySource.asObservable();
+
+  notifyNavBar() {
+    this.notifySource.next();
+  }
 
   constructor(private http: HttpClient) { }
 

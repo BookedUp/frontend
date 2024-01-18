@@ -77,6 +77,7 @@ export class NotificationsComponent implements OnInit{
 
   markAllAsRead():void{
     this.webSocketService.messages = this.webSocketService.messages.filter(num => num !== this.authService.getUserID());
+    this.notificationService.notifyNavBar();
   }
 
   calculateTimeAgo(date: Date | string | undefined): string {
