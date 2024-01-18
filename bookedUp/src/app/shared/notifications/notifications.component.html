@@ -1,14 +1,13 @@
 
-<div class="notification" *ngIf="isNotificationVisible">
+<div class="notification" >
     <div class="header">
         <div class="text-box">
-            <div class="all-text" [ngClass]="{ 'clicked': selectedClass === 'all-text' }" (click)="changeStyle('all-text')">All</div>
-            <div class="new-text" [ngClass]="{ 'clicked': selectedClass === 'new-text' }" (click)="changeStyle('new-text')">Unread</div>
+            <div class="all-text" (click)="changeViewToNotification()">All</div>
         </div>
-        <img class="icon-settings" alt="" src="../../../assets/public/icon2.svg" (click)="navigateTo('manage-profile')">
+        <img class="icon-settings" alt="" src="../../../assets/public/icon2.svg" (click)="changeView()">
     </div>
 
-    <div class="notification-list">
+    <div class="notification-list" *ngIf="!isSettingsVisible">
         <div class="notification-box" *ngFor="let notification of notifications$ | async">
             <div class="picture-box">
                 <img class="icon" alt="" src="../../../assets/public/cream-black-minimalist-illustrated-luxury-real-estate-circle-logo-7-3@2x.png">
@@ -17,6 +16,76 @@
                 <div class="title-text">BookedUp - {{notification.title}}</div>
                 <div class="time-text">{{calculateTimeAgo(notification.timestamp)}} ago • Notification</div>
                 <div class="message-text">{{notification.message}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!loggedUserGuest">
+        <div class="notification-list" *ngIf="isSettingsVisible">
+            <div class="notification-box" id="newReservation">
+                <div class="notification-titile-box">
+                    <div class="title-text">New Reservation Notifications</div>
+                </div>
+                <div class="toggle-box">
+                    <label class="toggle">
+                        <input type="checkbox" [checked]="host?.reservationCreatedNotificationEnabled">
+                        <span class="slider"></span>
+                        <span class="labels" data-on="ON" data-off="OFF"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="notification-box" id="cancelReservation">
+                <div class="notification-titile-box">
+                    <div class="title-text">Cancelled Reservation Notifications</div>
+                </div>
+                <div class="toggle-box">
+                    <label class="toggle">
+                        <input type="checkbox" [checked]="host?.cancellationNotificationEnabled">
+                        <span class="slider"></span>
+                        <span class="labels" data-on="ON" data-off="OFF"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="notification-box" id="hostRating">
+                <div class="notification-titile-box">
+                    <div class="title-text">Host Rating Notifications</div>
+                </div>
+                <div class="toggle-box">
+                    <label class="toggle">
+                        <input type="checkbox" [checked]="host?.hostRatingNotificationEnabled">
+                        <span class="slider"></span>
+                        <span class="labels" data-on="ON" data-off="OFF"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="notification-box" id="accommodationRating">
+                <div class="notification-titile-box">
+                    <div class="title-text">Accommodation Rating Notifications</div>
+                </div>
+                <div class="toggle-box">
+                    <label class="toggle">
+                        <input type="checkbox" [checked]="host?.accommodationRatingNotificationEnabled">
+                        <span class="slider"></span>
+                        <span class="labels" data-on="ON" data-off="OFF"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div *ngIf="loggedUserGuest">
+        <div class="notification-list" *ngIf="isSettingsVisible">
+            <div class="notification-box" id="reservationNotifications">
+                <div class="notification-titile-box">
+                    <div class="title-text">Reservation Notifications</div>
+                </div>
+                <div class="toggle-box">
+                    <label class="toggle">
+                        <input type="checkbox" [checked]="guest?.notificationEnable">
+                        <span class="slider"></span>
+                        <span class="labels" data-on="ON" data-off="OFF"></span>
+                    </label>
+                </div>
             </div>
         </div>
     </div>
