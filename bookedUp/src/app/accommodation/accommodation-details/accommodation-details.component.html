@@ -48,7 +48,7 @@
 
             </div>
             <div class="left-box">
-              <b class="totalPrice">{{totalPrice}} $</b><br>
+              <b class="totalPrice" *ngIf="totalPrice!=0">{{totalPrice}} $</b><br>
               <b class="singlePrice">${{accommodation.price}}/{{accommodation.priceType}}</b><br>
               <div *ngIf="numberGuests !== 0" class="normal-text" style="margin-top: 10px;">
                 {{ numberGuests }} adult, {{days}} nights
