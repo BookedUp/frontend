@@ -26,7 +26,6 @@ export class NotificationsComponent implements OnInit{
   guest: Guest | undefined;
   loggedUserGuest: boolean = false;
 
-
   constructor(
     private authService: AuthService, 
     private guestService: GuestService, 
@@ -117,6 +116,54 @@ export class NotificationsComponent implements OnInit{
       return 'Yesterday';
     } else {
       return `${daysAgo} days ago`;
+    }
+  }
+
+  createReservationEnabled(): void{
+    if(this.host != undefined){
+      this.host.reservationCreatedNotificationEnabled = !this.host.reservationCreatedNotificationEnabled;
+      this.updateHost(this.host);
+    }
+  }
+
+  cancelReservationEnabled(): void{
+    if(this.host != undefined){
+      this.host.cancellationNotificationEnabled = !this.host.cancellationNotificationEnabled;
+      this.updateHost(this.host);
+    }
+  }
+
+  hostRatingEnabled(): void{
+    if(this.host != undefined){
+      this.host.hostRatingNotificationEnabled = !this.host.hostRatingNotificationEnabled;
+      this.updateHost(this.host);
+    }
+  }
+
+  accRatingEnabled(): void{
+    if(this.host != undefined){
+      this.host.accommodationRatingNotificationEnabled = !this.host.accommodationRatingNotificationEnabled;
+      this.updateHost(this.host);
+    }
+  }
+
+  private updateHost(host: Host): void {
+    if(host.id != undefined){
+      this.hostService.updateHost(host.id, host).subscribe();
+    }
+  }
+
+  reservationEnabled(): void{
+    if(this.guest !== undefined){
+      this.guest.notificationEnable = !this.guest.notificationEnable;
+      this.updateGuest(this.guest);
+    }
+  }  
+
+  private updateGuest(guest: Guest): void {
+    if(guest.id !== undefined){
+      console.log("Tu sam");
+      this.guestService.updateGuest(guest.id, guest).subscribe();
     }
   }
 }

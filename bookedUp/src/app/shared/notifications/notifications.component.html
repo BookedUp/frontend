@@ -29,7 +29,7 @@
                 </div>
                 <div class="toggle-box">
                     <label class="toggle">
-                        <input type="checkbox" [checked]="host?.reservationCreatedNotificationEnabled">
+                        <input type="checkbox" [checked]="host?.reservationCreatedNotificationEnabled" (click)="createReservationEnabled()">
                         <span class="slider"></span>
                         <span class="labels" data-on="ON" data-off="OFF"></span>
                     </label>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="toggle-box">
                     <label class="toggle">
-                        <input type="checkbox" [checked]="host?.cancellationNotificationEnabled">
+                        <input type="checkbox" [checked]="host?.cancellationNotificationEnabled" (click)="cancelReservationEnabled()">
                         <span class="slider"></span>
                         <span class="labels" data-on="ON" data-off="OFF"></span>
                     </label>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="toggle-box">
                     <label class="toggle">
-                        <input type="checkbox" [checked]="host?.hostRatingNotificationEnabled">
+                        <input type="checkbox" [checked]="host?.hostRatingNotificationEnabled" (click)="hostRatingEnabled()">
                         <span class="slider"></span>
                         <span class="labels" data-on="ON" data-off="OFF"></span>
                     </label>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="toggle-box">
                     <label class="toggle">
-                        <input type="checkbox" [checked]="host?.accommodationRatingNotificationEnabled">
+                        <input type="checkbox" [checked]="host?.accommodationRatingNotificationEnabled" (click)="accRatingEnabled()">
                         <span class="slider"></span>
                         <span class="labels" data-on="ON" data-off="OFF"></span>
                     </label>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="toggle-box">
                     <label class="toggle">
-                        <input type="checkbox" [checked]="guest?.notificationEnable">
+                        <input type="checkbox" [checked]="guest?.notificationEnable" (click)="reservationEnabled()">
                         <span class="slider"></span>
                         <span class="labels" data-on="ON" data-off="OFF"></span>
                     </label>
@@ -90,5 +90,4 @@
             </div>
         </div>
     </div>
-
 </div>
