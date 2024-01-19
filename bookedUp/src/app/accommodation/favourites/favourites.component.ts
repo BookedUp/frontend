@@ -19,7 +19,6 @@ export class FavouritesComponent implements OnInit {
 
   accommodations: Observable<Accommodation[]> = new Observable<Accommodation[]>();
   selectedClass: string = 'active-accommodations';
-  filter: string = 'active';
 
   priceTypeGuest: string = 'per guest';
   priceTypeNight: string = 'per night';
@@ -32,7 +31,6 @@ export class FavouritesComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.filter = params['filter'] || 'active';
       this.loadAccommodations();
     });
     //this.accommodations = this.accommodationService.getAllActiveAccommodationsByHostId(this.authService.getUserID());
@@ -40,17 +38,14 @@ export class FavouritesComponent implements OnInit {
   }
 
   private loadAccommodations(): void {
-    if (this.filter === 'active') {
-      this.guestService.getGuestById(this.authService.getUserID()).subscribe((guest: Guest) => {
-        if (guest) {
-          // Assume that 'favourites' is an array property in the Guest model
-          const guestFavourites = guest.favourites || [];
-          this.accommodations = of(guestFavourites);
-          this.acc = guestFavourites;
-          this.loadPhotos();
-        }
-      });
-    }
+    this.guestService.getGuestById(this.authService.getUserID()).subscribe((guest: Guest) => {
+      if (guest) {
+        const guestFavourites = guest.favourites || [];
+        this.accommodations = of(guestFavourites);
+        this.acc = guestFavourites;
+        this.loadPhotos();
+      }
+    });
   }
 
   changeStyle(className: string): void {
