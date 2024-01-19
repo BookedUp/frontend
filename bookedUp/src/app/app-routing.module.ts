@@ -25,6 +25,7 @@ import { CheckInboxComponent } from './layout/check-inbox/check-inbox.component'
 import { ForgotPasswordComponent } from './layout/forgot-password/forgot-password.component';
 
 import { AccommodationReviewsComponent } from './review/accommodation-reviews/accommodation-reviews.component';
+import { AccommodationHostReviewComponent } from './review/accommodation-host-review/accommodation-host-review.component';
 import { AddReviewComponent } from './review/add-review/add-review.component';
 import { GuestReviewsComponent } from './review/guest-reviews/guest-reviews.component';
 import { HostReviewsComponent } from './review/host-reviews/host-reviews.component';
@@ -60,6 +61,7 @@ const routes: Routes = [
   { path: 'block-users', component: BlockUsersComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] } },
 
   { path: 'accommodation-reviews/:id', component: AccommodationReviewsComponent},
+  { path: 'accommodation-host-reviews/:id', component: AccommodationHostReviewComponent},
   { path: 'add-review/:id', component: AddReviewComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] } },
   { path: 'guest-reviews', component: GuestReviewsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] } },
   { path: 'host-reviews', component: HostReviewsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] } },
