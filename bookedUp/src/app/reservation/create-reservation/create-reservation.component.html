@@ -119,12 +119,12 @@
                   
                 <div class="reviews-frame" >
                   <div class="stars-container">
-                    <span class="star" *ngFor="let star of generateStars(roundHalf(4))">
-                      {{ star }}
+                    <span class="star" *ngFor="let star of generateStars(roundHalf((acc?.averageRating ?? 0)))">
+                        {{ star }}
                     </span>
                   </div>
                 </div>
-                
+
                 <div  class="normal-text" style="color: var(--color-gray-100); margin-top: 20%;" >Check in: {{formattedStartDate}}</div>
                 <div  class="normal-text" style="color: var(--color-gray-100);">Check out: {{formattedEndDate}}</div>
               </div>

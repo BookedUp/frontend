@@ -89,23 +89,19 @@ export class ReservationRequestsComponent implements OnInit {
   }
 
   generateStars(rating: number): string[] {
-
     const stars: string[] = [];
-    if(rating!=undefined){
-      for (let i = 1; i <= 5; i++) {
-        if (i <= rating) {
-          stars.push('★');
-        } else if (i - 0.5 === rating) {
-          stars.push('✯');
-        } else {
-          stars.push('☆');
-        }
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push('★');
+      } else if (i - 0.5 === rating) {
+        stars.push('✯');
+      } else {
+        stars.push('☆');
       }
-      return stars;
     }
     return stars;
-
   }
+
 
 
   acceptReservation(id: number | undefined): void {
@@ -267,7 +263,7 @@ export class ReservationRequestsComponent implements OnInit {
     return photo ? photo.url : '';
   }
 
-  roundHalf(value: number | undefined): number | undefined {
+  roundHalf(value: number | undefined): number {
     if (value) {
       return Math.round(value * 2) / 2;
     }

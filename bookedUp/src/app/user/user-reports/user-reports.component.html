@@ -53,7 +53,7 @@
               </div>
 
               <div class="right-buttons">
-                <div class="accept-button" id="accept-button">
+                <div class="accept-button" id="accept-button"  *ngIf="user.blocked==false">
                     <b class="button-text">Active</b>
                 </div>
 <!--                <div class="accept-button" id="accept-button" (click)="approveAccommodation(accommodation?.id ?? 0)">-->

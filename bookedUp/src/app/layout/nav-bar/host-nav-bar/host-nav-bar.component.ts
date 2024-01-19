@@ -43,7 +43,8 @@ export class HostNavBarComponent implements OnInit{
 
     this.authService.userState.subscribe((result) => {
       this.role = result;
-      this.loadPhotos();
+      // this.loadPhotos();
+
     })
 
     this.userService.getUser(this.authService.getUserID()).subscribe(
@@ -56,7 +57,7 @@ export class HostNavBarComponent implements OnInit{
       }
     );
   }
-  
+
   onNotificationIconClick(): void {
     this.isNotificationVisible = !this.isNotificationVisible;
   }
@@ -76,7 +77,7 @@ export class HostNavBarComponent implements OnInit{
        this.isPopupVisible = false;
     }
   }
-  
+
   navigateTo(route: string): void {
     this.isPopupVisible = false; // Close the popup when navigating
     this.router.navigate([route]);

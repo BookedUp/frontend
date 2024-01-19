@@ -111,71 +111,72 @@
         </div>
       </div>
 
-      <div id="createdNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'HOST'">
-        <div class="left-box-email">
-          <b class="title-text">New Reservation Notifications</b>
-        </div>
-        <div class="right-box-email">
-          <label class="toggle">
-            <input type="checkbox">
-            <span class="slider"></span>
-            <span class="labels" data-on="ON" data-off="OFF"></span>
-          </label>
-        </div>
-      </div>
+<!--      &lt;!&ndash; manage-profile.component.html &ndash;&gt;-->
 
-      <div id="cancelledNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'HOST'">
-        <div class="left-box-email">
-          <b class="title-text">Cancelled Reservation Notifications</b>
-        </div>
-        <div class="right-box-email">
-          <label class="toggle">
-            <input type="checkbox">
-            <span class="slider"></span>
-            <span class="labels" data-on="ON" data-off="OFF"></span>
-          </label>
-        </div>
-      </div>
+<!--      <div id="createdNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'HOST'">-->
+<!--        <div class="left-box-email">-->
+<!--          <b class="title-text">New Reservation Notifications</b>-->
+<!--        </div>-->
+<!--        <div class="right-box-email">-->
+<!--          <label class="toggle">-->
+<!--            <input type="checkbox" formControlName="reservationCreatedNotificationEnabled">-->
+<!--            <span class="slider"></span>-->
+<!--            <span class="labels" data-on="ON" data-off="OFF"></span>-->
+<!--          </label>-->
+<!--        </div>-->
+<!--      </div>-->
 
-      <div id="hostratingNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'HOST'">
-        <div class="left-box-email">
-         <b class="title-text">Host Rating Notifications</b>
-        </div>
-        <div class="right-box-email">
-          <label class="toggle">
-            <input type="checkbox">
-            <span class="slider"></span>
-            <span class="labels" data-on="ON" data-off="OFF"></span>
-          </label>
-        </div>
-      </div>
+<!--      <div id="cancelledNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'HOST'">-->
+<!--        <div class="left-box-email">-->
+<!--          <b class="title-text">Cancelled Reservation Notifications</b>-->
+<!--        </div>-->
+<!--        <div class="right-box-email">-->
+<!--          <label class="toggle">-->
+<!--            <input type="checkbox" formControlName="cancellationNotificationEnabled">-->
+<!--            <span class="slider"></span>-->
+<!--            <span class="labels" data-on="ON" data-off="OFF"></span>-->
+<!--          </label>-->
+<!--        </div>-->
+<!--      </div>-->
 
-      <div id="accRatingNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'HOST'">
-        <div class="left-box-email">
-          <b class="title-text">Accommodation Rating Notifications</b>
-        </div>
-        <div class="right-box-email">
-          <label class="toggle">
-            <input type="checkbox">
-            <span class="slider"></span>
-            <span class="labels" data-on="ON" data-off="OFF"></span>
-          </label>
-        </div>
-      </div>
+<!--      <div id="hostratingNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'HOST'">-->
+<!--        <div class="left-box-email">-->
+<!--          <b class="title-text">Host Rating Notifications</b>-->
+<!--        </div>-->
+<!--        <div class="right-box-email">-->
+<!--          <label class="toggle">-->
+<!--            <input type="checkbox" formControlName="hostRatingNotificationEnabled">-->
+<!--            <span class="slider"></span>-->
+<!--            <span class="labels" data-on="ON" data-off="OFF"></span>-->
+<!--          </label>-->
+<!--        </div>-->
+<!--      </div>-->
 
-      <div id="emailNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'GUEST'">
-        <div class="left-box-email">
-          <b class="title-text">Email Notifications</b>
-        </div>
-        <div class="right-box-email">
-          <label class="toggle">
-            <input type="checkbox">
-            <span class="slider"></span>
-            <span class="labels" data-on="ON" data-off="OFF"></span>
-          </label>
-        </div>
-      </div>
+<!--      <div id="accRatingNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'HOST'">-->
+<!--        <div class="left-box-email">-->
+<!--          <b class="title-text">Accommodation Rating Notifications</b>-->
+<!--        </div>-->
+<!--        <div class="right-box-email">-->
+<!--          <label class="toggle">-->
+<!--            <input type="checkbox" formControlName="accommodationRatingNotificationEnabled">-->
+<!--            <span class="slider"></span>-->
+<!--            <span class="labels" data-on="ON" data-off="OFF"></span>-->
+<!--          </label>-->
+<!--        </div>-->
+<!--      </div>-->
 
+<!--      <div id="emailNotification" class="in-line-box" style="margin-top: 5%;" *ngIf="loggedUser && loggedUser.role === 'GUEST'">-->
+<!--        <div class="left-box-email">-->
+<!--          <b class="title-text">Email Notifications</b>-->
+<!--        </div>-->
+<!--        <div class="right-box-email">-->
+<!--          <label class="toggle">-->
+<!--            <input type="checkbox" formControlName="notificationEnable">-->
+<!--            <span class="slider"></span>-->
+<!--            <span class="labels" data-on="ON" data-off="OFF"></span>-->
+<!--          </label>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <div class="in-line-box">
         <div class="left-box"></div>
@@ -202,7 +203,7 @@
         <img
           class="profile-image"
           alt=""
-          [src]="displayedImageUrl || loggedUser.profilePicture?.url"
+          [src]="displayedImageUrl"
         />
 
         <input type="file" #fileInput accept="image/*" class="input-image" style="display: none;">

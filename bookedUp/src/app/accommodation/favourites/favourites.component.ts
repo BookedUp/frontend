@@ -46,28 +46,9 @@ export class FavouritesComponent implements OnInit {
           // Assume that 'favourites' is an array property in the Guest model
           const guestFavourites = guest.favourites || [];
           this.accommodations = of(guestFavourites);
+          this.acc = guestFavourites;
           this.loadPhotos();
         }
-      });
-    } else if (this.filter === 'requests') {
-      forkJoin([
-        this.guestService.getGuestById(this.authService.getUserID()),
-        this.accommodationService.getAllActiveAccommodationsByHostId(this.authService.getUserID())
-      ]).subscribe(([guest, accommodations]) => {
-        if (guest) {
-          this.acc = guest.favourites || [];
-        }
-        if (accommodations) {
-
-          this.acc = this.acc.concat(accommodations);
-          this.loadPhotos();
-        }
-      });
-    } else {
-      this.accommodations = this.accommodationService.getAllRejectedByHostId(this.authService.getUserID());
-      this.accommodationService.getAllRejectedByHostId(this.authService.getUserID()).subscribe((results) => {
-        this.acc = results;
-        this.loadPhotos();
       });
     }
   }
@@ -75,11 +56,7 @@ export class FavouritesComponent implements OnInit {
   changeStyle(className: string): void {
     this.selectedClass = className;
     if (className === 'active-accommodations') {
-      this.router.navigate(['/my-accommodations'], { queryParams: { filter: 'active' } });
-    } else if (className === 'requests-accommodations') {
-      this.router.navigate(['/my-accommodations'], { queryParams: { filter: 'requests' } });
-    } else {
-      this.router.navigate(['/my-accommodations'], { queryParams: { filter: 'rejected' } });
+      this.router.navigate(['/favourites'], { queryParams: { filter: 'active' } });
     }
   }
 

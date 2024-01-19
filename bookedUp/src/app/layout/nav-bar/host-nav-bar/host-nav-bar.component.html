@@ -27,7 +27,7 @@
          <img
             class="icon"
             alt=""
-            [src]="displayedImageUrl || loggedUser.profilePicture?.url"
+            [src]="displayedImageUrl"
             id="profile-picture-host"
             (click)="onProfilePictureClick()"
          />
@@ -40,12 +40,12 @@
            <img class="nav-icon" alt="" src="../../../assets/public/usersquare-2.svg" />
            <div class="nav-text">Manage account</div>
         </div>
-     
+
         <div class="nav-box" (click)="navigateTo('/my-accommodations')">
            <img class="nav-icon" alt="" src="../../../assets/public/frame.svg" />
            <div class="nav-text">My accommodations</div>
         </div>
-     
+
         <div class="nav-box" (click)="navigateTo('/reservation-requests')">
            <img class="nav-icon" alt="" src="../../../assets/public/hotel-2.svg" />
            <div class="nav-text">Reservations</div>
@@ -55,7 +55,7 @@
             <img class="nav-icon" alt="" src="../../../assets/public/frame1.svg" />
             <div class="nav-text">Users</div>
          </div>
-     
+
         <div class="nav-box" (click)="navigateTo('/host-reviews')">
            <img class="nav-icon" alt="" src="../../../assets/public/frame2.svg" />
            <div class="nav-text">Comments</div>
@@ -65,7 +65,7 @@
            <img class="nav-icon" alt="" src="../../../assets/public/reportsolid24-1-1@2x.png" />
            <div class="nav-text">Analytics</div>
         </div>
-     
+
         <div class="nav-box" id="signOut" *ngIf="role != null" (click)="logOut()">
            <img class="nav-icon" alt="" src="../../../assets/public/logout-1.svg" />
            <div class="nav-text">Sign out</div>
@@ -76,5 +76,5 @@
    <div class="popup-overlay" *ngIf="isNotificationVisible" (click)="onNotificationPopupClick($event)">
       <app-notifications class="notification-dropdown"></app-notifications>
    </div>
-   
+
 </header>
