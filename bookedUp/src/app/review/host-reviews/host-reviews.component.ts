@@ -17,7 +17,7 @@ export class HostReviewsComponent implements OnInit {
   reviews: Observable<Review[]> = new Observable();
   selectedClass: string = 'all-accommodations';
   filter: string = 'all';
-  photoDict: { accId: number, url: string }[] = [];
+  photoDict: { reviewId: number, url: string }[] = [];
   photoDictUser: { accId: number, url: string }[] = [];
 
   review: Review[] = [];
@@ -190,14 +190,13 @@ export class HostReviewsComponent implements OnInit {
   }
 
   loadPhotos() {
-    this.review.forEach((acc) => {
-      // Provera postojanja acc i njegovog accommodation svojstva
-      if (acc && acc.accommodation && acc.accommodation.photos && acc.accommodation.photos.length > 0) {
-        this.photoService.loadPhoto(acc.accommodation.photos[0]).subscribe(
+    this.review.forEach((review) => {
+      if (review && review.guest && review.guest.profilePicture) {
+        this.photoService.loadPhoto(review.guest.profilePicture).subscribe(
           (data) => {
             this.createImageFromBlob(data).then((url: string) => {
-              if (acc.id) {
-                this.photoDict.push({ accId: acc.id, url: url });
+              if (review.id) {
+                this.photoDict.push({ reviewId: review.id, url: url });
               }
             }).catch(error => {
               console.error("Greška prilikom konverzije slike ${imageName}:", error);
@@ -225,8 +224,8 @@ export class HostReviewsComponent implements OnInit {
     });
   }
 
-  getPhotoUrl(accId: number | undefined): string | undefined {
-    const photo = this.photoDict.find((item) => item.accId === accId);
+  getPhotoUrl(reviewId: number | undefined): string | undefined {
+    const photo = this.photoDict.find((item) => item.reviewId === reviewId);
     return photo ? photo.url : '';
   }
 
