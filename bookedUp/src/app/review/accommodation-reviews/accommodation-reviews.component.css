@@ -78,7 +78,8 @@
   color: var(--gray-1);
 }
 .bar-text,
-.bar-text-review {
+.bar-text-review,
+.bar-text-host {
   cursor: pointer;
   position: absolute;
   left: 122px;
@@ -86,6 +87,9 @@
 }
 .bar-text-review{
   left: 210px;
+}
+.bar-text-host{
+  left: 325px;
 }
 .main-data-box{
   width: 86%;
@@ -106,11 +110,13 @@
   font-family: var(--font-adamina);
   color: var(--color-gray-300);
 }
+.title{
+  margin-bottom: 1%;
+}
 .review-text{
   font-size: var(--font-size-9xl) !important;
 }
 .reviews-list{
-  margin-top: 2%;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -130,21 +136,28 @@
   flex-direction: row;
   width: 32%;
   height: 90%;
-  margin-top: 5%;
+  margin-bottom: 5%;
 }
 .left-side{
-  margin-top: 10%;
+  margin-top: 5%;
   margin-bottom: 5%;
   margin-left: 5%;
   width: 20%;
 }
+.normal-text {
+  font-size: var(--font-size-mini);
+  word-wrap: break-word;
+  line-height: 1.3;
+}
 .image-profile{
   display: flex;
-  height: 60%;
-  width: auto;
-  justify-content: center;
+  height: auto;
+  margin-left: 25%;
+  width: 50%;
+  justify-content: top;
   align-items: center;
   align-content: center;
+  border-radius: 50%;
 }
 .right-side{
   position: relative;
@@ -177,7 +190,7 @@
 }
 .time-text{
   letter-spacing: 0.2px;
-  margin-bottom: 7%;
+  margin-top: 1%;
   line-height: 19px;
   font-size: var(--font-size-sm);
   color: var(--color-gray-600);
@@ -194,7 +207,17 @@
 .reviews-frame {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 2%;
+}
+.no-text{
+  letter-spacing: 0.01em;
+  color: var(--color-gray-100);
+  font-size: var(--font-size-9xl);
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  display: flex;
 }
 .stars-container,
 .reviews-average {

@@ -2,7 +2,7 @@ import { Component, OnInit  } from '@angular/core';
 import { AccommodationService } from 'src/app/accommodation/accommodation.service';
 import { Router, ActivatedRoute} from '@angular/router';
 import { Accommodation } from 'src/app/accommodation/model/accommodation.model';
-import {Observable, map, last} from 'rxjs';
+import {Observable, map, last, forkJoin, of, merge} from 'rxjs';
 import { Photo } from 'src/app/shared/model/photo.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { UserService } from 'src/app/user/user.service';
@@ -31,8 +31,13 @@ export class AccommodationReviewsComponent implements OnInit {
   foundAccommodation!: Accommodation;
   acc!:Accommodation;
 
-  photoDictUsers: { hostId: number, url:string}[] = [];
+  photoDictUser: { reviewId: number, url: string }[] = [];
+  photoDict: { accId: number, url: string }[] = [];
+
   reviews: Observable<Review[]> = new Observable<Review[]>;
+  accResult: Review[] = [];
+  hostResult: Review[] = [];
+  totalResults: Review[] = [];
   review: Review[] = [];
 
 
@@ -69,13 +74,21 @@ export class AccommodationReviewsComponent implements OnInit {
       this.loadReviews();
     });
 
-
     this.accommodation = this.accommodationService.getAccommodationById(this.accommodationId);
 
     this.getUrls().subscribe((urls) => {
       this.orgPictureUrls = urls;
     });
 
+  }
+
+  private loadReviews() {
+    this.reviews = this.reviewService.getAccommodationReviews(this.accommodationId);
+
+    this.reviewService.getAccommodationReviews(this.accommodationId).subscribe((results) => {
+      this.review = results;
+      this.loadPhotosUser();  
+    }); 
   }
 
   findAccommodationById(accommodations: Accommodation[], targetId: number): Accommodation | undefined {
@@ -105,6 +118,28 @@ export class AccommodationReviewsComponent implements OnInit {
     }
   }
 
+  loadPhotosUser() {
+    this.review.forEach((review) => {
+      if (review && review.guest && review.guest.profilePicture) {
+        this.photoService.loadPhoto(review.guest.profilePicture).subscribe(
+          (data) => {
+            this.createImageFromBlob(data).then((url: string) => {
+              if (review.id) {
+                this.photoDictUser.push({ reviewId: review.id, url: url });
+              }
+            }).catch(error => {
+              console.error("Greška prilikom konverzije slike ${imageName}:", error);
+            });
+          },
+          (error) => {
+            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
+          }
+        );
+      }
+
+    });
+  }
+
   loadPhotos() {
     this.acc.photos.forEach((imageName) => {
       this.photoService.loadPhoto(imageName).subscribe(
@@ -121,28 +156,6 @@ export class AccommodationReviewsComponent implements OnInit {
       );
     });
   }
-    loadPhotosUsers() {
-        this.review.forEach((acc) => {
-            // Provera postojanja host objekta i profilePicture svojstva
-            if (acc && acc.host && acc.host.profilePicture) {
-                this.photoService.loadPhoto(acc.host.profilePicture).subscribe(
-                    (data) => {
-                        this.createImageFromBlob(data).then((url: string) => {
-                            if (acc.id) {
-                                this.photoDictUsers.push({ hostId: acc.id, url: url });
-                            }
-                        }).catch(error => {
-                            console.error("Greška prilikom konverzije slike ${imageName}:", error);
-                        });
-                    },
-                    (error) => {
-                        console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
-                    }
-                );
-            }
-        });
-    }
-
 
   createImageFromBlob(imageBlob: Blob): Promise<string> {
     const reader = new FileReader();
@@ -156,23 +169,17 @@ export class AccommodationReviewsComponent implements OnInit {
     });
   }
 
-    getPhotoUrlUser(hostId: number | undefined): string | undefined {
-        const photo = this.photoDictUsers.find((item) => item.hostId === hostId);
-        return photo ? photo.url : '';
-    }
+  getPhotoUrl(reviewId: number | undefined): string | undefined {
+    const photo = this.photoDict.find((item) => item.accId === reviewId);
+    return photo ? photo.url : '';
+  }
 
-  private loadReviews() {
-    this.reviews = this.reviewService.getAccommodationReviews(this.accommodationId);
-    this.reviewService.getAccommodationReviews(this.accommodationId).subscribe((results) => {
-      this.review = results;
-       this.loadPhotosUsers();
-      console.log(results);
-    });
+  getPhotoUrlUser(accId: number | undefined): string | undefined {
+    const photo = this.photoDictUser.find((item) => item.reviewId === accId);
+    return photo ? photo.url : '';
   }
 
   calculateTimeAgo(date: Date | string | undefined): string {
-    console.log(date);
-
     try {
       if (!date) {
         throw new Error('Date is undefined or null');
@@ -205,7 +212,6 @@ export class AccommodationReviewsComponent implements OnInit {
     }
   }
 
-
   get reviewsChunks(): any[] {
     const chunkSize = 3;
     const chunks = [];
@@ -215,12 +221,14 @@ export class AccommodationReviewsComponent implements OnInit {
     }
     return chunks;
   }
+
   roundHalf(value: number | undefined): number | undefined {
     if (value) {
       return Math.round(value * 2) / 2;
     }
     return 0;
   }
+
   generateStars(rating: number | undefined): string[] {
     const stars: string[] = [];
     if(rating != undefined){
@@ -238,7 +246,5 @@ export class AccommodationReviewsComponent implements OnInit {
     return stars;
   }
 
-
   protected readonly last = last;
-
 }

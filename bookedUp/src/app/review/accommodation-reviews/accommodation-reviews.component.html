@@ -22,48 +22,54 @@
       <div id="nav-bar" class="nav-bar">
         <div class="bar-text" (click)="navigateTo('/accommodation-details')">Overview</div>
         <div class="bar-text-review" style="color: var(--blue-1); font-weight: bold;">Guest Review</div>
+        <div class="bar-text-host" (click)="navigateTo('/accommodation-host-reviews')">Host Review</div>
       </div>
 
       <div id="main-data" class="main-data-box">
-        <div class="title">{{accommodation.name}}</div>
+        <b class="no-text" *ngIf="(reviews | async)?.length == 0">NO COMMENTS</b>
+        <div *ngIf="(reviews | async)?.length != 0">
+          <div class="title">{{accommodation.name}}</div>
         <div class="reviews-frame">
           <div class="stars-container"  style="color: #9e8d5f">
-                    <span class="star" *ngFor="let star of generateStars(roundHalf((accommodation?.averageRating ?? 0)))">
-                        {{ star }}
-                    </span>
+            <span class="star" *ngFor="let star of generateStars(roundHalf((accommodation?.averageRating ?? 0)))">
+                {{ star }}
+            </span>
           </div>
-          <span class="review-text" style="margin-left: 5px">
-            {{accommodation.averageRating}}
-        </span>
-          </div>
-
-
+        </div>
         <div class="reviews-list">
           <div class="row" *ngFor="let chunk of reviewsChunks">
             <div class="review-box" *ngFor="let review of chunk">
               <div class="left-side">
-                <img alt="" src="../../../assets/public/logogoogle4@2x.png" class="image-profile">
+                <img alt="" 
+                [src]="getPhotoUrlUser(review?.id)" 
+                class="image-profile">
 
               </div>
               <div class="right-side">
                 <div class="top-line">
                   <div class="guest-text">{{ review.guest?.firstName }} {{ review.guest?.lastName }}</div>
-                  <div class="time-text">{{ calculateTimeAgo(review.date) }}</div>
+                  <div class="time-text" *ngIf="review.type === 'ACCOMMODATION'">Accommodation Review</div>
+                  <div class="time-text" *ngIf="review.type === 'HOST'">Host Review</div>
+                  <div class="time-text" style="margin-bottom: 7%;">{{ calculateTimeAgo(review.date) }}</div>
                 </div>
                 <div class="bottom-line">
-                  <div class="stars" style="color: #FBBC04">
-                    <span *ngFor="let star of generateStars(roundHalf(review.review ? review.review  : 0))">
-                        {{ star }}
+                  <div class="reviews-frame">
+                    <div class="stars-container"  style="color: #9e8d5f">
+                              <span class="star" *ngFor="let star of generateStars(roundHalf((review?.review ?? 0)))">
+                                  {{ star }}
+                              </span>
+                    </div>
+                    <span class="normal-text" style="margin-left: 5px">
+                      {{review.review}}
                     </span>
-                  </div> <!-- Dodajte odgovarajući kod za prikaz zvezda na osnovu ocene recenzije -->
+                  </div>
                   <div class="comment-text">{{ review.comment }}</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-
+        </div>
       </div>
         <app-shorter-footer></app-shorter-footer>
 
