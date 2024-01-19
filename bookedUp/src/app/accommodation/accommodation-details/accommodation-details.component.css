@@ -78,7 +78,8 @@
   color: var(--gray-1);
 }
 .bar-text,
-.bar-text-review {
+.bar-text-review,
+.bar-text-host {
   cursor: pointer;
   position: absolute;
   left: 122px;
@@ -86,6 +87,9 @@
 }
 .bar-text-review{
   left: 210px;
+}
+.bar-text-host{
+  left: 325px;
 }
 .clicked {
   color: var(--blue-1);
