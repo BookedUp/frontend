@@ -40,7 +40,16 @@ export class FavouritesComponent implements OnInit {
   private loadAccommodations(): void {
     this.guestService.getGuestById(this.authService.getUserID()).subscribe((guest: Guest) => {
       if (guest) {
-        const guestFavourites = guest.favourites || [];
+        const guestFavourites: Accommodation[] = [];
+
+        if (guest.favourites && guest.favourites.length > 0) {
+          for (const accommodation of guest.favourites) {
+              if (accommodation.status == AccommodationStatus.Active) {
+                  guestFavourites.push(accommodation);
+              }
+          }
+        }
+
         this.accommodations = of(guestFavourites);
         this.acc = guestFavourites;
         this.loadPhotos();
