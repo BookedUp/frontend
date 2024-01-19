@@ -96,16 +96,17 @@ export class ReservationDetailsComponent implements OnInit{
   }
 
   canCancel(): void{
-    console.log("This is role", this.authService.getRole());
-    if(this.authService.getRole() != "ROLE_HOST"){
-      if( this.reser.status == ReservationStatus.Accept){
-        const reservationStartDate = this.reser.startDate;
-  
+    if(this.authService.getRole() !== "ROLE_HOST"){
+      if( this.reser.status === ReservationStatus.Accept){
+        const reservationStartDate = new Date(this.reser.startDate);
+
         const currentDate = new Date();
-        const timeDifference = currentDate.getTime() - reservationStartDate.getTime();
+        const timeDifference =  reservationStartDate.getTime() - currentDate.getTime();
         const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
         
-        if(this.reser.accommodation.cancellationDeadline > daysDifference){
+        console.log("Ovo je days diff ", daysDifference);
+        
+        if(this.reser.accommodation.cancellationDeadline >= daysDifference){
           this.cancellation = false;
         }
       }else if( this.reser.status == ReservationStatus.Reject || this.reser.status == ReservationStatus.Cancelled || this.reser.status == ReservationStatus.Completed){
