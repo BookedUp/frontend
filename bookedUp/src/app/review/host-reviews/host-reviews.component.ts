@@ -45,24 +45,41 @@ export class HostReviewsComponent implements OnInit {
 
   private loadUsers(): void {
     if (this.filter === 'all') {
-      this.reviews = this.reviewService.getReviewsByHostId(this.authService.getUserID());
-      this.reviewService.getReviewsByHostId(this.authService.getUserID()).subscribe((results) => {
-        this.review = results;
-        this.loadPhotos();
-      });
+      this.reviews = this.reviewService.getReviewsByHostId(this.authService.getUserID())
+      .pipe(
+        map(reviews => reviews.sort((a, b) => {
+          const timestampA = new Date(a.date || '').getTime();
+          const timestampB = new Date(b.date || '').getTime();
+          return timestampB - timestampA;
+        }))
+      );
     } else if (this.filter === 'accommodations') {
-      this.reviews = this.reviewService.getAccommodationReviewsByHostId(this.authService.getUserID());
-      this.reviewService.getAccommodationReviewsByHostId(this.authService.getUserID()).subscribe((results) => {
-        this.review = results;
-        this.loadPhotos();
-      });
+      this.reviews = this.reviewService.getAccommodationReviewsByHostId(this.authService.getUserID())
+      .pipe(
+        map(reviews => reviews.sort((a, b) => {
+          const timestampA = new Date(a.date || '').getTime();
+          const timestampB = new Date(b.date || '').getTime();
+          return timestampB - timestampA;
+        }))
+      );
     } else {
-      this.reviews = this.reviewService.getHostReviewsByHostId(this.authService.getUserID());
-      this.reviewService.getHostReviewsByHostId(this.authService.getUserID()).subscribe((results) => {
-        this.review = results;
-        this.loadPhotos();
-      });
+      this.reviews = this.reviewService.getHostReviewsByHostId(this.authService.getUserID())
+      .pipe(
+        map(reviews => reviews.sort((a, b) => {
+          const timestampA = new Date(a.date || '').getTime();
+          const timestampB = new Date(b.date || '').getTime();
+          return timestampB - timestampA;
+        }))
+      );
     }
+
+    if(this.reviews != undefined){
+      this.reviews.subscribe(sortedReviews => {
+        sortedReviews.forEach(review => {
+          this.loadPhotos(review.guest?.profilePicture?.url);
+        });
+      });
+    }    
   }
 
   generateStars(rating: number | undefined): string[] {
@@ -130,7 +147,7 @@ export class HostReviewsComponent implements OnInit {
 
 
 
-  loadPhotos() {
+  loadPhotos(url: String | undefined) {
     //ovde treba neka logika da se pronadje guest koji je ostavio review, poenta je da se prikaze profila slika tog gosta, vrv neka funkcija na beku
 
     // this.review.forEach((acc) => {
