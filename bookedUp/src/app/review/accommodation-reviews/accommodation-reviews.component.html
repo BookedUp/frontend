@@ -26,15 +26,24 @@
 
       <div id="main-data" class="main-data-box">
         <div class="title">{{accommodation.name}}</div>
-        <div class="review-text">
-            <b>{{accommodation.averageRating}}</b>
-        </div>
+        <div class="reviews-frame">
+          <div class="stars-container"  style="color: #9e8d5f">
+                    <span class="star" *ngFor="let star of generateStars(roundHalf((accommodation?.averageRating ?? 0)))">
+                        {{ star }}
+                    </span>
+          </div>
+          <span class="review-text" style="margin-left: 5px">
+            {{accommodation.averageRating}}
+        </span>
+          </div>
+
 
         <div class="reviews-list">
           <div class="row" *ngFor="let chunk of reviewsChunks">
             <div class="review-box" *ngFor="let review of chunk">
               <div class="left-side">
                 <img alt="" src="../../../assets/public/logogoogle4@2x.png" class="image-profile">
+
               </div>
               <div class="right-side">
                 <div class="top-line">
@@ -42,7 +51,7 @@
                   <div class="time-text">{{ calculateTimeAgo(review.date) }}</div>
                 </div>
                 <div class="bottom-line">
-                  <div class="stars">
+                  <div class="stars" style="color: #FBBC04">
                     <span *ngFor="let star of generateStars(roundHalf(review.review ? review.review  : 0))">
                         {{ star }}
                     </span>

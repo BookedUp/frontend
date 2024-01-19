@@ -31,6 +31,7 @@ export class AccommodationReviewsComponent implements OnInit {
   foundAccommodation!: Accommodation;
   acc!:Accommodation;
 
+  photoDictUsers: { hostId: number, url:string}[] = [];
   reviews: Observable<Review[]> = new Observable<Review[]>;
   review: Review[] = [];
 
@@ -120,6 +121,27 @@ export class AccommodationReviewsComponent implements OnInit {
       );
     });
   }
+    loadPhotosUsers() {
+        this.review.forEach((acc) => {
+            // Provera postojanja host objekta i profilePicture svojstva
+            if (acc && acc.host && acc.host.profilePicture) {
+                this.photoService.loadPhoto(acc.host.profilePicture).subscribe(
+                    (data) => {
+                        this.createImageFromBlob(data).then((url: string) => {
+                            if (acc.id) {
+                                this.photoDictUsers.push({ hostId: acc.id, url: url });
+                            }
+                        }).catch(error => {
+                            console.error("Greška prilikom konverzije slike ${imageName}:", error);
+                        });
+                    },
+                    (error) => {
+                        console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
+                    }
+                );
+            }
+        });
+    }
 
 
   createImageFromBlob(imageBlob: Blob): Promise<string> {
@@ -134,11 +156,16 @@ export class AccommodationReviewsComponent implements OnInit {
     });
   }
 
+    getPhotoUrlUser(hostId: number | undefined): string | undefined {
+        const photo = this.photoDictUsers.find((item) => item.hostId === hostId);
+        return photo ? photo.url : '';
+    }
+
   private loadReviews() {
     this.reviews = this.reviewService.getAccommodationReviews(this.accommodationId);
     this.reviewService.getAccommodationReviews(this.accommodationId).subscribe((results) => {
       this.review = results;
-      // this.loadPhotos();
+       this.loadPhotosUsers();
       console.log(results);
     });
   }
@@ -211,5 +238,7 @@ export class AccommodationReviewsComponent implements OnInit {
     return stars;
   }
 
+
   protected readonly last = last;
+
 }
