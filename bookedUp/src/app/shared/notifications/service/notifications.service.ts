@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 import { Notification } from '../model/notification.model';
 
 @Injectable({
@@ -8,23 +8,16 @@ import { Notification } from '../model/notification.model';
 })
 export class NotificationsService {
 
-  private baseUrl = 'http://localhost:8080';
-  url: string = this.baseUrl + "/api/socket";
-  restUrl: string = this.baseUrl + "/sendMessageRest";
+  private apiUrl = 'http://localhost:8080/api/notifications';
+  
+  private notifySource = new Subject<void>();
+  notify$ = this.notifySource.asObservable();
+
+  notifyNavBar() {
+    this.notifySource.next();
+  }
 
   constructor(private http: HttpClient) { }
-
-  post(data: Notification) {
-    return this.http.post<Notification>(this.url, data)
-      .pipe(map((data: Notification) => { return data; }));
-  }
-
-  postRest(data: Notification) {
-    return this.http.post<Notification>(this.restUrl, data)
-      .pipe(map((data: Notification) => { return data; }));
-  }
-
-  private apiUrl = 'http://localhost:8080/api/notifications';
 
   getNotifications(): Observable<Notification[]> {
     return this.http.get<Notification[]>(this.apiUrl);
@@ -36,6 +29,10 @@ export class NotificationsService {
 
   getNotificationsByUserId(id: number): Observable<Notification[]> {
     return this.http.get<Notification[]>(`${this.apiUrl}/user/${id}`);
+  }
+
+  getEnabledNotificationsByUserId(id: number): Observable<Notification[]> {
+    return this.http.get<Notification[]>(`${this.apiUrl}/user/enabled/${id}`);
   }
 
   createNotification(notification: Notification): Observable<Notification> {

@@ -5,6 +5,7 @@ import {Login} from "../model/login";
 import {AuthResponse} from "../model/auth-response";
 import {Router} from "@angular/router";
 import Swal from 'sweetalert2';
+import { WebSocketService } from 'src/app/shared/notifications/service/web-socket.service';
 
 
 @Component({
@@ -16,11 +17,9 @@ export class LoginComponent {
   isPasswordVisible: boolean = false;
 
   constructor(private authService: AuthService,
-              private router: Router) {
-
+              private router: Router,
+              private webSocketService: WebSocketService) {
   }
-
-  //sta je ovo proveriti
 
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
@@ -48,7 +47,6 @@ export class LoginComponent {
       return;
     }
 
-    // Sada možete nastaviti sa pozivom API-ja za prijavu
     const login: Login = {
       email: emailValue,
       password: passwordValue,
@@ -69,26 +67,6 @@ export class LoginComponent {
       }
     });
   }
-
-
-
-  //   this.authService.login(login).subscribe({
-  //     next: (response: AuthResponse) => {
-  //       localStorage.setItem('user', response.token);
-  //       this.authService.setUser()
-  //       this.router.navigate(['/'])
-  //     },
-  //     error: (error) => {
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: 'Incorrect Login',
-  //         text: 'Incorrect login credentials. Please try again.',
-  //       });
-  //     }
-  //   });
-  // }
-
-
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;

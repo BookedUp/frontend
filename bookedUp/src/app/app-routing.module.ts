@@ -51,7 +51,7 @@ const routes: Routes = [
 
   { path: 'reservation-requests', component: ReservationRequestsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_HOST'] }},
   { path: 'create-reservation/:id', component: CreateReservationComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] }},
-  { path: 'reservation-details/:id', component: ReservationDetailsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] }},
+  { path: 'reservation-details/:id', component: ReservationDetailsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST', 'ROLE_HOST'] }},
   { path: 'my-reservations', component: ReservationsComponent, canActivate: [AuthGuard], data: { role: ['ROLE_GUEST'] }},
 
   { path: 'manage-profile', component: ManageProfileComponent, canActivate: [AuthGuard], data: { role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST'] }},

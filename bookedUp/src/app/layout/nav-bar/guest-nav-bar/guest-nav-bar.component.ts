@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import {User} from "../../../user/model/user.model";
 import { UserService } from 'src/app/user/user.service';
 import {PhotoService} from "../../../shared/photo/photo.service";
+import { WebSocketService } from 'src/app/shared/notifications/service/web-socket.service';
+import { NotificationsService } from 'src/app/shared/notifications/service/notifications.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-guest-nav-bar',
   templateUrl: './guest-nav-bar.component.html',
@@ -12,15 +15,31 @@ import {PhotoService} from "../../../shared/photo/photo.service";
 export class GuestNavBarComponent implements OnInit{
   isPopupVisible = false;
   isNotificationVisible = false;
+  
+  hasWebSocketNotification: boolean = false;
+  subscription: Subscription | undefined;
 
   role: string = '' ;
   loggedUser!: User;
   displayedImageUrl: string | null = null;
 
 
-  constructor(private router: Router, private authService: AuthService,private userService: UserService, private photoService:PhotoService,) {}
+  constructor(
+    private router: Router, 
+    private authService: AuthService,
+    private userService: UserService, 
+    private photoService:PhotoService,
+    private  webSocketService: WebSocketService,
+    private notificationService: NotificationsService ) {}
 
   ngOnInit(): void {
+    this.subscription = this.notificationService.notify$.subscribe(() => {
+      this.hasWebSocketNotification = this.webSocketService.hasNotificationOnSocket(this.authService.getUserID());
+      console.log('Nav-bar updated!');
+    });
+
+    this.hasWebSocketNotification = this.webSocketService.hasNotificationOnSocket(this.authService.getUserID());
+
     this.authService.userState.subscribe((result) => {
       this.role = result;
     })

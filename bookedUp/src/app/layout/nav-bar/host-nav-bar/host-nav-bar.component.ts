@@ -4,6 +4,9 @@ import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
 import {User} from "../../../user/model/user.model";
 import {PhotoService} from "../../../shared/photo/photo.service";
+import { WebSocketService } from 'src/app/shared/notifications/service/web-socket.service';
+import { Subscription } from 'rxjs';
+import { NotificationsService } from 'src/app/shared/notifications/service/notifications.service';
 
 @Component({
   selector: 'app-host-nav-bar',
@@ -14,13 +17,30 @@ export class HostNavBarComponent implements OnInit{
   isPopupVisible = false;
   isNotificationVisible = false;
 
+  hasWebSocketNotification: boolean = false;
+  subscription: Subscription | undefined;
+
   role: string = '';
   loggedUser!: User;
   displayedImageUrl: string | null = null;
 
-  constructor(private router: Router, private authService: AuthService, private userService: UserService, private photoService:PhotoService) {}
+  constructor(
+    private router: Router, 
+    private authService: AuthService,
+    private userService: UserService, 
+    private photoService:PhotoService,
+    private  webSocketService: WebSocketService, 
+    private notificationService: NotificationsService
+    ) {}
 
   ngOnInit(): void {
+    this.subscription = this.notificationService.notify$.subscribe(() => {
+      this.hasWebSocketNotification = this.webSocketService.hasNotificationOnSocket(this.authService.getUserID());
+      console.log('Nav-bar updated!');
+    });
+    
+    this.hasWebSocketNotification = this.webSocketService.hasNotificationOnSocket(this.authService.getUserID());
+
     this.authService.userState.subscribe((result) => {
       this.role = result;
       // this.loadPhotos();
@@ -28,13 +48,13 @@ export class HostNavBarComponent implements OnInit{
     })
 
     this.userService.getUser(this.authService.getUserID()).subscribe(
-        (user: User) => {
-          this.loggedUser = user;
-          this.loadPhotos();
-        },
-        (error) => {
-          console.error('Error loading user:', error);
-        }
+      (user: User) => {
+        this.loggedUser = user;
+        this.loadPhotos();
+      },
+      (error) => {
+        console.error('Error loading user:', error);
+      }
     );
   }
 
@@ -47,8 +67,7 @@ export class HostNavBarComponent implements OnInit{
        this.isNotificationVisible = false;
     }
   }
-
-
+  
   onProfilePictureClick(): void {
     this.isPopupVisible = !this.isPopupVisible;
   }
@@ -65,6 +84,7 @@ export class HostNavBarComponent implements OnInit{
   }
 
   logOut(): void {
+    //this.webSocketService.disconnectFromWebSocket();
     this.authService.logout().subscribe({
       next: (_) => {
         localStorage.removeItem('user');

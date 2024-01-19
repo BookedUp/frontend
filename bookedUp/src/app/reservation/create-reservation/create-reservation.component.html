@@ -11,7 +11,7 @@
           <div id="inputs" class="description">
             <div class="container-title">
               <img class="icon" alt="" src="../../../assets/public/securityuser-1.svg">
-              <b class="smaller-title" style="margin-right: 2%;">{{acc?.name}}</b>
+              <b class="smaller-title" style="margin-right: 2%;">{{acc.name}}</b>
               <b class="normal-text">{{numberGuests}} adults</b>
             </div>
             <div class="description-box">
@@ -114,9 +114,9 @@
 
             <div class="hotel-data">
               <div class="text-hotel-box">
-                <b id="normal-text" style="font-size: var(--font-size-lg);">{{acc?.name}}</b>
-                <div id="hotel-address" class="normal-text" style="color: var(--color-gray-100); margin-top: 1%;">{{acc?.address?.streetAndNumber}}, {{acc?.address?.city}} {{acc?.address?.postalCode}}, {{acc?.address?.country}}</div>
-
+                <b id="normal-text" style="font-size: var(--font-size-lg);">{{acc.name}}</b>
+                <div id="hotel-address" class="normal-text" style="color: var(--color-gray-100); margin-top: 1%;">{{acc.address.streetAndNumber}}, {{acc.address.city}} {{acc.address.postalCode}}, {{acc.address.country}}</div>
+                  
                 <div class="reviews-frame" >
                   <div class="stars-container">
                     <span class="star" *ngFor="let star of generateStars(roundHalf((acc?.averageRating ?? 0)))">

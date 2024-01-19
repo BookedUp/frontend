@@ -25,7 +25,12 @@ export class ReservationsComponent implements OnInit {
 
   searchText: string = '';
 
-    constructor(private reservationService: ReservationService, private router: Router, private route: ActivatedRoute, private authService: AuthService, private photoService: PhotoService) { }
+    constructor(
+      private reservationService: ReservationService, 
+      private router: Router, 
+      private route: ActivatedRoute, 
+      private authService: AuthService, 
+      private photoService: PhotoService) { }
 
   protected readonly ReservationStatus = ReservationStatus;
 
@@ -185,15 +190,11 @@ export class ReservationsComponent implements OnInit {
 
     this.reservationService.cancelReservation(id).subscribe(
         (cancelledReservation) => {
-          // Here, you can set logic for handling successful reservation cancellation
           Swal.fire('Successfully Canceled!', 'Your reservation has been canceled.', 'success').then(() => {
             this.loadReservations();
           });
         },
         (error) => {
-          // Here, you can set logic for handling errors during reservation cancellation
-          console.error('Error cancelling reservation:', error);
-
           Swal.fire('Error!', 'An error occurred while canceling the reservation.', 'error');
         }
     );

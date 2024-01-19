@@ -6,6 +6,10 @@ import Swal from 'sweetalert2';
 import { Review } from '../model/review.model';
 import { ReviewService } from '../review.service';
 import {ReviewReportService} from "../review-report/review-report.service";
+import { Notification } from 'src/app/shared/notifications/model/notification.model';
+import { NotificationsService } from 'src/app/shared/notifications/service/notifications.service';
+import { NotificationType } from 'src/app/shared/notifications/model/enum/notificationType.enum';
+import { WebSocketService } from 'src/app/shared/notifications/service/web-socket.service';
 
 @Component({
   selector: 'app-review-reports',
@@ -21,7 +25,13 @@ export class ReviewReportsComponent implements OnInit {
   review: Review[] = [];
   reportedReasons: string[] = [];
 
-  constructor(private reviewService: ReviewService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private reviewReportService: ReviewReportService) {
+  constructor(
+    private reviewService: ReviewService, 
+    private router: Router, private route: ActivatedRoute, 
+    private photoService: PhotoService, 
+    private reviewReportService: ReviewReportService,
+    private notificationService: NotificationsService,
+    private webSocketService: WebSocketService) {
   }
 
 
@@ -82,52 +92,6 @@ export class ReviewReportsComponent implements OnInit {
     return daysDifference;
   }
 
-  approveAccommodation(id: number): void {
-    // this.userService.approveAccommodation(id)
-    //     .subscribe(
-    //         (approvedReservation) => {
-    //           Swal.fire({
-    //             icon: 'success',
-    //             title: 'Accommodation Approved!',
-    //             text: 'The accommodation has been successfully approved.',
-    //           }).then(() => {
-    //             this.loadAccommodations();
-    //           });
-    //         },
-    //         (error) => {
-    //           // Handle error
-    //           Swal.fire({
-    //             icon: 'error',
-    //             title: 'Error Approving Accommodation',
-    //             text: `An error occurred: ${error.message}`,
-    //           });
-    //         }
-    //     );
-  }
-
-  rejectAccommodation(id: number): void {
-    // this.accommodationService.rejectAccommodation(id)
-    //     .subscribe(
-    //         (rejectedReservation) => {
-    //           Swal.fire({
-    //             icon: 'success',
-    //             title: 'Accommodation Rejected!',
-    //             text: 'The accommodation has been successfully rejected.',
-    //           }).then(() => {
-    //             this.loadAccommodations();
-    //           });
-    //         },
-    //         (error) => {
-    //           Swal.fire({
-    //             icon: 'error',
-    //             title: 'Error Rejecting Accommodation',
-    //             text: `An error occurred: ${error.message}`,
-    //           });
-    //         }
-    //     );
-  }
-
-
   loadPhotos() {
     this.review.forEach((acc) => {
       // Provera postojanja acc i njegovog accommodation svojstva
@@ -187,6 +151,49 @@ export class ReviewReportsComponent implements OnInit {
           confirmButtonText: 'OK'
         });
         this.loadReviews();
+
+        if(approvedReview.accommodation != undefined && approvedReview.guest != undefined){
+          const notification: Notification = {
+            fromUserDTO: approvedReview.guest,
+            toUserDTO: approvedReview.accommodation.host,
+            title: 'New Review for Your Accommodation!',
+            message: 'Heads up, '+ approvedReview.accommodation.host.firstName + '! A new review awaits your attention. Check it out and keep the positive vibes going!',
+            timestamp: new Date(),
+            type: NotificationType.accommodationRated,
+            active: true
+          };
+
+          this.notificationService.createNotification(notification).subscribe(
+            (createdNotification) => {
+              console.log(createdNotification);
+            },
+            (error) => {
+              console.error('Error creating review:', error);
+            }
+          );
+          this.webSocketService.sendMessageUsingSocket(notification);
+
+        }else if(approvedReview.host!= undefined && approvedReview.guest!= undefined){
+          const notification: Notification = {
+            fromUserDTO: approvedReview.guest,
+            toUserDTO: approvedReview.host,
+            title: 'New Review for You!',
+            message: 'Curious about the latest buzz? A new review is in-time to hear what your guests are saying about their experience!',
+            timestamp: new Date(),
+            type: NotificationType.hostRated,
+            active: true
+          };
+
+          this.notificationService.createNotification(notification).subscribe(
+            (createdNotification) => {
+              console.log(createdNotification);
+            },
+            (error) => {
+              console.error('Error creating review:', error);
+            }
+          );
+          //this.webSocketService.sendMessageUsingSocket(notification);
+        }
       },
       (error) => {
         console.error('Error approving review:', error);

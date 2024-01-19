@@ -9,6 +9,10 @@ import Swal from "sweetalert2";
 import {Accommodation} from "../../accommodation/model/accommodation.model";
 import {PhotoService} from "../../shared/photo/photo.service";
 import { DatePipe } from '@angular/common';
+import { Notification } from 'src/app/shared/notifications/model/notification.model';
+import { NotificationType } from 'src/app/shared/notifications/model/enum/notificationType.enum';
+import { NotificationsService } from 'src/app/shared/notifications/service/notifications.service';
+import { WebSocketService } from 'src/app/shared/notifications/service/web-socket.service';
 
 @Component({
   selector: 'app-reservation-requests',
@@ -25,7 +29,13 @@ export class ReservationRequestsComponent implements OnInit {
   res: Reservation[] = [];
   searchText: string = '';
 
-  constructor(private reservationService: ReservationService, private router: Router, private route: ActivatedRoute, private authService: AuthService, private photoService: PhotoService) { }
+  constructor(
+    private reservationService: ReservationService, 
+    private router: Router, private route: ActivatedRoute, 
+    private authService: AuthService, 
+    private photoService: PhotoService,
+    private notificationService: NotificationsService,
+    private webSocketService: WebSocketService) { }
 
   protected readonly ReservationStatus = ReservationStatus;
 
@@ -106,9 +116,28 @@ export class ReservationRequestsComponent implements OnInit {
                 }).then(() => {
                   this.loadReservations();
                 });
+
+                const notification: Notification = {
+                  fromUserDTO: approvedReservation.accommodation.host,
+                  toUserDTO: approvedReservation.guest,
+                  title: 'Reservation Confirmed!',
+                  message: 'Congratulations '+ approvedReservation.guest.firstName + '! Your reservation has been accepted by the host. Get ready for a fantastic stay!',
+                  timestamp: new Date(),
+                  type: NotificationType.reservationRequestResponse,
+                  active: true
+                };
+      
+                this.notificationService.createNotification(notification).subscribe(
+                  (createdNotification) => {
+                    console.log(createdNotification);
+                  },
+                  (error) => {
+                    console.error('Error creating review:', error);
+                  }
+                );
+                this.webSocketService.sendMessageUsingSocket(notification);       
               },
               (error) => {
-                // Handle error
                 Swal.fire({
                   icon: 'error',
                   title: 'Error Approving Reservation',
@@ -133,6 +162,26 @@ export class ReservationRequestsComponent implements OnInit {
                 }).then(() => {
                   this.loadReservations();
                 });
+
+                const notification: Notification = {
+                  fromUserDTO: rejectedReservation.accommodation.host,
+                  toUserDTO: rejectedReservation.guest,
+                  title: 'Reservation Update: Rejected!',
+                  message: 'Hi '+ rejectedReservation.guest.firstName + ', unfortunately, the host has declined your reservation request. Do not worry, there are plenty of other great options available! Let us know if we can help you find another place!',
+                  timestamp: new Date(),
+                  type: NotificationType.reservationRequestResponse,
+                  active: true
+                };
+      
+                this.notificationService.createNotification(notification).subscribe(
+                  (createdNotification) => {
+                    console.log(createdNotification);
+                  },
+                  (error) => {
+                    console.error('Error creating review:', error);
+                  }
+                );
+                this.webSocketService.sendMessageUsingSocket(notification);       
               },
               (error) => {
                 Swal.fire({

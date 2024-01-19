@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { WebSocketService } from './shared/notifications/service/web-socket.service';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'bookedUp';
   isChecked: boolean = false;
+
+  constructor(
+    private webSocketService: WebSocketService) {
+      this.webSocketService.connectToWebSocket();
+    }
+
 }
