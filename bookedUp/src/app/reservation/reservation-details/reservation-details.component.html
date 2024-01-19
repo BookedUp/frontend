@@ -31,6 +31,7 @@
                         </div>
                     </div>
 
+
                     <div id="price" class="address" style="margin-top: 15px;">
                         <div class="info-text">Price: </div>
                         <b class="info-text"> {{ reservation.totalPrice }} $</b>
@@ -54,13 +55,23 @@
                     <div id="status" class="address">
                         <div class="info-text">Status: </div>
                         <b [ngStyle]="{ 'color': getStatusColor(reservation.status) }" class="info-text">{{ reservation.status }}</b>
-                    </div>                  
+                    </div>
+
+<!--                    <div  class="address">-->
+<!--                        <div class="info-text">Guest: </div>-->
+<!--                        <b class="info-text"> {{ reservation.guest.firstName }} {{ reservation.guest.lastName }}</b>-->
+<!--                    </div>-->
+
+<!--                    <div  class="address">-->
+<!--                        <div class="info-text">Host: </div>-->
+<!--                        <b class="info-text"> {{ reservation.accommodation.host.firstName }} {{ reservation.accommodation.host.lastName }}</b>-->
+<!--                    </div>-->
                 </div>
             </div>
 
             <button *ngIf="cancellation" class="button-container" (click)="cancelReservation()">
                 <b>Cancel Reservation</b>
-            </button>              
+            </button>
         </div>
 
       <app-shorter-footer></app-shorter-footer>
