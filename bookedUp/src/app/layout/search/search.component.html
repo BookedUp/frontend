@@ -210,7 +210,7 @@
 
                 </div>
               </div>
-               <div class="reviews55" *ngIf="result">{{ roundHalf(result.averageRating ? result.averageRating / 2 : 0) }}</div>
+               <div class="reviews55" *ngIf="result">{{ roundHalf(result.averageRating ? result.averageRating  : 0) }}</div>
 <!--              <div class="reviews55">{{ result?.averageRating !== undefined ? result.averageRating: 0.0 }}</div>-->
               <div class="see-availability-wrapper26" id="frameContainer19">
                 <b class="register1" (click)="navigateToAccommodationDetails(result?.id ?? 0, result?.totalPrice ?? 0)">See availability</b>

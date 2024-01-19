@@ -43,7 +43,7 @@
                 </div>
                 <div class="bottom-line">
                   <div class="stars">
-                    <span *ngFor="let star of generateStars(roundHalf(review.review ? review.review / 2 : 0))">
+                    <span *ngFor="let star of generateStars(roundHalf(review.review ? review.review  : 0))">
                         {{ star }}
                     </span>
                   </div> <!-- Dodajte odgovarajući kod za prikaz zvezda na osnovu ocene recenzije -->

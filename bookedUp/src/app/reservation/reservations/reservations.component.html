@@ -54,14 +54,14 @@
                     <b class="title">{{ reservation.accommodation.name }}</b>
                     <div class="reviews-frame">
                         <div class="stars-container">
-                            <span class="star" *ngFor="let star of generateStars(roundHalf((reservation?.accommodation?.averageRating ?? 0) / 2))">
+                            <span class="star" *ngFor="let star of generateStars(roundHalf((reservation?.accommodation?.averageRating ?? 0) ))">
                                 {{ star }}
-                            </span>                              
+                            </span>
                         </div>
-                        <div class="normal-text" style="margin-left: 10px;">{{ (reservation?.accommodation?.averageRating ?? 0)/2 }}</div>
+                        <div class="normal-text" style="margin-left: 10px;">{{ (reservation?.accommodation?.averageRating ?? 0)}}</div>
                     </div>
 
-                    <b [ngStyle]="{ 'color': getStatusColor(reservation.status) }" class="status-text">{{ reservation.status }}</b>   
+                    <b [ngStyle]="{ 'color': getStatusColor(reservation.status) }" class="status-text">{{ reservation.status }}</b>
                 </div>
 
                 <div class="bottom-data-box">
@@ -75,7 +75,7 @@
                 <div *ngIf="(reservation.status === 'CREATED' || (reservation.status === 'ACCEPTED' && isWithinCancellationDeadline(reservation)))" class="reject-button" id="reject-button" (click)="cancelReservation(reservation?.id)">
                     <b class="button-text">Cancel</b>
                 </div>
-        
+
                 <div class="view-details-button" id="view-details-button" routerLink="/reservation-details/{{reservation.id}}">
                     <b class="button-text">View Details</b>
                 </div>
