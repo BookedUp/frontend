@@ -17,11 +17,24 @@
         <div class="main-content" id="main-content">
           <div *ngFor="let review of reviews | async" class="acc-frame" [class.created-status]="review">
                <!-- [class.changed-status]="user === 'CHANGED'" -->
-              <img
-                class="accommodation-image"
-                alt=""
-                [src]="getPhotoUrl(review?.accommodation?.id)"
-              />
+              <ng-container *ngIf="review.type === 'ACCOMMODATION'">
+                  <img
+                          class="accommodation-image"
+                          alt=""
+                          [src]="getPhotoUrl(review?.id)"
+                  />
+              </ng-container>
+
+              <ng-container *ngIf="review.type === 'HOST'">
+                  <img
+                          class="accommodation-image"
+                          alt=""
+                          [src]="getPhotoUrlUser(review?.id)"
+                  />
+              </ng-container>
+
+
+
 
               <div class="left-data">
                 <ng-container *ngIf="review.type === 'ACCOMMODATION'">
@@ -30,6 +43,10 @@
                 <ng-container *ngIf="review.type === 'HOST'">
                     <b class="title">{{ review.host?.firstName }} {{ review.host?.lastName }}</b>
                 </ng-container>
+
+                  <div class="location-frame">
+                      <div class="location-text"><b>Reviewed:</b> {{ review.guest?.firstName }} {{ review.guest?.lastName }}</div>
+                  </div>
 
                 <div class="location-frame">
                   <div class="location-text"><b>Date:</b> {{ review.date| date: 'EEEE, MMMM d, y' }}</div>

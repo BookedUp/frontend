@@ -22,13 +22,15 @@ export class ReviewReportsComponent implements OnInit {
   filter: string = 'all';
 
   photoDict: { accId: number, url: string }[] = [];
+  photoDictUser: { accId: number, url: string }[] = [];
+
   review: Review[] = [];
   reportedReasons: string[] = [];
 
   constructor(
-    private reviewService: ReviewService, 
-    private router: Router, private route: ActivatedRoute, 
-    private photoService: PhotoService, 
+    private reviewService: ReviewService,
+    private router: Router, private route: ActivatedRoute,
+    private photoService: PhotoService,
     private reviewReportService: ReviewReportService,
     private notificationService: NotificationsService,
     private webSocketService: WebSocketService) {
@@ -57,6 +59,7 @@ export class ReviewReportsComponent implements OnInit {
       this.reviewService.getUnapprovedReviews().subscribe((results) => {
         this.review = results;
         this.loadPhotos();
+        this.loadPhotosUser()
       });
     } else if (this.filter === 'reported') {
       this.reviews = this.reviewReportService.getReportedReviews();
@@ -64,6 +67,8 @@ export class ReviewReportsComponent implements OnInit {
         this.review = results;
         console.log(results);
         this.loadPhotos();
+        this.loadPhotosUser()
+
       });
     }
   }
@@ -90,6 +95,30 @@ export class ReviewReportsComponent implements OnInit {
     const timeDifference = currentDate.getTime() - reviewDate.getTime();
     const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // convert milliseconds to days
     return daysDifference;
+  }
+
+  loadPhotosUser() {
+    this.review.forEach((acc) => {
+      // Provera postojanja acc i njegovog accommodation svojstva
+      if (acc && acc.host && acc.host.profilePicture) {
+        this.photoService.loadPhoto(acc.host.profilePicture).subscribe(
+            (data) => {
+              this.createImageFromBlob(data).then((url: string) => {
+                if (acc.id) {
+                  this.photoDictUser.push({ accId: acc.id, url: url });
+                  console.log(this.photoDictUser)
+                }
+              }).catch(error => {
+                console.error("Greška prilikom konverzije slike ${imageName}:", error);
+              });
+            },
+            (error) => {
+              console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
+            }
+        );
+      }
+
+    });
   }
 
   loadPhotos() {
@@ -130,6 +159,11 @@ export class ReviewReportsComponent implements OnInit {
 
   getPhotoUrl(accId: number | undefined): string | undefined {
     const photo = this.photoDict.find((item) => item.accId === accId);
+    return photo ? photo.url : '';
+  }
+
+  getPhotoUrlUser(accId: number | undefined): string | undefined {
+    const photo = this.photoDictUser.find((item) => item.accId === accId);
     return photo ? photo.url : '';
   }
 
