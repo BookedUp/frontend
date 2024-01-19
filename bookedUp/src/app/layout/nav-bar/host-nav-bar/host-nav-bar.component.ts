@@ -12,8 +12,9 @@ import {PhotoService} from "../../../shared/photo/photo.service";
 })
 export class HostNavBarComponent implements OnInit{
   isPopupVisible = false;
+  isNotificationVisible = false;
 
-  role: string = '' ;
+  role: string = '';
   loggedUser!: User;
   displayedImageUrl: string | null = null;
 
@@ -22,7 +23,7 @@ export class HostNavBarComponent implements OnInit{
   ngOnInit(): void {
     this.authService.userState.subscribe((result) => {
       this.role = result;
-      this.loadPhotos();
+      // this.loadPhotos();
 
     })
 
@@ -33,12 +34,21 @@ export class HostNavBarComponent implements OnInit{
         },
         (error) => {
           console.error('Error loading user:', error);
-          // Handle error as needed
         }
     );
   }
-  
-  
+
+  onNotificationIconClick(): void {
+    this.isNotificationVisible = !this.isNotificationVisible;
+  }
+
+  onNotificationPopupClick(event: Event): void {
+    if (this.isNotificationVisible && event.target instanceof HTMLElement && !event.target.closest('.notification-dropdown')) {
+       this.isNotificationVisible = false;
+    }
+  }
+
+
   onProfilePictureClick(): void {
     this.isPopupVisible = !this.isPopupVisible;
   }
@@ -48,7 +58,7 @@ export class HostNavBarComponent implements OnInit{
        this.isPopupVisible = false;
     }
   }
-  
+
   navigateTo(route: string): void {
     this.isPopupVisible = false; // Close the popup when navigating
     this.router.navigate([route]);

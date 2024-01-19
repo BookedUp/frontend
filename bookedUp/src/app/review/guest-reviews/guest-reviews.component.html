@@ -32,11 +32,11 @@
 
                         <div class="reviews-frame">
                           <div class="stars-container">
-                      <span *ngIf="review && review.accommodation && review.accommodation.averageRating"><span class="star" *ngFor="let star of generateStars(roundHalf(review.accommodation.averageRating / 2))">{{ star }}</span></span>
+                      <span *ngIf="review && review.accommodation && review.accommodation.averageRating"><span class="star" *ngFor="let star of generateStars(roundHalf(review.accommodation.averageRating ))">{{ star }}</span></span>
 
 
                           </div>
-                            <div class="reviews-average" *ngIf="review.accommodation">{{ roundHalf(review.accommodation.averageRating ? review.accommodation.averageRating / 2 : 0) }}</div>
+                            <div class="reviews-average" *ngIf="review.accommodation">{{ roundHalf(review.accommodation.averageRating ? review.accommodation.averageRating : 0) }}</div>
                         </div>
 
                       </div>

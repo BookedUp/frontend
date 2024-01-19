@@ -18,11 +18,11 @@
                     <b class="title-text">{{reservation.accommodation.name}}</b>
                     <div class="reviews-frame">
                         <div class="stars-container">
-                            <span class="star" *ngFor="let star of generateStars(roundHalf((reservation?.accommodation?.averageRating ?? 0)/2))">
+                            <span class="star" *ngFor="let star of generateStars(roundHalf((reservation?.accommodation?.averageRating ?? 0)))">
                                 {{ star }}
                             </span>
                         </div>
-                        <div class="normal-text">{{ (reservation?.accommodation?.averageRating ?? 0)/2 }}</div>
+                        <div class="normal-text">{{ (reservation?.accommodation?.averageRating ?? 0) }}</div>
                     </div>
                     <div id="address" class="address">
                         <img class="icon" alt="" src="../../assets/public/location-1.svg" />
@@ -30,6 +30,7 @@
                         {{ reservation.accommodation.address.streetAndNumber }}, {{reservation.accommodation.address.city}} {{reservation.accommodation.address.postalCode}}, {{ reservation.accommodation.address.city }}
                         </div>
                     </div>
+
 
                     <div id="price" class="address" style="margin-top: 15px;">
                         <div class="info-text">Price: </div>
@@ -54,13 +55,23 @@
                     <div id="status" class="address">
                         <div class="info-text">Status: </div>
                         <b [ngStyle]="{ 'color': getStatusColor(reservation.status) }" class="info-text">{{ reservation.status }}</b>
-                    </div>                  
+                    </div>
+
+<!--                    <div  class="address">-->
+<!--                        <div class="info-text">Guest: </div>-->
+<!--                        <b class="info-text"> {{ reservation.guest.firstName }} {{ reservation.guest.lastName }}</b>-->
+<!--                    </div>-->
+
+<!--                    <div  class="address">-->
+<!--                        <div class="info-text">Host: </div>-->
+<!--                        <b class="info-text"> {{ reservation.accommodation.host.firstName }} {{ reservation.accommodation.host.lastName }}</b>-->
+<!--                    </div>-->
                 </div>
             </div>
 
             <button *ngIf="cancellation" class="button-container" (click)="cancelReservation()">
                 <b>Cancel Reservation</b>
-            </button>              
+            </button>
         </div>
 
       <app-shorter-footer></app-shorter-footer>

@@ -57,6 +57,11 @@ export class RegistrationComponent {
         email: formValues.email || '',
         password: formValues.password || '',
         role: formValues.role || Role.Guest,
+
+        profilePicture:{
+          url:"images/usx.jpg",
+          active:true
+        }
       };
 
       this.authService.register(user).subscribe({
@@ -64,7 +69,7 @@ export class RegistrationComponent {
           Swal.fire('Success', 'Successfully registered user!', 'success');
           const emailValue = this.registrationForm.get('email')?.value;
           this.router.navigate(['/check-inbox', { email: emailValue }]);
-          
+
         },
         error: (error) => {
           Swal.fire('Info', 'Your request has been successfully created,but you must activate account.', 'success');

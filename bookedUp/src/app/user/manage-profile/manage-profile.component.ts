@@ -31,7 +31,7 @@ export class ManageProfileComponent implements OnInit {
   updateForm: FormGroup | undefined;
 
 
-  constructor(private userService: UserService,private photoService:PhotoService, private guestService: GuestService,private hostService: HostService, private router: Router, 
+  constructor(private userService: UserService,private photoService:PhotoService, private guestService: GuestService,private hostService: HostService, private router: Router,
     private authService: AuthService, private formBuilder: FormBuilder,private zone: NgZone
   ) {
     this.updateForm = this.formBuilder.group({
@@ -44,6 +44,7 @@ export class ManageProfileComponent implements OnInit {
       city: ['', Validators.required],
       postalCode: ['', Validators.required],
       country: ['', Validators.required],
+
     });
   }
 
@@ -87,27 +88,39 @@ export class ManageProfileComponent implements OnInit {
 
   handleFileButtonClick() {
     this.fileInput.nativeElement.click();
-    this.convertBlobToFile(this.displayedImageUrl??'')
-    .then(file => {
-      console.log('Converted file:', file);
 
-      // Now you can upload the file or use it as needed.
-      this.photoService.uploadImage(file).subscribe(
-        response => {
-          console.log('Image uploaded successfully:', response);
-          this.updateProfilePicture = 'images/'+file.name;
-          console.log("ovo je naziv koji se prosledjuje ", this.updateProfilePicture);
-          // Handle success as needed
-        },
-        error => {
-          console.error('Error uploading image:', error);
-          // Handle error as needed
-        }
-      );
-    })
-    .catch(error => {
-      console.error('Error converting blob to file:', error);
+    this.fileInput.nativeElement.addEventListener('change', (event: any) => {
+
+      const file = event.target.files[0];
+      console.log('Nova slika dodata', event.target.files[0]);
+
+      if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        this.displayedImageUrl = imageUrl;
+        this.convertBlobToFile(this.displayedImageUrl??'')
+          .then(file => {
+            console.log('Converted file:', file);
+
+            // Now you can upload the file or use it as needed.
+            this.photoService.uploadImage(file).subscribe(
+              response => {
+                console.log('Image uploaded successfully:', response);
+                this.updateProfilePicture = 'images/'+file.name;
+                console.log("ovo je naziv koji se prosledjuje ", this.updateProfilePicture);
+                // Handle success as needed
+              },
+              error => {
+                console.error('Error uploading image:', error);
+                // Handle error as needed
+              }
+            );
+          })
+          .catch(error => {
+            console.error('Error converting blob to file:', error);
+          });
+      }
     });
+
   }
 
   togglePasswordVisibility() {
@@ -117,15 +130,15 @@ export class ManageProfileComponent implements OnInit {
   convertBlobToFile(blobUrl: string): Promise<File> {
     return fetch(blobUrl)
       .then(response => response.blob())
-      .then(blob => new File([blob], `acc${Date.now()}.png`, { type: blob.type }));
+      .then(blob => new File([blob], `us${Date.now()}.png`, { type: blob.type }));
   }
-  
+
 
   updateUser() {
 
-    
 
-    if (this.validate()) {
+
+    if (this.validate() || this.updateProfilePicture!='') {
 
       this.updatedUser = {
         id: this.authService.getUserID(),
@@ -247,7 +260,7 @@ export class ManageProfileComponent implements OnInit {
     });
   }
 
-  
+
 
   private deleteHost() {
     Swal.fire({
@@ -294,7 +307,7 @@ export class ManageProfileComponent implements OnInit {
       }
     );
   }
-  
+
 
   loadPhotos() {
     if(this.loggedUser.profilePicture){
