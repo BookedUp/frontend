@@ -52,15 +52,12 @@ export class ReservationDetailsComponent implements OnInit{
       this.reservationService.getReservationById(this.reservationId).subscribe((result) =>{
         this.reser = result;
         this.canCancel();
-        this.loadPhotos();
       })
 
     });
   }
 
   cancelReservation(): void {
-    
-
     if(this.reser.id != undefined){
       this.reservationService.cancelReservation(this.reser.id).subscribe(
         (cancelledReservation) => {
@@ -117,34 +114,6 @@ export class ReservationDetailsComponent implements OnInit{
     }
   }
 
-  createImageFromBlob(imageBlob: Blob): Promise<string> {
-    const reader = new FileReader();
-
-    return new Promise<string>((resolve, reject) => {
-      reader.onloadend = () => {
-        resolve(reader.result as string);
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(imageBlob);
-    });
-  }
-
-  loadPhotos() {
-    const imageName = this.reser.accommodation.photos[0];
-    this.photoService.loadPhoto(imageName).subscribe(
-      (data) => {
-        this.createImageFromBlob(data).then((url: string) => {
-          this.pictureUrl = url;
-        }).catch(error => {
-          console.error("Greška prilikom konverzije slike ${imageName}:" , error);
-        });
-      },
-      (error) => {
-        console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
-      }
-    );
-  }
-
   generateStars(rating: number): string[] {
     const stars: string[] = [];
     for (let i = 1; i <= 5; i++) {
@@ -179,7 +148,5 @@ export class ReservationDetailsComponent implements OnInit{
         return 'inherit'; // default color or 'inherit' if no match
     }
   }
-  
-
 }
 
