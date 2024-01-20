@@ -317,18 +317,28 @@ edit(){
   console.log('Changed acc:', this.editedAcc);
 
   this.accommodationService.updateAccommodation(this.selectedAccommodation.id ?? 0, this.editedAcc)
-    .subscribe(updatedAccommodation => {
-      console.log('Update successful:', updatedAccommodation); // Log the updated data
-      Swal.fire({ icon: 'success', title: 'Accommodation edited successfully!', text: 'You will be redirected to the home page.' });
-      this.router.navigate(['/']);
-    }, error => {
-      console.error('Error updating accommodation:', error);
+  .subscribe(updatedAccommodation => {
+    console.log('Update successful:', updatedAccommodation); // Log the updated data
+    Swal.fire({ icon: 'success', title: 'Accommodation edited successfully!', text: 'You will be directed to a page featuring your accommodations.' });    
+    this.router.navigate(['my-accommodations']);
+  }, error => {
+    console.error('Error updating accommodation:', error);
+    if (error.status === 403) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Change Denied!',
+        text: 'Whoops! It looks like there are existing reservations for this accommodation under your hosting profile, making it currently unmodifiable.',
+      });
+      this.router.navigate(['my-accommodations']);
+    } else {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Sorry, an error occurred while updating the accommodation. Please check the console for details and try again later.',
+        text: 'Uh-oh! It seems there is a hiccup. We are encountering an error that prevents modifications at the moment. Please try again later.',
       });
-    });
+    }
+  });
+
 }
 
 
