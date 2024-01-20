@@ -153,11 +153,8 @@ export class CreateReservationComponent implements OnInit {
     
     this.reservationService.createReservation(this.newReservation).subscribe(
       (createdReservation: Reservation) => {
-        console.log('Created Reservation:', createdReservation);
-        Swal.fire({icon: 'success', title: 'Reservation created successfully!', text: 'You will be redirected to the home page.',});
-        this.router.navigate(['/']);
 
-        const notification: Notification = {
+        const notificationCreate: Notification = {
           fromUserDTO: this.guest,
           toUserDTO: createdReservation.accommodation.host,
           title: 'New Reservation!',
@@ -167,7 +164,7 @@ export class CreateReservationComponent implements OnInit {
           active: true
         };
 
-        this.notificationService.createNotification(notification).subscribe(
+        this.notificationService.createNotification(notificationCreate).subscribe(
           (createdNotification) => {
             console.log(createdNotification);
           },
@@ -175,7 +172,7 @@ export class CreateReservationComponent implements OnInit {
             console.error('Error creating review:', error);
           }
         );
-        this.webSocketService.sendMessageUsingSocket(notification);
+        this.webSocketService.sendMessageUsingSocket(notificationCreate);
         
         if(this.acc.automaticReservationAcceptance == true){
           const notification: Notification = {
@@ -198,6 +195,14 @@ export class CreateReservationComponent implements OnInit {
           );
           this.webSocketService.sendMessageUsingSocket(notification); 
         }
+
+        
+        
+        
+        console.log('Created Reservation:', createdReservation);
+        Swal.fire({icon: 'success', title: 'Reservation created successfully!', text: 'You will be redirected to the home page.',});
+        
+        this.delayNavigation();
         
       },
       (error) => {
@@ -209,6 +214,13 @@ export class CreateReservationComponent implements OnInit {
       }
     );
     
+    
+  }
+
+  delayNavigation(): void {
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 1000);
   }
 
   generateStars(rating: number): string[] {
