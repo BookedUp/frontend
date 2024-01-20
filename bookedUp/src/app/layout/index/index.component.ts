@@ -63,7 +63,7 @@ export class IndexComponent implements OnInit {
 
 
       const location = (document.getElementById("locationTxt") as HTMLInputElement).value || "";
-      const guestNumber = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10) || 0;
+      const guestNumber = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10) || 1;
 
       const fromDateInput = document.getElementById("fromDate") as HTMLInputElement;
       const selectedFromDateInputValue = fromDateInput.value;

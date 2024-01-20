@@ -30,7 +30,7 @@ export class AccommodationDetailsComponent implements OnInit {
   endDate: string | null = null;
   role: string = '';
   totalPrice: number = 0;
-  numberGuests: number = 0;
+  numberGuests: number = 1;
   days: number = 0;
   location: string = "";
   accommodations: Accommodation[] = [];
