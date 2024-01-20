@@ -62,18 +62,15 @@ export class WebSocketService {
     this.stompClient = Stomp.over(socket);
   
     this.stompClient.connect({}, (frame) => {
-
-      console.log("This is id:", notification.toUserDTO.id);
-      console.log("This is type:", notification.type);
-
-      var isEnabled = false;
-
       if(notification.toUserDTO.role === Role.Guest){
         if(notification.toUserDTO.id !== undefined){
           this.guestService.getGuestById(notification.toUserDTO.id).subscribe(
             (guest: Guest) => {
               if(guest.notificationEnable){
-                isEnabled = true;
+                const message = notification.toUserDTO.id + ' ' + notification.type;
+                  if((this.stompClient !== undefined) && (message !== undefined)){
+                    this.stompClient.send('/app/send/message', {}, message.toString());
+                  }
               }
             },
             (error) => {
@@ -85,13 +82,6 @@ export class WebSocketService {
         if(notification.toUserDTO.id !== undefined){
           this.hostService.getHost(notification.toUserDTO.id).subscribe(
             (host: Host) => {
-              
-              console.log("Usao sam id je acc", host.accommodationRatingNotificationEnabled);
-              console.log("Usao sam id je host", host.hostRatingNotificationEnabled);
-              console.log("Usao sam id je cancel", host.cancellationNotificationEnabled);
-              console.log("Usao sam id je create", host.reservationCreatedNotificationEnabled);
-              
-              console.log("not type", notification.type);
               if((host.accommodationRatingNotificationEnabled) && (notification.type === NotificationType.accommodationRated)){
                 const message = notification.toUserDTO.id + ' ' + notification.type;
                   if((this.stompClient !== undefined) && (message !== undefined)){
@@ -105,7 +95,6 @@ export class WebSocketService {
                   }
               }
               if((host.cancellationNotificationEnabled) && (notification.type === NotificationType.reservationCanceled)){
-                console.log("tu sam");
                 const message = notification.toUserDTO.id + ' ' + notification.type;
                   if((this.stompClient !== undefined) && (message !== undefined)){
                     this.stompClient.send('/app/send/message', {}, message.toString());
@@ -124,13 +113,6 @@ export class WebSocketService {
           );
         }
       }
-
-      // if(isEnabled){
-      //   const message = notification.toUserDTO.id + ' ' + notification.type;
-      //   if((this.stompClient !== undefined) && (message !== undefined)){
-      //     this.stompClient.send('/app/send/message', {}, message.toString());
-      //   }
-      // }
     }, (error) => {
       console.log('Error: ' + error);
     });
