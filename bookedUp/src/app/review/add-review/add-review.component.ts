@@ -43,7 +43,7 @@ export class AddReviewComponent implements OnInit{
   constructor( private router: Router, private route: ActivatedRoute, private reviewService: ReviewService, private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private reservationService: ReservationService, private guestService: GuestService) {}
 
     ngOnInit(): void {
-        this.route.params.subscribe((params) => {
+        this.route.params.subscribe((params: { [x: string]: number; }) => {
             if ('id' in params) {
                 this.reservationId = params['id'];
 

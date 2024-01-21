@@ -38,7 +38,7 @@ export class ReviewReportsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params: { [x: string]: string; }) => {
       this.filter = params['filter'] || 'all';
       this.loadReviews();
     });
@@ -223,7 +223,7 @@ export class ReviewReportsComponent implements OnInit {
               console.error('Error creating review:', error);
             }
           );
-          this.webSocketService.sendMessageUsingSocket(notification);
+          //this.webSocketService.sendMessageUsingSocket(notification);
 
         }else if(approvedReview.host!= undefined && approvedReview.guest!= undefined){
           const notification: Notification = {
