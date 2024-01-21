@@ -32,12 +32,13 @@ export class NotificationsComponent implements OnInit{
     private hostService: HostService,
     private route: ActivatedRoute, 
     private notificationService: NotificationsService,
-    private webSocketService: WebSocketService) {
+    //private webSocketService: WebSocketService
+    ) {
   }
 
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe(() => {
       this.loadNotifications();
     });
 
@@ -75,7 +76,7 @@ export class NotificationsComponent implements OnInit{
   }
 
   markAllAsRead():void{
-    this.webSocketService.messages = this.webSocketService.messages.filter(num => num !== this.authService.getUserID());
+    //this.webSocketService.messages = this.webSocketService.messages.filter(num => num !== this.authService.getUserID());
     this.notificationService.notifyNavBar();
   }
 
