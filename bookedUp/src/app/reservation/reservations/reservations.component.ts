@@ -101,7 +101,17 @@ export class ReservationsComponent implements OnInit {
       this.router.navigate(['/my-reservations'], { queryParams: { filter: 'cancelled' } });
     }
 
-    this.reservations = this.reservationService.getReservationsByStatusAndGuestId(this.authService.getUserID(), status);
+    this.reservationService.getReservationsByStatusAndGuestId(this.authService.getUserID(), status)
+    .pipe(
+      map(reservations => reservations.sort((a, b) => {
+        const timestampA = new Date(a.startDate).getTime();
+        const timestampB = new Date(b.startDate).getTime();
+        return timestampB - timestampA;
+      }))
+    )
+    .subscribe(sortedReservations => {
+      this.reservations = of(sortedReservations);
+    });
     this.reservationService.getReservationsByStatusAndGuestId(this.authService.getUserID(), status).subscribe((results) => {
       this.res = results;
       this.loadPhotos();
