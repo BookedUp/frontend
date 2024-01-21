@@ -21,21 +21,11 @@
           <b class="no-text" *ngIf="(reviews | async)?.length == 0">NO RESULTS</b>
             <ng-container *ngFor="let review of reviews | async">
                 <div class="acc-frame">
-                  <ng-container *ngIf="review.type === 'ACCOMMODATION'">
                     <img
                       class="profile-image"
                       alt=""
                       [src]="getPhotoUrl(review?.id)"
                     />
-                  </ng-container>
-
-                  <ng-container *ngIf="review.type === 'HOST'">
-                    <img
-                      class="profile-image"
-                      alt=""
-                      [src]="getPhotoUrlUser(review?.id)"
-                    />
-                  </ng-container>
 
                     <div class="left-data">
                         <div class="top-data-box">
