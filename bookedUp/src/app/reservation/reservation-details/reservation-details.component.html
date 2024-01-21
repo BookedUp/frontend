@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <div class="acc-details">
+    <div class="acc-details" id="visibility">
 
         <app-nav-bar></app-nav-bar>
 
@@ -32,7 +32,7 @@
                             </div>
                             <div class="normal-text">{{ (reservation?.accommodation?.averageRating ?? 0) }}</div>
                         </div>
-                    </div> 
+                    </div>
 
                     <div id="price" class="address" style="margin-top: 15px;">
                         <div class="info-text">Price: </div>
@@ -58,17 +58,17 @@
                         <div class="info-text">Guest: </div>
                         <b class="info-text"> {{ reservation.guest.firstName }} {{ reservation.guest.lastName }}</b>
                     </div>
-                    
-                        
+
+
 
                     <div id="status" class="address">
                         <div class="info-text">Status: </div>
                         <b [ngStyle]="{ 'color': getStatusColor(reservation.status) }" class="info-text">{{ reservation.status }}</b>
-                    </div>               
+                    </div>
                 </div>
             </div>
 
-            <button *ngIf="cancellation" class="button-container" (click)="cancelReservation()">
+            <button id="cancel" *ngIf="cancellation" class="button-container" (click)="cancelReservation()">
                 <b>Cancel Reservation</b>
             </button>
         </div>

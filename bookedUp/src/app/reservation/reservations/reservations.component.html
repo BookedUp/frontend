@@ -39,7 +39,7 @@
 
     <div class="main-content" id="main-content">
         <b class="no-text" *ngIf="(reservations | async)?.length == 0">NO RESULTS</b>
-        <div *ngFor="let reservation of reservations | async" class="acc-frame" [class.created-status]="reservation.status === 'CREATED'"
+        <div *ngFor="let reservation of reservations | async" id="resultReservation" class="acc-frame" [class.created-status]="reservation.status === 'CREATED'"
              [class.cancelled-status]="reservation.status === 'CANCELLED'"
              [class.rejected-status]="reservation.status === 'REJECTED'"
              [class.accepted-status]="reservation.status === 'ACCEPTED'">

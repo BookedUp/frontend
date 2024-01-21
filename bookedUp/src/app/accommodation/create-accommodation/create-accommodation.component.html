@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <div class="acc-details">
+    <div class="acc-details" id="acc-details">
 
       <app-nav-bar></app-nav-bar>
 
@@ -34,20 +34,20 @@
             <div class="inputs-box">
 
               <b class="title-text">Accommodation Name</b>
-              <div id="name-input" class="normal-text">
-                <input [(ngModel)]="name" type="text" placeholder='Enter name of accommodation here..'/>
+              <div  class="normal-text">
+                <input id="name-input" [(ngModel)]="name" type="text" placeholder='Enter name of accommodation here..'/>
               </div>
 
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <b class="title-text">Address</b>
               <div id="address-input">
                 <div class="in-line-box">
-                  <input [(ngModel)]="addressStreet" class="normal-text" type="text" placeholder='Enter street and number here..' style="margin-right: 10%;"/>
-                  <input [(ngModel)]="city" class="normal-text" type="text" placeholder='Enter city here..'/>
+                  <input [(ngModel)]="addressStreet" id="streetInput" class="normal-text" type="text" placeholder='Enter street and number here..' style="margin-right: 10%;"/>
+                  <input [(ngModel)]="city"  id="cityInput" class="normal-text" type="text" placeholder='Enter city here..'/>
                 </div>
                 <div class="in-line-box">
-                  <input [(ngModel)]="postalCode" type="text" placeholder='Enter postal code here..' pattern="\d*" style="margin-right: 10%;"/>
-                  <input [(ngModel)]="country" class="normal-text" type="text" placeholder='Enter country here..'/>
+                  <input [(ngModel)]="postalCode" id="postalInput" type="text" placeholder='Enter postal code here..' pattern="\d*" style="margin-right: 10%;"/>
+                  <input [(ngModel)]="country" id="countryInput"class="normal-text" type="text" placeholder='Enter country here..'/>
                 </div>
               </div>
 
@@ -55,7 +55,7 @@
               <b class="title-text">Price</b>
               <div id="price-inputs" class="in-line-box">
                 <div class="normal-text" style="width: 30% !important;">
-                  <input [(ngModel)]="defaultPrice" type="number" placeholder='Enter price here..' pattern="\d*" [readonly]="isInputReadOnly"/>
+                  <input [(ngModel)]="defaultPrice" id="priceInput" type="number" placeholder='Enter price here..' pattern="\d*" [readonly]="isInputReadOnly"/>
                 </div>
                 <div class="in-line-box" style="width: 70% !important; justify-content: right;">
                   <input type="checkbox" id="perNight" name="amenities" class="icon" [(ngModel)]="perNightChecked" (change)="handlePerNightChange()" />
@@ -67,8 +67,8 @@
 
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
               <b class="title-text">Overview</b>
-              <div id="description-input" class="normal-text">
-                <input [(ngModel)]="description" type="text" placeholder='Enter description for accommodation here..' style="height: 100px;"/>
+              <div  class="normal-text">
+                <input [(ngModel)]="description" id="description-input" type="text" placeholder='Enter description for accommodation here..' style="height: 100px;"/>
               </div>
 
               <img class="line" alt="" src="../../assets/public/vector-1.svg"><br>
@@ -89,7 +89,7 @@
               <div class="in-line-box">
                 <b class="title-text" style="margin-right: 10%;">Minimum Guests</b>
                 <div class="normal-text" style="width: 60%;">
-                  <input [(ngModel)]="minimumPrice" type="number" placeholder='Enter minimum number of guests here..' pattern="\d*" />
+                  <input [(ngModel)]="minimumPrice" id="minGuestInput" type="number" placeholder='Enter minimum number of guests here..' pattern="\d*" />
                 </div>
               </div>
 
@@ -97,7 +97,7 @@
               <div class="in-line-box">
                 <b class="title-text" style="margin-right: 10%;">Maximum Guests</b>
                 <div class="normal-text" style="width: 60%;">
-                  <input [(ngModel)]="maximumPrice" type="number" placeholder='Enter maximum number of guests here..' pattern="\d*" />
+                  <input [(ngModel)]="maximumPrice" type="number" id="maxGuestInput" placeholder='Enter maximum number of guests here..' pattern="\d*" />
                 </div>
               </div>
 
@@ -105,7 +105,7 @@
               <div class="in-line-box">
                 <b class="title-text" style="margin-right: 10%;">Cancellation: </b>
                 <div class="normal-text" style="width: 60%;">
-                  <input [(ngModel)]="cancellation" type="number" placeholder='Enter cancellation dead line..' pattern="\d*" />
+                  <input [(ngModel)]="cancellation" type="number" id="cancellationInput" placeholder='Enter cancellation dead line..' pattern="\d*" />
                 </div>
               </div>
 
@@ -127,10 +127,10 @@
             [defaultPrice]=defaultPrice
             [customPricesInput]=accPriceChange
           ></app-calendar>
-          <button class="button-container" (click)="addDateRange()"  style="background-color: var(--gray-2);">
+          <button class="button-container" id="addAv" (click)="addDateRange()"  style="background-color: var(--gray-2);">
             <b>Add</b>
           </button>
-          <button class="button-container" (click)="deleteDateRange()"  style="background-color: var(--gray-2);">
+          <button class="button-container" id="deleteAv" (click)="deleteDateRange()"  style="background-color: var(--gray-2);">
             <b>Delete</b>
           </button>
 
@@ -148,12 +148,12 @@
 
           <div class="normal-text">If you wish to set a different price for a specific date range, please select the range and enter the desired price below.</div>
           <div class="normal-text">
-            <input [(ngModel)]="customPrice" type="number" placeholder='Enter price here..' pattern="\d*" class="custom-input"/>
+            <input id="customPriceInput" [(ngModel)]="customPrice" type="number" placeholder='Enter price here..' pattern="\d*" class="custom-input"/>
           </div>
-          <button class="button-container" (click)="applyCustomPrice()" style="background-color: var(--gray-2);">
+          <button class="button-container" id="applyPrice" (click)="applyCustomPrice()" style="background-color: var(--gray-2);">
             <b>Apply Custom Price</b>
           </button>
-          <button class="button-container" (click)="saveAccommodation()">
+          <button class="button-container" id="addNew" (click)="saveAccommodation()">
             <b>Add new accommodation</b>
           </button>
         </div>
