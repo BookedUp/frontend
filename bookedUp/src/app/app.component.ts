@@ -11,8 +11,9 @@ export class AppComponent {
   isChecked: boolean = false;
 
   constructor(
-    private webSocketService: WebSocketService) {
-      this.webSocketService.connectToWebSocket();
+    //private webSocketService: WebSocketService
+    ) {
+      //this.webSocketService.connectToWebSocket();
     }
 
 }

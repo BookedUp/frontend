@@ -35,11 +35,11 @@ export class HostNavBarComponent implements OnInit{
 
   ngOnInit(): void {
     this.subscription = this.notificationService.notify$.subscribe(() => {
-      this.hasWebSocketNotification = this.webSocketService.hasNotificationOnSocket(this.authService.getUserID());
+      //this.hasWebSocketNotification = this.webSocketService.hasNotificationOnSocket(this.authService.getUserID());
       console.log('Nav-bar updated!');
     });
     
-    this.hasWebSocketNotification = this.webSocketService.hasNotificationOnSocket(this.authService.getUserID());
+    //this.hasWebSocketNotification = this.webSocketService.hasNotificationOnSocket(this.authService.getUserID());
 
     this.authService.userState.subscribe((result) => {
       this.role = result;
