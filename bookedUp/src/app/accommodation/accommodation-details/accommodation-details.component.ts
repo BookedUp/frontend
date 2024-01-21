@@ -109,7 +109,7 @@ export class AccommodationDetailsComponent implements OnInit {
         this.accommodation.subscribe((data: Accommodation) => {
           this.location = data.address.country;
         });
-        this.accommodationService.searchAccommodations(this.location, this.numberGuests , start, end, [], 0.0, 0.0, 0.0, null, "")
+        this.accommodationService.searchAccommodationsFilters(this.location, this.numberGuests , start, end, [], 0.0, 0.0, 0.0, null, "")
           .subscribe((filterResults: Accommodation[]) => {
             this.accommodations = filterResults;
             const foundAccommodation = this.findAccommodationById(this.accommodations, this.accommodationId);
