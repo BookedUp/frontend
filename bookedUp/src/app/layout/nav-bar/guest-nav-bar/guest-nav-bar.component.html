@@ -1,7 +1,7 @@
 <header>
   <div class="header-container">
-    <img class="logo" alt="" src="../../../assets/public/cream-black-minimalist-illustrated-luxury-real-estate-circle-logo-7-3@2x.png" routerLink="/" style="cursor: pointer;"/>
-   
+    <img id="logo" class="logo" alt="" src="../../../assets/public/cream-black-minimalist-illustrated-luxury-real-estate-circle-logo-7-3@2x.png" routerLink="/" style="cursor: pointer;"/>
+
     <div class="home-nav">
     </div>
 
@@ -20,14 +20,13 @@
         class="notification-icon"
         alt=""
         src="../../../../assets/public/notification-11.svg"
-        id="notification-icon"
         (click)="onNotificationIconClick()"
         />
         <img
           class="icon"
           alt=""
           [src]="displayedImageUrl"
-          id="profile-picture-guest"
+          id="profile-picture-host"
           (click)="onProfilePictureClick()"
         />
     </div>
@@ -40,7 +39,7 @@
         <div class="nav-text">Manage account</div>
      </div>
 
-     <div class="nav-box" (click)="navigateTo('/my-reservations')">
+     <div class="nav-box" id="reservationsNavItem" (click)="navigateTo('/my-reservations')">
         <img class="nav-icon" alt="" src="../../../assets/public/hotel-21.svg" />
         <div class="nav-text">My reservations</div>
      </div>

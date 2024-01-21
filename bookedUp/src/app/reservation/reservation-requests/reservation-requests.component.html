@@ -9,7 +9,7 @@
             <div class="all-reservation" [ngClass]="{ 'clicked': selectedClass === 'all-reservation' }" (click)="getHostsReservations()">
                 All Reservations
             </div>
-            <div class="waiting-reservation" [ngClass]="{ 'clicked': selectedClass === 'waiting-reservation' }" (click)="getHostsReservationsByStatus('waiting-reservation', ReservationStatus.Created)">
+            <div id="waitingForApproval" class="waiting-reservation" [ngClass]="{ 'clicked': selectedClass === 'waiting-reservation' }" (click)="getHostsReservationsByStatus('waiting-reservation', ReservationStatus.Created)">
                 Waiting For Approval
             </div>
             <div class="accepted-reservation" [ngClass]="{ 'clicked': selectedClass === 'accepted-reservation' }" (click)="getHostsReservationsByStatus('accepted-reservation', ReservationStatus.Accept)">

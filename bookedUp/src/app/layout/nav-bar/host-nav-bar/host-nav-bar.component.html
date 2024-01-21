@@ -1,7 +1,7 @@
 <header>
    <div class="header-container">
-      <img class="logo" alt="" src="../../../assets/public/cream-black-minimalist-illustrated-luxury-real-estate-circle-logo-7-3@2x.png" routerLink="/" style="cursor: pointer;"/>
-   
+      <img  id="logo" class="logo" alt="" src="../../../assets/public/cream-black-minimalist-illustrated-luxury-real-estate-circle-logo-7-3@2x.png" routerLink="/" style="cursor: pointer;"/>
+
       <div class="home-nav">
       </div>
 
@@ -20,10 +20,10 @@
          class="notification-icon"
          alt=""
          src="../../../../assets/public/notification-11.svg"
-         id="notification-icon"
+
          (click)="onNotificationIconClick()"
          />
-         
+
          <img
             class="icon"
             alt=""
@@ -46,10 +46,11 @@
            <div class="nav-text">My accommodations</div>
         </div>
 
-        <div class="nav-box" (click)="navigateTo('/reservation-requests')">
-           <img class="nav-icon" alt="" src="../../../assets/public/hotel-2.svg" />
-           <div class="nav-text">Reservations</div>
-        </div>
+          <div class="nav-box" id="reservationsNavItem" (click)="navigateTo('/reservation-requests')">
+              <img class="nav-icon" alt="" src="../../../assets/public/hotel-2.svg" />
+              <div class="nav-text">Reservations</div>
+          </div>
+
 
         <div class="nav-box" (click)="navigateTo('/block-users')">
             <img class="nav-icon" alt="" src="../../../assets/public/frame1.svg" />

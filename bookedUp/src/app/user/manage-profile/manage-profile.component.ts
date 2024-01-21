@@ -136,9 +136,11 @@ export class ManageProfileComponent implements OnInit {
 
   updateUser() {
 
+    if(this.updateProfilePicture=="" && this.loggedUser.profilePicture?.url ){
+      this.updateProfilePicture = this.loggedUser.profilePicture?.url;
+    }
 
-
-    if (this.validate() || this.updateProfilePicture!='') {
+    if (this.validate()) {
 
       this.updatedUser = {
         id: this.authService.getUserID(),
@@ -148,6 +150,8 @@ export class ManageProfileComponent implements OnInit {
         phone: this.updateForm!.get('phone')!.value,
         email: this.loggedUser.email,
         role: this.loggedUser.role,
+
+
         profilePicture: {url: this.updateProfilePicture, caption: 'profilePicture'}, // Dodajte ovo
 
         address: {

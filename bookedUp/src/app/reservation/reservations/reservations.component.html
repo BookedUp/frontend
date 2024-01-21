@@ -12,13 +12,13 @@
         <div class="waiting-reservation" [ngClass]="{ 'clicked': selectedClass === 'waiting-reservation' }" (click)="getGuestsReservationsByStatus('waiting-reservation', ReservationStatus.Created)">
             Waiting For Approval
         </div>
-        <div class="accepted-reservation" [ngClass]="{ 'clicked': selectedClass === 'accepted-reservation' }" (click)="getGuestsReservationsByStatus('accepted-reservation', ReservationStatus.Accept)">
+        <div id="acceptedReservations"  class="accepted-reservation" [ngClass]="{ 'clicked': selectedClass === 'accepted-reservation' }" (click)="getGuestsReservationsByStatus('accepted-reservation', ReservationStatus.Accept)">
             Accepted
         </div>
         <div class="rejected-reservation" [ngClass]="{ 'clicked': selectedClass === 'rejected-reservation' }" (click)="getGuestsReservationsByStatus('rejected-reservation', ReservationStatus.Reject)">
             Rejected
         </div>
-        <div class="cancelled-reservation" [ngClass]="{ 'clicked': selectedClass === 'cancelled-reservation' }" (click)="getGuestsReservationsByStatus('cancelled-reservation', ReservationStatus.Cancelled)">
+        <div id="cancelledReservations"  class="cancelled-reservation" [ngClass]="{ 'clicked': selectedClass === 'cancelled-reservation' }" (click)="getGuestsReservationsByStatus('cancelled-reservation', ReservationStatus.Cancelled)">
             Cancelled
         </div>
         <div class="finished-reservation" [ngClass]="{ 'clicked': selectedClass === 'finished-reservation' }" (click)="getGuestsReservationsByStatus('finished-reservation', ReservationStatus.Completed)">
@@ -75,7 +75,7 @@
                 <!-- <div *ngIf="(reservation.status === 'CREATED' || (reservation.status === 'ACCEPTED' && isWithinCancellationDeadline(reservation)))" class="reject-button" id="reject-button" (click)="cancelReservation(reservation?.id)">
                     <b class="button-text">Cancel</b>
                 </div> -->
-        
+
                 <div class="view-details-button" id="view-details-button" routerLink="/reservation-details/{{reservation.id}}">
                     <b class="button-text">View Details</b>
                 </div>
