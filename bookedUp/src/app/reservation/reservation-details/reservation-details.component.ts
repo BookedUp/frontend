@@ -98,7 +98,7 @@ export class ReservationDetailsComponent implements OnInit{
               console.error('Error creating review:', error);
             }
           );
-          this.webSocketService.sendMessageUsingSocket(notification);
+          //this.webSocketService.sendMessageUsingSocket(notification);
         },
         (error) => {  
           Swal.fire('Error!', 'An error occurred while canceling the reservation.', 'error');

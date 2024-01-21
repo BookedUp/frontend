@@ -191,7 +191,7 @@ export class ReservationRequestsComponent implements OnInit {
                     console.error('Error creating review:', error);
                   }
                 );
-                this.webSocketService.sendMessageUsingSocket(notification);       
+                //this.webSocketService.sendMessageUsingSocket(notification);       
               },
               (error) => {
                 Swal.fire({
@@ -237,7 +237,7 @@ export class ReservationRequestsComponent implements OnInit {
                     console.error('Error creating review:', error);
                   }
                 );
-                this.webSocketService.sendMessageUsingSocket(notification);       
+                //this.webSocketService.sendMessageUsingSocket(notification);       
               },
               (error) => {
                 Swal.fire({

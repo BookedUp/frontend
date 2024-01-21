@@ -172,7 +172,7 @@ export class CreateReservationComponent implements OnInit {
             console.error('Error creating review:', error);
           }
         );
-        this.webSocketService.sendMessageUsingSocket(notificationCreate);
+        //this.webSocketService.sendMessageUsingSocket(notificationCreate);
         
         if(this.acc.automaticReservationAcceptance == true){
           const notification: Notification = {
@@ -193,7 +193,7 @@ export class CreateReservationComponent implements OnInit {
               console.error('Error creating review:', error);
             }
           );
-          this.webSocketService.sendMessageUsingSocket(notification); 
+          //this.webSocketService.sendMessageUsingSocket(notification); 
         }
 
         
