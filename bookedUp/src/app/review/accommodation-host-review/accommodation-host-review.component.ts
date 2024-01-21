@@ -191,9 +191,9 @@ export class AccommodationHostReviewComponent implements OnInit {
       if (!date) {
         throw new Error('Date is undefined or null');
       }
-
+  
       let parsedDate: Date;
-
+  
       if (date instanceof Date) {
         parsedDate = date;
       } else {
@@ -202,22 +202,40 @@ export class AccommodationHostReviewComponent implements OnInit {
           throw new Error('Invalid date string');
         }
       }
-
+  
       const currentDate = new Date();
-      const daysAgo = Math.floor((currentDate.getTime() - parsedDate.getTime()) / (1000 * 60 * 60 * 24));
-
-      if (daysAgo === 0) {
-        return 'Today';
-      } else if (daysAgo === 1) {
-        return 'Yesterday';
+      const timeDifference = currentDate.getTime() - parsedDate.getTime();
+      const secondsAgo = Math.floor(timeDifference / 1000);
+      const minutesAgo = Math.floor(timeDifference / (1000 * 60));
+      const hoursAgo = Math.floor(timeDifference / (1000 * 60 * 60));
+      const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const weeksAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 7));
+      const monthsAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 30)); // Assuming a month has approximately 30 days
+  
+      if (secondsAgo < 60) {
+        return 'Just now';
+      } else if (minutesAgo < 60) {
+        return `${minutesAgo} minute${minutesAgo > 1 ? 's' : ''} ago`;
+      } else if (hoursAgo < 24) {
+        return `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago`;
+      } else if (daysAgo < 7) {
+        if (daysAgo === 1) {
+          return 'Yesterday';
+        }
+        return `${daysAgo} day${daysAgo > 1 ? 's' : ''} ago`;
+      } else if (weeksAgo <= 6) {
+        return `${weeksAgo} week${weeksAgo > 1 ? 's' : ''} ago`;
+      } else if (monthsAgo > 0) {
+        return `${monthsAgo} month${monthsAgo > 1 ? 's' : ''} ago`;
       } else {
-        return `${daysAgo} days ago`;
+        return 'N/A';
       }
     } catch (error) {
       console.error('Error calculating time ago:', error);
       return 'N/A';
     }
   }
+  
 
   get reviewsChunks(): any[] {
     const chunkSize = 3;
