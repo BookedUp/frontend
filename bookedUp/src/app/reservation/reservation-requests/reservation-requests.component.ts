@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
-import {Observable, of} from 'rxjs';
+import {Observable, map, of} from 'rxjs';
 import { Reservation } from 'src/app/reservation/model/reservation.model';
 import { ReservationStatus } from 'src/app/reservation/model/reservationStatus.enum';
 import { ReservationService } from 'src/app/reservation/reservation.service';
@@ -49,38 +49,94 @@ export class ReservationRequestsComponent implements OnInit {
 
   private loadReservations(): void {
     if (this.filter === 'waiting') {
-      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created);
+      //this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created);
+      this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created)
+      .pipe(
+        map(reservations => reservations.sort((a, b) => {
+          const timestampA = new Date(a.startDate).getTime();
+          const timestampB = new Date(b.startDate).getTime();
+          return timestampB - timestampA;
+        }))
+      )
+      .subscribe(sortedReservations => {
+        this.reservations = of(sortedReservations);
+      });
       this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created).subscribe((results) => {
         this.res = results;
         this.loadPhotos();
       });
     } else if (this.filter === 'accepted') {
-      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Accept);
+      this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Accept).pipe(
+        map(reservations => reservations.sort((a, b) => {
+          const timestampA = new Date(a.startDate).getTime();
+          const timestampB = new Date(b.startDate).getTime();
+          return timestampB - timestampA;
+        }))
+      )
+      .subscribe(sortedReservations => {
+        this.reservations = of(sortedReservations);
+      });
       this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Accept).subscribe((results) => {
         this.res = results;
         this.loadPhotos();
       });
     } else if (this.filter === 'rejected') {
-      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Reject);
+      this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Reject).pipe(
+        map(reservations => reservations.sort((a, b) => {
+          const timestampA = new Date(a.startDate).getTime();
+          const timestampB = new Date(b.startDate).getTime();
+          return timestampB - timestampA;
+        }))
+      )
+      .subscribe(sortedReservations => {
+        this.reservations = of(sortedReservations);
+      });
       this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Reject).subscribe((results) => {
         this.res = results;
         this.loadPhotos();
       });
     } else if (this.filter === 'finished') {
-      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Completed);
+      this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Completed).pipe(
+        map(reservations => reservations.sort((a, b) => {
+          const timestampA = new Date(a.startDate).getTime();
+          const timestampB = new Date(b.startDate).getTime();
+          return timestampB - timestampA;
+        }))
+      )
+      .subscribe(sortedReservations => {
+        this.reservations = of(sortedReservations);
+      });
       this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Completed).subscribe((results) => {
         this.res = results;
         this.loadPhotos();
       });
     } else if (this.filter === 'cancelled') {
-      this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Cancelled);
+      this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Cancelled).pipe(
+        map(reservations => reservations.sort((a, b) => {
+          const timestampA = new Date(a.startDate).getTime();
+          const timestampB = new Date(b.startDate).getTime();
+          return timestampB - timestampA;
+        }))
+      )
+      .subscribe(sortedReservations => {
+        this.reservations = of(sortedReservations);
+      });
       this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Cancelled).subscribe((results) => {
         this.res = results;
         this.loadPhotos();
       });
     }
     else {
-      this.reservations = this.reservationService.getReservationsByHostId(this.authService.getUserID())
+      this.reservationService.getReservationsByHostId(this.authService.getUserID()).pipe(
+        map(reservations => reservations.sort((a, b) => {
+          const timestampA = new Date(a.startDate).getTime();
+          const timestampB = new Date(b.startDate).getTime();
+          return timestampB - timestampA;
+        }))
+      )
+      .subscribe(sortedReservations => {
+        this.reservations = of(sortedReservations);
+      });
       this.reservationService.getReservationsByHostId(this.authService.getUserID()).subscribe((results) => {
         this.res = results;
         this.loadPhotos();

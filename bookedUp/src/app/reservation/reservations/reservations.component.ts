@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable, of} from "rxjs";
+import {Observable, map, of} from "rxjs";
 import {Reservation} from "../model/reservation.model";
 import {ReservationService} from "../reservation.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -43,7 +43,18 @@ export class ReservationsComponent implements OnInit {
   }
   private loadReservations(): void {
     if (this.filter === 'all') {
-      this.reservations = this.reservationService.getReservationsByGuestId(this.authService.getUserID());
+      this.reservationService.getReservationsByGuestId(this.authService.getUserID())
+      .pipe(
+        map(reservations => reservations.sort((a, b) => {
+          const timestampA = new Date(a.startDate).getTime();
+          const timestampB = new Date(b.startDate).getTime();
+          return timestampB - timestampA;
+        }))
+      )
+      .subscribe(sortedReservations => {
+        this.reservations = of(sortedReservations);
+      });
+
       this.reservationService.getReservationsByGuestId(this.authService.getUserID()).subscribe((results) => {
         this.res = results;
         this.loadPhotos();

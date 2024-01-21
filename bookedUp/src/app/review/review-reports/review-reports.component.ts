@@ -55,14 +55,32 @@ export class ReviewReportsComponent implements OnInit {
 
   private loadReviews(): void {
     if (this.filter === 'all') {
-      this.reviews = this.reviewService.getUnapprovedReviews();
+      this.reviewService.getUnapprovedReviews().pipe(
+        map(reviews => reviews.sort((a, b) => {
+          const timestampA = new Date(a.date??0).getTime() ;
+          const timestampB = new Date(b.date??0).getTime() ;
+          return timestampB - timestampA;
+        }))
+      )
+      .subscribe(sortedReviews => {
+        this.reviews = of(sortedReviews);
+      });
       this.reviewService.getUnapprovedReviews().subscribe((results) => {
         this.review = results;
         this.loadPhotos();
         this.loadPhotosUser()
       });
     } else if (this.filter === 'reported') {
-      this.reviews = this.reviewReportService.getReportedReviews();
+      this.reviewReportService.getReportedReviews().pipe(
+        map(reviews => reviews.sort((a, b) => {
+          const timestampA = a.date ? new Date(a.date).getTime() : 0;
+          const timestampB = b.date ? new Date(b.date).getTime() : 0;
+          return timestampB - timestampA;
+        }))
+      )
+      .subscribe(sortedReviews => {
+        this.reviews = of(sortedReviews);
+      });
       this.reviewReportService.getReportedReviews().subscribe((results) => {
         this.review = results;
         console.log(results);
