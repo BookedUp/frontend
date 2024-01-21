@@ -50,11 +50,11 @@
                   <div class="guest-text">{{ review.guest?.firstName }} {{ review.guest?.lastName }}</div>
                   <div class="time-text" *ngIf="review.type === 'ACCOMMODATION'">Accommodation Review</div>
                   <div class="time-text" *ngIf="review.type === 'HOST'">Host Review</div>
-                  <div class="time-text" style="margin-bottom: 7%;">{{ calculateTimeAgo(review.date) }}</div>
+                  <div class="time-text">{{ calculateTimeAgo(review.date) }}</div>
                 </div>
                 <div class="bottom-line">
-                  <div class="reviews-frame">
-                    <div class="stars-container"  style="color: #9e8d5f">
+                  <div class="reviews-frame" style="margin-bottom: 5%;">
+                    <div class="stars-container"  style="color: #9e8d5f;" >
                               <span class="star" *ngFor="let star of generateStars(roundHalf((review?.review ?? 0)))">
                                   {{ star }}
                               </span>
@@ -63,7 +63,7 @@
                       {{review.review}}
                     </span>
                   </div>
-                  <div class="comment-text">{{ review.comment }}</div>
+                  <div class="normal-text">{{ review.comment }}</div>
                 </div>
               </div>
             </div>
