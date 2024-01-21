@@ -61,9 +61,24 @@ export class ReservationDetailsComponent implements OnInit{
     if(this.reser.id != undefined){
       this.reservationService.cancelReservation(this.reser.id).subscribe(
         (cancelledReservation) => {
-          Swal.fire({icon: 'success', title: 'Reservation cancelled successfully!', text: 'You will be redirected to the reservation page.',}).then(() => {
-            this.router.navigate(['/my-reservations']);
+          
+
+          this.reservationService.getReservationsByStatusAndGuestId(this.authService.getUserID(), ReservationStatus.Cancelled).subscribe(
+          (cancelledReservations) => {
+            const numberOfCancelledReservations = cancelledReservations.length;
+            Swal.fire({
+              icon: 'success',
+              title: 'Reservation cancelled successfully!',
+              text: `Number of cancelled reservations: ${numberOfCancelledReservations}!`,
+            })
+            .then(() => {
+              this.router.navigate(['/my-reservations']);
+            });
+          },
+          (error) => {
+            console.error('Error creating review:', error);
           });
+          
 
           const notification: Notification = {
             fromUserDTO: this.reser.guest,
