@@ -76,7 +76,7 @@ export class AccommodationService {
     return this.http.get<Accommodation[]>(`${this.apiUrl}/mostPopular`);
   }
 
-  searchAccommodations(
+  searchAccommodationsFilters(
     location?: string,
     guestsNumber?: number,
     startDate?: Date,
@@ -100,6 +100,6 @@ export class AccommodationService {
       selectedType: selectedType || null,
       name:name || ""
     };
-    return this.http.get<Accommodation[]>(`${this.apiUrl}/search-filter`, { params });
+    return this.http.get<Accommodation[]>(`${this.apiUrl}/search-filters`, { params });
   }
 }

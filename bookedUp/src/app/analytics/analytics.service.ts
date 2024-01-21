@@ -37,6 +37,7 @@ export class AnalyticsService {
                 this.isDateInRange(this.formatDate(new Date(reservation.endDate)), startDate, endDate)
               );
   
+              console.log("This is acc ", accommodation, " and this profit, total: ", matchingReservations);
               const totalEarnings = matchingReservations.reduce((sum, reservation) => sum + reservation.totalPrice, 0);
               const totalReservations = matchingReservations.length;
   
@@ -90,8 +91,14 @@ export class AnalyticsService {
   
 
   private isDateInRange(date: string, startDate: string, endDate: string): boolean {
-    return date >= startDate && date <= endDate;
+    const parsedDate = new Date(date);
+    const parsedStartDate = new Date(startDate);
+    const parsedEndDate = new Date(endDate);
+
+    console.log("this is range ", date, "result: ", parsedDate >= parsedStartDate && parsedDate <= parsedEndDate);
+    return parsedDate >= parsedStartDate && parsedDate <= parsedEndDate;
   }
+
 
   private formatDate(date: Date): string {
     const year = date.getFullYear();

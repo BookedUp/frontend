@@ -63,7 +63,7 @@ export class IndexComponent implements OnInit {
 
 
       const location = (document.getElementById("locationTxt") as HTMLInputElement).value || "";
-      const guestNumber = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10) || 0;
+      const guestNumber = parseInt((document.getElementById("guestNumberTxt") as HTMLInputElement).value, 10) || 1;
 
       const fromDateInput = document.getElementById("fromDate") as HTMLInputElement;
       const selectedFromDateInputValue = fromDateInput.value;
@@ -86,7 +86,7 @@ export class IndexComponent implements OnInit {
         return;
       }
 
-      this.accommodationService.searchAccommodations(location, guestNumber, selectedFromDate, selectedToDate)
+      this.accommodationService.searchAccommodationsFilters(location, guestNumber, selectedFromDate, selectedToDate)
         .subscribe((results) => {
           this.searchResults = results;
           if (roleParam === 'ROLE_ADMIN') {
@@ -123,7 +123,7 @@ export class IndexComponent implements OnInit {
 
 
 
-        this.accommodationService.searchAccommodations(country, guestNumber, selectedFromDate, selectedToDate)
+        this.accommodationService.searchAccommodationsFilters(country, guestNumber, selectedFromDate, selectedToDate)
             .subscribe((results) => {
                 this.searchResults = results;
                 if (roleParam === 'ROLE_ADMIN') {
@@ -137,6 +137,7 @@ export class IndexComponent implements OnInit {
                 }
             });
     }
+    
     loadPhotos() {
         this.popularAcc.forEach((acc) => {
             this.photoService.loadPhoto(acc.photos[0]).subscribe(

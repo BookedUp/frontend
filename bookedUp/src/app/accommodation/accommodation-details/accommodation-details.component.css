@@ -23,7 +23,7 @@
   align-items: center;
 }
 .slider-box {
-  width: 80%;
+  width: 75%;
   height: 80%;
   position: relative;
   display: flex;
@@ -58,14 +58,16 @@
   display: block;
 }
 .more-images{
-  width: 20%;
-  margin-right: 10%;
+  width: 30%;
+  margin-right: 7%;
   position: relative;
   height: 80%;
 }
 .more{
   border-radius: var(--br-8xs);
   max-height: 48%;
+  min-height: 48%;
+  width: 100%;
   display: block;
 }
 .nav-bar{  
@@ -78,7 +80,8 @@
   color: var(--gray-1);
 }
 .bar-text,
-.bar-text-review {
+.bar-text-review,
+.bar-text-host {
   cursor: pointer;
   position: absolute;
   left: 122px;
@@ -86,6 +89,9 @@
 }
 .bar-text-review{
   left: 210px;
+}
+.bar-text-host{
+  left: 325px;
 }
 .clicked {
   color: var(--blue-1);

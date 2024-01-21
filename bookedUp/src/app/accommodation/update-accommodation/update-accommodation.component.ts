@@ -223,13 +223,56 @@ handlePerGuestChange() {
   }
 }
 
-edit(){
-  var amenities: Amenity[] = Object.keys(this.accAmenities)
-  .filter((key) => this.accAmenities[key])
-  .map((key) => key as Amenity);
+convertAmenities():Amenity[] {
+  var amenities: Amenity[] = []
+  if(this.accAmenities['Restaurant'] == true){
+    amenities.push(Amenity.Restaurant);
+  }
+  if(this.accAmenities['Free Wifi'] == true){
+    amenities.push(Amenity.FreeWifi);
+  }
+  if(this.accAmenities['Non Smoking Rooms'] == true){
+    amenities.push(Amenity.NonSmokingRooms);
+  }
+  if(this.accAmenities['Parking'] == true){
+    amenities.push(Amenity.Parking);
+  }
+  if(this.accAmenities['Swimming Pool'] == true){
+    amenities.push(Amenity.SwimmingPool);
+  }
+  if(this.accAmenities['Fitness Centre'] == true){
+    amenities.push(Amenity.FitnessCentre);
+  }
 
-  var selectedAccommodationType: AccommodationType = Object.keys(this.accTypeChecked)
-  .find((key) => this.accTypeChecked[key]) as AccommodationType;
+  return amenities;
+}
+
+converAccType(): AccommodationType{
+  var accType: AccommodationType = AccommodationType.Hostel;
+
+  if(this.accTypeChecked['Hostel'] == true){
+    accType = AccommodationType.Hostel;
+  }
+  if(this.accTypeChecked['Hotel'] == true){
+    accType = AccommodationType.Hotel;
+  }
+  if(this.accTypeChecked['Villa'] == true){
+    accType = AccommodationType.Villa;
+  }
+  if(this.accTypeChecked['Apartment'] == true){
+    accType = AccommodationType.Apartment;
+  }
+  if(this.accTypeChecked['Resort'] == true){
+    accType = AccommodationType.Resort;
+  }
+
+  return accType;
+}
+
+edit(){
+  var amenities: Amenity[] = this.convertAmenities();
+
+  var selectedAccommodationType: AccommodationType = this.converAccType();
 
   let pr : PriceType;
   if (this.perGuestChecked){
@@ -274,38 +317,27 @@ edit(){
   console.log('Changed acc:', this.editedAcc);
 
   this.accommodationService.updateAccommodation(this.selectedAccommodation.id ?? 0, this.editedAcc)
-    .subscribe(updatedAccommodation => {
-      console.log('Update successful:', updatedAccommodation); // Log the updated data
-      // Swal.fire({ icon: 'success', title: 'Accommodation edited successfully!', text: 'You will be redirected to the home page.' });
-      this.router.navigate(['/']);
-    }, error => {
-      console.error('Error updating accommodation:', error);
-      // Swal.fire({
-      //   icon: 'error',
-      //   title: 'Error',
-      //   text: 'Sorry, an error occurred while updating the accommodation. Please check the console for details and try again later.',
-      // });
-    });
-
-    Swal.fire({ icon: 'success', title: 'Accommodation edited successfully!', text: 'You will be redirected to the home page.' });
-
-  
-  // this.accommodationService.updateAccommodation(this.selectedAccommodation.id || 0, this.editedAcc).subscribe(
-  //   (accommodation: Accommodation) => {
-  //     console.log('Update successful:', accommodation);
-  //     Swal.fire({ icon: 'success', title: 'Accommodation edited successfully!', text: 'You will be redirected to the home page.' });
-  //     this.router.navigate(['/']);
-  //   },
-  //   (error) => {
-  //     console.error('Error updating accommodation:', error);
-  //     Swal.fire({
-  //       icon: 'error',
-  //       title: 'Error',
-  //       text: 'Sorry, an error occurred while updating the accommodation. Please check the console for details and try again later.',
-  //     });
-  //   }
-  // );
-  
+  .subscribe(updatedAccommodation => {
+    console.log('Update successful:', updatedAccommodation); // Log the updated data
+    Swal.fire({ icon: 'success', title: 'Accommodation edited successfully!', text: 'You will be directed to a page featuring your accommodations.' });    
+    this.router.navigate(['my-accommodations']);
+  }, error => {
+    console.error('Error updating accommodation:', error);
+    if (error.status === 403) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Change Denied!',
+        text: 'Whoops! It looks like there are existing reservations for this accommodation under your hosting profile, making it currently unmodifiable.',
+      });
+      this.router.navigate(['my-accommodations']);
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Uh-oh! It seems there is a hiccup. We are encountering an error that prevents modifications at the moment. Please try again later.',
+      });
+    }
+  });
 
 }
 
@@ -501,6 +533,7 @@ deleteDateRange(): void {
     this.addedDates = this.mergeOverlappingDateRanges(this.addedDates);
   }
 }
+
 nextImage() {
   if (this.currentIndex < this.pictureUrls.length - 1) {
     this.currentIndex++;
@@ -547,94 +580,94 @@ deleteImage():void{
   console.log("ovo je posle brisanja ", this.pictureUrls);
 }
 
-  loadPhotos() {
-    this.selectedAccommodation.photos.forEach((imageName) => {
-      this.photoService.loadPhoto(imageName).subscribe(
-          (data) => {
-            this.createImageFromBlob(data).then((url: string) => {
-              this.pictureUrls.push(url);
-            }).catch(error => {
-              console.error("Greška prilikom konverzije slike ${imageName}:" , error);
-            });
-          },
-          (error) => {
-            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
-          }
-      );
-    });
-  }
-
-
-  createImageFromBlob(imageBlob: Blob): Promise<string> {
-    const reader = new FileReader();
-
-    return new Promise<string>((resolve, reject) => {
-      reader.onloadend = () => {
-        resolve(reader.result as string);
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(imageBlob);
-    });
-  }
-
-  convertBlobToFiles(blobUrls: string[]): Promise<File[]> {
-    const files: File[] = [];
-  
-    // Map each blob URL to a Promise that resolves to a File
-    const promises = blobUrls.map(blobUrl =>
-      fetch(blobUrl)
-        .then(response => response.blob())
-        .then(blob => new File([blob], `image_${Date.now()}.png`, { type: blob.type }))
+loadPhotos() {
+  this.selectedAccommodation.photos.forEach((imageName) => {
+    this.photoService.loadPhoto(imageName).subscribe(
+        (data) => {
+          this.createImageFromBlob(data).then((url: string) => {
+            this.pictureUrls.push(url);
+          }).catch(error => {
+            console.error("Greška prilikom konverzije slike ${imageName}:" , error);
+          });
+        },
+        (error) => {
+          console.log("Doslo je do greske pri ucitavanju slike ${imageName}:" , error);
+        }
     );
-  
-    // Use Promise.all to wait for all promises to resolve
-    return Promise.all(promises);
-  }
-
-  private updateCopyPriceChange(): void {
-    if (this.accPriceChange.length % 2==0) {
-      const lastTwoChanges = this.accPriceChange.slice(-2); // Poslednja dva elementa
-
-      if (this.copyPriceChange.length === 0) {
-        // Ako je copyPriceChange prazan, kopiraj poslednja dva elementa iz accPriceChange
-        this.copyPriceChange = [...lastTwoChanges];
-      } else {
-        // Ako nije prazan, ažuriraj ga na osnovu poslednja dva elementa iz accPriceChange
-        const lastTwoCopyChanges = this.copyPriceChange.slice(-2);
-
-        const startDate =lastTwoChanges[0].changeDate;
-        const endDate = lastTwoChanges[1].changeDate;
-
-        // Iteriraj kroz copyPriceChange i ažuriraj ga
-        this.copyPriceChange.forEach((copyChange, index) => {
-          const copyDate = copyChange.changeDate;
-
-          if (copyDate >= startDate && copyDate <= endDate) {
-            // Datum u copyPriceChange je između startDate i endDate, izbaci ga
-            this.copyPriceChange.splice(index, 1);
-          }
-        });
-
-        const uniqueDates = this.copyPriceChange.filter((change, index, self) => {
-          const currentChangeDate = new Date(change.changeDate).toISOString();
-          const isUnique = index === self.findIndex(c => currentChangeDate === new Date(c.changeDate).toISOString());
-
-          const isSameAsStartDate = currentChangeDate === new Date(startDate).toISOString();
-
-          return isUnique && !isSameAsStartDate;
-        });
-
-        this.copyPriceChange = [
-          ...uniqueDates,
-          { changeDate: startDate, newPrice: lastTwoChanges[0].newPrice },
-          { changeDate: endDate, newPrice: lastTwoChanges[1].newPrice }
-        ];
+  });
+}
 
 
+createImageFromBlob(imageBlob: Blob): Promise<string> {
+  const reader = new FileReader();
 
-      }
+  return new Promise<string>((resolve, reject) => {
+    reader.onloadend = () => {
+      resolve(reader.result as string);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(imageBlob);
+  });
+}
+
+convertBlobToFiles(blobUrls: string[]): Promise<File[]> {
+  const files: File[] = [];
+
+  // Map each blob URL to a Promise that resolves to a File
+  const promises = blobUrls.map(blobUrl =>
+    fetch(blobUrl)
+      .then(response => response.blob())
+      .then(blob => new File([blob], `image_${Date.now()}.png`, { type: blob.type }))
+  );
+
+  // Use Promise.all to wait for all promises to resolve
+  return Promise.all(promises);
+}
+
+private updateCopyPriceChange(): void {
+  if (this.accPriceChange.length % 2==0) {
+    const lastTwoChanges = this.accPriceChange.slice(-2); // Poslednja dva elementa
+
+    if (this.copyPriceChange.length === 0) {
+      // Ako je copyPriceChange prazan, kopiraj poslednja dva elementa iz accPriceChange
+      this.copyPriceChange = [...lastTwoChanges];
+    } else {
+      // Ako nije prazan, ažuriraj ga na osnovu poslednja dva elementa iz accPriceChange
+      const lastTwoCopyChanges = this.copyPriceChange.slice(-2);
+
+      const startDate =lastTwoChanges[0].changeDate;
+      const endDate = lastTwoChanges[1].changeDate;
+
+      // Iteriraj kroz copyPriceChange i ažuriraj ga
+      this.copyPriceChange.forEach((copyChange, index) => {
+        const copyDate = copyChange.changeDate;
+
+        if (copyDate >= startDate && copyDate <= endDate) {
+          // Datum u copyPriceChange je između startDate i endDate, izbaci ga
+          this.copyPriceChange.splice(index, 1);
+        }
+      });
+
+      const uniqueDates = this.copyPriceChange.filter((change, index, self) => {
+        const currentChangeDate = new Date(change.changeDate).toISOString();
+        const isUnique = index === self.findIndex(c => currentChangeDate === new Date(c.changeDate).toISOString());
+
+        const isSameAsStartDate = currentChangeDate === new Date(startDate).toISOString();
+
+        return isUnique && !isSameAsStartDate;
+      });
+
+      this.copyPriceChange = [
+        ...uniqueDates,
+        { changeDate: startDate, newPrice: lastTwoChanges[0].newPrice },
+        { changeDate: endDate, newPrice: lastTwoChanges[1].newPrice }
+      ];
+
+
+
     }
   }
+}
 
 }
 

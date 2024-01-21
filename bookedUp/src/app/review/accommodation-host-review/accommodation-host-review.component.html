@@ -21,8 +21,8 @@
 
       <div id="nav-bar" class="nav-bar">
         <div class="bar-text" (click)="navigateTo('/accommodation-details')">Overview</div>
-        <div class="bar-text-review" style="color: var(--blue-1); font-weight: bold;">Guest Review</div>
-        <div class="bar-text-host" (click)="navigateTo('/accommodation-host-reviews')">Host Review</div>
+        <div class="bar-text-review" (click)="navigateTo('/accommodation-reviews')">Guest Review</div>
+        <div class="bar-text-host"style="color: var(--blue-1); font-weight: bold;">Host Review</div>
       </div>
 
       <div id="main-data" class="main-data-box">
@@ -72,7 +72,6 @@
         </div>
       </div>
         <app-shorter-footer></app-shorter-footer>
-
     </div>
   </body>
 </html>

@@ -12,6 +12,7 @@ import { AddReviewComponent } from './add-review/add-review.component';
 import { GuestReviewsComponent } from './guest-reviews/guest-reviews.component';
 import { HostReviewsComponent } from './host-reviews/host-reviews.component';
 import { ReviewReportsComponent } from './review-reports/review-reports.component';
+import { AccommodationHostReviewComponent } from './accommodation-host-review/accommodation-host-review.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { ReviewReportsComponent } from './review-reports/review-reports.componen
     GuestReviewsComponent,
     HostReviewsComponent,
     ReviewReportsComponent,
+    AccommodationHostReviewComponent,
   ],
   imports: [
     CommonModule,

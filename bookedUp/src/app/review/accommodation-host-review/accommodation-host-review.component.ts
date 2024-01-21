@@ -11,11 +11,11 @@ import { Review } from '../model/review.model';
 import { ReviewService } from '../review.service';
 
 @Component({
-  selector: 'app-accommodation-reviews',
-  templateUrl: './accommodation-reviews.component.html',
-  styleUrls: ['./accommodation-reviews.component.css']
+  selector: 'app-accommodation-host-review',
+  templateUrl: './accommodation-host-review.component.html',
+  styleUrls: ['./accommodation-host-review.component.css']
 })
-export class AccommodationReviewsComponent implements OnInit {
+export class AccommodationHostReviewComponent implements OnInit {
   pictureUrls: string[] = [];
   orgPictureUrls: string[] = [];
 
@@ -83,12 +83,19 @@ export class AccommodationReviewsComponent implements OnInit {
   }
 
   private loadReviews() {
-    this.reviews = this.reviewService.getAccommodationReviews(this.accommodationId);
-
-    this.reviewService.getAccommodationReviews(this.accommodationId).subscribe((results) => {
-      this.review = results;
-      this.loadPhotosUser();  
-    }); 
+    
+    var hostId: number | undefined;
+    this.accommodationService.getAccommodationById(this.accommodationId).subscribe((result) =>{
+      hostId = result.host.id;
+      if(hostId !== undefined){
+        this.reviews = this.reviewService.getHostReviewsByHostId(hostId);
+        
+        this.reviewService.getHostReviewsByHostId(hostId).subscribe((results) => {
+          this.review = results;
+          this.loadPhotosUser();  
+        }); 
+      }
+    });  
   }
 
   findAccommodationById(accommodations: Accommodation[], targetId: number): Accommodation | undefined {
@@ -266,3 +273,4 @@ export class AccommodationReviewsComponent implements OnInit {
 
   protected readonly last = last;
 }
+

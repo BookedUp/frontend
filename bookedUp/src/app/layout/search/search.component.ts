@@ -98,6 +98,7 @@ export class SearchComponent implements OnInit {
     this.outDate = this.route.snapshot.queryParams['selectedToDate'] || new Date();
     this.guests = this.route.snapshot.queryParams['guestNumber'] || 0;
     this.searchResults = JSON.parse(this.route.snapshot.queryParams['searchResults']);
+    console.log("this is searchResults", this.searchResults);
 
     this.loadPhotos();
 
@@ -223,7 +224,7 @@ export class SearchComponent implements OnInit {
     }
 
     this.accommodationService
-      .searchAccommodations(this.location, this.guests , this.fromDate, this.outDate, popular, minPrice, maxPrice, this.customBudget, selectedTypeEnum, this.name)
+      .searchAccommodationsFilters(this.location, this.guests , this.fromDate, this.outDate, popular, minPrice, maxPrice, this.customBudget, selectedTypeEnum, this.name)
       .subscribe(
         (filterResults: Accommodation[]) => {
           console.log('Accommodations:', filterResults);
@@ -315,11 +316,13 @@ export class SearchComponent implements OnInit {
   }
 
   loadPhotos() {
+    console.log("this is result in load ", this.searchResults);
     this.searchResults.forEach((acc) => {
       this.photoService.loadPhoto(acc.photos[0]).subscribe(
           (data) => {
             this.createImageFromBlob(data).then((url: string) => {
               if(acc.id){
+                console.log("this is adding photo: ", acc.name);
                 this.photoDict.push({accId: acc.id, url: url});
               }
             }).catch(error => {

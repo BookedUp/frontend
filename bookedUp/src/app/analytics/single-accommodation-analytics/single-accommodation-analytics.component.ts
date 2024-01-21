@@ -70,7 +70,7 @@ export class SingleAccommodationAnalyticsComponent implements OnInit {
   
         this.chartLabels = uniqueMonths;
         this.chartData = [
-          { data: profitData, label: 'Profit (divided by 100)', backgroundColor: '#037940' },
+          { data: profitData, label: 'Profit (x100)', backgroundColor: '#037940' },
           { data: reservationsData, label: 'Reservations', backgroundColor: '#bc1823' }
         ];
       },

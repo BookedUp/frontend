@@ -15,22 +15,24 @@
                 </div>
 
                 <div class="inputs-box">
-                    <b class="title-text">{{reservation.accommodation.name}}</b>
-                    <div class="reviews-frame">
-                        <div class="stars-container">
-                            <span class="star" *ngFor="let star of generateStars(roundHalf((reservation?.accommodation?.averageRating ?? 0)))">
-                                {{ star }}
-                            </span>
-                        </div>
-                        <div class="normal-text">{{ (reservation?.accommodation?.averageRating ?? 0) }}</div>
-                    </div>
-                    <div id="address" class="address">
-                        <img class="icon" alt="" src="../../assets/public/location-1.svg" />
+                    <b class="title-text" style="margin-top: 2%;">{{reservation.accommodation.name}}</b>
+                    <div class="address" style="margin-top: 2%; align-content: center; flex-wrap: wrap; align-items: center;" >
+                        <!-- <div>Host: </div> -->
+                        <img alt="" src="../../../assets/public/usersquare-2.svg" class="icon" />
+                        <b> {{ reservation.accommodation.host.firstName }} {{ reservation.accommodation.host.lastName }}</b>
+                        <img class="icon" alt="" src="../../assets/public/location-1.svg" style="margin-left: 5%;"/>
                         <div class="" id="normal-text">
                         {{ reservation.accommodation.address.streetAndNumber }}, {{reservation.accommodation.address.city}} {{reservation.accommodation.address.postalCode}}, {{ reservation.accommodation.address.city }}
                         </div>
-                    </div>
-
+                        <div class="reviews-frame" style="margin-left: 5%; ">
+                            <div class="stars-container">
+                                <span class="star" *ngFor="let star of generateStars(roundHalf((reservation?.accommodation?.averageRating ?? 0)))">
+                                    {{ star }}
+                                </span>
+                            </div>
+                            <div class="normal-text">{{ (reservation?.accommodation?.averageRating ?? 0) }}</div>
+                        </div>
+                    </div> 
 
                     <div id="price" class="address" style="margin-top: 15px;">
                         <div class="info-text">Price: </div>
@@ -52,20 +54,17 @@
                         <b class="info-text">{{ reservation.endDate| date: 'd MMMM yyyy' }}</b>
                     </div>
 
+                    <div class="address">
+                        <div class="info-text">Guest: </div>
+                        <b class="info-text"> {{ reservation.guest.firstName }} {{ reservation.guest.lastName }}</b>
+                    </div>
+                    
+                        
+
                     <div id="status" class="address">
                         <div class="info-text">Status: </div>
                         <b [ngStyle]="{ 'color': getStatusColor(reservation.status) }" class="info-text">{{ reservation.status }}</b>
-                    </div>
-
-<!--                    <div  class="address">-->
-<!--                        <div class="info-text">Guest: </div>-->
-<!--                        <b class="info-text"> {{ reservation.guest.firstName }} {{ reservation.guest.lastName }}</b>-->
-<!--                    </div>-->
-
-<!--                    <div  class="address">-->
-<!--                        <div class="info-text">Host: </div>-->
-<!--                        <b class="info-text"> {{ reservation.accommodation.host.firstName }} {{ reservation.accommodation.host.lastName }}</b>-->
-<!--                    </div>-->
+                    </div>               
                 </div>
             </div>
 

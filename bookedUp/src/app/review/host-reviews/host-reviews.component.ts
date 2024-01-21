@@ -17,8 +17,9 @@ export class HostReviewsComponent implements OnInit {
   reviews: Observable<Review[]> = new Observable();
   selectedClass: string = 'all-accommodations';
   filter: string = 'all';
+  photoDict: { reviewId: number, url: string }[] = [];
+  photoDictUser: { accId: number, url: string }[] = [];
 
-  photoDict: { accId: number, url: string }[] = [];
   review: Review[] = [];
 
   constructor(private reviewService: ReviewService, private router: Router, private route: ActivatedRoute, private photoService: PhotoService, private authService: AuthService, private reviewReportService: ReviewReportService) {
@@ -45,22 +46,56 @@ export class HostReviewsComponent implements OnInit {
 
   private loadUsers(): void {
     if (this.filter === 'all') {
-      this.reviews = this.reviewService.getReviewsByHostId(this.authService.getUserID());
+      this.reviews = this.reviewService.getReviewsByHostId(this.authService.getUserID())
+      .pipe(
+        map(reviews => reviews.sort((a, b) => {
+          const timestampA = new Date(a.date || '').getTime();
+          const timestampB = new Date(b.date || '').getTime();
+          return timestampB - timestampA;
+        }))
+      );
+
       this.reviewService.getReviewsByHostId(this.authService.getUserID()).subscribe((results) => {
         this.review = results;
         this.loadPhotos();
+        this.loadPhotosUser()
       });
+
     } else if (this.filter === 'accommodations') {
-      this.reviews = this.reviewService.getAccommodationReviewsByHostId(this.authService.getUserID());
+      this.reviews = this.reviewService.getAccommodationReviewsByHostId(this.authService.getUserID())
+      .pipe(
+        map(reviews => reviews.sort((a, b) => {
+          const timestampA = new Date(a.date || '').getTime();
+          const timestampB = new Date(b.date || '').getTime();
+          return timestampB - timestampA;
+        }))
+      );
       this.reviewService.getAccommodationReviewsByHostId(this.authService.getUserID()).subscribe((results) => {
         this.review = results;
         this.loadPhotos();
+        this.loadPhotosUser()
       });
     } else {
-      this.reviews = this.reviewService.getHostReviewsByHostId(this.authService.getUserID());
+      this.reviews = this.reviewService.getHostReviewsByHostId(this.authService.getUserID())
+      .pipe(
+        map(reviews => reviews.sort((a, b) => {
+          const timestampA = new Date(a.date || '').getTime();
+          const timestampB = new Date(b.date || '').getTime();
+          return timestampB - timestampA;
+        }))
+      );
       this.reviewService.getHostReviewsByHostId(this.authService.getUserID()).subscribe((results) => {
         this.review = results;
         this.loadPhotos();
+        this.loadPhotosUser()
+      });
+    }
+
+    if(this.reviews != undefined){
+      this.reviews.subscribe(sortedReviews => {
+        sortedReviews.forEach(review => {
+          this.loadPhotos();
+          this.loadPhotosUser();        });
       });
     }
   }
@@ -130,27 +165,50 @@ export class HostReviewsComponent implements OnInit {
 
 
 
-  loadPhotos() {
-    //ovde treba neka logika da se pronadje guest koji je ostavio review, poenta je da se prikaze profila slika tog gosta, vrv neka funkcija na beku
+  loadPhotosUser() {
+    this.review.forEach((acc) => {
+      // Provera postojanja acc i njegovog accommodation svojstva
+      if (acc && acc.host && acc.host.profilePicture) {
+        this.photoService.loadPhoto(acc.host.profilePicture).subscribe(
+          (data) => {
+            this.createImageFromBlob(data).then((url: string) => {
+              if (acc.id) {
+                this.photoDictUser.push({ accId: acc.id, url: url });
+                console.log(this.photoDictUser)
+              }
+            }).catch(error => {
+              console.error("Greška prilikom konverzije slike ${imageName}:", error);
+            });
+          },
+          (error) => {
+            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
+          }
+        );
+      }
 
-    // this.review.forEach((acc) => {
-    //   if () {
-    //     this.photoService.loadPhoto(acc.profilePicture).subscribe(
-    //         (data) => {
-    //           this.createImageFromBlob(data).then((url: string) => {
-    //             if (acc.id) {
-    //               this.photoDict.push({accId: acc.id, url: url});
-    //             }
-    //           }).catch(error => {
-    //             console.error("Greška prilikom konverzije slike ${imageName}:", error);
-    //           });
-    //         },
-    //         (error) => {
-    //           console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
-    //         }
-    //     );
-    //   }
-    // });
+    });
+  }
+
+  loadPhotos() {
+    this.review.forEach((review) => {
+      if (review && review.guest && review.guest.profilePicture) {
+        this.photoService.loadPhoto(review.guest.profilePicture).subscribe(
+          (data) => {
+            this.createImageFromBlob(data).then((url: string) => {
+              if (review.id) {
+                this.photoDict.push({ reviewId: review.id, url: url });
+              }
+            }).catch(error => {
+              console.error("Greška prilikom konverzije slike ${imageName}:", error);
+            });
+          },
+          (error) => {
+            console.log("Doslo je do greske pri ucitavanju slike ${imageName}:", error);
+          }
+        );
+      }
+
+    });
   }
 
 
@@ -166,8 +224,13 @@ export class HostReviewsComponent implements OnInit {
     });
   }
 
-  getPhotoUrl(accId: number | undefined): string | undefined {
-    const photo = this.photoDict.find((item) => item.accId === accId);
+  getPhotoUrl(reviewId: number | undefined): string | undefined {
+    const photo = this.photoDict.find((item) => item.reviewId === reviewId);
+    return photo ? photo.url : '';
+  }
+
+  getPhotoUrlUser(accId: number | undefined): string | undefined {
+    const photo = this.photoDictUser.find((item) => item.accId === accId);
     return photo ? photo.url : '';
   }
 

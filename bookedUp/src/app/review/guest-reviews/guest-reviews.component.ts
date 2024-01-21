@@ -4,7 +4,7 @@ import { Router, ActivatedRoute} from '@angular/router';
 import { Accommodation } from 'src/app/accommodation/model/accommodation.model';
 import { ReviewService } from '../review.service';
 import { Review } from '../model/review.model';
-import { Observable } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import Swal from "sweetalert2";
 import {PhotoService} from "../../shared/photo/photo.service";
 import {AuthService} from "../../infrastructure/auth/auth.service";
@@ -47,7 +47,18 @@ export class GuestReviewsComponent implements OnInit {
 
   private loadReviews(): void {
     if (this.filter === 'all') {
-      this.reviews = this.reviewService.getGuestReviews(this.authService.getUserID());
+      this.reviewService.getGuestReviews(this.authService.getUserID())
+      .pipe(
+        map(reviews => reviews.sort((a, b) => {
+          const timestampA = a.date ? new Date(a.date).getTime() : 0;
+          const timestampB = b.date ? new Date(b.date).getTime() : 0;
+          return timestampB - timestampA;
+        }))
+      )
+      .subscribe(sortedReviews => {
+        this.reviews = of(sortedReviews);
+      });
+
       this.reviewService.getGuestReviews(this.authService.getUserID()).subscribe((results) => {
         this.review = results;
         this.loadPhotos();
@@ -55,14 +66,32 @@ export class GuestReviewsComponent implements OnInit {
 
       });
     } else if (this.filter === 'posted') {
-      this.reviews = this.reviewService.getGuestAccommodationReviews(this.authService.getUserID());
+      this.reviewService.getGuestAccommodationReviews(this.authService.getUserID()).pipe(
+        map(reviews => reviews.sort((a, b) => {
+          const timestampA = a.date ? new Date(a.date).getTime() : 0;
+          const timestampB = b.date ? new Date(b.date).getTime() : 0;
+          return timestampB - timestampA;
+        }))
+      )
+      .subscribe(sortedReviews => {
+        this.reviews = of(sortedReviews);
+      });
       this.reviewService.getGuestAccommodationReviews(this.authService.getUserID()).subscribe((results) => {
         this.review = results;
         this.loadPhotos();
       });
     } else {
 
-      this.reviews = this.reviewService.getGuestHostReviews(this.authService.getUserID());
+      this.reviewService.getGuestHostReviews(this.authService.getUserID()).pipe(
+        map(reviews => reviews.sort((a, b) => {
+          const timestampA = a.date ? new Date(a.date).getTime() : 0;
+          const timestampB = b.date ? new Date(b.date).getTime() : 0;
+          return timestampB - timestampA;
+        }))
+      )
+      .subscribe(sortedReviews => {
+        this.reviews = of(sortedReviews);
+      });
       this.reviewService.getGuestHostReviews(this.authService.getUserID()).subscribe((results) => {
         this.review = results;
         this.loadPhotosUsers();
