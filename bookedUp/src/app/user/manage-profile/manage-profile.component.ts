@@ -31,7 +31,7 @@ export class ManageProfileComponent implements OnInit {
   updateForm: FormGroup | undefined;
 
 
-  constructor(private userService: UserService,private photoService:PhotoService, private guestService: GuestService,private hostService: HostService, private router: Router,
+  constructor(public userService: UserService,private photoService:PhotoService, public guestService: GuestService,public hostService: HostService, private router: Router,
     private authService: AuthService, private formBuilder: FormBuilder,private zone: NgZone
   ) {
     this.updateForm = this.formBuilder.group({
@@ -50,12 +50,13 @@ export class ManageProfileComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getUser(this.authService.getUserID()).subscribe(
-        (user: User) => {
-          this.loggedUser = user;
-
-          this.loadPhotos();
-
-          this.updateForm!.setValue({
+      (user: User) => {
+        this.loggedUser = user;
+  
+        this.loadPhotos();
+  
+        if (this.updateForm) {
+          this.updateForm.setValue({
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
@@ -66,12 +67,14 @@ export class ManageProfileComponent implements OnInit {
             postalCode: user.address?.postalCode,
             country: user.address?.country,
           });
-        },
-        (error) => {
-          console.error('Error loading user:', error);
         }
+      },
+      (error) => {
+        console.error('Error loading user:', error);
+      }
     );
   }
+  
 
   ngAfterViewInit() {
     this.fileInput.nativeElement.addEventListener('change', (event: any) => {
