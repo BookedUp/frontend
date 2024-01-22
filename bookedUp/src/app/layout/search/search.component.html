@@ -37,7 +37,7 @@
               <b class="search-by-property3" >Search by property name</b>
             <div class="search-1-parent1">
               <img class="location-1-icon16" alt="" src="../../assets/public/search-1.svg" />
-              <input type="text" class="melbourne3" placeholder="eg. Beach westpalm" [(ngModel)]="name" (ngModelChange)="onNameChange($event)"/>
+              <input id="propertyNameInput" type="text" class="melbourne3" placeholder="eg. Beach westpalm" [(ngModel)]="name" (ngModelChange)="onNameChange($event)"/>
             </div>
           </div>
 
@@ -158,10 +158,10 @@
         <div class="APARTMENT" [ngClass]="{ 'clicked': selectedType === 'APARTMENT' }" (click)="changeStyle('APARTMENT')">
           <div class="register1">Apartments</div>
         </div>
-        <div class="RESORT" [ngClass]="{ 'clicked': selectedType === 'RESORT' }" (click)="changeStyle('RESORT')">
+        <div  id='resortType' class="RESORT" [ngClass]="{ 'clicked': selectedType === 'RESORT' }" (click)="changeStyle('RESORT')">
           <div class="register1">Resorts</div>
         </div>
-        <div class="VILLA" [ngClass]="{ 'clicked': selectedType === 'VILLA' }" (click)="changeStyle('VILLA')">
+        <div id='villaType' class="VILLA" [ngClass]="{ 'clicked': selectedType === 'VILLA' }" (click)="changeStyle('VILLA')">
           <div class="register1">Villas</div>
         </div>
       </div>
@@ -173,7 +173,7 @@
 
       <div id="frames-apartments">
         <ng-container *ngIf="searchResults && searchResults.length > 0; else noResults">
-          <div *ngFor="let result of searchResults" class="search-unlogged-child1">
+          <div *ngFor="let result of searchResults" class="search-unlogged-child1" id="resultAccommodation">
             <div id="picture-apartments">
               <img
                 class="search-unlogged-child11"
@@ -194,7 +194,7 @@
               </div>
 
               <div class="parent28">
-                <b class="b83">{{ result.price }}$</b>
+                <b id="unitPrice" class="b83">{{ result.price }}$</b>
                 <b class="b84" *ngIf="result.priceType=='PER_GUEST'">/{{priceTypeGuest}}</b>
                 <b class="b84" *ngIf="result.priceType=='PER_NIGHT'">/{{priceTypeNight}}</b>
               </div>
