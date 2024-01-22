@@ -25,7 +25,7 @@ describe('UserService', () => {
     expect(userService).toBeTruthy();
   });
 
-  it('should retrieve users from the API', () => {
+  it('should retrieve users from', () => {
     const mockUsers: User[] = [
       { id: 1, firstName: 'Vesna', lastName: 'Vasic', email: 'vesna.vasic@example.com', phone: 123456790 },
       { id: 2, firstName: 'Ana', lastName: 'Poparic', email: 'ana.poparic@example.com', phone: 9876543210 },
@@ -41,9 +41,7 @@ describe('UserService', () => {
     req.flush(mockUsers);
   });
 
-
-
-  it('should handle errors', () => {
+  it('should handle errors when recieving users', () => {
     const mockError = { status: 404, statusText: 'Not Found' };
 
     userService.getUsers().subscribe(
@@ -58,10 +56,7 @@ describe('UserService', () => {
     req.error(new ErrorEvent('Not Found'), mockError);
   });
 
-  // Dodaj slične testove za druge metode u UserService
-  // ...
-
-  it('should create a new user via API', () => {
+  it('should create a new user', () => {
     const mockUser: User = {
       id: 3,
       firstName: 'New',
@@ -79,7 +74,31 @@ describe('UserService', () => {
     req.flush(mockUser);
   });
 
-  it('should update an existing user via API', () => {
+  it('should handle updating a non-existent user - Negative Case', () => {
+    const mockUser: User = {
+        id: 3,
+        firstName: 'Updated',
+        lastName: 'User',
+        email: 'updated.user@example.com',
+        phone: 9876543210,
+    };
+
+    userService.updateUser(999, mockUser).subscribe(
+        () => {
+            fail('Expected error, but got success');
+        },
+        (error) => {
+            expect(error.status).toEqual(404);
+        }
+    );
+
+    const req = httpTestingController.expectOne('http://localhost:8080/api/users/999');
+    expect(req.request.method).toEqual('PUT');
+
+    req.flush(null, { status: 404, statusText: 'Not Found' });
+  });
+
+  it('should update an existing user - Positive Case', () => {
     const mockUser: User = {
       id: 3,
       firstName: 'Updated',
@@ -97,7 +116,7 @@ describe('UserService', () => {
     req.flush(mockUser);
   });
 
-  it('should delete an existing user via API', () => {
+  it('should delete an existing user', () => {
     const userId = 3;
 
     userService.deleteUser(userId).subscribe(() => {
@@ -108,3 +127,5 @@ describe('UserService', () => {
     req.flush({});
   });
 });
+
+//ng test --include="**/user.service.spec.ts"
