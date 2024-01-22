@@ -27,9 +27,9 @@ describe('UserService', () => {
 
   it('should retrieve users from the API', () => {
     const mockUsers: User[] = [
-      { id: 1, firstName: 'Vesna', lastName: 'Vasic', email: 'vesna.vasic@example.com', phone: 1234567890 },
+      { id: 1, firstName: 'Vesna', lastName: 'Vasic', email: 'vesna.vasic@example.com', phone: 123456790 },
       { id: 2, firstName: 'Ana', lastName: 'Poparic', email: 'ana.poparic@example.com', phone: 9876543210 },
-      { id: 3, firstName: 'Dusica', lastName: 'Trbovic', email: 'dusica.trbovic@example.com', phone: 5555555555 },
+      { id: 3, firstName: 'Dusica', lastName: 'Trbovic', email: 'dusica.trbovic@example.com', phone: 55555555 },
     ];
 
     userService.getUsers().subscribe((users) => {
@@ -101,8 +101,6 @@ describe('UserService', () => {
     const userId = 3;
 
     userService.deleteUser(userId).subscribe(() => {
-      // The expectation here depends on your server implementation
-      // If it returns a response, you can check for it, or if it returns void (NO_CONTENT), you can just check for the absence of errors
     });
 
     const req = httpTestingController.expectOne(`http://localhost:8080/api/users/${userId}`);
