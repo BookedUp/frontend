@@ -241,30 +241,17 @@ export class ManageProfileComponent implements OnInit {
   }
 
   private deleteGuest(){
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You won\'t be able to revert this!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        if (this.loggedUser?.id != null) {
-          this.logout();
-          this.guestService.deleteGuest(this.loggedUser?.id).subscribe(
-              () => {
-                Swal.fire('Deleted!', 'Your account has been deleted.', 'success');
-              },
-              (error) => {
-                Swal.fire('Error', 'You cannot delete your account because you have active reservations in the future. You will be unlogged now!', 'error');
-              }
-          );
-        }
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelled', 'Your account is safe :)', 'info');
-      }
-    });
+    if (this.loggedUser?.id != null) {
+      this.logout();
+      this.guestService.deleteGuest(this.loggedUser?.id).subscribe(
+          () => {
+            Swal.fire('Deleted!', 'Your account has been deleted.', 'success');
+          },
+          (error) => {
+            Swal.fire('Error', 'You cannot delete your account because you have active reservations in the future. You will be unlogged now!', 'error');
+          }
+      );
+    }
   }
 
 
@@ -303,10 +290,10 @@ export class ManageProfileComponent implements OnInit {
         this.authService.setUser();
         // Use Angular Zone to trigger change detection
         this.zone.run(() => {
-          this.router.navigate(['/']).then(() => {
-            // Reload the current route to reflect changes (optional)
-            this.router.navigate([this.router.url]);
-          });
+          // this.router.navigate(['/']).then(() => {
+          //   // Reload the current route to reflect changes (optional)
+          //   this.router.navigate([this.router.url]);
+          // });
         });
       },
       (error) => {

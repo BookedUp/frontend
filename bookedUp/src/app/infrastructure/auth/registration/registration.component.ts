@@ -17,7 +17,7 @@ import { Observable, map } from 'rxjs';
 export class RegistrationComponent {
   showHostText = false;
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService) {
+  constructor(private authService: AuthService, public router: Router, private userService: UserService) {
   }
 
   registrationForm = new FormGroup({
@@ -66,7 +66,7 @@ export class RegistrationComponent {
     if (this.registrationForm.valid && this.checkForEmptyValues(formValues) && this.checkPasswordsMatch(formValues)) {
       this.isUserExist(formValues.email || '').subscribe(result => {
         if (result) {
-          Swal.fire('Error', 'Account with this email already exist.', 'error');
+          Swal.fire('Error', 'Account with this email already exists.', 'error');
         } else {
           const user: User = {
             firstName: formValues.firstName || '',

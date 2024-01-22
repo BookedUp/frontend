@@ -8,20 +8,25 @@ import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {ToastrModule} from "ngx-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { MaterialModule } from '../../material/material.module';
-import {Router} from "@angular/router";
+import {NavigationExtras, Router} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
 import { RegistrationComponent } from './registration.component';
 import { Role } from 'src/app/user/model/role.enum';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
+import { mockUsers, mockUser4 } from 'src/app/mocks/user.service.mock';
+import { AuthService } from '../auth.service';
+import { User } from 'src/app/user/model/user.model';
 
 describe('RegisterComponent', () => {
 
   let component: RegistrationComponent ;
   let fixture: ComponentFixture<RegistrationComponent>;
   let el: HTMLElement;
-  let userServiceMock: jasmine.SpyObj<UserService>;
-  let swalFireSpy: jasmine.Spy<any>;
+  let swalFireSpy: jasmine.SpyObj<any>;
+  let userService: jasmine.SpyObj<UserService>;
+  let authService: jasmine.SpyObj<AuthService>;
+  let router: jasmine.SpyObj<Router>;
 
   const setFormControlValue = (controlName?: string, value?: any) => {
     component.registrationForm.get('firstName')?.setValue('Ime')
@@ -44,8 +49,11 @@ describe('RegisterComponent', () => {
   };
 
   beforeEach(() => {
-    const spyUserService = jasmine.createSpyObj('UserService', ['getUsers']);
+    userService = jasmine.createSpyObj('UserService', ['getUsers']);
     
+    authService = jasmine.createSpyObj('AuthService', ['register']);
+    router = jasmine.createSpyObj('Router', ['navigate']);
+
     TestBed.configureTestingModule({
       declarations: [RegistrationComponent],
       imports: [
@@ -59,13 +67,14 @@ describe('RegisterComponent', () => {
         RouterTestingModule.withRoutes([])
       ],
       providers: [
-        { provide: UserService, useValue: spyUserService },
+        { provide: UserService, useValue: userService },
         { provide: Router, useClass: RouterStub },
+        { provide: AuthService, useValue: authService },
       ]
     }).compileComponents();
     
+    userService.getUsers.and.returnValue(of(mockUsers));
     fixture = TestBed.createComponent(RegistrationComponent);
-    userServiceMock = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
     swalFireSpy = spyOn(Swal, 'fire');
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -210,40 +219,27 @@ describe('RegisterComponent', () => {
     expect(result).toBeFalse();
   }));
   
-  it('should return true if user already exists', fakeAsync(() => {
-    const sampleUser = {
-      firstName: 'Ime',
-      lastName: 'Prezime',
-      email: 'test@example.com',
-      streetNumber: 'Bulevar Oslobodjenja 5',
-      city: 'Novi Sad',
-      postalCode: '21000',
-      country: 'Srbija',
-      phone: 6425271738,
-      role: Role.Guest,
-      password: 'sifra123',
-      passwordAgain: 'sifra123'
-    };
-  
-    userServiceMock.getUsers.and.returnValue(of([sampleUser]));
+  it('should return true if user already exists', fakeAsync(() => {  
     let result: boolean | undefined;
-    component.isUserExist('test@example.com').subscribe(res => result = res);
+    userService.getUsers.and.returnValue(of([{ email: 'vesna.vasic@example.com' }]));
+
+    component.isUserExist('vesna.vasic@example.com').subscribe(res => result = res);
     tick();
   
     expect(result).toBeTrue();
   }));
   
-  it('should return false if user does not exist', fakeAsync(() => {
-    userServiceMock.getUsers.and.returnValue(of([]));
+  it('should return false if user does not exist', fakeAsync(() => {  
     let result: boolean | undefined;
-    component.isUserExist('test@example.com').subscribe(res => result = res);
-    tick();
+    userService.getUsers.and.returnValue(of([]));
   
+    component.isUserExist('vesna.vasic@example.com').subscribe(res => result = res);
+    tick();
+    
     expect(result).toBeFalse();
   }));
-
+  
   it('should handle error on registration with invalid form values', fakeAsync(() => {
-    const registerSpy = spyOn(component, 'register').and.callThrough();
     
     component.registrationForm.get('firstName')?.setValue('');
     
@@ -251,42 +247,56 @@ describe('RegisterComponent', () => {
     el.click();
     tick();
   
-    expect(registerSpy).toHaveBeenCalled();
     
+    expect(authService.register).not.toHaveBeenCalled();
     expect(Swal.fire).toHaveBeenCalledWith('Error', 'Some fields are empty or have invalid values.', 'error');
   }));
 
-  it('should handle successful user registration', fakeAsync(() => {
-
-    const registerSpy = spyOn(component, 'register').and.callThrough();
-    
-    component.registrationForm.get('firstName')?.setValue('Ime')
-    component.registrationForm.get('lastName')?.setValue('Prezime')
-    component.registrationForm.get('email')?.setValue('test@example.com')
-    component.registrationForm.get('streetNumber')?.setValue('Bulevar Oslobodjenja 5')
-    component.registrationForm.get('city')?.setValue('Novi Sad')
-    component.registrationForm.get('postalCode')?.setValue('21000')
-    component.registrationForm.get('country')?.setValue('Srbija')
-    component.registrationForm.get('phone')?.setValue(642527738)
-    component.registrationForm.get('role')?.setValue(Role.Guest)
-    component.registrationForm.get('password')?.setValue('sifra123')
-    component.registrationForm.get('passwordAgain')?.setValue('sifra123')
+  it('should handle registration error on auth service', fakeAsync(() => {
+    const routerComp = spyOn(component.router, 'navigate').and.callThrough();
+    userService.getUsers.and.returnValue(of([]));
   
+    const errorResponse = { status: 500, message: 'Internal Server Error' };
+    authService.register.and.returnValue(throwError(errorResponse));
+  
+    setFormControlValue();
+    component.register();
+  
+    tick();
+  
+    expect(authService.register).toHaveBeenCalled();
+    expect(Swal.fire).toHaveBeenCalledWith('Info', 'Your request has been successfully created,but you must activate account.', 'success');
+    expect(router.navigate).not.toHaveBeenCalled();
+  }));
+
+  it('should handle existing user during registration', fakeAsync(() => {
+    userService.getUsers.and.returnValue(of([mockUser4]));
+  
+    setFormControlValue();
     el = fixture.debugElement.query(By.css('#registerBtn')).nativeElement;
     el.click();
     tick();
   
-    expect(registerSpy).toHaveBeenCalled();
-    let result: boolean | undefined;
-    spyOn(component, 'isUserExist').and.returnValue(of(false));
-    component.isUserExist('test@example.com').subscribe(res => result = res);
-    tick();
-    expect(result).toBeFalse();
-    const result2 = component.checkPasswordsMatch(component.registrationForm.value);
-    expect(result2).toBeTrue();
-    expect(component.registrationForm.valid).toBeTrue();
+    expect(Swal.fire).toHaveBeenCalledWith('Error', 'Account with this email already exists.', 'error');
+  
+    expect(authService.register).not.toHaveBeenCalled();
+    expect(router.navigate).not.toHaveBeenCalled();
+  }));
+  
+  it('should successfully register user', fakeAsync(() => {
+    const routerComp = spyOn(component.router, 'navigate').and.callThrough();
+    userService.getUsers.and.returnValue(of([]));
+    authService.register.and.returnValue(of(mockUser4));
 
-    //expect(Swal.fire).toHaveBeenCalledWith('Success', 'Successfully registered user!', 'success');
+    setFormControlValue();
+
+    el = fixture.debugElement.query(By.css('#registerBtn')).nativeElement;
+    el.click();
+    tick();
+
+    expect(authService.register).toHaveBeenCalled();
+    expect(Swal.fire).toHaveBeenCalledWith('Success', 'Successfully registered user!', 'success');
+    expect(router.navigate).not.toHaveBeenCalled();
   }));
 });
 

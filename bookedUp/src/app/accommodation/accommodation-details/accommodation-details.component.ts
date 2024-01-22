@@ -39,7 +39,7 @@ export class AccommodationDetailsComponent implements OnInit {
   isFavourite: boolean = false;
 
   acc!:Accommodation;
-  constructor( private router: Router, private route: ActivatedRoute,private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService, private guestService: GuestService) {}
+  constructor( public router: Router, private route: ActivatedRoute,private photoService:PhotoService, private accommodationService: AccommodationService, private authService: AuthService, private userService: UserService, private guestService: GuestService) {}
 
   ngOnInit(): void {
     this.role = this.authService.getRole();
@@ -76,12 +76,6 @@ export class AccommodationDetailsComponent implements OnInit {
       })
 
     });
-
-
-    this.authService.userState.subscribe((result) => {
-      this.role = result;
-    })
-
 
 
     this.accommodation = this.accommodationService.getAccommodationById(this.accommodationId);

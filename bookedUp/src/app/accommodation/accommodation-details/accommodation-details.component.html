@@ -82,15 +82,14 @@
             [defaultPrice]="accommodation.price"
             [startDate]="startDate"
             [endDate]="endDate"
-            [customPricesInput]="accommodation.priceChanges"
             [alreadyPickedInput]="accommodation.availability"
             (click)="handleCalendarClick($event)">
           </app-calendar>
-          <div class="save-account-wrapper" *ngIf="role === 'ROLE_GUEST'" id="save-button" style="margin-top: 5%;" (click)="onButtonClick()">
+          <div class="save-account-wrapper" *ngIf="role === 'GUEST'" id="save-button" style="margin-top: 5%;" (click)="onButtonClick()">
             <b class="save-account">Reserve Accommodation</b>
           </div>
 
-          <div class="save-account-wrapper" *ngIf="role === 'ROLE_GUEST'" style="margin-top: 5%;" (click)="toggleFavourite()">
+          <div class="save-account-wrapper" *ngIf="role === 'GUEST'" style="margin-top: 5%;" (click)="toggleFavourite()">
             <b class="save-account">{{ isFavourite ? 'Remove from Favourites' : 'Add to Favourites' }}</b>
           </div>
 

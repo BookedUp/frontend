@@ -51,7 +51,7 @@ export class CreateReservationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService, 
-    private router: Router, 
+    public router: Router, 
     private route: ActivatedRoute, 
     private accommodationService: AccommodationService, 
     private authService: AuthService, 

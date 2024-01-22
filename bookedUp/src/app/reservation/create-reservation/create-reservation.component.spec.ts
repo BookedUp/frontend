@@ -1,103 +1,102 @@
-import { ComponentFixture, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async, tick, fakeAsync, flushMicrotasks, flush } from '@angular/core/testing';
 import { CreateReservationComponent } from './create-reservation.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
+import { of, throwError } from 'rxjs';
 import { AccommodationService } from '../../accommodation/accommodation.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { UserService } from '../../user/user.service';
 import { ReservationService } from '../reservation.service';
-import { PhotoService } from '../../shared/photo/photo.service';
 import { GuestService } from '../../user/guest/guest.service';
-import { NotificationsService } from '../../shared/notifications/service/notifications.service';
-import { WebSocketService } from '../../shared/notifications/service/web-socket.service';
-import { Accommodation } from 'src/app/accommodation/model/accommodation.model';
-import { User } from '../../user/model/user.model';
-import { Guest } from '../../user/model/guest.model';
-import { ReservationStatus } from '../model/reservationStatus.enum';
-import { Reservation } from '../model/reservation.model';
-import { NotificationType } from '../../shared/notifications/model/enum/notificationType.enum';
 import Swal from 'sweetalert2';
+import { BrowserModule, By } from '@angular/platform-browser';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from 'src/app/infrastructure/material/material.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { LayoutModule } from 'src/app/layout/layout.module';
+import { RouterStub } from 'src/app/mocks/router.stub';
+import { mockUser4 } from 'src/app/mocks/user.service.mock';
+import { Role } from 'src/app/user/model/role.enum';
+import { mockAccommodation } from 'src/app/mocks/accommodation.service.mock';
+import { mockGuest } from 'src/app/mocks/guest.service.mock';
+import { mockReservation } from 'src/app/mocks/reservation.service.mock';
 
 describe('CreateReservationComponent', () => {
   let component: CreateReservationComponent;
   let fixture: ComponentFixture<CreateReservationComponent>;
-  let mockActivatedRoute: any;
-  let mockRouter: any;
-  let mockAccommodationService: any;
-  let mockAuthService: any;
-  let mockUserService: any;
-  let mockReservationService: any;
-  let mockPhotoService: any;
-  let mockGuestService: any;
-  let mockNotificationsService: any;
-  let mockWebSocketService: any;
+  let el: HTMLElement;
+  let swalFireSpy: jasmine.SpyObj<any>;
+  let userService: jasmine.SpyObj<UserService>;
+  let authService: jasmine.SpyObj<AuthService>;
+  let accommodationService: jasmine.SpyObj<AccommodationService>;
+  let reservationService: jasmine.SpyObj<ReservationService>;
+  let guestService: jasmine.SpyObj<GuestService>;
+  let router: jasmine.SpyObj<Router>;
 
-  beforeEach(async(() => {
-    mockActivatedRoute = {
+  beforeEach(() => {
+    const activatedRouteStub = {
       params: of({ id: 1 }),
       queryParams: of({
-        startDate: '2022-01-01',
-        endDate: '2022-01-05',
-        totalPrice: 100,
-        numberGuests: 2,
-        days: 5,
+        startDate: '2024-02-04',
+        endDate: '2024-02-06',
+        totalPrice: 300,
+        numberGuests: 3,
+        days: 2
       }),
+      snapshot: {
+        paramMap: convertToParamMap({ id: 1 })
+      }
     };
-
-    mockRouter = { navigate: jasmine.createSpy('navigate') };
-
-    mockAccommodationService = {
-      getAccommodationById: jasmine.createSpy('getAccommodationById').and.returnValue(of({} as Accommodation)),
-    };
-
-    mockAuthService = { getUserID: jasmine.createSpy('getUserID').and.returnValue('123') };
-
-    mockUserService = {
-      getUser: jasmine.createSpy('getUser').and.returnValue(of({} as User)),
-    };
-
-    mockReservationService = {
-      createReservation: jasmine.createSpy('createReservation').and.returnValue(of({} as Reservation)),
-    };
-
-    mockPhotoService = {
-      loadPhoto: jasmine.createSpy('loadPhoto').and.returnValue(of(new Blob())),
-    };
-
-    mockGuestService = {
-      getGuestById: jasmine.createSpy('getGuestById').and.returnValue(of({} as Guest)),
-    };
-
-    mockNotificationsService = {
-      createNotification: jasmine.createSpy('createNotification').and.returnValue(of({})),
-    };
-
-    mockWebSocketService = {
-      sendMessageUsingSocket: jasmine.createSpy('sendMessageUsingSocket'),
-    };
+    
+    userService = jasmine.createSpyObj('UserService', ['registerGuest','registerHost', 'createUser', 'getUsers', 'getUser', 'updateUser']);
+    guestService = jasmine.createSpyObj('GuestService', ['getGuestById']);
+    reservationService = jasmine.createSpyObj('ReservationService', ['createReservation']);
+    accommodationService = jasmine.createSpyObj('AccommodationService', ['getAccommodationById']);
+    authService = jasmine.createSpyObj('AuthService', ['login', 'getUserID', 'isLoggedIn', 'getRole', 'getUsername']);
+    router = jasmine.createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({
       declarations: [CreateReservationComponent],
-      imports: [ReactiveFormsModule, RouterTestingModule],
-      providers: [
-        { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        { provide: Router, useValue: mockRouter },
-        { provide: AccommodationService, useValue: mockAccommodationService },
-        { provide: AuthService, useValue: mockAuthService },
-        { provide: UserService, useValue: mockUserService },
-        { provide: ReservationService, useValue: mockReservationService },
-        { provide: PhotoService, useValue: mockPhotoService },
-        { provide: GuestService, useValue: mockGuestService },
-        { provide: NotificationsService, useValue: mockNotificationsService },
-        { provide: WebSocketService, useValue: mockWebSocketService },
+      imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        ToastrModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        SharedModule,
+        LayoutModule,
+        RouterTestingModule.withRoutes([])
       ],
+      providers: [
+        { provide: UserService, useValue: userService },
+        { provide: Router, useClass: RouterStub },
+        { provide: AuthService, useValue: authService },
+        { provide: AccommodationService, useValue: accommodationService},
+        { provide: ReservationService, useValue: reservationService},
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
+      ]
     }).compileComponents();
-  }));
+    
+    userService.getUser.and.returnValue(of(mockUser4));
 
-  beforeEach(() => {
+    authService.getUserID.and.returnValue(4);
+    authService.getRole.and.returnValue(Role.Guest);
+    authService.getUsername.and.returnValue('test@example.com');
+    
+    authService.isLoggedIn.and.returnValue(true);
+
+    guestService.getGuestById.and.returnValue(of(mockGuest));
+
+    accommodationService.getAccommodationById.and.returnValue(of(mockAccommodation));
+
     fixture = TestBed.createComponent(CreateReservationComponent);
+    swalFireSpy = spyOn(Swal, 'fire');
+    
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -106,45 +105,56 @@ describe('CreateReservationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load accommodation data and user data on init', fakeAsync(() => {
-    tick();
-
-    expect(mockAccommodationService.getAccommodationById).toHaveBeenCalledWith(1);
-    expect(mockUserService.getUser).toHaveBeenCalledWith(123);
-    expect(mockGuestService.getGuestById).toHaveBeenCalledWith(123);
+  it('should call reserve() on button click', fakeAsync(() => {
+    const reserveSpy = spyOn(component, 'reserve');
+  
+    const buttonElement = fixture.debugElement.query(By.css('#completeBooking')).nativeElement;
+    buttonElement.click();
+  
+    expect(reserveSpy).toHaveBeenCalled();
   }));
+
+  it('should show error message on reservation creation failure', fakeAsync(() => {
+    const createReservationSpy = reservationService.createReservation.and.returnValue(throwError('Fake error'));
+  
+    component.startDate = '2024-02-04';
+    component.endDate = '2024-02-06';
+    component.totalPrice = 200;
+    component.numberGuests = 3;
+    component.acc = mockAccommodation;
+    component.guest = mockGuest;
+  
+    const buttonElement = fixture.debugElement.query(By.css('#completeBooking')).nativeElement;
+    buttonElement.click();
+  
+    tick();
+    flushMicrotasks();
+    flush();
+    
+    const expectedText = 'Sorry, an error occurred while creating the reservation. Please try again later.';
+    expect(Swal.fire).toHaveBeenCalledWith(jasmine.objectContaining({ text: expectedText }));
+  }));
+  
 
   it('should create reservation', fakeAsync(() => {
-    spyOn(Swal, 'fire');
-    spyOn(component, 'delayNavigation');
-
-    component.reserve();
+    const createReservationSpy = reservationService.createReservation.and.returnValue(of(mockReservation));
+  
+    component.startDate = '2024-02-04';
+    component.endDate = '2024-02-06';
+    component.totalPrice = 200;
+    component.numberGuests = 3;
+    component.acc = mockAccommodation;
+    component.guest = mockGuest;
+  
+    const buttonElement = fixture.debugElement.query(By.css('#completeBooking')).nativeElement;
+    buttonElement.click();
+  
     tick();
-
-    expect(mockReservationService.createReservation).toHaveBeenCalled();
-
-    expect(component.delayNavigation).toHaveBeenCalled();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
+    flushMicrotasks();
+    flush();
+  
+    expect(createReservationSpy).toHaveBeenCalled();
   }));
-
-  it('should delay navigation', fakeAsync(() => {
-    component.delayNavigation();
-    tick(1000);
-
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
-  }));
-
-  it('should have enabled input fields for user information', () => {
-    const firstNameInput = fixture.nativeElement.querySelector('input[formControlName="firstName"]');
-    const lastNameInput = fixture.nativeElement.querySelector('input[formControlName="lastName"]');
-    const emailInput = fixture.nativeElement.querySelector('input[formControlName="email"]');
-    const phoneNumberInput = fixture.nativeElement.querySelector('input[formControlName="phoneNumber"]');
-
-    expect(firstNameInput.disabled).toBe(false);
-    expect(lastNameInput.disabled).toBe(false);
-    expect(emailInput.disabled).toBe(false);
-    expect(phoneNumberInput.disabled).toBe(false);
-  });
-
 });
 
+//ng test --include="**/create-reservation.component.spec.ts"

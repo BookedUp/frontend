@@ -25,6 +25,11 @@ export class AuthService {
     this.user$.next(this.getRole());
   }
 
+  setUserState(newState: string): string {
+    this.user$.next(newState);
+    return newState;
+  }
+
   login(auth: any): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, auth, {
       headers: this.headers,

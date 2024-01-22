@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { Role } from 'src/app/user/model/role.enum';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,8 +13,12 @@ export class NavBarComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.authService.userState.subscribe((result) => {
-      this.role = result;
-    })
+      if(this.authService.getRole() == Role.Guest){
+        this.role = 'ROLE_GUEST';
+      }else if(this.authService.getRole() == Role.Host){
+        this.role = 'ROLE_HOST';
+      }else{
+        this.role = 'ROLE_ADMIN';
+      }
   }
 }
