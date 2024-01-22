@@ -9,7 +9,7 @@
     <div class="active-accommodations" [ngClass]="{ 'clicked': selectedClass === 'active-accommodations' }" (click)="changeStyle('active-accommodations')">
       My Accommodations
     </div>
-    <div class="requests-accommodations" [ngClass]="{ 'clicked': selectedClass === 'requests-accommodations' }" (click)="changeStyle('requests-accommodations')">
+    <div id="waiting" class="requests-accommodations" [ngClass]="{ 'clicked': selectedClass === 'requests-accommodations' }" (click)="changeStyle('requests-accommodations')">
       Waiting For Approval
     </div>
     <div class="rejected-accommodations" [ngClass]="{ 'clicked': selectedClass === 'rejected-accommodations' }" (click)="changeStyle('rejected-accommodations')">

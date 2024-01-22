@@ -26,13 +26,14 @@ export class ReservationsComponent implements OnInit {
   searchText: string = '';
 
     constructor(
-      private reservationService: ReservationService, 
-      private router: Router, 
-      private route: ActivatedRoute, 
-      private authService: AuthService, 
+      private reservationService: ReservationService,
+      private router: Router,
+      private route: ActivatedRoute,
+      private authService: AuthService,
       private photoService: PhotoService) { }
 
   protected readonly ReservationStatus = ReservationStatus;
+  numberOfReservations: number = 0; // Postavljate početnu vrednost
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -57,6 +58,7 @@ export class ReservationsComponent implements OnInit {
 
       this.reservationService.getReservationsByGuestId(this.authService.getUserID()).subscribe((results) => {
         this.res = results;
+        this.numberOfReservations = this.res.length;
         this.loadPhotos();
       });
     }
@@ -82,6 +84,7 @@ export class ReservationsComponent implements OnInit {
     this.reservations = this.reservationService.getReservationsByGuestId(this.authService.getUserID());
     this.reservationService.getReservationsByGuestId(this.authService.getUserID()).subscribe((results) => {
       this.res = results;
+      this.numberOfReservations = this.res.length;
       this.loadPhotos();
     });
   }
@@ -114,6 +117,7 @@ export class ReservationsComponent implements OnInit {
     });
     this.reservationService.getReservationsByStatusAndGuestId(this.authService.getUserID(), status).subscribe((results) => {
       this.res = results;
+      this.numberOfReservations = this.res.length;
       this.loadPhotos();
     });
   }
@@ -173,14 +177,14 @@ export class ReservationsComponent implements OnInit {
     private containsSearchText(reservation: Reservation, searchText: string): boolean {
       const datePipe = new DatePipe('en-US');
       const searchLower = searchText.toLowerCase();
-  
+
       const nameIncludes = reservation.accommodation.name.toLowerCase().includes(searchLower);
       const startDateFormatted = datePipe.transform(reservation.startDate, 'EEEE, MMMM d, y');
       const endDateFormatted = datePipe.transform(reservation.endDate, 'EEEE, MMMM d, y');
-  
+
       const startDateIncludes = startDateFormatted!.toLowerCase().includes(searchLower);
       const endDateIncludes = endDateFormatted!.toLowerCase().includes(searchLower);
-  
+
       return nameIncludes || startDateIncludes || endDateIncludes;
   }
 

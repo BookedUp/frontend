@@ -12,10 +12,10 @@
             <div id="waitingForApproval" class="waiting-reservation" [ngClass]="{ 'clicked': selectedClass === 'waiting-reservation' }" (click)="getHostsReservationsByStatus('waiting-reservation', ReservationStatus.Created)">
                 Waiting For Approval
             </div>
-            <div class="accepted-reservation" [ngClass]="{ 'clicked': selectedClass === 'accepted-reservation' }" (click)="getHostsReservationsByStatus('accepted-reservation', ReservationStatus.Accept)">
+            <div id="accepted" class="accepted-reservation" [ngClass]="{ 'clicked': selectedClass === 'accepted-reservation' }" (click)="getHostsReservationsByStatus('accepted-reservation', ReservationStatus.Accept)">
                 Accepted
             </div>
-            <div class="rejected-reservation" [ngClass]="{ 'clicked': selectedClass === 'rejected-reservation' }" (click)="getHostsReservationsByStatus('rejected-reservation', ReservationStatus.Reject)">
+            <div id="rejected" class="rejected-reservation" [ngClass]="{ 'clicked': selectedClass === 'rejected-reservation' }" (click)="getHostsReservationsByStatus('rejected-reservation', ReservationStatus.Reject)">
                 Rejected
             </div>
             <div class="cancelled-reservation" [ngClass]="{ 'clicked': selectedClass === 'cancelled-reservation' }" (click)="getHostsReservationsByStatus('cancelled-reservation', ReservationStatus.Cancelled)">
@@ -32,6 +32,8 @@
                         placeholder="Search Reservations..."
                         (input)="searchReservations()"
                 />
+              <span id="numberOfReservations">{{ numberOfReservations }}</span>
+
             </div>
         </div>
 
@@ -46,6 +48,7 @@
               <img
                 class="accommodation-image"
                 alt=""
+                id="image"
                 [src]="getPhotoUrl(reservation?.accommodation?.id)"
 
               />
@@ -70,8 +73,8 @@
 
                 <div class="bottom-data-box">
                     <b class="per-night">{{ reservation.totalPrice }}$</b>
-                    <div class="includes-taxes">Check In: {{ reservation.startDate| date: 'EEEE, MMMM d, y' }}</div>
-                    <div class="includes-taxes">Check Out: {{ reservation.endDate | date: 'EEEE, MMMM d, y' }}</div>
+                    <div id="checkIn" class="includes-taxes">Check In: {{ reservation.startDate| date: 'EEEE, MMMM d, y' }}</div>
+                    <div id="checkOut" class="includes-taxes">Check Out: {{ reservation.endDate | date: 'EEEE, MMMM d, y' }}</div>
                 </div>
               </div>
 

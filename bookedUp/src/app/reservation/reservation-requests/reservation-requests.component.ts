@@ -28,11 +28,13 @@ export class ReservationRequestsComponent implements OnInit {
   photoDict: { accId: number, url: string }[] = [];
   res: Reservation[] = [];
   searchText: string = '';
+  numberOfReservations: number = 0; // Postavljate početnu vrednost
+
 
   constructor(
-    private reservationService: ReservationService, 
-    private router: Router, private route: ActivatedRoute, 
-    private authService: AuthService, 
+    private reservationService: ReservationService,
+    private router: Router, private route: ActivatedRoute,
+    private authService: AuthService,
     private photoService: PhotoService,
     private notificationService: NotificationsService,
     private webSocketService: WebSocketService) { }
@@ -60,9 +62,13 @@ export class ReservationRequestsComponent implements OnInit {
       )
       .subscribe(sortedReservations => {
         this.reservations = of(sortedReservations);
+        this.numberOfReservations = sortedReservations.length;
+
       });
       this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Created).subscribe((results) => {
         this.res = results;
+        this.numberOfReservations = this.res.length;
+
         this.loadPhotos();
       });
     } else if (this.filter === 'accepted') {
@@ -75,9 +81,12 @@ export class ReservationRequestsComponent implements OnInit {
       )
       .subscribe(sortedReservations => {
         this.reservations = of(sortedReservations);
+        this.numberOfReservations = sortedReservations.length;
+
       });
       this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Accept).subscribe((results) => {
         this.res = results;
+        this.numberOfReservations = this.res.length;
         this.loadPhotos();
       });
     } else if (this.filter === 'rejected') {
@@ -90,9 +99,12 @@ export class ReservationRequestsComponent implements OnInit {
       )
       .subscribe(sortedReservations => {
         this.reservations = of(sortedReservations);
+        this.numberOfReservations = sortedReservations.length;
+
       });
       this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Reject).subscribe((results) => {
         this.res = results;
+        this.numberOfReservations = this.res.length;
         this.loadPhotos();
       });
     } else if (this.filter === 'finished') {
@@ -105,9 +117,12 @@ export class ReservationRequestsComponent implements OnInit {
       )
       .subscribe(sortedReservations => {
         this.reservations = of(sortedReservations);
+        this.numberOfReservations = sortedReservations.length;
+
       });
       this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Completed).subscribe((results) => {
         this.res = results;
+        this.numberOfReservations = this.res.length;
         this.loadPhotos();
       });
     } else if (this.filter === 'cancelled') {
@@ -120,9 +135,12 @@ export class ReservationRequestsComponent implements OnInit {
       )
       .subscribe(sortedReservations => {
         this.reservations = of(sortedReservations);
+        this.numberOfReservations = sortedReservations.length;
+
       });
       this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), ReservationStatus.Cancelled).subscribe((results) => {
         this.res = results;
+        this.numberOfReservations = this.res.length;
         this.loadPhotos();
       });
     }
@@ -136,9 +154,11 @@ export class ReservationRequestsComponent implements OnInit {
       )
       .subscribe(sortedReservations => {
         this.reservations = of(sortedReservations);
+        this.numberOfReservations = sortedReservations.length;
       });
       this.reservationService.getReservationsByHostId(this.authService.getUserID()).subscribe((results) => {
         this.res = results;
+        this.numberOfReservations = results.length;
         this.loadPhotos();
       });
     }
@@ -182,7 +202,7 @@ export class ReservationRequestsComponent implements OnInit {
                   type: NotificationType.reservationRequestResponse,
                   active: true
                 };
-      
+
                 this.notificationService.createNotification(notification).subscribe(
                   (createdNotification) => {
                     console.log(createdNotification);
@@ -191,7 +211,7 @@ export class ReservationRequestsComponent implements OnInit {
                     console.error('Error creating review:', error);
                   }
                 );
-                this.webSocketService.sendMessageUsingSocket(notification);       
+                this.webSocketService.sendMessageUsingSocket(notification);
               },
               (error) => {
                 Swal.fire({
@@ -228,7 +248,7 @@ export class ReservationRequestsComponent implements OnInit {
                   type: NotificationType.reservationRequestResponse,
                   active: true
                 };
-      
+
                 this.notificationService.createNotification(notification).subscribe(
                   (createdNotification) => {
                     console.log(createdNotification);
@@ -237,7 +257,7 @@ export class ReservationRequestsComponent implements OnInit {
                     console.error('Error creating review:', error);
                   }
                 );
-                this.webSocketService.sendMessageUsingSocket(notification);       
+                this.webSocketService.sendMessageUsingSocket(notification);
               },
               (error) => {
                 Swal.fire({
@@ -280,6 +300,7 @@ export class ReservationRequestsComponent implements OnInit {
     this.reservations = this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), status);
     this.reservationService.getReservationsByStatusAndHostId(this.authService.getUserID(), status).subscribe((results) => {
       this.res = results;
+      this.numberOfReservations = this.res.length;
       this.loadPhotos();
     });
   }
